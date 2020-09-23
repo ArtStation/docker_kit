@@ -44,6 +44,14 @@ RSpec.describe Indocker::Core::ImageFactory do
     }) }.to raise_error(Indocker::Core::ImageFactory::CircularDependencyError)
   end
 
+  it "raises error if dependent image is not found" do
+    example_definition = image_definition_factory
+      .create(:example_image)
+      .depends_on(:not_found_image)
+    
+    expect{ subject.create(example_definition) }.to raise_error(Indocker::Core::ImageFactory::DependencyNotFoundError)
+  end
+
   it "sets default dockerfile path" do
     image = subject.create(test_definition)
 

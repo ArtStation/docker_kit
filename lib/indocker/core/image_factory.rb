@@ -1,9 +1,10 @@
 class Indocker::Core::ImageFactory
   DEFAULT_DOCKERFILE_NAME = "Dockerfile".freeze
   DEFAULT_BUILD_CONTEXT_DIR = "build_context".freeze
+  DEFAULT_TAG = 'latest'.freeze
 
   CircularDependencyError = Class.new(StandardError)
-  DockerfileNotFoundError = Class.new(StandardError)
+  DependencyNotFoundError = Class.new(StandardError)
 
   include Indocker::Import["tools.file_presence_checker"]
 
@@ -32,9 +33,9 @@ class Indocker::Core::ImageFactory
       dependent_images:       dependent_images,
       registry_name:          image_attrs.registry_name,
       dockerfile_path:        dockerfile_path,
-      build_args:             image_attrs.build_args,
+      build_args:             image_attrs.build_args || {},
       build_context_dir:      build_context_dir,
-      tag:                    image_attrs.tag,
+      tag:                    image_attrs.tag || DEFAULT_TAG,
       before_build_callback:  image_attrs.before_build_callback,
       after_build_callback:   image_attrs.after_build_callback
     )
@@ -46,9 +47,14 @@ class Indocker::Core::ImageFactory
     end
 
     dependent_images = image_attrs.dependent_images || []
-    dependent_images.map do |dependency|
+    dependent_images.map do |dependency_name|
+      dependency = all_definitions[dependency_name]
+      if dependency.nil?
+        raise DependencyNotFoundError, "Dependent image not found: #{dependency_name}"
+      end
+
       create(
-        all_definitions[dependency], 
+        dependency, 
         all_definitions: all_definitions,
         dependency_tree: dependency_tree + [image_attrs.name]
       )
