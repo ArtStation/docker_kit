@@ -1,7 +1,7 @@
 require "bundler/setup"
 require "indocker"
 
-Dir["#{File.dirname(__FILE__)}/factories/**/*.rb"].each { |f| require f }
+Dir["#{File.dirname(__FILE__)}/helpers/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

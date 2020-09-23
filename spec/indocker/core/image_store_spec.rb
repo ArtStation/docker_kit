@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 RSpec.describe Indocker::Core::ImageStore do
-  subject{ Indocker::Core::ImageStore.new }
+  subject{ Indocker::Core::ImageStore.new(image_factory: image_factory) }
+  let(:image_factory) { Indocker::Core::ImageFactory.new(
+    file_presence_checker: TestFilePresenceChecker.new
+  ) }
   let(:image_definition_factory) { TestImageDefinitionFactory.new }
   let(:test_definition) { image_definition_factory.create(:example) }
    

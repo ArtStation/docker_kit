@@ -2,8 +2,8 @@ class Indocker::Core::ImageStore
   NotFoundError = Class.new(StandardError)
   AlreadyAddedError = Class.new(StandardError)
 
-  include Indocker::Import["image_factory"]
-  include Indocker::Import["image_definition_factory"]
+  include Indocker::Import["core.image_factory"]
+  include Indocker::Import["core.image_definition_factory"]
 
   def define(image_name, image_dir)
     definition = image_definition_factory.create(image_name, image_dir)

@@ -19,15 +19,23 @@ module Indocker
     autoload :Image, 'core/image'
   end
 
+  module Tools
+    autoload :FilePresenceChecker, 'tools/file_presence_checker'
+  end
+
   class Container
     extend Dry::Container::Mixin
 
-    register "image_factory" do
+    register "core.image_factory" do
       Indocker::Core::ImageFactory.new
     end
     
-    register "image_definition_factory" do
+    register "core.image_definition_factory" do
       Indocker::Core::ImageDefinitionFactory.new
+    end
+
+    register "tools.file_presence_checker" do
+      Indocker::Tools::FilePresenceChecker.new
     end
   end
 
