@@ -1,6 +1,6 @@
 class Indocker::Core::Image < Dry::Struct
   attribute :name,                  Types::Coercible::Symbol
-  attribute :dependent_images,      Types::Array.of(self).optional
+  attribute :dependent_images,      Types::Array.of(Indocker::Core::Image).optional
   attribute :registry_name,         Types::Coercible::Symbol.optional
   attribute :dockerfile_path,       Types::Coercible::String.optional
   attribute :build_args,            Types::Hash.optional

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Indocker::Core::ImageDefinition do
-  subject{ Indocker::Core::ImageDefinition.new(:example_image) }
+  subject{ Indocker::Core::ImageDefinition.new(:example_image, "/images/example_image") }
 
   context "dependencies" do
     it "sets image dependencies with symbol" do

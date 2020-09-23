@@ -1,15 +1,17 @@
 class Indocker::Core::ImageDefinition
-  attr_reader :image_name, 
+  attr_reader :image_name, :path,
               :dependent_images, :registry_name, :dockerfile_path,
               :build_args, :build_context_dir, :tag, 
               :before_build_callback, :after_build_callback
   
-  def initialize(image_name)
+  def initialize(image_name, image_dir)
     @image_name = image_name
+    @image_dir  = image_dir
   end
 
   class ImageAttributes < Dry::Struct
     attribute :name,                  Types::Coercible::Symbol
+    attribute :dir,                   Types::Coercible::String
     attribute :dependent_images,      Types::Array.of(Types::Coercible::Symbol).optional
     attribute :registry_name,         Types::Coercible::Symbol.optional
     attribute :dockerfile_path,       Types::Coercible::String.optional
@@ -23,6 +25,7 @@ class Indocker::Core::ImageDefinition
   def to_image_attrs
     ImageAttributes.new(
       name:                   @image_name,
+      dir:                    @image_dir,
       dependent_images:       get_value(@dependent_images),
       registry_name:          get_value(@registry_name),
       dockerfile_path:        get_value(@dockerfile_path),

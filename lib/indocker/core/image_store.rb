@@ -5,8 +5,8 @@ class Indocker::Core::ImageStore
   include Indocker::Import["image_factory"]
   include Indocker::Import["image_definition_factory"]
 
-  def define(image_name)
-    definition = image_definition_factory.create(image_name)
+  def define(image_name, image_dir)
+    definition = image_definition_factory.create(image_name, image_dir)
     add_definition(definition)
     definition
   end
@@ -14,7 +14,9 @@ class Indocker::Core::ImageStore
   def add_definition(image_definition)
     @image_definitions ||= {}
 
-    raise AlreadyAddedError unless @image_definitions[image_definition.image_name].nil?
+    unless @image_definitions[image_definition.image_name].nil?
+      raise AlreadyAddedError, "image #{image_definition.image_name} was already added"
+    end
 
     @image_definitions[image_definition.image_name] = image_definition
   end
@@ -22,7 +24,9 @@ class Indocker::Core::ImageStore
   def get_definition(image_name)
     @image_definitions ||= {}
 
-    raise NotFoundError if @image_definitions[image_name].nil?
+    if @image_definitions[image_name].nil?
+      raise NotFoundError, "image #{image_name} not found"
+    end
 
     @image_definitions[image_name]
   end
@@ -30,6 +34,6 @@ class Indocker::Core::ImageStore
   def get_image(image_name)
     definition = get_definition(image_name)
 
-    image_factory.create(definition)
+    image_factory.create(definition, all_definitions: @image_definitions)
   end
 end
