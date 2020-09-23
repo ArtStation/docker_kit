@@ -7,18 +7,32 @@ class Indocker::Core::ImageDefinition
     OpenStruct.new(
       name: @image_name,
       dependent_image_names: get_value(@dependent_image_names),
-      registry_name:         get_value(@registry_name)
+      registry_name:         get_value(@registry_name),
+      dockerfile_path:       get_value(@dockerfile_path),
+      build_args:            get_value(@build_args)
     )
   end
 
-  def depends_on(dependent_image_names = nil, &block)
-    @dependent_image_names = dependent_image_names ? Array(dependent_image_names) : block
+  def depends_on(value = nil, &block)
+    @dependent_image_names = value ? Array(value) : block
 
     self
   end
 
-  def registry(registry_name = nil, &block)
-    @registry_name = registry_name ? registry_name : block
+  def registry(value = nil, &block)
+    @registry_name = value ? value : block
+
+    self
+  end
+
+  def dockerfile(value = nil, &block)
+    @dockerfile_path = value ? value : block
+
+    self
+  end
+
+  def build_args(value = nil, &block)
+    @build_args = value ? value : block
 
     self
   end
