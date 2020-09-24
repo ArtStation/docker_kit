@@ -1,11 +1,8 @@
 class Indocker::Core::ImageFactory
-  DEFAULT_DOCKERFILE_NAME = "Dockerfile".freeze
-  DEFAULT_BUILD_CONTEXT_DIR = "build_context".freeze
-  DEFAULT_TAG = 'latest'.freeze
-
   CircularDependencyError = Class.new(StandardError)
   DependencyNotFoundError = Class.new(StandardError)
 
+  include Indocker::Import["defaults"]
   include Indocker::Import["tools.file_presence_checker"]
 
   def create(definition, all_definitions: {}, dependency_tree: [])
@@ -17,14 +14,14 @@ class Indocker::Core::ImageFactory
       dependency_tree: dependency_tree,
     )
 
-    dockerfile_path = image_attrs.dockerfile_path || File.join(image_attrs.dir, DEFAULT_DOCKERFILE_NAME)
+    dockerfile_path = image_attrs.dockerfile_path || File.join(image_attrs.dir, defaults.image_dockerfile_name)
     file_presence_checker.check_file!(dockerfile_path)
 
     if image_attrs.build_context_dir
       file_presence_checker.check_dir!(image_attrs.build_context_dir)
       build_context_dir = image_attrs.build_context_dir
     else 
-      default_dir = File.join(image_attrs.dir, DEFAULT_BUILD_CONTEXT_DIR)
+      default_dir = File.join(image_attrs.dir, defaults.image_build_context_dir)
       build_context_dir = file_presence_checker.dir_exists?(default_dir) ? default_dir : nil
     end
 
@@ -35,7 +32,7 @@ class Indocker::Core::ImageFactory
       dockerfile_path:        dockerfile_path,
       build_args:             image_attrs.build_args || {},
       build_context_dir:      build_context_dir,
-      tag:                    image_attrs.tag || DEFAULT_TAG,
+      tag:                    image_attrs.tag || defaults.image_tag,
       before_build_callback:  image_attrs.before_build_callback,
       after_build_callback:   image_attrs.after_build_callback
     )

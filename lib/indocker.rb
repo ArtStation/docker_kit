@@ -23,8 +23,14 @@ module Indocker
     autoload :FilePresenceChecker, 'tools/file_presence_checker'
   end
 
+  autoload :Defaults, 'defaults'
+
   class Container
     extend Dry::Container::Mixin
+
+    register "defaults" do
+      Indocker::Defaults.new
+    end
 
     register "core.image_factory" do
       Indocker::Core::ImageFactory.new
