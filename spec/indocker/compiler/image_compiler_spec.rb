@@ -4,10 +4,6 @@ RSpec.describe Indocker::Compiler::ImageCompiler do
   let(:image) { get_test_image(:example) }
   let(:shell) { Indocker::Shell::LocalShell.new }
 
-  xit "compiles image build context & dockerfile" do
-    subject.compile(shell, image, "/tmp/images/")
-
-    expect(subject.template_dir_compiler).to receive(:compile)
-    expect(subject.template_file_compiler).to receive(:compile)
-  end
+  xit "creates a build dir"
+  xit "builds docker image"
 end
