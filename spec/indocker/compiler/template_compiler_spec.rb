@@ -1,0 +1,19 @@
+RSpec.describe Indocker::Compiler::TemplateCompiler do
+  subject{ Indocker::Compiler::TemplateCompiler.new }
+
+  it "returns original content if not a erb template" do
+    expect(subject.compile("test")).to eq("test")
+  end
+
+  it "compiles erb content" do
+    expect(subject.compile("<%= 'test' %>\r\ntest")).to eq("test\r\ntest")
+  end
+
+  it "returns an error if syntax is not correct" do
+    expect{subject.compile("<%= 'test %>")}.to raise_error(SyntaxError)
+  end
+
+  it "allows using a context helper" do
+    expect(subject.compile("<%= hello_world %>", context_helper: HelloWorldContextHelper.new)).to eq("hello world")
+  end
+end

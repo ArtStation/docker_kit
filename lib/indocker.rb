@@ -28,6 +28,12 @@ module Indocker
     autoload :BashCommands, 'shell/bash_commands'
   end
 
+  module Compiler
+    autoload :TemplateCompiler, 'compiler/template_compiler'
+    autoload :TemplateFileCompiler, 'compiler/template_file_compiler'
+    autoload :TemplateDirCompiler, 'compiler/template_dir_compiler'
+  end
+
   autoload :Defaults, 'defaults'
 
   class Container
@@ -47,6 +53,18 @@ module Indocker
 
     register "tools.file_presence_checker" do
       Indocker::Tools::FilePresenceChecker.new
+    end
+
+    register "shell.bash_commands" do
+      Indocker::Shell::BashCommands.new
+    end
+
+    register "compiler.template_compiler" do
+      Indocker::Compiler::TemplateCompiler.new
+    end
+
+    register "compiler.template_file_compiler" do
+      Indocker::Compiler::TemplateFileCompiler.new
     end
   end
 
