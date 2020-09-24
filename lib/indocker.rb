@@ -26,12 +26,14 @@ module Indocker
   module Shell
     autoload :LocalShell, 'shell/local_shell'
     autoload :BashCommands, 'shell/bash_commands'
+    autoload :DockerCommands, 'shell/docker_commands'
   end
 
   module Compiler
     autoload :TemplateCompiler, 'compiler/template_compiler'
     autoload :TemplateFileCompiler, 'compiler/template_file_compiler'
     autoload :TemplateDirCompiler, 'compiler/template_dir_compiler'
+    autoload :ImageBuilder, 'compiler/image_builder'
   end
 
   autoload :Defaults, 'defaults'
@@ -56,6 +58,10 @@ module Indocker
     end
 
     register "shell.bash_commands" do
+      Indocker::Shell::BashCommands.new
+    end
+
+    register "shell.docker_commands" do
       Indocker::Shell::BashCommands.new
     end
 
