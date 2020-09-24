@@ -23,6 +23,11 @@ module Indocker
     autoload :FilePresenceChecker, 'tools/file_presence_checker'
   end
 
+  module Shell
+    autoload :LocalShell, 'shell/local_shell'
+    autoload :BashCommands, 'shell/bash_commands'
+  end
+
   autoload :Defaults, 'defaults'
 
   class Container
