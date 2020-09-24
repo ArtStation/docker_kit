@@ -34,6 +34,7 @@ module Indocker
     autoload :TemplateFileCompiler, 'compiler/template_file_compiler'
     autoload :TemplateDirCompiler, 'compiler/template_dir_compiler'
     autoload :ImageBuilder, 'compiler/image_builder'
+    autoload :ImageCompiler, 'compiler/image_compiler'
   end
 
   autoload :Defaults, 'defaults'
@@ -71,6 +72,14 @@ module Indocker
 
     register "compiler.template_file_compiler" do
       Indocker::Compiler::TemplateFileCompiler.new
+    end
+
+    register "compiler.template_dir_compiler" do
+      Indocker::Compiler::TemplateDirCompiler.new
+    end
+
+    register "compiler.image_builder" do
+      Indocker::Compiler::ImageBuilder.new
     end
   end
 

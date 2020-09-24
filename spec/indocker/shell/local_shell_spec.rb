@@ -7,6 +7,13 @@ RSpec.describe Indocker::Shell::LocalShell do
       result = subject.exec!("ls #{path} | grep local_shell_spec")
       expect(result).to eq("local_shell_spec.rb")
     end
+
+    it "raises error if exit status is not 0" do
+      path = File.expand_path(__dir__)
+      expect{
+        subject.exec!("cp /some/not/existing/folder /another/not/existing/folder")
+      }.to raise_error(Indocker::Shell::LocalShell::ShellError) 
+    end
   end
   
   context "#read" do

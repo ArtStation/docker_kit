@@ -38,37 +38,37 @@ class Indocker::Core::ImageDefinition
   end
 
   def depends_on(value = nil, &block)
-    @dependent_images = value ? Array(value) : block
+    @dependent_images = block_given? ? block : Array(value)
 
     self
   end
 
   def registry(value = nil, &block)
-    @registry_name = value ? value : block
+    @registry_name = block_given? ? block : value
 
     self
   end
 
   def dockerfile(value = nil, &block)
-    @dockerfile_path = value ? value : block
+    @dockerfile_path = block_given? ? block : value
 
     self
   end
 
   def build_args(value = nil, &block)
-    @build_args = value ? value : block
+    @build_args = block_given? ? block : value
 
     self
   end
 
   def build_context(value = nil, &block)
-    @build_context_dir = value ? value : block
+    @build_context_dir = block_given? ? block : value
 
     self
   end
 
   def tag(value = nil, &block)
-    @tag = value ? value : block
+    @tag = block_given? ? block : value
 
     self
   end

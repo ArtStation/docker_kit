@@ -1,8 +1,14 @@
 class Indocker::Shell::LocalShell
+  ShellError = Class.new(StandardError)
+
   def exec!(command)
     result = 
     IO.popen(command, err: [:child, :out]) do |io|
       result = io.read.chomp.strip
+    end
+
+    if $?.exitstatus != 0
+      raise ShellError, "Shell command failed: #{command}\r\n#{result}"
     end
 
     result

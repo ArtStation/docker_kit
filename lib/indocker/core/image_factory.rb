@@ -20,7 +20,7 @@ class Indocker::Core::ImageFactory
     if image_attrs.build_context_dir
       file_presence_checker.check_dir!(image_attrs.build_context_dir)
       build_context_dir = image_attrs.build_context_dir
-    else 
+    else
       default_dir = File.join(image_attrs.dir, defaults.image_build_context_dir)
       build_context_dir = file_presence_checker.dir_exists?(default_dir) ? default_dir : nil
     end
