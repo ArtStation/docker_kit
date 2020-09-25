@@ -1,6 +1,8 @@
 class Indocker::Compiler::TemplateDirCompiler
-  include Indocker::Import["compiler.template_file_compiler"]
-  include Indocker::Import["shell.bash_commands"]
+  include Indocker::Import[
+    "compiler.template_file_compiler",
+    "shell.bash_commands"
+  ]
 
   def compile(shell, source_dir, destination_dir, context_helper: nil)
     copy_dir(shell, source_dir, destination_dir)

@@ -1,8 +1,10 @@
 class Indocker::Compiler::ImageBuildDirCreator
-  include Indocker::Import["compiler.template_dir_compiler"]
-  include Indocker::Import["compiler.template_file_compiler"]
-  include Indocker::Import["shell.bash_commands"]
-  include Indocker::Import["configs"]
+  include Indocker::Import[
+    "compiler.template_dir_compiler",
+    "compiler.template_file_compiler",
+    "shell.bash_commands",
+    "configs"
+  ]
 
   def create(shell, image, build_dir, context_helper: nil)
     bash_commands.rm_rf(shell, build_dir)
