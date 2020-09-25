@@ -14,6 +14,6 @@ RSpec.describe Indocker::Compiler::TemplateCompiler do
   end
 
   it "allows using a context helper" do
-    expect(subject.compile("<%= hello_world %>", context_helper: HelloWorldContextHelper.new)).to eq("hello world")
+    expect(subject.compile("<%= hello_world %>", context_helper: test_helper.context_helper)).to eq("hello world")
   end
 end

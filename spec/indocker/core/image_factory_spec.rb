@@ -4,7 +4,7 @@ RSpec.describe Indocker::Core::ImageFactory do
   subject{ Indocker::Core::ImageFactory.new(
     file_presence_checker: TestFilePresenceChecker.new
   ) }
-  let(:image_definition_factory) { TestImageDefinitionFactory.new }
+  let(:image_definition_factory) { test_helper.image_definition_factory }
   let(:test_definition) { image_definition_factory.create(:example) }
 
   it "builds image based on image definition" do

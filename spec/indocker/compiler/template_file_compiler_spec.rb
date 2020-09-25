@@ -4,12 +4,12 @@ RSpec.describe Indocker::Compiler::TemplateFileCompiler do
   subject{ Indocker::Compiler::TemplateFileCompiler.new }
   let(:source_path) { File.join(FIXTURES_PATH, "compiler", "erb_template.txt") }
   let(:destination_path) { File.join(FIXTURES_PATH, "compiler", "erb_template.txt.compiled") }
-  let(:shell) { Indocker::Shell::LocalShell.new }
+  let(:shell) { test_helper.shell }
   
   after { FileUtils.rm(destination_path) if File.exists?(destination_path) }
 
   it "compiles a given erb template" do
-    subject.compile(shell, source_path, destination_path: destination_path, context_helper: HelloWorldContextHelper.new)
+    subject.compile(shell, source_path, destination_path: destination_path, context_helper: test_helper.context_helper)
 
     content = File.read(destination_path)
     expect(content).to eq(%{hello world\ntest})
@@ -19,7 +19,7 @@ RSpec.describe Indocker::Compiler::TemplateFileCompiler do
     it "updates file by source path" do
       FileUtils.cp(source_path, destination_path)
   
-      subject.compile(shell, destination_path, context_helper: HelloWorldContextHelper.new)
+      subject.compile(shell, destination_path, context_helper: test_helper.context_helper)
   
       content = File.read(destination_path)
       expect(content).to eq(%{hello world\ntest})

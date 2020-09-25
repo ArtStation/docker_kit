@@ -17,28 +17,6 @@ RSpec.configure do |config|
   end
 end
 
-class HelloWorldContextHelper
-  def hello_world
-    "hello world"
-  end
-
-  def get_binding
-    binding
-  end
-end
-
-def get_test_image_factory
-  Indocker::Core::ImageFactory.new(
-    file_presence_checker: TestFilePresenceChecker.new
-  )
-end
-
-def get_test_image_definition(name)
-  factory = TestImageDefinitionFactory.new
-  factory.create(name)
-end
-
-def get_test_image(name)
-  definition = get_test_image_definition(name)
-  get_test_image_factory.create(definition)
+def test_helper
+  TestHelper.new
 end

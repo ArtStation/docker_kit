@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 RSpec.describe Indocker::Core::ImageStore do
-  subject{ Indocker::Core::ImageStore.new(image_factory: get_test_image_factory) }
-  let(:test_definition) { get_test_image_definition(:example) }
+  subject{ Indocker::Core::ImageStore.new(image_factory: test_helper.image_factory) }
+  let(:test_definition) { test_helper.image_definition(:example) }
    
   context "#define" do
     it "defines an image and returns ImageDefinition" do
