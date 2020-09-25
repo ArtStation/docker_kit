@@ -6,20 +6,25 @@ class Indocker::CLI < Thor
   desc "compile IMAGE_NAME", "Compile image with IMAGE_NAME"
   method_option :images_path, :type => :string, :required => true
   def compile(image_name)
-    #CLI::UI::StdoutRouter.enable
+    CLI::UI::StdoutRouter.enable
 
     shell    = Indocker::Container['shell.local_shell']
     compiler = Indocker::Container['compiler.image_compiler']
     image_store = Indocker::Container['core.image_store']
+    infra_store = Indocker::Container['infrastructure.infra_store']
 
-    #spinner("Loading definitions") do
+    spinner("Loading infrastructure") do
+      infra_store.add_registry(Indocker::Infrastructure::Registry.new(:default))
+    end
+
+    spinner("Loading definitions") do
       image_store.load_definitions(options[:images_path])
-    #end
+    end
 
-    #spinner("Compiling #{image_name}") do
+    spinner("Compiling #{image_name}") do
       image = image_store.get_image(image_name.to_sym)
       compiler.compile(shell, image, "/tmp/images")
-    #end
+    end
   end
 
   def self.exit_on_failure?

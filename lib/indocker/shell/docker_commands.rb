@@ -5,4 +5,8 @@ class Indocker::Shell::DockerCommands
 
     shell.exec!(%Q{docker build #{build_dir} #{args_list}})
   end
+
+  def tag(shell, image_name, tag_name)
+    shell.exec!(%Q{docker tag #{image_name} #{tag_name}})
+  end
 end

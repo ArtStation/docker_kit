@@ -13,4 +13,11 @@ RSpec.describe Indocker::Shell::DockerCommands do
       subject.build(shell, "/opt/build", ["-t=example_image"])
     end
   end
+
+  context "#tag" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{docker tag example_image example_tag})
+      subject.tag(shell, "example_image", "example_tag")
+    end
+  end
 end

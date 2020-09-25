@@ -38,6 +38,14 @@ module Indocker
     autoload :ImageCompiler, 'compiler/image_compiler'
   end
 
+  module Infrastructure
+    module Concerns
+      autoload :Inspectable, 'infrastructure/concerns/inspectable'
+    end
+    autoload :InfraStore, 'infrastructure/infra_store'
+    autoload :Registry, 'infrastructure/registry'
+  end
+
   autoload :Configs, 'configs'
   autoload :CLI, 'cli'
 
@@ -99,6 +107,10 @@ module Indocker
     register "compiler.image_compiler" do
       Indocker::Compiler::ImageCompiler.new
     end
+
+    register "infrastructure.infra_store" do
+      Indocker::Infrastructure::InfraStore.new
+    end
   end
 
   Import = Dry::AutoInject(Container)
@@ -109,5 +121,12 @@ module Indocker
   
       Container["core.image_store"].define(image_name, image_path.split('image.rb').first)
     end
+  end
+
+  # Aliases for compatibility with old Indocker
+  module Registries
+    Abstract = Indocker::Infrastructure::Registry
+    Local = Indocker::Infrastructure::Registry
+    Remote = Indocker::Infrastructure::Registry
   end
 end

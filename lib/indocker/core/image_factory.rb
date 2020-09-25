@@ -4,7 +4,8 @@ class Indocker::Core::ImageFactory
 
   include Indocker::Import[
     "configs",
-    "tools.file_presence_checker"
+    "tools.file_presence_checker",
+    "infrastructure.infra_store"
   ]
 
   def create(definition, all_definitions: {}, dependency_tree: [])
@@ -27,10 +28,16 @@ class Indocker::Core::ImageFactory
       build_context_dir = file_presence_checker.dir_exists?(default_dir) ? default_dir : nil
     end
 
+    if image_attrs.registry_name
+      registry = infra_store.get_registry(image_attrs.registry_name)
+    else
+      registry = infra_store.default_registry
+    end
+
     Indocker::Core::Image.new(
       name:                   image_attrs.name,
       dependent_images:       dependent_images,
-      registry_name:          image_attrs.registry_name,
+      registry:               registry,
       dockerfile_path:        dockerfile_path,
       build_args:             image_attrs.build_args || {},
       build_context_dir:      build_context_dir,
