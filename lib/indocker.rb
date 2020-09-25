@@ -39,6 +39,7 @@ module Indocker
   end
 
   autoload :Configs, 'configs'
+  autoload :CLI, 'cli'
 
   class Container
     extend Dry::Container::Mixin
