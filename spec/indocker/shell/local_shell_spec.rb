@@ -39,10 +39,19 @@ RSpec.describe Indocker::Shell::LocalShell do
   context "#recursive_list_files" do
     let(:test_dir) { File.join(FIXTURES_PATH, "shell") }
 
+    let(:file_1_path) { File.join(test_dir, "a_folder", "test2.txt") }
+    let(:file_2_path) { File.join(test_dir, "test.txt") }
+
     it "returns list of files in dir" do
       result = subject.recursive_list_files(test_dir)
       
-      expect(result.sort).to eq([File.join(test_dir, "a_folder", "test2.txt"), File.join(test_dir, "test.txt")])
+      expect(result.sort).to eq([file_1_path, file_2_path])
+    end
+
+    it "returns list of files filtered by name" do
+      result = subject.recursive_list_files(test_dir, name: "test2*")
+      
+      expect(result.sort).to eq([file_1_path])
     end
   end
 end

@@ -22,7 +22,9 @@ class Indocker::Shell::LocalShell
     File.write(file_path, content)
   end
 
-  def recursive_list_files(path)
-    exec!(%Q{find -L #{path}  -type f}).split(/[\r\n]+/)
+  def recursive_list_files(path, name: nil)
+    command = %Q{find -L #{path}  -type f}
+    command += " -name #{name}" if name
+    exec!(command).split(/[\r\n]+/)
   end
 end

@@ -51,4 +51,13 @@ RSpec.describe Indocker::Core::ImageStore do
       expect(image.name).to eq(:example)
     end
   end
+
+  context "#load_definitions" do
+    it "returns an image based on definition" do
+      expect(subject.local_shell).to receive(:recursive_list_files).and_return(["/images/example/image.rb"])
+      expect(subject).to receive(:load_definition).with("/images/example/image.rb")
+
+      subject.load_definitions("/images/")
+    end
+  end
 end

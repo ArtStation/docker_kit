@@ -15,6 +15,10 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+  
+  config.after do
+    Indocker::Container['core.image_store'].reset!
+  end
 end
 
 def test_helper

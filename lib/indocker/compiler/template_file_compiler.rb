@@ -1,6 +1,8 @@
 class Indocker::Compiler::TemplateFileCompiler
   include Indocker::Import["compiler.template_compiler"]
 
+  TemplateCompileError = Class.new(StandardError)
+
   def compile(shell, source_path, destination_path: nil, context_helper: nil)
     destination_path ||= source_path
 
@@ -15,5 +17,9 @@ class Indocker::Compiler::TemplateFileCompiler
     shell.write(destination_path, content)
 
     return true
+  rescue => e
+    message = "#{e.message}\r\n"
+    message += e.backtrace.select{|l| l.include?("(erb)") }.join("\r\n")
+    raise TemplateCompileError, "Error while compiling template #{source_path}.\r\n#{message}"
   end
 end

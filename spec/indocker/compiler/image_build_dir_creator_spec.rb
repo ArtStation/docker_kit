@@ -7,6 +7,7 @@ RSpec.describe Indocker::Compiler::ImageBuildDirCreator do
   before do
     allow(subject.template_dir_compiler).to receive(:compile)
     allow(subject.template_file_compiler).to receive(:compile)
+    allow(shell).to receive(:write)
   end
 
   it "creates a build dir" do

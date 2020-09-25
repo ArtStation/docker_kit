@@ -56,6 +56,10 @@ module Indocker
       Indocker::Core::ImageDefinitionFactory.new
     end
 
+    register "core.image_store" do
+      Indocker::Core::ImageStore.new
+    end
+
     register "tools.file_presence_checker" do
       Indocker::Tools::FilePresenceChecker.new
     end
@@ -65,7 +69,11 @@ module Indocker
     end
 
     register "shell.docker_commands" do
-      Indocker::Shell::BashCommands.new
+      Indocker::Shell::DockerCommands.new
+    end
+
+    register "shell.local_shell" do
+      Indocker::Shell::LocalShell.new
     end
 
     register "compiler.template_compiler" do
@@ -94,4 +102,12 @@ module Indocker
   end
 
   Import = Dry::AutoInject(Container)
+
+  class << self
+    def define_image(image_name)
+      image_path = caller[0].split(':').first
+  
+      Container["core.image_store"].define(image_name, image_path.split('image.rb').first)
+    end
+  end
 end
