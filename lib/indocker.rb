@@ -46,11 +46,20 @@ module Indocker
     autoload :Registry, 'infrastructure/registry'
   end
 
+  module Actions
+    autoload :ImageCompiler, 'actions/image_compiler'
+  end
+
   autoload :Configs, 'configs'
   autoload :CLI, 'cli'
+  autoload :UI, 'ui'
 
   class Container
     extend Dry::Container::Mixin
+
+    register "actions.image_compiler" do
+      Indocker::Actions::ImageCompiler.new
+    end
 
     register "configs" do
       Indocker::Configs.new
@@ -110,6 +119,10 @@ module Indocker
 
     register "infrastructure.infra_store" do
       Indocker::Infrastructure::InfraStore.new
+    end
+
+    register "ui" do
+      Indocker::UI.new
     end
   end
 

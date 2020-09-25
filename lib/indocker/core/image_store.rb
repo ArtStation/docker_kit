@@ -41,7 +41,7 @@ class Indocker::Core::ImageStore
   end
 
   def load_definitions(dir_path)
-    local_shell.recursive_list_files(dir_path, name: "image.rb").each do |path|
+    files = local_shell.recursive_list_files(dir_path, name: "image.rb").each do |path|
       load_definition(path)
     end
   end

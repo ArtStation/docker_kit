@@ -3,6 +3,7 @@ RSpec.describe Indocker::Compiler::ImageCompiler do
 
   let(:image) { test_helper.image(:example) }
   let(:shell) { test_helper.shell }
+  let(:builds_dir) { "/tmp/images" }
 
   before do
     allow(subject.image_build_dir_creator).to receive(:create)
@@ -12,14 +13,12 @@ RSpec.describe Indocker::Compiler::ImageCompiler do
   it "creates a build dir" do
     expect(subject.image_build_dir_creator).to receive(:create).with(shell, image, "/tmp/images/example")
 
-    subject.compile(shell, image, "/tmp/images")
+    subject.compile(shell, image, builds_dir)
   end
 
   it "builds docker image" do
     expect(subject.image_builder).to receive(:build).with(shell, image, "/tmp/images/example", args: [])
 
-    subject.compile(shell, image, "/tmp/images")
+    subject.compile(shell, image, builds_dir)
   end
-
-  xit "compiles dependencies"
 end

@@ -31,9 +31,11 @@ class TestHelper
     image_definition_factory.create(name)
   end
   
-  def image(name)
+  def image(name, all_definitions: nil)
     definition = image_definition(name)
-    image_factory.create(definition)
+    all_definitions ||= [definition]
+
+    image_factory.create(definition, all_definitions: all_definitions)
   end
 
   def remote_image(name, url)
