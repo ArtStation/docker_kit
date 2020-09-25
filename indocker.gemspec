@@ -27,6 +27,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-types"
   spec.add_dependency "dry-auto_inject"
   spec.add_dependency "thor"
+  spec.add_dependency "cli-ui"
 
   spec.add_development_dependency "bundler", "~> 1.17"
   spec.add_development_dependency "rake", "~> 10.0"
