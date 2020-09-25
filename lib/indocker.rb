@@ -38,13 +38,13 @@ module Indocker
     autoload :ImageCompiler, 'compiler/image_compiler'
   end
 
-  autoload :Defaults, 'defaults'
+  autoload :Configs, 'configs'
 
   class Container
     extend Dry::Container::Mixin
 
-    register "defaults" do
-      Indocker::Defaults.new
+    register "configs" do
+      Indocker::Configs.new
     end
 
     register "core.image_factory" do

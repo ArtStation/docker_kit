@@ -12,4 +12,5 @@ RSpec.describe Indocker::Compiler::ImageBuilder do
   xit "adds tag with local registry url"
   xit "adds tag with remote registry url"
   xit "pushes image to registry"
+  xit "it calls before and after callbacks"
 end
