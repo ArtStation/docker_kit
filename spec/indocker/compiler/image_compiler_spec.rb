@@ -20,4 +20,6 @@ RSpec.describe Indocker::Compiler::ImageCompiler do
 
     subject.compile(shell, image, "/tmp/images")
   end
+
+  xit "compiles dependencies"
 end

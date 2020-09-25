@@ -6,6 +6,7 @@ class Indocker::Compiler::ImageBuilder
 
     if image.registry.remote?
       docker_commands.tag(shell, image.registry_url, image.remote_registry_url)
+      docker_commands.push(shell, image.remote_registry_url)
     end
   end
 end

@@ -20,4 +20,11 @@ RSpec.describe Indocker::Shell::DockerCommands do
       subject.tag(shell, "example_image", "example_tag")
     end
   end
+
+  context "#push" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{docker push example_tag})
+      subject.push(shell, "example_tag")
+    end
+  end
 end

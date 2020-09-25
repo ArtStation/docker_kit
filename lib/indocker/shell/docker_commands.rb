@@ -9,4 +9,8 @@ class Indocker::Shell::DockerCommands
   def tag(shell, image_name, tag_name)
     shell.exec!(%Q{docker tag #{image_name} #{tag_name}})
   end
+
+  def push(shell, tag_name)
+    shell.exec!(%Q{docker push #{tag_name}})
+  end
 end
