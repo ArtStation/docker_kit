@@ -1,5 +1,4 @@
 require 'thor'
-require 'cli/ui'
 
 class Indocker::CLI < Thor
 

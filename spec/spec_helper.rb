@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "indocker"
+require 'pry'
 
 Dir["#{File.dirname(__FILE__)}/helpers/**/*.rb"].each { |f| require f }
 
@@ -24,4 +25,12 @@ end
 
 def test_helper
   TestHelper.new
+end
+
+def index_by(array, &block)
+  if block_given?
+    result = {}
+    array.each { |elem| result[yield(elem)] = elem }
+    result
+  end
 end

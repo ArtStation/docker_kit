@@ -36,6 +36,7 @@ module Indocker
     autoload :ImageBuilder, 'compiler/image_builder'
     autoload :ImageBuildDirCreator, 'compiler/image_build_dir_creator'
     autoload :ImageCompiler, 'compiler/image_compiler'
+    autoload :ImageDependencyResolver, 'compiler/image_dependency_resolver'
   end
 
   module Infrastructure

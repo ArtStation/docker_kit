@@ -1,3 +1,5 @@
+require 'cli/ui'
+
 class Indocker::Actions::ImageCompiler
   include Indocker::Import[
     "infrastructure.infra_store",
@@ -8,7 +10,7 @@ class Indocker::Actions::ImageCompiler
   ]
 
   def call(image_name, options)
-    CLI::UI::StdoutRouter.enable
+    ::CLI::UI::StdoutRouter.enable
 
     ui.spin("Loading infrastructure") do |spinner|
       infra_store.add_registry(Indocker::Infrastructure::Registry.new(:default))
@@ -23,10 +25,10 @@ class Indocker::Actions::ImageCompiler
     image = image_store.get_image(image_name.to_sym)
 
     image.dependent_images.each do |image|
-      compile_image(image)
+      compile_image(image.name)
     end
 
-    compile_image(image)
+    compile_image(image.name)
   end
 
   private

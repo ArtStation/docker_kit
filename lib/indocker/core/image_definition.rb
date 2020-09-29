@@ -37,8 +37,8 @@ class Indocker::Core::ImageDefinition
     )
   end
 
-  def depends_on(value = nil, &block)
-    @dependent_images = block_given? ? block : Array(value)
+  def depends_on(*value, &block)
+    @dependent_images = block_given? ? block : Array(value).flatten
 
     self
   end
