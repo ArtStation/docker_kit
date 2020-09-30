@@ -24,6 +24,7 @@ module Indocker
   end
 
   module Shell
+    autoload :AbstractShell, 'shell/abstract_shell'
     autoload :LocalShell, 'shell/local_shell'
     autoload :BashCommands, 'shell/bash_commands'
     autoload :DockerCommands, 'shell/docker_commands'

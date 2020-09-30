@@ -6,6 +6,9 @@ class Indocker::Compiler::ImageBuildDirCreator
     "configs"
   ]
 
+  Contract Indocker::Shell::AbstractShell, Indocker::Core::Image, String, KeywordArgs[
+    context_helper: Maybe[Any]
+  ] => Any
   def create(shell, image, build_dir, context_helper: nil)
     bash_commands.rm_rf(shell, build_dir)
     bash_commands.mkdir_p(shell, build_dir)

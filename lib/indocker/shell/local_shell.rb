@@ -1,6 +1,4 @@
-class Indocker::Shell::LocalShell
-  ShellError = Class.new(StandardError)
-
+class Indocker::Shell::LocalShell < Indocker::Shell::AbstractShell
   def exec!(command)
     result = 
     IO.popen(command, err: [:child, :out]) do |io|

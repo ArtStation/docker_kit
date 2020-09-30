@@ -1,6 +1,9 @@
 class Indocker::Compiler::ImageBuilder
   include Indocker::Import["shell.docker_commands"]
 
+  Contract Indocker::Shell::AbstractShell, Indocker::Core::Image, String, KeywordArgs[
+    args: Maybe[Any]
+  ] => Any
   def build(shell, image, build_dir, args: [])
     image.before_build_callback.call if image.before_build_callback
 

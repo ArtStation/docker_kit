@@ -6,6 +6,9 @@ class Indocker::Compiler::ImageDependencyResolver
     "core.image_store"
   ]
   
+  Contract Symbol, KeywordArgs[
+    resolved: Optional[ArrayOf[Symbol]]
+  ] => Any
   def get_next(image_name, resolved: [])
     ready_to_resolve = get_recursive_deps(image_name).select do |dep_name|
       unresolved_deps = get_deps(dep_name) - resolved

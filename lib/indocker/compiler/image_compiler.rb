@@ -5,6 +5,7 @@ class Indocker::Compiler::ImageCompiler
     "core.image_store"
   ]
 
+  Contract Indocker::Shell::AbstractShell, Symbol, String => Any
   def compile(shell, image_name, builds_dir)
     image = image_store.get_image(image_name)
 

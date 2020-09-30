@@ -11,6 +11,7 @@ class Indocker::Actions::ImageCompiler
     "ui"
   ]
 
+  Contract Symbol, Hash => Any
   def call(image_name, options)
     ::CLI::UI::StdoutRouter.enable
 
