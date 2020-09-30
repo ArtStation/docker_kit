@@ -24,7 +24,7 @@ class Indocker::Actions::ImageCompiler
 
     image = image_store.get_image(image_name.to_sym)
 
-    image.dependent_images.each do |image|
+    image.dependencies.each do |image|
       compile_image(image.name)
     end
 

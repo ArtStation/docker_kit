@@ -1,18 +1,19 @@
 class Indocker::Core::ImageDefinition
   attr_reader :image_name, :path,
-              :dependent_images, :registry_name, :dockerfile_path,
+              :dependencies, :registry_name, :dockerfile_path,
               :build_args, :build_context_dir, :tag, 
               :before_build_callback, :after_build_callback
   
   def initialize(image_name, image_dir)
-    @image_name = image_name
-    @image_dir  = image_dir
+    @image_name   = image_name
+    @image_dir    = image_dir
+    @dependencies = []
   end
 
   class ImageAttributes < Dry::Struct
     attribute :name,                  Types::Coercible::Symbol
     attribute :dir,                   Types::Coercible::String
-    attribute :dependent_images,      Types::Array.of(Types::Coercible::Symbol).optional
+    attribute :dependencies,          Types::Array.of(Types::Coercible::Symbol).optional
     attribute :registry_name,         Types::Coercible::Symbol.optional
     attribute :dockerfile_path,       Types::Coercible::String.optional
     attribute :build_args,            Types::Hash.optional
@@ -26,7 +27,7 @@ class Indocker::Core::ImageDefinition
     ImageAttributes.new(
       name:                   @image_name,
       dir:                    @image_dir,
-      dependent_images:       get_value(@dependent_images),
+      dependencies:           get_value(@dependencies),
       registry_name:          get_value(@registry_name),
       dockerfile_path:        get_value(@dockerfile_path),
       build_args:             get_value(@build_args),
@@ -38,7 +39,7 @@ class Indocker::Core::ImageDefinition
   end
 
   def depends_on(*value, &block)
-    @dependent_images = block_given? ? block : Array(value).flatten
+    @dependencies = block_given? ? block : Array(value).flatten
 
     self
   end

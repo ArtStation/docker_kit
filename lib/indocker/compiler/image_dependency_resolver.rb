@@ -9,8 +9,7 @@ class Indocker::Compiler::ImageDependencyResolver
   def get_next(image, resolved: [])
     all_deps = get_recursive_deps(image)
     ready_to_resolve = all_deps.select do |image|
-      image_deps = image.dependent_images || []
-      image_deps.empty? || image_deps.all?{|i| resolved.map(&:image_name).include?(i) }
+      image.dependencies.empty? || image.dependencies.all?{|i| resolved.map(&:image_name).include?(i) }
     end
     ready_to_resolve - resolved
   end
@@ -31,7 +30,7 @@ class Indocker::Compiler::ImageDependencyResolver
   end
 
   def get_deps(image)
-    (image.dependent_images || []).map do |image_name|
+    image.dependencies.map do |image_name|
       image_store.get_definition(image_name)
     end
   end

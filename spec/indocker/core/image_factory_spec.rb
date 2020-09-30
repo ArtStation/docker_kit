@@ -24,7 +24,7 @@ RSpec.describe Indocker::Core::ImageFactory do
       example_image: example_definition,
       another_image: another_definition,
     })
-    expect(image.dependent_images.first).to be_a(Indocker::Core::Image)
+    expect(image.dependencies.first).to be_a(Indocker::Core::Image)
   end
 
   it "raises error on circular dependency" do

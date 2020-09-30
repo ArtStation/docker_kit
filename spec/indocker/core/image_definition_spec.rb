@@ -7,25 +7,25 @@ RSpec.describe Indocker::Core::ImageDefinition do
     it "sets image dependencies with symbol" do
       definition = subject.depends_on(:another_image)
   
-      expect(definition.to_image_attrs.dependent_images).to eq([:another_image])
+      expect(definition.to_image_attrs.dependencies).to eq([:another_image])
     end
 
     it "sets image dependencies with array" do
       definition = subject.depends_on([:first_image, :second_image])
   
-      expect(definition.to_image_attrs.dependent_images).to eq([:first_image, :second_image])
+      expect(definition.to_image_attrs.dependencies).to eq([:first_image, :second_image])
     end
 
     it "sets image dependencies with multiple args" do
       definition = subject.depends_on(:first_image, :second_image)
   
-      expect(definition.to_image_attrs.dependent_images).to eq([:first_image, :second_image])
+      expect(definition.to_image_attrs.dependencies).to eq([:first_image, :second_image])
     end
 
     it "sets image dependencies with proc" do
       definition = subject.depends_on{ [:first_image, :second_image] }
   
-      expect(definition.to_image_attrs.dependent_images).to eq([:first_image, :second_image])
+      expect(definition.to_image_attrs.dependencies).to eq([:first_image, :second_image])
     end
   end
 

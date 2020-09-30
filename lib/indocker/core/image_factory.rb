@@ -11,7 +11,7 @@ class Indocker::Core::ImageFactory
   def create(definition, all_definitions: {}, dependency_tree: [])
     image_attrs = definition.to_image_attrs
 
-    dependent_images = create_dependent_images(
+    dependencies = create_dependencies(
       image_attrs, 
       all_definitions: all_definitions,
       dependency_tree: dependency_tree,
@@ -36,7 +36,7 @@ class Indocker::Core::ImageFactory
 
     Indocker::Core::Image.new(
       name:                   image_attrs.name,
-      dependent_images:       dependent_images,
+      dependencies:           dependencies,
       registry:               registry,
       dockerfile_path:        dockerfile_path,
       build_args:             image_attrs.build_args || {},
@@ -47,13 +47,12 @@ class Indocker::Core::ImageFactory
     )
   end
 
-  def create_dependent_images(image_attrs, all_definitions:, dependency_tree:)
+  def create_dependencies(image_attrs, all_definitions:, dependency_tree:)
     if dependency_tree.include?(image_attrs.name)
       raise CircularDependencyError, "Circular dependency found while creating #{image_attrs.name}. Dependency tree: #{dependency_tree.inspect}"
     end
 
-    dependent_images = image_attrs.dependent_images || []
-    dependent_images.map do |dependency_name|
+    image_attrs.dependencies.map do |dependency_name|
       dependency = all_definitions[dependency_name]
       if dependency.nil?
         raise DependencyNotFoundError, "Dependent image not found: #{dependency_name}"
