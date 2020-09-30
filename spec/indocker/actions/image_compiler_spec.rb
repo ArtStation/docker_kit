@@ -16,7 +16,7 @@ RSpec.describe Indocker::Actions::ImageCompiler do
     expect(subject).to receive(:compile_image).with(:image2, "200320")
     expect(subject).to receive(:compile_image).with(:image3, "200320")
 
-    subject.call(:image3, {})
+    subject.call([:image3], {})
   end
 
   it "compiles image simultaneously when possible" do
@@ -32,6 +32,6 @@ RSpec.describe Indocker::Actions::ImageCompiler do
     expect(subject).to receive(:compile_simultaneously).with([:image3_a, :image3_b], "200320")
     expect(subject).to receive(:compile_simultaneously).with([:image4], "200320")
 
-    subject.call(:image4, {})
+    subject.call([:image4], {})
   end
 end

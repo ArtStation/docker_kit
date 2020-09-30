@@ -2,10 +2,11 @@ require 'thor'
 
 class Indocker::CLI < Thor
 
-  desc "compile IMAGE_NAME", "Compile image with IMAGE_NAME"
+  desc "compile IMAGE_NAMES", "Compile image with IMAGE_NAMES (comma-separated)"
   method_option :images_path, :type => :string, :required => true
-  def compile(image_name)
-    Indocker::Container['actions.image_compiler'].call(image_name.to_sym, options)
+  def compile(image_names_str)
+    image_names = image_names_str.split(",").map(&:strip).map(&:to_sym)
+    Indocker::Container['actions.image_compiler'].call(image_names, options)
   end
 
   def self.exit_on_failure?

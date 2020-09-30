@@ -11,8 +11,8 @@ class Indocker::Actions::ImageCompiler
     "ui"
   ]
 
-  Contract Symbol, Hash => Any
-  def call(image_name, options)
+  Contract ArrayOf[Symbol], Hash => Any
+  def call(image_names, options)
     ::CLI::UI::StdoutRouter.enable
 
     ui.spin("Loading infrastructure") do |spinner|
@@ -27,20 +27,20 @@ class Indocker::Actions::ImageCompiler
 
     build_id = generate_build_id
 
-    compile_image_with_dependencies(image_name, build_id)
+    compile_images_with_dependencies(image_names, build_id)
   end
 
   private
-    def compile_image_with_dependencies(image_name, build_id)
+    def compile_images_with_dependencies(image_names, build_id)
       resolved_dependencies = []
-      dependencies = image_dependency_resolver.get_next(image_name)
+      dependencies = image_dependency_resolver.get_next(image_names)
       while (dependencies - resolved_dependencies).any?
         compile_simultaneously(dependencies, build_id)
         resolved_dependencies += dependencies
-        dependencies = image_dependency_resolver.get_next(image_name, resolved: resolved_dependencies)
+        dependencies = image_dependency_resolver.get_next(image_names, resolved: resolved_dependencies)
       end
 
-      compile_simultaneously([image_name], build_id)
+      compile_simultaneously(image_names - resolved_dependencies, build_id)
     end
 
     def compile_simultaneously(image_names, build_id)
