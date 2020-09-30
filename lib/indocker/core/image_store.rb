@@ -8,7 +8,7 @@ class Indocker::Core::ImageStore
     "shell.local_shell"
   ]
 
-  def define(image_name, image_dir)
+  def define(image_name, image_dir = nil)
     definition = image_definition_factory.create(image_name, image_dir)
     add_definition(definition)
     definition

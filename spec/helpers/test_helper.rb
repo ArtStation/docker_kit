@@ -16,6 +16,10 @@ class TestHelper
   def context_helper
     HelloWorldContextHelper.new
   end
+
+  def image_store
+    Indocker::Container['core.image_store']
+  end
   
   def image_factory
     Indocker::Container['core.image_factory']

@@ -5,12 +5,14 @@ RSpec.describe Indocker::Actions::ImageCompiler do
   let(:builds_dir) { "/tmp/images" }
 
   xit "compiles image with dependencies" do
-    image1_def = test_helper.image_definition_factory.create(:image1)
-    image2_def = test_helper.image_definition_factory.create(:image2).depends_on(:image1)
+    image1_def = test_helper.image_store.define(:image1)
+    image2_def = test_helper.image_store.define(:image2).depends_on(:image1)
+    image3_def = test_helper.image_store.define(:image3).depends_on(:image2)
 
-    expect(subject).to receive(:compile_image).with(shell, :image1, builds_dir)
-    expect(subject).to receive(:compile_image).with(shell, :image2, builds_dir)
+    expect(subject).to receive(:compile_image).with(:image1)
+    expect(subject).to receive(:compile_image).with(:image2)
+    expect(subject).to receive(:compile_image).with(:image3)
 
-    subject.call(:image2, builds_dir)
+    subject.call(:image3, builds_dir)
   end
 end

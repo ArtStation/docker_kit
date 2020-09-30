@@ -32,11 +32,3 @@ end
 def test_helper
   TestHelper.new
 end
-
-def index_by(array, &block)
-  if block_given?
-    result = {}
-    array.each { |elem| result[yield(elem)] = elem }
-    result
-  end
-end
