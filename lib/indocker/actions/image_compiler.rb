@@ -34,14 +34,21 @@ class Indocker::Actions::ImageCompiler
       resolved_dependencies = []
       dependencies = image_dependency_resolver.get_next(image_name)
       while (dependencies - resolved_dependencies).any?
-        dependencies.each do |dependency_name|
-          compile_image(dependency_name, build_id)
-        end
+        compile_simultaneously(dependencies, build_id)
         resolved_dependencies += dependencies
         dependencies = image_dependency_resolver.get_next(image_name, resolved: resolved_dependencies)
       end
 
-      compile_image(image_name, build_id)
+      compile_simultaneously([image_name], build_id)
+    end
+
+    def compile_simultaneously(image_names, build_id)
+      threads = image_names.map do |dependency_name|
+        Thread.new do
+          compile_image(dependency_name, build_id)
+        end
+      end
+      threads.each(&:join)
     end
 
     def compile_image(image_name, build_id)
