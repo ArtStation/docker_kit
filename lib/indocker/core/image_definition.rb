@@ -27,7 +27,7 @@ class Indocker::Core::ImageDefinition
     ImageAttributes.new(
       name:                   @image_name,
       dir:                    @image_dir,
-      dependencies:           get_value(@dependencies),
+      dependencies:           @dependencies,
       registry_name:          get_value(@registry_name),
       dockerfile_path:        get_value(@dockerfile_path),
       build_args:             get_value(@build_args),
@@ -39,8 +39,7 @@ class Indocker::Core::ImageDefinition
   end
 
   def depends_on(*value, &block)
-    @dependencies = block_given? ? block : Array(value).flatten
-
+    @dependencies = Array(value).flatten
     self
   end
 
