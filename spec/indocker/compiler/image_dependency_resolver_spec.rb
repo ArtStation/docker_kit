@@ -18,6 +18,23 @@ RSpec.describe Indocker::Compiler::ImageDependencyResolver do
     it "returns recursive dependencies" do
       expect(subject.get_recursive_deps(imageA, all_definitions: allImages)).to eq([imageB, imageC, imageD])
     end
+
+    it "raises exception on circular dependency" do
+      image1 = test_helper.image_definition(:image1).depends_on(:image2)
+      image2 = test_helper.image_definition(:image2).depends_on(:image1)
+
+      expect{
+        subject.get_recursive_deps(image1, all_definitions: index_by([image1, image2], &:image_name))
+      }.to raise_error(Indocker::Compiler::ImageDependencyResolver::CircularDependencyError)
+    end
+
+    it "raises exception if dependency is not found" do
+      image1 = test_helper.image_definition(:image1).depends_on(:image2)
+
+      expect{
+        subject.get_recursive_deps(image1, all_definitions: index_by([image1], &:image_name))
+      }.to raise_error(Indocker::Compiler::ImageDependencyResolver::DependencyNotFoundError)
+    end
   end
 
   context "#get_next" do
