@@ -33,7 +33,7 @@ class Indocker::Core::ImageFactory
       dependencies:           image_attrs.dependencies,
       registry:               registry,
       dockerfile_path:        dockerfile_path,
-      build_args:             image_attrs.build_args || {},
+      build_vars:             image_attrs.build_vars || {},
       build_context_dir:      build_context_dir,
       tag:                    image_attrs.tag || configs.image_tag,
       before_build_callback:  image_attrs.before_build_callback,

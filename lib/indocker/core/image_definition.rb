@@ -1,7 +1,7 @@
 class Indocker::Core::ImageDefinition
   attr_reader :image_name, :path,
               :dependencies, :registry_name, :dockerfile_path,
-              :build_args, :build_context_dir, :tag, 
+              :build_vars, :build_context_dir, :tag, 
               :before_build_callback, :after_build_callback
   
   def initialize(image_name, image_dir)
@@ -17,7 +17,7 @@ class Indocker::Core::ImageDefinition
       dependencies:           @dependencies,
       registry_name:          get_value(@registry_name),
       dockerfile_path:        get_value(@dockerfile_path),
-      build_args:             get_value(@build_args),
+      build_vars:             get_value(@build_vars),
       build_context_dir:      get_value(@build_context_dir),
       tag:                    get_value(@tag),
       before_build_callback:  @before_build_callback,
@@ -43,7 +43,12 @@ class Indocker::Core::ImageDefinition
   end
 
   def build_args(value = nil, &block)
-    @build_args = block_given? ? block : value
+    puts "WARNING: build_args is deprecated, please use build_vars instead"
+    build_vars(value, *block)
+  end
+
+  def build_vars(value = nil, &block)
+    @build_vars = block_given? ? block : value
 
     self
   end

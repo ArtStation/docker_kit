@@ -51,17 +51,23 @@ RSpec.describe Indocker::Core::ImageDefinition do
     end
   end
 
-  context "build_args" do
-    it "sets build_args with symbol" do
-      definition = subject.build_args({health_check_url: "/test"})
+  context "build_vars" do
+    it "sets build_vars with symbol" do
+      definition = subject.build_vars({health_check_url: "/test"})
   
-      expect(definition.to_image_attrs.build_args).to eq({health_check_url: "/test"})
+      expect(definition.to_image_attrs.build_vars).to eq({health_check_url: "/test"})
     end
 
-    it "sets build_args with proc" do
-      definition = subject.build_args{ {health_check_url: "/test"} }
+    it "sets build_vars with proc" do
+      definition = subject.build_vars{ {health_check_url: "/test"} }
   
-      expect(definition.to_image_attrs.build_args).to eq({health_check_url: "/test"})
+      expect(definition.to_image_attrs.build_vars).to eq({health_check_url: "/test"})
+    end
+
+    it "DEPRECATED: sets build_vars as build_args" do
+      definition = subject.build_args({health_check_url: "/test"})
+  
+      expect(definition.to_image_attrs.build_vars).to eq({health_check_url: "/test"})
     end
   end
 
