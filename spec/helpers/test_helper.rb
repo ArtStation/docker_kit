@@ -18,13 +18,11 @@ class TestHelper
   end
   
   def image_factory
-    Indocker::Core::ImageFactory.new(
-      file_presence_checker: TestFilePresenceChecker.new
-    )
+    Indocker::Container['core.image_factory']
   end
 
   def image_definition_factory
-    TestImageDefinitionFactory.new
+    Indocker::Container['core.image_definition_factory']
   end
   
   def image_definition(name)

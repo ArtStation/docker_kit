@@ -1,10 +1,16 @@
 require "bundler/setup"
 require "indocker"
 require 'pry'
+require 'dry/container/stub'
 
 Dir["#{File.dirname(__FILE__)}/helpers/**/*.rb"].each { |f| require f }
 
 FIXTURES_PATH = File.expand_path(File.join(File.dirname(__FILE__), 'fixtures'))
+
+Indocker::Container.enable_stubs!
+
+Indocker::Container.stub("tools.file_presence_checker", TestFilePresenceChecker.new)
+Indocker::Container.stub("core.image_definition_factory", TestImageDefinitionFactory.new)
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
