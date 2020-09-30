@@ -1,13 +1,17 @@
-class Indocker::Core::Image < Dry::Struct
-  attribute :name,                  Types::Coercible::Symbol
-  attribute :dependencies,          Types::Array.of(Types::Coercible::Symbol).optional
-  attribute :registry,              Types.Instance(Indocker::Infrastructure::Registry)
-  attribute :dockerfile_path,       Types::Coercible::String.optional
-  attribute :build_args,            Types::Hash.optional
-  attribute :build_context_dir,     Types::Coercible::String.optional
-  attribute :tag,                   Types::Coercible::String.optional
-  attribute :before_build_callback, Types.Instance(Proc).optional
-  attribute :after_build_callback,  Types.Instance(Proc).optional
+class Indocker::Core::Image
+  attr_reader :name, :dependencies, :registry, :dockerfile_path, :build_args, :build_context_dir, :tag, :before_build_callback, :after_build_callback
+
+  def initialize(name:, dependencies:, registry:, dockerfile_path:, build_args:, build_context_dir:, tag:, before_build_callback:, after_build_callback:)
+    @name = name
+    @dependencies = dependencies
+    @registry = registry
+    @dockerfile_path = dockerfile_path
+    @build_args = build_args
+    @build_context_dir = build_context_dir
+    @tag = tag
+    @before_build_callback = before_build_callback
+    @after_build_callback = after_build_callback
+  end
 
   def registry_url
     "#{registry.path}/#{name}:#{tag}"

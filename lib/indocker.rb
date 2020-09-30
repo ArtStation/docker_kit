@@ -1,11 +1,11 @@
 require "indocker/version"
 require 'ostruct'
-
-require 'dry-types'
-require 'dry-struct'
+require 'contracts'
 require 'dry-auto_inject'
-module Types
-  include Dry.Types()
+
+class Object
+  include Contracts::Core
+  include Contracts::Builtin
 end
 
 $LOAD_PATH << File.join(__dir__, 'indocker')
