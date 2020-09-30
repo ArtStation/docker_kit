@@ -118,6 +118,10 @@ module Indocker
       Indocker::Compiler::ImageCompiler.new
     end
 
+    register "compiler.image_dependency_resolver" do
+      Indocker::Compiler::ImageDependencyResolver.new
+    end
+
     register "infrastructure.infra_store" do
       Indocker::Infrastructure::InfraStore.new
     end

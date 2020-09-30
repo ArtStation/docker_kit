@@ -5,6 +5,7 @@ class Indocker::Actions::ImageCompiler
     "infrastructure.infra_store",
     "core.image_store",
     "compiler.image_compiler",
+    "compiler.image_dependency_resolver",
     "shell.local_shell",
     "ui"
   ]
@@ -22,20 +23,24 @@ class Indocker::Actions::ImageCompiler
       spinner.update_title("Loaded #{files.count} image definitions")
     end
 
-    image = image_store.get_image(image_name.to_sym)
-
-    image.dependencies.each do |image|
-      compile_image(image.name)
+    resolved_dependencies = []
+    dependencies = image_dependency_resolver.get_next(image_name)
+    while (dependencies - resolved_dependencies).any?
+      dependencies.each do |dependency_name|
+        compile_image(dependency_name)
+      end
+      resolved_dependencies += dependencies
+      dependencies = image_dependency_resolver.get_next(image_name, resolved: resolved_dependencies)
     end
 
-    compile_image(image.name)
+    compile_image(image_name)
   end
 
   private
-    def compile_image(image)
-      ui.spin("Compiling #{image.name.to_sym}") do |spinner|
-        image_compiler.compile(local_shell, image, "/tmp/images")
-        spinner.update_title("Compiled #{image.name.to_sym}")
+    def compile_image(image_name)
+      ui.spin("Compiling #{image_name}") do |spinner|
+        image_compiler.compile(local_shell, image_name, "/tmp/images")
+        spinner.update_title("Compiled #{image_name}")
       end
     end
 end
