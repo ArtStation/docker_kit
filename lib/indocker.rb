@@ -2,11 +2,8 @@ require "indocker/version"
 require 'ostruct'
 require 'contracts'
 require 'dry-auto_inject'
-
-class Object
-  include Contracts::Core
-  include Contracts::Builtin
-end
+require 'indocker/extensions/colored_string'
+require 'indocker/extensions/contracts'
 
 $LOAD_PATH << File.join(__dir__, 'indocker')
 

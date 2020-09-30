@@ -55,9 +55,9 @@ class Indocker::Actions::ImageCompiler
     def compile_image(image_name, build_id)
       compile_dir = generate_compile_dir(build_id: build_id)
 
-      ui.spin("Compiling #{image_name}") do |spinner|
+      ui.spin("Compiling #{image_name.to_s.yellow}") do |spinner|
         image_compiler.compile(local_shell, image_name, compile_dir)
-        spinner.update_title("Compiled #{image_name}")
+        spinner.update_title("Compiled #{image_name.to_s.green}")
       end
     end
 
