@@ -6,11 +6,13 @@ class Indocker::Compiler::ImageDependencyResolver
     "core.image_store"
   ]
   
-  Contract Symbol, KeywordArgs[
+  Contract Any, KeywordArgs[
     resolved: Optional[ArrayOf[Symbol]]
   ] => Any
-  def get_next(image_name, resolved: [])
-    ready_to_resolve = get_recursive_deps(image_name).select do |dep_name|
+  def get_next(image_names, resolved: [])
+    deps = Array(image_names).map { |i| get_recursive_deps(i) }.flatten.uniq
+
+    ready_to_resolve = deps.select do |dep_name|
       unresolved_deps = get_deps(dep_name) - resolved
       unresolved_deps.empty?
     end
@@ -29,7 +31,7 @@ class Indocker::Compiler::ImageDependencyResolver
       child_deps += get_recursive_deps(i, dependency_tree: dependency_tree + [image_name])
     end
 
-    (deps + child_deps).flatten.compact.uniq
+    (deps + child_deps).uniq
   end
 
   def get_deps(image_name)

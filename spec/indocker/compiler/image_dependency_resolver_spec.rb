@@ -5,7 +5,6 @@ RSpec.describe Indocker::Compiler::ImageDependencyResolver do
   let!(:imageB) { test_helper.image_store.define(:imageB).depends_on(:imageC, :imageD) }
   let!(:imageC) { test_helper.image_store.define(:imageC) }
   let!(:imageD) { test_helper.image_store.define(:imageD) }
-  let!(:imageE) { test_helper.image_store.define(:imageE) }
 
   context "#get_deps" do
     it "returns dependencies" do
@@ -47,6 +46,22 @@ RSpec.describe Indocker::Compiler::ImageDependencyResolver do
 
     it "resolves dependencies for 3rd step" do
       expect(subject.get_next(:imageA, resolved: [:imageB, :imageC, :imageD])).to eq([])
+    end
+
+    it "resolves dependencies for 1st step of array" do
+      expect(subject.get_next([:imageA, :imageB])).to eq([:imageC, :imageD])
+    end
+
+    it "resolves dependencies for 2nd step of array" do
+      expect(subject.get_next([:imageA, :imageB], resolved: [:imageC, :imageD])).to eq([:imageB])
+    end
+
+    it "resolves dependencies for 3rd step of array" do
+      expect(subject.get_next([:imageA, :imageB], resolved: [:imageC, :imageD, :imageB])).to eq([])
+    end
+
+    it "returns empty for independent images" do
+      expect(subject.get_next([:imageC, :imageD])).to eq([])
     end
   end
 end
