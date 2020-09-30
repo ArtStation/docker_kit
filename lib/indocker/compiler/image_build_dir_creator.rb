@@ -27,4 +27,8 @@ class Indocker::Compiler::ImageBuildDirCreator
     docker_ignore_content = configs.docker_ignore_list.join("\r\n")
     shell.write(File.join(build_dir, '.dockerignore'), docker_ignore_content)
   end
+
+  def cleanup(shell, build_dir)
+    bash_commands.rm_rf(shell, build_dir)
+  end
 end

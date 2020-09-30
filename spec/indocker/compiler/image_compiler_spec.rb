@@ -22,4 +22,11 @@ RSpec.describe Indocker::Compiler::ImageCompiler do
 
     subject.compile(shell, image.name, builds_dir)
   end
+
+  it "cleans build dir after compilation" do
+    expect(subject.image_builder).to receive(:build)
+    expect(subject.image_build_dir_creator).to receive(:cleanup).with(shell, "/tmp/images/example")
+
+    subject.compile(shell, image.name, builds_dir)
+  end
 end
