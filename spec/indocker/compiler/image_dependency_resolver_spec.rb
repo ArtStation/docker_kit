@@ -9,13 +9,13 @@ RSpec.describe Indocker::Compiler::ImageDependencyResolver do
 
   context "#get_deps" do
     it "returns dependencies" do
-      expect(subject.get_deps(imageA)).to eq([imageB])
+      expect(subject.get_deps(:imageA)).to eq([:imageB])
     end
   end
 
   context "#get_recursive_deps" do
     it "returns recursive dependencies" do
-      expect(subject.get_recursive_deps(imageA)).to eq([imageB, imageC, imageD])
+      expect(subject.get_recursive_deps(:imageA)).to eq([:imageB, :imageC, :imageD])
     end
 
     it "raises exception on circular dependency" do
@@ -23,7 +23,7 @@ RSpec.describe Indocker::Compiler::ImageDependencyResolver do
       image2 = test_helper.image_store.define(:image2).depends_on(:image1)
 
       expect{
-        subject.get_recursive_deps(image1)
+        subject.get_recursive_deps(:image1)
       }.to raise_error(Indocker::Compiler::ImageDependencyResolver::CircularDependencyError)
     end
 
@@ -38,15 +38,15 @@ RSpec.describe Indocker::Compiler::ImageDependencyResolver do
 
   context "#get_next" do
     it "resolves dependencies for 1st step" do
-      expect(subject.get_next(imageA)).to eq([imageC, imageD])
+      expect(subject.get_next(:imageA)).to eq([:imageC, :imageD])
     end
 
     it "resolves dependencies for 2nd step" do
-      expect(subject.get_next(imageA, resolved: [imageC, imageD])).to eq([imageB])
+      expect(subject.get_next(:imageA, resolved: [:imageC, :imageD])).to eq([:imageB])
     end
 
     it "resolves dependencies for 3rd step" do
-      expect(subject.get_next(imageA, resolved: [imageB, imageC, imageD])).to eq([])
+      expect(subject.get_next(:imageA, resolved: [:imageB, :imageC, :imageD])).to eq([])
     end
   end
 end
