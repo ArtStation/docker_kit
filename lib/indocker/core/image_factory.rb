@@ -5,7 +5,7 @@ class Indocker::Core::ImageFactory
   include Indocker::Import[
     "configs",
     "tools.file_presence_checker",
-    "infrastructure.infra_store"
+    "core.infra_store"
   ]
 
   def create(definition, all_definitions: {}, dependency_tree: [])

@@ -1,5 +1,5 @@
-class Indocker::Infrastructure::Registry
-  include Indocker::Infrastructure::Concerns::Inspectable
+class Indocker::Core::Registry
+  include Indocker::Extensions::Inspectable
 
   attr_reader :repository_name
 

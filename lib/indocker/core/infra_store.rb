@@ -1,12 +1,12 @@
-class Indocker::Infrastructure::InfraStore
+class Indocker::Core::InfraStore
   NotFoundError = Class.new(StandardError)
   AlreadyAddedError = Class.new(StandardError)
 
   def add_registry(registry)
     @@registries ||= {}
 
-    if !registry.is_a?(Indocker::Infrastructure::Registry)
-      raise ArgumentError.new("should be an instance of Indocker::Infrastructure::Registry, got: #{registry.inspect}")
+    if !registry.is_a?(Indocker::Core::Registry)
+      raise ArgumentError.new("should be an instance of Indocker::Core::Registry, got: #{registry.inspect}")
     end
 
     unless @@registries[registry.repository_name].nil?
@@ -27,7 +27,7 @@ class Indocker::Infrastructure::InfraStore
   end
 
   def default_registry
-    @default_registry ||= Indocker::Infrastructure::Registry.new(:default)
+    @default_registry ||= Indocker::Core::Registry.new(:default)
   end
 
   def reset!

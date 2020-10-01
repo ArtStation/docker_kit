@@ -4,7 +4,7 @@ class Indocker::Core::Image
   Contract KeywordArgs[
     name:               Symbol,
     dependencies:       ArrayOf[Symbol],
-    registry:           Maybe[Indocker::Infrastructure::Registry],
+    registry:           Maybe[Indocker::Core::Registry],
     dockerfile_path:    String,
     build_vars:         Hash,
     build_context_dir:  Maybe[String],

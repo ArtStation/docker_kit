@@ -1,4 +1,4 @@
-module Indocker::Infrastructure::Concerns::Inspectable
+module Indocker::Extensions::Inspectable
   def inspect
     data = {}
     data[:type] = self.class.to_s.split('::').last.downcase

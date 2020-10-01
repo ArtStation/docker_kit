@@ -25,7 +25,7 @@ RSpec.configure do |config|
   
   config.after do
     Indocker::Container['core.image_store'].reset!
-    Indocker::Container['infrastructure.infra_store'].reset!
+    Indocker::Container['core.infra_store'].reset!
   end
 end
 

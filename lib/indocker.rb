@@ -14,6 +14,9 @@ module Indocker
     autoload :ImageStore, 'core/image_store'
     autoload :ImageFactory, 'core/image_factory'
     autoload :Image, 'core/image'
+
+    autoload :InfraStore, 'core/infra_store'
+    autoload :Registry, 'core/registry'
   end
 
   module Tools
@@ -37,16 +40,12 @@ module Indocker
     autoload :ImageDependencyResolver, 'compiler/image_dependency_resolver'
   end
 
-  module Infrastructure
-    module Concerns
-      autoload :Inspectable, 'infrastructure/concerns/inspectable'
-    end
-    autoload :InfraStore, 'infrastructure/infra_store'
-    autoload :Registry, 'infrastructure/registry'
-  end
-
   module Actions
     autoload :ImageCompiler, 'actions/image_compiler'
+  end
+
+  module Extensions
+    autoload :Inspectable, 'extensions/inspectable'
   end
 
   autoload :Configs, 'configs'
@@ -74,6 +73,10 @@ module Indocker
 
     register "core.image_store" do
       Indocker::Core::ImageStore.new
+    end
+
+    register "core.infra_store" do
+      Indocker::Core::InfraStore.new
     end
 
     register "tools.file_presence_checker" do
@@ -120,10 +123,6 @@ module Indocker
       Indocker::Compiler::ImageDependencyResolver.new
     end
 
-    register "infrastructure.infra_store" do
-      Indocker::Infrastructure::InfraStore.new
-    end
-
     register "ui" do
       Indocker::UI.new
     end
@@ -141,8 +140,8 @@ module Indocker
 
   # Aliases for compatibility with old Indocker
   module Registries
-    Abstract = Indocker::Infrastructure::Registry
-    Local = Indocker::Infrastructure::Registry
-    Remote = Indocker::Infrastructure::Registry
+    Abstract = Indocker::Core::Registry
+    Local = Indocker::Core::Registry
+    Remote = Indocker::Core::Registry
   end
 end

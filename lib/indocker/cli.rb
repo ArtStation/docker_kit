@@ -7,13 +7,13 @@ class Indocker::CLI < Thor
   def compile(image_names_str)
     image_names = image_names_str.split(",").map(&:strip).map(&:to_sym)
 
-    infra_store = Indocker::Container['infrastructure.infra_store']
+    infra_store = Indocker::Container['core.infra_store']
     image_store = Indocker::Container['core.image_store']
     ui = Indocker::Container['ui']
     ui.init
 
     ui.create_task("Loading infrastructure") do |task|
-      infra_store.add_registry(Indocker::Infrastructure::Registry.new(:default))
+      infra_store.add_registry(Indocker::Core::Registry.new(:default))
       task.update_title("Loaded infrastructure")
     end
 
