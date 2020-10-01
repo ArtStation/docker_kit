@@ -7,9 +7,9 @@ class Indocker::CLI < Thor
   def compile(image_names_str)
     image_names = image_names_str.split(",").map(&:strip).map(&:to_sym)
 
-    infra_store = Indocker::Import['infra_store']
-    image_store = Indocker::Import['image_store']
-    ui = Indocker::Import['ui']
+    infra_store = Indocker::Container['infrastructure.infra_store']
+    image_store = Indocker::Container['core.image_store']
+    ui = Indocker::Container['ui']
     ui.init
 
     ui.create_task("Loading infrastructure") do |task|

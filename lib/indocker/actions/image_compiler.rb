@@ -37,7 +37,7 @@ class Indocker::Actions::ImageCompiler
       task_group.wait
     end
 
-    def compile_image(image_name, build_id, task_group)
+    def compile_image(image_name, build_id)
       compile_dir = generate_compile_dir(build_id: build_id)
       image_compiler.compile(local_shell, image_name, compile_dir)
     end

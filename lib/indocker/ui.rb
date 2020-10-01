@@ -1,3 +1,5 @@
+require 'cli/ui'
+
 class Indocker::UI
   class TaskGroup < CLI::UI::SpinGroup
   end
