@@ -42,6 +42,7 @@ module Indocker
 
   module Actions
     autoload :ImageCompiler, 'actions/image_compiler'
+    autoload :ConfigurationLoader, 'actions/configuration_loader'
   end
 
   module Extensions
@@ -57,6 +58,10 @@ module Indocker
 
     register "actions.image_compiler" do
       Indocker::Actions::ImageCompiler.new
+    end
+
+    register "actions.configuration_loader" do
+      Indocker::Actions::ConfigurationLoader.new
     end
 
     register "configs" do

@@ -1,5 +1,3 @@
-require 'cli/ui'
-
 class Indocker::Actions::ImageCompiler
   include Indocker::Import[
     "compiler.image_compiler",
