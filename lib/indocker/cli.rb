@@ -6,6 +6,22 @@ class Indocker::CLI < Thor
   method_option :images_path, :type => :string, :required => true
   def compile(image_names_str)
     image_names = image_names_str.split(",").map(&:strip).map(&:to_sym)
+
+    infra_store = Indocker::Import['infra_store']
+    image_store = Indocker::Import['image_store']
+    ui = Indocker::Import['ui']
+    ui.init
+
+    ui.create_task("Loading infrastructure") do |task|
+      infra_store.add_registry(Indocker::Infrastructure::Registry.new(:default))
+      task.update_title("Loaded infrastructure")
+    end
+
+    ui.create_task("Loading image definitions") do |task|
+      files = image_store.load_definitions(options[:images_path])
+      task.update_title("Loaded #{files.count} image definitions")
+    end
+
     Indocker::Container['actions.image_compiler'].call(image_names, options)
   end
 

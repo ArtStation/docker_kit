@@ -5,6 +5,8 @@ RSpec.describe Indocker::Actions::ImageCompiler do
 
   before do
     allow(subject).to receive(:generate_build_id).and_return("200320")
+    
+    subject.ui.init
   end
 
   it "compiles image with dependencies" do
@@ -12,9 +14,9 @@ RSpec.describe Indocker::Actions::ImageCompiler do
     image2_def = test_helper.image_store.define(:image2).depends_on(:image1)
     image3_def = test_helper.image_store.define(:image3).depends_on(:image2)
 
-    expect(subject).to receive(:compile_image).with(:image1, "200320")
-    expect(subject).to receive(:compile_image).with(:image2, "200320")
-    expect(subject).to receive(:compile_image).with(:image3, "200320")
+    expect(subject).to receive(:compile_image).with(:image1, "200320") { sleep(0.01) }
+    expect(subject).to receive(:compile_image).with(:image2, "200320") { sleep(0.01) }
+    expect(subject).to receive(:compile_image).with(:image3, "200320") { sleep(0.01) }
 
     subject.call([:image3], {})
   end
