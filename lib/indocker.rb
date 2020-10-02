@@ -71,13 +71,14 @@ module Indocker
 
     def set_configuration_name(configuration_name)
       @configuration_name = configuration_name
+      @current_configuration = nil
     end
 
     def current_configuration
       if @configuration_name.nil?
         raise "Please set configuration name before calling current_configuration"
       end
-      Container['core.configuration_store'].get_configuration(@configuration_name)
+      @current_configuration ||= Container['core.configuration_store'].get_configuration(@configuration_name)
     end
   end
 end

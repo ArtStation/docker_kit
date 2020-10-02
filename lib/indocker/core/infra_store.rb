@@ -9,21 +9,34 @@ class Indocker::Core::InfraStore
       raise ArgumentError.new("should be an instance of Indocker::Core::Registry, got: #{registry.inspect}")
     end
 
-    unless @@registries[registry.repository_name].nil?
-      raise AlreadyAddedError, "registry #{registry.repository_name} was already added"
+    unless @@registries[registry.registry_name].nil?
+      raise AlreadyAddedError, "registry #{registry.registry_name} was already added"
     end
 
-    @@registries[registry.repository_name] = registry
+    @@registries[registry.registry_name] = registry
   end
 
-  def get_registry(repository_name)
+  def get_registry(registry_name)
+    registry = get_configuration_registry(registry_name) || 
+               get_global_registry(registry_name)
+
+    registry
+  end
+
+  def get_global_registry(registry_name)
     @@registries ||= {}
+    registry = @@registries[registry_name]
 
-    if @@registries[repository_name].nil?
-      raise NotFoundError, "registry #{repository_name} not found"
+    if registry.nil?
+      raise NotFoundError, "registry #{registry_name} not found"
     end
+    
+    registry
+  end
 
-    @@registries[repository_name]
+  def get_configuration_registry(registry_name)
+    registries = Indocker.current_configuration.registries
+    registries[registry_name]
   end
 
   def default_registry

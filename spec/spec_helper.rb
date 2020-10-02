@@ -23,6 +23,11 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
   
+  config.before do
+    test_helper.configuration_store.define(:default)
+    Indocker.set_configuration_name(:default)
+  end
+
   config.after do
     Indocker::Container['core.image_store'].reset!
     Indocker::Container['core.configuration_store'].reset!

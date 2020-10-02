@@ -22,7 +22,7 @@ class Indocker::Core::ConfigurationFactory
     def fetch_registries(registries)
       result = {}
       registries.each do |registry_alias, registry_name|
-        result[registry_alias] = infra_store.get_registry(registry_name)
+        result[registry_alias] = infra_store.get_global_registry(registry_name)
       end
       result
     end

@@ -1,10 +1,10 @@
 class Indocker::Core::Registry
   include Indocker::Extensions::Inspectable
 
-  attr_reader :repository_name
+  attr_reader :registry_name
 
-  def initialize(repository_name)
-    @repository_name = repository_name
+  def initialize(registry_name)
+    @registry_name = registry_name
   end
 
   def set_remote_url(remote_url)
@@ -15,7 +15,7 @@ class Indocker::Core::Registry
   alias_method :setup, :set_remote_url
 
   def path
-    repository_name.to_s
+    registry_name.to_s
   end
 
   def remote_path
