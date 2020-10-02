@@ -3,6 +3,7 @@ class Indocker::Core::ConfigurationStore
   AlreadyAddedError = Class.new(StandardError)
 
   include Indocker::Import[
+    "core.configuration_factory",
     "core.configuration_definition_factory",
     "shell.local_shell"
   ]
@@ -36,7 +37,17 @@ class Indocker::Core::ConfigurationStore
   def get_configuration(configuration_name)
     definition = get_definition(configuration_name)
 
-    configuration_factory.create(definition, all_definitions: @@configuration_definitions)
+    configuration_factory.create(definition)
+  end
+
+  def load_definitions(dir_path)
+    files = local_shell.recursive_list_files(dir_path).each do |path|
+      load_definition(path)
+    end
+  end
+
+  def load_definition(file_path)
+    require(file_path)
   end
 
   def reset!

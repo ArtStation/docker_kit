@@ -42,7 +42,7 @@ RSpec.describe Indocker::Core::ImageStore do
   end
 
   context "#get_image" do
-    xit "returns an image based on definition" do
+    it "returns an image based on definition" do
       subject.add_definition(test_definition)
 
       image = subject.get_image(:example)

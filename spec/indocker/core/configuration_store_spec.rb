@@ -42,7 +42,7 @@ RSpec.describe Indocker::Core::ConfigurationStore do
   end
 
   context "#get_configuration" do
-    xit "returns a configuration based on definition" do
+    it "returns a configuration based on definition" do
       subject.add_definition(test_definition)
 
       configuration = subject.get_configuration(:production)
@@ -53,11 +53,11 @@ RSpec.describe Indocker::Core::ConfigurationStore do
   end
 
   context "#load_definitions" do
-    xit "loads definitions by file name pattern" do
-      expect(subject.local_shell).to receive(:recursive_list_files).and_return(["/images/production/image.rb"])
-      expect(subject).to receive(:load_definition).with("/images/production/image.rb")
+    it "loads definitions by file name pattern" do
+      expect(subject.local_shell).to receive(:recursive_list_files).and_return(["/configurations/production.rb"])
+      expect(subject).to receive(:load_definition).with("/configurations/production.rb")
 
-      subject.load_definitions("/images/")
+      subject.load_definitions("/configurations/")
     end
   end
 end

@@ -90,6 +90,10 @@ module Indocker
       Indocker::Core::ConfigurationDefinitionFactory.new
     end
 
+    register "core.configuration_factory" do
+      Indocker::Core::ConfigurationFactory.new
+    end
+
     register "core.configuration_store" do
       Indocker::Core::ConfigurationStore.new
     end
