@@ -17,11 +17,11 @@ class Indocker::Actions::ConfigurationLoader
     configuration_name   = options[:configuration] || :_default_
 
     logger.info "Launching indocker with:"
-    logger.info "  Root path: #{root_path.yellow}"
-    logger.info "  Images path: #{images_path.yellow}"
-    logger.info "  Infrastructure path: #{infra_path.yellow}"
-    logger.info "  Configurations path: #{configurations_path.yellow}"
-    logger.info "  Configuration name: #{configuration_name.yellow}"
+    logger.info "  Root path: #{root_path.to_s.yellow}"
+    logger.info "  Images path: #{images_path.to_s.yellow}"
+    logger.info "  Infrastructure path: #{infra_path.to_s.yellow}"
+    logger.info "  Configurations path: #{configurations_path.to_s.yellow}"
+    logger.info "  Configuration name: #{configuration_name.to_s.yellow}"
 
     configuration_store.define(:_default_)
     configuration_store.load_definitions(configurations_path)
