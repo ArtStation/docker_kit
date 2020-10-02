@@ -9,6 +9,11 @@ RSpec.describe Indocker::Core::ImageStore do
       definition = subject.define(:example, "/images/example")
       expect(definition).to be_a(Indocker::Core::ImageDefinition)
     end
+
+    it "can define image name as string" do
+      definition = subject.define("example", "/images/example")
+      expect(definition.image_name).to eq(:example)
+    end
   end
 
   context "#get_definition" do

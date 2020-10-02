@@ -3,6 +3,18 @@ require 'spec_helper'
 RSpec.describe Indocker::Core::ConfigurationDefinition do
   subject{ Indocker::Core::ConfigurationDefinition.new(:production) }
 
+  context "initialize" do
+    it "can initialize configuration with symbol name" do
+      definition = Indocker::Core::ConfigurationDefinition.new(:production)
+      expect(definition.configuration_name).to eq(:production)
+    end
+
+    it "can initialize configuration with string name" do
+      definition = Indocker::Core::ConfigurationDefinition.new("production")
+      expect(definition.configuration_name).to eq(:production)
+    end
+  end
+
   context "repository" do
     it "saves repositories as hash" do
       subject.use_repository(:main_production_repo, as: :main_repo)

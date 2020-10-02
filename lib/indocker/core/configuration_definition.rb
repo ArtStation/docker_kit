@@ -3,8 +3,9 @@ class Indocker::Core::ConfigurationDefinition
 
   attr_reader :configuration_name
 
+  Contract Or[Symbol, String] => Any
   def initialize(configuration_name)
-    @configuration_name = configuration_name
+    @configuration_name = configuration_name.to_sym
     @repositories = {}
     @registries   = {}
   end

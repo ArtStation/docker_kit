@@ -3,6 +3,18 @@ require 'spec_helper'
 RSpec.describe Indocker::Core::ImageDefinition do
   subject{ Indocker::Core::ImageDefinition.new(:example_image, "/images/example_image") }
 
+  context "initialize" do
+    it "can initialize image with symbol name" do
+      definition = Indocker::Core::ImageDefinition.new(:example_image, "")
+      expect(definition.image_name).to eq(:example_image)
+    end
+
+    it "can initialize image with string name" do
+      definition = Indocker::Core::ImageDefinition.new("example_image", "")
+      expect(definition.image_name).to eq(:example_image)
+    end
+  end
+
   context "dependencies" do
     it "sets image dependencies with symbol" do
       definition = subject.depends_on(:another_image)

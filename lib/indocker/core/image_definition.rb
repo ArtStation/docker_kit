@@ -4,8 +4,9 @@ class Indocker::Core::ImageDefinition
               :build_vars, :build_context_dir, :tag, 
               :before_build_callback, :after_build_callback
   
+  Contract Or[Symbol, String], Maybe[String] => Any
   def initialize(image_name, image_dir)
-    @image_name   = image_name
+    @image_name   = image_name.to_sym
     @image_dir    = image_dir
     @dependencies = []
   end
