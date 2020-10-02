@@ -1,2 +1,1 @@
-- Add logger
 - Add configurations support

@@ -1,6 +1,12 @@
 class Indocker::Shell::LocalShell < Indocker::Shell::AbstractShell
+  include Indocker::Import[
+    "tools.logger",
+  ]
+
   def exec!(command)
-    result = 
+    logger.info("Executing command: #{command.to_s.cyan}")
+
+    result = nil
     IO.popen(command, err: [:child, :out]) do |io|
       result = io.read.chomp.strip
     end

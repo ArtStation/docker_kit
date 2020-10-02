@@ -12,6 +12,11 @@ class Indocker::CLI < Thor
     Indocker::Container['ui'].init
     Indocker::Container['actions.configuration_loader'].call(options)
     Indocker::Container['actions.image_compiler'].call(image_names, options)
+
+    logger = Indocker::Container['tools.logger']
+    logger.info("---------------------------")
+    logger.info("Image compilation finished!")
+    logger.info("---------------------------")
   end
 
   def self.exit_on_failure?

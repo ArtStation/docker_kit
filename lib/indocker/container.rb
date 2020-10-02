@@ -45,6 +45,14 @@ class Indocker::Container
     Indocker::Tools::FilePresenceChecker.new
   end
 
+  register "tools.logger_factory" do
+    Indocker::Tools::LoggerFactory.new
+  end
+
+  register "tools.logger" do
+    Indocker::Container["tools.logger_factory"].create("/tmp/indocker.log")
+  end
+
   register "shell.bash_commands" do
     Indocker::Shell::BashCommands.new
   end

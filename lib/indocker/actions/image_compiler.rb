@@ -3,6 +3,7 @@ class Indocker::Actions::ImageCompiler
     "compiler.image_compiler",
     "compiler.image_dependency_resolver",
     "shell.local_shell",
+    "tools.logger",
     "configs",
     "ui"
   ]
@@ -27,10 +28,15 @@ class Indocker::Actions::ImageCompiler
     def compile_simultaneously(image_names, build_id)
       task_group = ui.create_task_group
       image_names.map do |image_name|
+
+        logger.info("Started compiling: #{image_name.to_s.green}")
         task_group.add("Compiling #{image_name.to_s.yellow}") do |task|
           compile_image(image_name, build_id)
+
           task.update_title("Compiled #{image_name.to_s.green}")
+          logger.info("Finished compiling: #{image_name.to_s.green}")
         end
+        
       end
       task_group.wait
     end

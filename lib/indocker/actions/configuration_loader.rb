@@ -3,6 +3,7 @@ class Indocker::Actions::ConfigurationLoader
     "core.infra_store",
     "core.image_store",
     "core.configuration_store",
+    "tools.logger",
     "ui",
     "configs"
   ]
@@ -13,16 +14,12 @@ class Indocker::Actions::ConfigurationLoader
     images_path = options[:images_path] || File.join(root_path, configs.images_dirname)
     infra_path  = options[:infra_path]  || File.join(root_path, configs.infra_dirname)
 
-    puts "Launching indocker with:".yellow
-    puts "  Root path: #{root_path}".yellow
+    logger.info "Launching indocker with:"
+    logger.info "  Root path: #{root_path}"
 
-    ui.create_task("Loading configuration") do |task|
-      configuration_store.define(:default)
-      Indocker.set_configuration_name(:default)
-
-      infra_store.load_infra_items(infra_path)
-      task.update_title("Loaded infrastructure")
-    end
+    configuration_store.define(:default)
+    Indocker.set_configuration_name(:default)
+    infra_store.load_infra_items(infra_path)
 
     ui.create_task("Loading image definitions") do |task|
       files = image_store.load_definitions(images_path)

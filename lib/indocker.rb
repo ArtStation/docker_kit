@@ -30,6 +30,7 @@ module Indocker
 
   module Tools
     autoload :FilePresenceChecker, 'tools/file_presence_checker'
+    autoload :LoggerFactory, 'tools/logger_factory'
   end
 
   module Shell
