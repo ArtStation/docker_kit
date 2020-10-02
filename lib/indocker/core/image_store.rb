@@ -1,6 +1,6 @@
 class Indocker::Core::ImageStore
-  NotFoundError = Class.new(StandardError)
-  AlreadyAddedError = Class.new(StandardError)
+  NotFoundError = Class.new(Indocker::Error)
+  AlreadyAddedError = Class.new(Indocker::Error)
 
   include Indocker::Import[
     "core.image_factory",

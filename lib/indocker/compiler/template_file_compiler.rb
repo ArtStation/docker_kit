@@ -1,7 +1,7 @@
 class Indocker::Compiler::TemplateFileCompiler
   include Indocker::Import["compiler.template_compiler"]
 
-  TemplateCompileError = Class.new(StandardError)
+  TemplateCompileError = Class.new(Indocker::Error)
 
   def compile(shell, source_path, destination_path: nil, context_helper: nil)
     destination_path ||= source_path

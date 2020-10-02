@@ -8,6 +8,9 @@ require 'indocker/extensions/contracts'
 $LOAD_PATH << File.join(__dir__, 'indocker')
 
 module Indocker
+  Error = Class.new(StandardError)
+  NotImplementedError = Class.new(Error)
+  
   module Core
     autoload :ImageDefinition, 'core/image_definition'
     autoload :ImageDefinitionFactory, 'core/image_definition_factory'

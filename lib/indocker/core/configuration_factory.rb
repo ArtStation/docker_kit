@@ -1,5 +1,5 @@
 class Indocker::Core::ConfigurationFactory
-  NotFoundError = Class.new(StandardError)
+  NotFoundError = Class.new(Indocker::Error)
 
   include Indocker::Import[
     "core.infra_store"

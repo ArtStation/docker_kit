@@ -1,5 +1,5 @@
 class Indocker::Core::ConfigurationDefinition
-  ResourceAlreadyAdded = Class.new(StandardError)
+  ResourceAlreadyAdded = Class.new(Indocker::Error)
 
   attr_reader :configuration_name
 

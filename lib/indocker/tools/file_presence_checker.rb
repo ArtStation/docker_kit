@@ -1,5 +1,5 @@
 class Indocker::Tools::FilePresenceChecker
-  FileNotFound = Class.new(StandardError)
+  FileNotFound = Class.new(Indocker::Error)
 
   def check_file!(file_path)
     unless file_exists?(file_path)
