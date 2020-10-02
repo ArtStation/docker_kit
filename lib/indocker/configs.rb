@@ -14,13 +14,14 @@ class Indocker::Configs
     'tmp',
     'logs'
   ]
-  INDOCKER_DIRNAME = "indocker".freeze
-  IMAGES_DIRNAME   = "images".freeze
-  INFRA_DIRNAME    = "infrastructure".freeze
+  INDOCKER_DIRNAME       = "indocker".freeze
+  IMAGES_DIRNAME         = "images".freeze
+  INFRA_DIRNAME          = "infrastructure".freeze
+  CONFIGURATIONS_DIRNAME = "configurations".freeze
 
   attr_accessor :image_dockerfile_name, :image_build_context_dir, :image_tag,
                 :docker_ignore_list, :image_compile_dir, 
-                :indocker_dirname, :images_dirname, :infra_dirname
+                :indocker_dirname, :images_dirname, :infra_dirname, :configurations_dirname
 
   def initialize
     @image_dockerfile_name   = IMAGE_DOCKERFILE_NAME
@@ -31,5 +32,6 @@ class Indocker::Configs
     @indocker_dirname        = INDOCKER_DIRNAME
     @images_dirname          = IMAGES_DIRNAME
     @infra_dirname           = INFRA_DIRNAME
+    @configurations_dirname  = CONFIGURATIONS_DIRNAME
   end
 end

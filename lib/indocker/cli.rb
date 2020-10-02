@@ -6,6 +6,9 @@ class Indocker::CLI < Thor
   method_option :path, :type => :string
   method_option :images_path, :type => :string
   method_option :infra_path, :type => :string
+  method_option :configurations_path, :type => :string
+
+  method_option :configuration, :type => :string, aliases: ["-C"]
   def compile(image_names_str)
     image_names = image_names_str.split(",").map(&:strip).map(&:to_sym)
 

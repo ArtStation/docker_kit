@@ -75,8 +75,12 @@ module Indocker
       Container["core.image_store"].define(image_name, image_path.split('image.rb').first)
     end
 
+    def define_configuration(configuration_name)
+      Container["core.configuration_store"].define(configuration_name)
+    end
+
     def set_configuration_name(configuration_name)
-      @configuration_name = configuration_name
+      @configuration_name = configuration_name.to_sym
       @current_configuration = nil
     end
 
