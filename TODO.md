@@ -1,1 +1,1 @@
-- Add configurations support
+- Add full configurations support

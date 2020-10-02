@@ -48,6 +48,8 @@ module Indocker
     autoload :ImageBuildDirCreator, 'compiler/image_build_dir_creator'
     autoload :ImageCompiler, 'compiler/image_compiler'
     autoload :ImageDependencyResolver, 'compiler/image_dependency_resolver'
+    autoload :ContextHelper, 'compiler/context_helper'
+    autoload :ContextHelperFactory, 'compiler/context_helper_factory'
   end
 
   module Actions

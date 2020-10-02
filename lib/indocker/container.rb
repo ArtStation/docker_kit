@@ -93,6 +93,10 @@ class Indocker::Container
     Indocker::Compiler::ImageDependencyResolver.new
   end
 
+  register "compiler.context_helper_factory" do
+    Indocker::Compiler::ContextHelperFactory.new
+  end
+
   register "ui" do
     Indocker::UI.new
   end
