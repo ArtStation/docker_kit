@@ -15,6 +15,12 @@ module Indocker
     autoload :ImageFactory, 'core/image_factory'
     autoload :Image, 'core/image'
 
+    autoload :ConfigurationDefinition, 'core/configuration_definition'
+    autoload :ConfigurationDefinitionFactory, 'core/configuration_definition_factory'
+    autoload :ConfigurationStore, 'core/configuration_store'
+    autoload :ConfigurationFactory, 'core/configuration_factory'
+    autoload :Configuration, 'core/configuration'
+
     autoload :InfraStore, 'core/infra_store'
     autoload :Registry, 'core/registry'
   end
@@ -78,6 +84,14 @@ module Indocker
 
     register "core.image_store" do
       Indocker::Core::ImageStore.new
+    end
+
+    register "core.configuration_definition_factory" do
+      Indocker::Core::ConfigurationDefinitionFactory.new
+    end
+
+    register "core.configuration_store" do
+      Indocker::Core::ConfigurationStore.new
     end
 
     register "core.infra_store" do

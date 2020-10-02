@@ -1,14 +1,11 @@
 class Indocker::Core::ImageFactory
-  CircularDependencyError = Class.new(StandardError)
-  DependencyNotFoundError = Class.new(StandardError)
-
   include Indocker::Import[
     "configs",
     "tools.file_presence_checker",
     "core.infra_store"
   ]
 
-  def create(definition, all_definitions: {}, dependency_tree: [])
+  def create(definition)
     image_attrs = definition.to_image_attrs
 
     dockerfile_path = image_attrs.dockerfile_path || File.join(image_attrs.dir, configs.image_dockerfile_name)

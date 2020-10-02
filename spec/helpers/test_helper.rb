@@ -33,17 +33,23 @@ class TestHelper
     image_definition_factory.create(name)
   end
   
-  def image(name, all_definitions: nil)
+  def image(name)
     definition = image_definition(name)
-    all_definitions ||= [definition]
-
-    image_factory.create(definition, all_definitions: all_definitions)
+    image_factory.create(definition)
   end
 
   def remote_image(name, url)
     add_registry(:remote, url)
     remote_image_def = image_definition(:remote_image).registry(:remote)
     remote_image = image_factory.create(remote_image_def)
+  end
+
+  def configuration_definition_factory
+    Indocker::Container['core.configuration_definition_factory']
+  end
+
+  def configuration_definition(name)
+    configuration_definition_factory.create(name)
   end
 
   def add_registry(name, url)

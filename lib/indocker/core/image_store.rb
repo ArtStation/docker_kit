@@ -37,7 +37,7 @@ class Indocker::Core::ImageStore
   def get_image(image_name)
     definition = get_definition(image_name)
 
-    image_factory.create(definition, all_definitions: @@image_definitions)
+    image_factory.create(definition)
   end
 
   def load_definitions(dir_path)

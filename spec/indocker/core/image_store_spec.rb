@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 RSpec.describe Indocker::Core::ImageStore do
-  subject{ Indocker::Core::ImageStore.new(image_factory: test_helper.image_factory) }
+  subject{ Indocker::Core::ImageStore.new }
   let(:test_definition) { test_helper.image_definition(:example) }
    
   context "#define" do
@@ -42,7 +42,7 @@ RSpec.describe Indocker::Core::ImageStore do
   end
 
   context "#get_image" do
-    it "returns an image based on definition" do
+    xit "returns an image based on definition" do
       subject.add_definition(test_definition)
 
       image = subject.get_image(:example)
@@ -53,7 +53,7 @@ RSpec.describe Indocker::Core::ImageStore do
   end
 
   context "#load_definitions" do
-    it "returns an image based on definition" do
+    it "loads definitions by file name pattern" do
       expect(subject.local_shell).to receive(:recursive_list_files).and_return(["/images/example/image.rb"])
       expect(subject).to receive(:load_definition).with("/images/example/image.rb")
 
