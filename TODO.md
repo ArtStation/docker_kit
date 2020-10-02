@@ -1,0 +1,3 @@
+- Add code coverage
+- Add logger
+- Add configurations support

@@ -2,6 +2,10 @@ class Indocker::Core::InfraStore
   NotFoundError = Class.new(StandardError)
   AlreadyAddedError = Class.new(StandardError)
 
+  include Indocker::Import[
+    "shell.local_shell"
+  ]
+
   def add_registry(registry)
     @@registries ||= {}
 
@@ -41,6 +45,16 @@ class Indocker::Core::InfraStore
 
   def default_registry
     @default_registry ||= Indocker::Core::Registry.new(:default)
+  end
+
+  def load_infra_items(infra_path)
+    files = local_shell.recursive_list_files(infra_path).each do |path|
+      load_infra_item(path)
+    end
+  end
+
+  def load_infra_item(file_path)
+    require(file_path)
   end
 
   def reset!

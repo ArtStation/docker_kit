@@ -11,7 +11,7 @@ gem 'indocker'
 ## Launch compilation for example images
 
 ```
-bin/indocker compile ruby_app,ruby_app2 --images-path=./example/images/
+bin/indocker compile ruby_app,ruby_app2 --path=./example
 ```
 
 ## License

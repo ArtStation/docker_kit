@@ -80,6 +80,10 @@ module Indocker
       end
       @current_configuration ||= Container['core.configuration_store'].get_configuration(@configuration_name)
     end
+
+    def add_registry(registry)
+      Container["core.infra_store"].add_registry(registry)
+    end
   end
 end
 

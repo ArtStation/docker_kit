@@ -47,4 +47,13 @@ RSpec.describe Indocker::Core::InfraStore do
       expect{ subject.add_registry(12) }.to raise_error(ArgumentError)
     end
   end
+
+  context "#load_infra_items" do
+    it "loads definitions by file name pattern" do
+      expect(subject.local_shell).to receive(:recursive_list_files).and_return(["/infrastructure/registries.rb"])
+      expect(subject).to receive(:load_infra_item).with("/infrastructure/registries.rb")
+
+      subject.load_infra_items("/infrastructure/")
+    end
+  end
 end

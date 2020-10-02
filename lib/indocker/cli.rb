@@ -3,7 +3,9 @@ require 'thor'
 class Indocker::CLI < Thor
 
   desc "compile IMAGE_NAMES", "Compile image with IMAGE_NAMES (comma-separated)"
-  method_option :images_path, :type => :string, :required => true
+  method_option :path, :type => :string
+  method_option :images_path, :type => :string
+  method_option :infra_path, :type => :string
   def compile(image_names_str)
     image_names = image_names_str.split(",").map(&:strip).map(&:to_sym)
 
