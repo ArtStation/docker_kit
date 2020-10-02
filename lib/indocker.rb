@@ -68,6 +68,17 @@ module Indocker
   
       Container["core.image_store"].define(image_name, image_path.split('image.rb').first)
     end
+
+    def set_configuration_name(configuration_name)
+      @configuration_name = configuration_name
+    end
+
+    def current_configuration
+      if @configuration_name.nil?
+        raise "Please set configuration name before calling current_configuration"
+      end
+      Container['core.configuration_store'].get_configuration(@configuration_name)
+    end
   end
 end
 

@@ -44,6 +44,10 @@ class TestHelper
     remote_image = image_factory.create(remote_image_def)
   end
 
+  def configuration_store
+    Indocker::Container['core.configuration_store']
+  end
+
   def configuration_definition_factory
     Indocker::Container['core.configuration_definition_factory']
   end
