@@ -18,7 +18,7 @@ RSpec.describe Indocker::Core::ConfigurationFactory do
     definition = test_definition.use_registry(:main_production_registry, as: :main_registry)
     configuration = subject.create(definition)
 
-    expect(configuration.registries[:main_registry]).to be_a(Indocker::Core::Registry)
+    expect(configuration.registries[:main_registry]).to be_a(Indocker::Core::Registries::Registry)
   end
 
   it "raises exception if registry is not found" do

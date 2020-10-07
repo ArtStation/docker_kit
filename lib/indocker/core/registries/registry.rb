@@ -1,4 +1,4 @@
-class Indocker::Core::Registry
+class Indocker::Core::Registries::Registry
   include Indocker::Extensions::Inspectable
 
   attr_reader :registry_name

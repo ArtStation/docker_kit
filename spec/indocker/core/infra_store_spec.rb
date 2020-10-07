@@ -4,12 +4,12 @@ RSpec.describe Indocker::Core::InfraStore do
   subject{ Indocker::Core::InfraStore.new }
 
   it "returns default registry" do
-    expect(subject.default_registry).to be_a(Indocker::Core::Registry)
+    expect(subject.default_registry).to be_a(Indocker::Core::Registries::Registry)
   end
 
   context "#get_global_registry" do
     it "returns global registry" do
-      registry = Indocker::Core::Registry.new(:default)
+      registry = Indocker::Core::Registries::Registry.new(:default)
       subject.add_registry(registry)
 
       expect(subject.get_global_registry(:default)).to eq(registry)
@@ -22,7 +22,7 @@ RSpec.describe Indocker::Core::InfraStore do
 
   context "#get_configuration_registry" do
     it "returns configuration registry" do
-      registry = Indocker::Core::Registry.new(:production_default)
+      registry = Indocker::Core::Registries::Registry.new(:production_default)
       subject.add_registry(registry)
       test_helper.configuration_store.define(:production).use_registry(:production_default, as: :default)
       Indocker.set_configuration_name(:production)
@@ -37,7 +37,7 @@ RSpec.describe Indocker::Core::InfraStore do
 
   context "#add_registry" do
     it "doesn't allow adding registry twice" do
-      registry = Indocker::Core::Registry.new(:default)
+      registry = Indocker::Core::Registries::Registry.new(:default)
       subject.add_registry(registry)
 
       expect{ subject.add_registry(registry) }.to raise_error(Indocker::Core::InfraStore::AlreadyAddedError)

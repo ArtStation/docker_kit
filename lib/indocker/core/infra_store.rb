@@ -9,8 +9,8 @@ class Indocker::Core::InfraStore
   def add_registry(registry)
     @@registries ||= {}
 
-    if !registry.is_a?(Indocker::Core::Registry)
-      raise ArgumentError.new("should be an instance of Indocker::Core::Registry, got: #{registry.inspect}")
+    if !registry.is_a?(Indocker::Core::Registries::Registry)
+      raise ArgumentError.new("should be an instance of Indocker::Core::Registries::Registry, got: #{registry.inspect}")
     end
 
     unless @@registries[registry.registry_name].nil?
@@ -44,7 +44,7 @@ class Indocker::Core::InfraStore
   end
 
   def default_registry
-    @default_registry ||= Indocker::Core::Registry.new(:default)
+    @default_registry ||= Indocker::Core::Registries::Registry.new(:default)
   end
 
   def load_infra_items(infra_path)

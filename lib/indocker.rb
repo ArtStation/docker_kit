@@ -25,7 +25,10 @@ module Indocker
     autoload :Configuration, 'core/configuration'
 
     autoload :InfraStore, 'core/infra_store'
-    autoload :Registry, 'core/registry'
+
+    module Registries
+      autoload :Registry, 'core/registries/registry'
+    end
   end
 
   module Tools
