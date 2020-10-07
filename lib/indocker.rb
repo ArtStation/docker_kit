@@ -10,6 +10,7 @@ $LOAD_PATH << File.join(__dir__, 'indocker')
 module Indocker
   Error = Class.new(StandardError)
   NotImplementedError = Class.new(Error)
+  NotFoundError = Class.new(Error)
   
   module Core
     autoload :ImageDefinition, 'core/image_definition'
@@ -25,8 +26,15 @@ module Indocker
     autoload :Configuration, 'core/configuration'
 
     module Registries
+      autoload :AbstractRegistry, 'core/registries/abstract_registry'
       autoload :RegistryStore, 'core/registries/registry_store'
       autoload :Registry, 'core/registries/registry'
+    end
+
+    module Repositories
+      autoload :AbstractRepository, 'core/repositories/abstract_repository'
+      autoload :RepositoryStore, 'core/repositories/repository_store'
+      autoload :Git, 'core/repositories/git'
     end
   end
 
@@ -97,7 +105,7 @@ module Indocker
     end
 
     def add_registry(registry)
-      Container["core.registry_store"].add_registry(registry)
+      Container["core.registry_store"].add(registry)
     end
   end
 end

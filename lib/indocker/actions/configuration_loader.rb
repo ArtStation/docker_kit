@@ -4,6 +4,7 @@ class Indocker::Actions::ConfigurationLoader
     "core.image_store",
     "core.configuration_store",
     "tools.logger",
+    "shell.local_shell",
     "ui",
     "configs"
   ]
@@ -27,11 +28,17 @@ class Indocker::Actions::ConfigurationLoader
     configuration_store.load_definitions(configurations_path)
     Indocker.set_configuration_name(configuration_name)
 
-    registry_store.load_infra_items(infra_path)
+    load_infrastructure(infra_path)
 
     ui.create_task("Loading image definitions") do |task|
-      files = image_store.load_definitions(images_path)
+      image_store.load_definitions(images_path)
       task.update_title("Loaded #{files.count} image definitions")
+    end
+  end
+
+  def load_infrastructure(infra_path)
+    local_shell.recursive_list_files(infra_path).each do |path|
+      require(path)
     end
   end
 end

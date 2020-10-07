@@ -1,16 +1,16 @@
 class Indocker::Core::Registries::RegistryStore
-  NotFoundError = Class.new(Indocker::Error)
+  NotFoundError = Class.new(Indocker::NotFoundError)
   AlreadyAddedError = Class.new(Indocker::Error)
 
   include Indocker::Import[
     "shell.local_shell"
   ]
 
-  def add_registry(registry)
+  def add(registry)
     @@registries ||= {}
 
-    if !registry.is_a?(Indocker::Core::Registries::Registry)
-      raise ArgumentError.new("should be an instance of Indocker::Core::Registries::Registry, got: #{registry.inspect}")
+    if !registry.is_a?(Indocker::Core::Registries::AbstractRegistry)
+      raise ArgumentError.new("should be an instance of Indocker::Core::Registries::AbstractRegistry, got: #{registry.inspect}")
     end
 
     unless @@registries[registry.registry_name].nil?
@@ -20,14 +20,14 @@ class Indocker::Core::Registries::RegistryStore
     @@registries[registry.registry_name] = registry
   end
 
-  def get_registry(registry_name)
-    registry = get_configuration_registry(registry_name) || 
-               get_global_registry(registry_name)
+  def get(registry_name)
+    registry = get_from_configuration(registry_name) || 
+               get_global(registry_name)
 
     registry
   end
 
-  def get_global_registry(registry_name)
+  def get_global(registry_name)
     @@registries ||= {}
     registry = @@registries[registry_name]
 
@@ -38,23 +38,13 @@ class Indocker::Core::Registries::RegistryStore
     registry
   end
 
-  def get_configuration_registry(registry_name)
+  def get_from_configuration(registry_name)
     registries = Indocker.current_configuration.registries
     registries[registry_name]
   end
 
   def default_registry
     @default_registry ||= Indocker::Core::Registries::Registry.new(:default)
-  end
-
-  def load_infra_items(infra_path)
-    files = local_shell.recursive_list_files(infra_path).each do |path|
-      load_infra_item(path)
-    end
-  end
-
-  def load_infra_item(file_path)
-    require(file_path)
   end
 
   def reset!

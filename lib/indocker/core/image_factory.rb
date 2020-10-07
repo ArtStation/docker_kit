@@ -20,7 +20,7 @@ class Indocker::Core::ImageFactory
     end
 
     if image_attrs.registry_name
-      registry = registry_store.get_registry(image_attrs.registry_name)
+      registry = registry_store.get(image_attrs.registry_name)
     else
       registry = registry_store.default_registry
     end

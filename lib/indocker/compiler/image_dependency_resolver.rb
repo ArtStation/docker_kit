@@ -1,6 +1,6 @@
 class Indocker::Compiler::ImageDependencyResolver
   CircularDependencyError = Class.new(Indocker::Error)
-  DependencyNotFoundError = Class.new(Indocker::Error)
+  DependencyNotFoundError = Class.new(Indocker::NotFoundError)
 
   include Indocker::Import[
     "core.image_store"

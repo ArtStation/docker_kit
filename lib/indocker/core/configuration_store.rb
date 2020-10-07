@@ -1,5 +1,5 @@
 class Indocker::Core::ConfigurationStore
-  NotFoundError = Class.new(Indocker::Error)
+  NotFoundError = Class.new(Indocker::NotFoundError)
   AlreadyAddedError = Class.new(Indocker::Error)
 
   include Indocker::Import[

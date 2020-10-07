@@ -27,14 +27,18 @@ RSpec.describe Indocker::Core::ConfigurationFactory do
     expect{ subject.create(definition) }.to raise_error(Indocker::Core::Registries::RegistryStore::NotFoundError)
   end
 
-  xit "sets repositories from definition" do
+  it "sets repositories from definition" do
+    test_helper.add_repository(:main_production_repo, "git@example.com/myapp.git")
+
     definition = test_definition.use_repository(:main_production_repo, as: :main_repo)
     configuration = subject.create(definition)
 
-    expect(configuration.repositories).to eq({main_repo: Repository})
+    expect(configuration.repositories[:main_repo]).to be_a(Indocker::Core::Repositories::Git)
   end
 
-  xit "raises exception if repository is not found" do
+  it "raises exception if repository is not found" do
+    definition = test_definition.use_repository(:main_production_repo, as: :main_repo)
 
+    expect{ subject.create(definition) }.to raise_error(Indocker::Core::Repositories::RepositoryStore::NotFoundError)
   end
 end

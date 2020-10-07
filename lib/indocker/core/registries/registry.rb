@@ -1,12 +1,4 @@
-class Indocker::Core::Registries::Registry
-  include Indocker::Extensions::Inspectable
-
-  attr_reader :registry_name
-
-  def initialize(registry_name)
-    @registry_name = registry_name
-  end
-
+class Indocker::Core::Registries::Registry < Indocker::Core::Registries::AbstractRegistry
   def set_remote_url(remote_url)
     @remote_url = remote_url
     
