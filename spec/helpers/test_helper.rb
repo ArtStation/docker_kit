@@ -58,6 +58,6 @@ class TestHelper
 
   def add_registry(name, url)
     registry = Indocker::Core::Registries::Registry.new(name).set_remote_url(url)
-    Indocker::Container['core.infra_store'].add_registry(registry)
+    Indocker::Container['core.registry_store'].add_registry(registry)
   end
 end

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-RSpec.describe Indocker::Core::InfraStore do
-  subject{ Indocker::Core::InfraStore.new }
+RSpec.describe Indocker::Core::Registries::RegistryStore do
+  subject{ Indocker::Core::Registries::RegistryStore.new }
 
   it "returns default registry" do
     expect(subject.default_registry).to be_a(Indocker::Core::Registries::Registry)
@@ -16,7 +16,7 @@ RSpec.describe Indocker::Core::InfraStore do
     end
 
     it "raises error if registry is not found" do
-      expect{ subject.get_global_registry(:default) }.to raise_error(Indocker::Core::InfraStore::NotFoundError)
+      expect{ subject.get_global_registry(:default) }.to raise_error(Indocker::Core::Registries::RegistryStore::NotFoundError)
     end
   end
 
@@ -40,7 +40,7 @@ RSpec.describe Indocker::Core::InfraStore do
       registry = Indocker::Core::Registries::Registry.new(:default)
       subject.add_registry(registry)
 
-      expect{ subject.add_registry(registry) }.to raise_error(Indocker::Core::InfraStore::AlreadyAddedError)
+      expect{ subject.add_registry(registry) }.to raise_error(Indocker::Core::Registries::RegistryStore::AlreadyAddedError)
     end
 
     it "doesn't allow adding not registry class" do

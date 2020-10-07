@@ -24,7 +24,7 @@ RSpec.describe Indocker::Core::ConfigurationFactory do
   it "raises exception if registry is not found" do
     definition = test_definition.use_registry(:main_production_registry, as: :main_registry)
 
-    expect{ subject.create(definition) }.to raise_error(Indocker::Core::InfraStore::NotFoundError)
+    expect{ subject.create(definition) }.to raise_error(Indocker::Core::Registries::RegistryStore::NotFoundError)
   end
 
   xit "sets repositories from definition" do

@@ -1,6 +1,6 @@
 class Indocker::Actions::ConfigurationLoader
   include Indocker::Import[
-    "core.infra_store",
+    "core.registry_store",
     "core.image_store",
     "core.configuration_store",
     "tools.logger",
@@ -27,7 +27,7 @@ class Indocker::Actions::ConfigurationLoader
     configuration_store.load_definitions(configurations_path)
     Indocker.set_configuration_name(configuration_name)
 
-    infra_store.load_infra_items(infra_path)
+    registry_store.load_infra_items(infra_path)
 
     ui.create_task("Loading image definitions") do |task|
       files = image_store.load_definitions(images_path)

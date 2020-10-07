@@ -2,7 +2,7 @@ class Indocker::Core::ConfigurationFactory
   NotFoundError = Class.new(Indocker::Error)
 
   include Indocker::Import[
-    "core.infra_store"
+    "core.registry_store"
   ]
 
   def create(definition)
@@ -22,7 +22,7 @@ class Indocker::Core::ConfigurationFactory
     def fetch_registries(registries)
       result = {}
       registries.each do |registry_alias, registry_name|
-        result[registry_alias] = infra_store.get_global_registry(registry_name)
+        result[registry_alias] = registry_store.get_global_registry(registry_name)
       end
       result
     end

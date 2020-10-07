@@ -1,4 +1,4 @@
-class Indocker::Core::InfraStore
+class Indocker::Core::Registries::RegistryStore
   NotFoundError = Class.new(Indocker::Error)
   AlreadyAddedError = Class.new(Indocker::Error)
 

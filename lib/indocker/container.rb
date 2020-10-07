@@ -37,8 +37,8 @@ class Indocker::Container
     Indocker::Core::ConfigurationStore.new
   end
 
-  register "core.infra_store" do
-    Indocker::Core::InfraStore.new
+  register "core.registry_store" do
+    Indocker::Core::Registries::RegistryStore.new
   end
 
   register "tools.file_presence_checker" do

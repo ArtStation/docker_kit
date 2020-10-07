@@ -2,7 +2,7 @@ class Indocker::Core::ImageFactory
   include Indocker::Import[
     "configs",
     "tools.file_presence_checker",
-    "core.infra_store"
+    "core.registry_store"
   ]
 
   def create(definition)
@@ -20,9 +20,9 @@ class Indocker::Core::ImageFactory
     end
 
     if image_attrs.registry_name
-      registry = infra_store.get_registry(image_attrs.registry_name)
+      registry = registry_store.get_registry(image_attrs.registry_name)
     else
-      registry = infra_store.default_registry
+      registry = registry_store.default_registry
     end
 
     Indocker::Core::Image.new(
