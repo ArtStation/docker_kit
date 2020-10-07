@@ -16,16 +16,7 @@ class Indocker::Core::Repositories::Git < Indocker::Core::Repositories::Abstract
     self
   end
 
-  def project_name
-    @remote_url.split('/').last.sub('.git', '')
-  end
-
-  def namespace
-    "#{project_name}/#{branch}"
-  end
-
-  def clone_path
-    # TODO: move this functionality to cloner
-    @clone_path || "/tmp/#{Indocker.configuration.name}/repositories/git/#{project_name}/#{branch}"
+  def cloned_path
+    "/tmp/indocker/repositories/#{repository_name}"
   end
 end

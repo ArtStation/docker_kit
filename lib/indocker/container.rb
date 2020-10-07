@@ -45,10 +45,6 @@ class Indocker::Container
     Indocker::Core::Repositories::RepositoryStore.new
   end
 
-  register "core.repository_helper" do
-    Indocker::Core::Repositories::RepositoryHelper.new
-  end
-
   register "tools.file_presence_checker" do
     Indocker::Tools::FilePresenceChecker.new
   end

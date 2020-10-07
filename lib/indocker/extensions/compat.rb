@@ -1,9 +1,13 @@
 # Aliases for compatibility with old Indocker
 module Indocker
   module Registries
-    Abstract = Indocker::Core::Registries::Registry
     Local = Indocker::Core::Registries::Registry
     Remote = Indocker::Core::Registries::Registry
+  end
+
+  module Repositories
+    NoSync = Indocker::Core::Repositories::Local
+    Git = Indocker::Core::Repositories::Git
   end
 
   class << self

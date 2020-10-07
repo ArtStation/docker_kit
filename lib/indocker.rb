@@ -34,8 +34,8 @@ module Indocker
     module Repositories
       autoload :AbstractRepository, 'core/repositories/abstract_repository'
       autoload :RepositoryStore, 'core/repositories/repository_store'
-      autoload :RepositoryHelper, 'core/repositories/repository_helper'
       autoload :Git, 'core/repositories/git'
+      autoload :Local, 'core/repositories/local'
     end
   end
 
