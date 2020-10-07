@@ -22,4 +22,10 @@ class Indocker::Core::Repositories::GitCloner
       )
     end
   end
+
+  private
+    def repository_already_cloned?(shell:, target_path:, remote_url:)
+      target_remote_url = git_commands.get_remote_url(shell, target_path)
+      target_remote_url == remote_url
+    end
 end

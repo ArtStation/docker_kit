@@ -17,6 +17,8 @@ class Indocker::Core::Repositories::Git < Indocker::Core::Repositories::Abstract
   end
 
   def cloned_path
-    "/tmp/indocker/repositories/#{repository_name}"
+    # TODO: We should refactor to not call container here
+    configs = Indocker::Container['configs']
+    "#{configs.repository_clone_dir}/#{repository_name}"
   end
 end
