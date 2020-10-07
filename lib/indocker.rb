@@ -34,6 +34,7 @@ module Indocker
     module Repositories
       autoload :AbstractRepository, 'core/repositories/abstract_repository'
       autoload :RepositoryStore, 'core/repositories/repository_store'
+      autoload :RepositoryHelper, 'core/repositories/repository_helper'
       autoload :Git, 'core/repositories/git'
     end
   end
@@ -48,6 +49,7 @@ module Indocker
     autoload :LocalShell, 'shell/local_shell'
     autoload :BashCommands, 'shell/bash_commands'
     autoload :DockerCommands, 'shell/docker_commands'
+    autoload :GitCommands, 'shell/git_commands'
   end
 
   module Compiler

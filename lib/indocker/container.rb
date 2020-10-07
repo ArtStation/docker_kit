@@ -45,6 +45,10 @@ class Indocker::Container
     Indocker::Core::Repositories::RepositoryStore.new
   end
 
+  register "core.repository_helper" do
+    Indocker::Core::Repositories::RepositoryHelper.new
+  end
+
   register "tools.file_presence_checker" do
     Indocker::Tools::FilePresenceChecker.new
   end
@@ -63,6 +67,10 @@ class Indocker::Container
 
   register "shell.docker_commands" do
     Indocker::Shell::DockerCommands.new
+  end
+
+  register "shell.git_commands" do
+    Indocker::Shell::GitCommands.new
   end
 
   register "shell.local_shell" do

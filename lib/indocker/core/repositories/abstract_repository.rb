@@ -7,15 +7,7 @@ class Indocker::Core::Repositories::AbstractRepository
     @repository_name = repository_name
   end
 
-  def project_name
-    raise Indocker::NotImplementedError, "must be implemented"
-  end
-
-  def root_path
-    raise Indocker::NotImplementedError, "must be implemented"
-  end
-
-  def clone_path
+  def namespace
     raise Indocker::NotImplementedError, "must be implemented"
   end
 end
