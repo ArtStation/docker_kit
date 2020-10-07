@@ -41,15 +41,18 @@ module Indocker
   end
 
   module Compiler
-    autoload :TemplateCompiler, 'compiler/template_compiler'
-    autoload :TemplateFileCompiler, 'compiler/template_file_compiler'
-    autoload :TemplateDirCompiler, 'compiler/template_dir_compiler'
     autoload :ImageBuilder, 'compiler/image_builder'
     autoload :ImageBuildDirCreator, 'compiler/image_build_dir_creator'
     autoload :ImageCompiler, 'compiler/image_compiler'
     autoload :ImageDependencyResolver, 'compiler/image_dependency_resolver'
     autoload :ContextHelper, 'compiler/context_helper'
     autoload :ContextHelperFactory, 'compiler/context_helper_factory'
+  end
+
+  module Templates
+    autoload :TemplateCompiler, 'templates/template_compiler'
+    autoload :TemplateFileCompiler, 'templates/template_file_compiler'
+    autoload :TemplateDirCompiler, 'templates/template_dir_compiler'
   end
 
   module Actions

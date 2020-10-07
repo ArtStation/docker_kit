@@ -1,7 +1,8 @@
 require 'fileutils'
 
-RSpec.describe Indocker::Compiler::TemplateFileCompiler do
-  subject{ Indocker::Compiler::TemplateFileCompiler.new }
+RSpec.describe Indocker::Templates::TemplateFileCompiler do
+  subject{ Indocker::Templates::TemplateFileCompiler.new }
+  
   let(:source_path) { File.join(FIXTURES_PATH, "compiler", "erb_template.txt") }
   let(:destination_path) { File.join(FIXTURES_PATH, "compiler", "erb_template.txt.compiled") }
   let(:shell) { test_helper.shell }

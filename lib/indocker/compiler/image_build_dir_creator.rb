@@ -1,7 +1,7 @@
 class Indocker::Compiler::ImageBuildDirCreator
   include Indocker::Import[
-    "compiler.template_dir_compiler",
-    "compiler.template_file_compiler",
+    "templates.template_dir_compiler",
+    "templates.template_file_compiler",
     "shell.bash_commands",
     "configs"
   ]

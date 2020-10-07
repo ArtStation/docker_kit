@@ -1,5 +1,5 @@
-class Indocker::Compiler::TemplateFileCompiler
-  include Indocker::Import["compiler.template_compiler"]
+class Indocker::Templates::TemplateFileCompiler
+  include Indocker::Import["templates.template_compiler"]
 
   TemplateCompileError = Class.new(Indocker::Error)
 

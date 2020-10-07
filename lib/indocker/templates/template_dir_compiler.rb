@@ -1,6 +1,6 @@
-class Indocker::Compiler::TemplateDirCompiler
+class Indocker::Templates::TemplateDirCompiler
   include Indocker::Import[
-    "compiler.template_file_compiler",
+    "templates.template_file_compiler",
     "shell.bash_commands"
   ]
 

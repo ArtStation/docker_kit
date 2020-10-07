@@ -1,5 +1,5 @@
-RSpec.describe Indocker::Compiler::TemplateCompiler do
-  subject{ Indocker::Compiler::TemplateCompiler.new }
+RSpec.describe Indocker::Templates::TemplateCompiler do
+  subject{ Indocker::Templates::TemplateCompiler.new }
 
   it "returns original content if not a erb template" do
     expect(subject.compile("test")).to eq("test")

@@ -65,16 +65,16 @@ class Indocker::Container
     Indocker::Shell::LocalShell.new
   end
 
-  register "compiler.template_compiler" do
-    Indocker::Compiler::TemplateCompiler.new
+  register "templates.template_compiler" do
+    Indocker::Templates::TemplateCompiler.new
   end
 
-  register "compiler.template_file_compiler" do
-    Indocker::Compiler::TemplateFileCompiler.new
+  register "templates.template_file_compiler" do
+    Indocker::Templates::TemplateFileCompiler.new
   end
 
-  register "compiler.template_dir_compiler" do
-    Indocker::Compiler::TemplateDirCompiler.new
+  register "templates.template_dir_compiler" do
+    Indocker::Templates::TemplateDirCompiler.new
   end
 
   register "compiler.image_builder" do

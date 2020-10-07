@@ -1,5 +1,5 @@
-RSpec.describe Indocker::Compiler::TemplateDirCompiler do
-  subject{ Indocker::Compiler::TemplateDirCompiler.new }
+RSpec.describe Indocker::Templates::TemplateDirCompiler do
+  subject{ Indocker::Templates::TemplateDirCompiler.new }
 
   let(:context_helper) { test_helper.context_helper }
   let(:shell) { test_helper.shell }
