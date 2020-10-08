@@ -1,4 +1,4 @@
-class Indocker::ArtifactsSync:::GitCloner
+class Indocker::ArtifactsSync::GitCloner
 
   include Indocker::Import[
     "shell.git_commands",

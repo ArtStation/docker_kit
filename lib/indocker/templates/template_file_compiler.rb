@@ -17,7 +17,7 @@ class Indocker::Templates::TemplateFileCompiler
     shell.write(destination_path, content)
 
     return true
-  rescue => e
+  rescue Exception => e
     message = "#{e.message}\r\n"
     message += e.backtrace.select{|l| l.include?("(erb)") }.join("\r\n")
     raise TemplateCompileError, "Error while compiling template #{source_path}.\r\n#{message}"

@@ -67,6 +67,10 @@ module Indocker
     autoload :TemplateDirCompiler, 'templates/template_dir_compiler'
   end
 
+  module ArtifactsSync
+    autoload :GitCloner, 'artifacts_sync/git_cloner'
+  end
+
   module Actions
     autoload :ImageCompiler, 'actions/image_compiler'
     autoload :ConfigurationLoader, 'actions/configuration_loader'

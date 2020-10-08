@@ -62,7 +62,7 @@ class TestHelper
   end
 
   def add_artifact(name, url)
-    repo = Indocker::Core::Artifacts::Git.new(name).setup(remote_url: url)
-    Indocker::Container['core.artifact_store'].add(repo)
+    artifact = Indocker::Core::Artifacts::Git.new(name).setup(remote_url: url)
+    Indocker::Container['core.artifact_store'].add(artifact)
   end
 end

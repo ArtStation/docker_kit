@@ -16,6 +16,14 @@ RSpec.describe Indocker::Templates::TemplateFileCompiler do
     expect(content).to eq(%{hello world\ntest})
   end
 
+  it "raises TemplateCompileError on any error in template compilation" do
+    expect(subject.template_compiler).to receive(:compile){ raise SyntaxError }
+
+    expect{ 
+      subject.compile(shell, source_path, destination_path: destination_path, context_helper: test_helper.context_helper) 
+    }.to raise_error(Indocker::Templates::TemplateFileCompiler::TemplateCompileError)
+  end
+
   context "destination_path is not provided" do
     it "updates file by source path" do
       FileUtils.cp(source_path, destination_path)

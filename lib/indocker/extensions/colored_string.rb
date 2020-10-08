@@ -1,30 +1,40 @@
 class String
+  module Colors
+    RED    = 31
+    GREEN  = 32
+    YELLOW = 33
+    BLUE   = 34
+    PURPLE = 35
+    CYAN   = 36
+    GREY   = 37
+  end
+
   def red
-    colorize(31)
+    colorize(Colors::RED)
   end
 
   def green
-    colorize(32)
+    colorize(Colors::GREEN)
   end
 
   def yellow
-    colorize(33)
+    colorize(Colors::YELLOW)
   end
 
   def blue
-    colorize(34)
+    colorize(Colors::BLUE)
   end
 
   def purple
-    colorize(35)
+    colorize(Colors::PURPLE)
   end
 
   def cyan
-    colorize(36)
+    colorize(Colors::CYAN)
   end
 
   def grey
-    colorize(37)
+    colorize(Colors::GREY)
   end
 
   def colorize(color_code)
