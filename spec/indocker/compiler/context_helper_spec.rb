@@ -1,7 +1,8 @@
 RSpec.describe Indocker::Compiler::ContextHelper do
   subject{ Indocker::Compiler::ContextHelper.new(
     image_store: test_helper.image_store,
-    artifact_store: Indocker::Container['core.artifact_store']
+    artifact_store: Indocker::Container['core.artifact_store'],
+    shell: test_helper.shell
   ) }
 
   context "image_url" do
@@ -24,6 +25,12 @@ RSpec.describe Indocker::Compiler::ContextHelper do
       test_helper.add_artifact(:example_repo, "git@github.com/myapp.git")
 
       expect(subject.artifact_path(:example_repo)).to eq("/tmp/indocker/artifacts/example_repo")
+    end
+
+    it "returns artifacts path to specific file if needed" do
+      test_helper.add_artifact(:example_repo, "git@github.com/myapp.git")
+
+      expect(subject.artifact_path(:example_repo, "test.txt")).to eq("/tmp/indocker/artifacts/example_repo/test.txt")
     end
   end
 end

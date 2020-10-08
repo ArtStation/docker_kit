@@ -18,7 +18,7 @@ RSpec.describe Indocker::Compiler::ImageCompiler do
   end
 
   it "builds docker image" do
-    expect(subject.image_builder).to receive(:build).with(shell, image, "/tmp/images/example", args: [])
+    expect(subject.image_builder).to receive(:build).with(shell, image, "/tmp/images/example", args: [], context_helper: anything)
 
     subject.compile(shell, image.name, builds_dir)
   end

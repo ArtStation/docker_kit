@@ -4,10 +4,11 @@ class Indocker::Compiler::ContextHelperFactory
     "core.artifact_store"
   ]
 
-  def create
+  def create(shell)
     Indocker::Compiler::ContextHelper.new(
       image_store: image_store,
-      artifact_store: artifact_store
+      artifact_store: artifact_store,
+      shell: shell
     )
   end
 end

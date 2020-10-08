@@ -1,4 +1,4 @@
-class Indocker::ArtifactsSync::GitArtifactResolver
+class Indocker::ArtifactsSync::GitArtifactResolver < Indocker::ArtifactsSync::AbstractArtifactResolver
 
   include Indocker::Import[
     "shell.git_commands",

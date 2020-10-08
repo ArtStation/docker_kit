@@ -3,6 +3,7 @@ class Indocker::Actions::ConfigurationLoader
     "core.registry_store",
     "core.image_store",
     "core.configuration_store",
+    "artifacts_sync.artifacts_updater",
     "tools.logger",
     "shell.local_shell",
     "ui",
@@ -30,8 +31,12 @@ class Indocker::Actions::ConfigurationLoader
 
     load_infrastructure(infra_path)
 
+    ui.create_task("Updating artifacts") do |task|
+      artifacts_updater.update(local_shell, Indocker.current_configuration.artifacts)
+    end
+
     ui.create_task("Loading image definitions") do |task|
-      image_store.load_definitions(images_path)
+      files = image_store.load_definitions(images_path)
       task.update_title("Loaded #{files.count} image definitions")
     end
   end

@@ -37,4 +37,10 @@ RSpec.describe Indocker::ArtifactsSync::ArtifactsUpdater do
       subject.update(test_helper.shell, [artifact1])
     }.to raise_error(Indocker::ArtifactsSync::ArtifactsUpdater::ResolverNotFoundError)
   end
+
+  it "raises an error if resolver is not instance of abstract resolver" do
+    expect {
+      subject.use_resolver(Indocker, artifact_class: ExampleArtifact1)
+  }.to raise_error(ArgumentError)
+  end
 end

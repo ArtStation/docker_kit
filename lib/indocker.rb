@@ -71,6 +71,7 @@ module Indocker
     autoload :AbstractArtifactResolver, 'artifacts_sync/abstract_artifact_resolver'
     autoload :ArtifactsUpdater, 'artifacts_sync/artifacts_updater'
     autoload :GitArtifactResolver, 'artifacts_sync/git_artifact_resolver'
+    autoload :NullArtifactResolver, 'artifacts_sync/null_artifact_resolver'
   end
 
   module Actions
@@ -114,6 +115,10 @@ module Indocker
 
     def add_registry(registry)
       Container["core.registry_store"].add(registry)
+    end
+
+    def add_artifact(artifact)
+      Container["core.artifact_store"].add(artifact)
     end
   end
 end

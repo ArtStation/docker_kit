@@ -113,6 +113,10 @@ class Indocker::Container
     Indocker::ArtifactsSync::GitArtifactResolver.new
   end
 
+  register "artifacts_sync.null_artifact_resolver" do
+    Indocker::ArtifactsSync::NullArtifactResolver.new
+  end
+
   register "ui" do
     Indocker::UI.new
   end

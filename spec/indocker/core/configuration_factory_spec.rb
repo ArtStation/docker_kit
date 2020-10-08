@@ -8,7 +8,6 @@ RSpec.describe Indocker::Core::ConfigurationFactory do
   it "builds configuration based on configuration definition" do
     image = subject.create(test_definition)
 
-    expect(image).to be_a(Indocker::Core::Configuration)
     expect(image.name).to eq(:production)
   end
 

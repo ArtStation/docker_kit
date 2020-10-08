@@ -2,10 +2,11 @@ class Indocker::Compiler::ImageBuilder
   include Indocker::Import["shell.docker_commands"]
 
   Contract Indocker::Shell::AbstractShell, Indocker::Core::Image, String, KeywordArgs[
-    args: Maybe[Any]
+    args: Maybe[Any],
+    context_helper: Maybe[Indocker::Compiler::ContextHelper]
   ] => Any
-  def build(shell, image, build_dir, args: [])
-    image.before_build_callback.call if image.before_build_callback
+  def build(shell, image, build_dir, context_helper: nil, args: [])
+    image.before_build_callback.call(context_helper, build_dir) if image.before_build_callback
 
     docker_commands.build(shell, build_dir, ["-t=#{image.registry_url}"])
 
@@ -14,6 +15,6 @@ class Indocker::Compiler::ImageBuilder
       docker_commands.push(shell, image.remote_registry_url)
     end
 
-    image.after_build_callback.call if image.after_build_callback
+    image.after_build_callback.call(context_helper, build_dir) if image.after_build_callback
   end
 end
