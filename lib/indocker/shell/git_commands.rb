@@ -4,6 +4,8 @@ class Indocker::Shell::GitCommands
       "cd #{git_repo_path}",
       "git config --get remote.#{remote_name}.url",
     ].join(" && ")
+  rescue Indocker::Shell::AbstractShell::ShellError
+    return nil
   end
 
   def download_repo(shell, remote_url:, path:, branch:)

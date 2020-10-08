@@ -32,7 +32,9 @@ class Indocker::Actions::ConfigurationLoader
     load_infrastructure(infra_path)
 
     ui.create_task("Updating artifacts") do |task|
-      artifacts_updater.update(local_shell, Indocker.current_configuration.artifacts)
+      artifacts = Indocker.current_configuration.artifacts.values
+      artifacts_updater.update(local_shell, artifacts)
+      task.update_title("Updated #{artifacts.count} artifacts")
     end
 
     ui.create_task("Loading image definitions") do |task|

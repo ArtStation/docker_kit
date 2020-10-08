@@ -3,7 +3,8 @@ class Indocker::ArtifactsSync::ArtifactsUpdater
 
   include Indocker::Import[
     "artifacts_sync.git_artifact_resolver",
-    "artifacts_sync.null_artifact_resolver"
+    "artifacts_sync.null_artifact_resolver",
+    "tools.logger"
   ]
 
   def use_resolver(artifact_resolver, artifact_class:)
@@ -21,6 +22,8 @@ class Indocker::ArtifactsSync::ArtifactsUpdater
 
     artifacts.each do |artifact|
       resolver = @@resolvers[artifact.class]
+
+      logger.info "Updating artifact #{artifact.artifact_name.to_s.green}"
       
       raise ResolverNotFoundError, "Can't find resolver for artifact #{artifact}" if resolver.nil?
 

@@ -14,11 +14,11 @@ class Indocker::ArtifactsSync::GitArtifactResolver < Indocker::ArtifactsSync::Ab
 
     if already_cloned
       git_commands.force_pull_repo(shell, 
-        path: artifact.cloned_path, name: artifact.branch
+        path: artifact.cloned_path, branch: artifact.branch
       )
     else
       git_commands.download_repo(shell, 
-        remote_url: artifact.remote_url, path: artifact.cloned_path, name: artifact.branch
+        remote_url: artifact.remote_url, path: artifact.cloned_path, branch: artifact.branch
       )
     end
   end
