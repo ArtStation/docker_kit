@@ -105,6 +105,14 @@ class Indocker::Container
     Indocker::Compiler::ContextHelperFactory.new
   end
 
+  register "artifacts_sync.artifacts_updater" do
+    Indocker::ArtifactsSync::ArtifactsUpdater.new
+  end
+
+  register "artifacts_sync.git_artifact_resolver" do
+    Indocker::ArtifactsSync::GitArtifactResolver.new
+  end
+
   register "ui" do
     Indocker::UI.new
   end

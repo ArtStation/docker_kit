@@ -68,7 +68,9 @@ module Indocker
   end
 
   module ArtifactsSync
-    autoload :GitCloner, 'artifacts_sync/git_cloner'
+    autoload :AbstractArtifactResolver, 'artifacts_sync/abstract_artifact_resolver'
+    autoload :ArtifactsUpdater, 'artifacts_sync/artifacts_updater'
+    autoload :GitArtifactResolver, 'artifacts_sync/git_artifact_resolver'
   end
 
   module Actions

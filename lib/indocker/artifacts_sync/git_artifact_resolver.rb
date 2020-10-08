@@ -1,11 +1,11 @@
-class Indocker::ArtifactsSync::GitCloner
+class Indocker::ArtifactsSync::GitArtifactResolver
 
   include Indocker::Import[
     "shell.git_commands",
   ]
 
   Contract Indocker::Shell::AbstractShell, Indocker::Core::Artifacts::Git => Any
-  def clone(shell, artifact)
+  def resolve(shell, artifact)
     already_cloned = artifact_already_cloned?(
       shell:       shell,
       target_path: artifact.cloned_path,

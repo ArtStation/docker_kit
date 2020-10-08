@@ -1,5 +1,5 @@
-RSpec.describe Indocker::ArtifactsSync::GitCloner do
-  subject{ Indocker::ArtifactsSync::GitCloner.new }
+RSpec.describe Indocker::ArtifactsSync::GitArtifactResolver do
+  subject{ Indocker::ArtifactsSync::GitArtifactResolver.new }
 
   let(:artifact_url) { "git@example.com/myapp.git" }
   let(:artifact) { Indocker::Core::Artifacts::Git.new(:myapp).setup(remote_url: artifact_url) }
@@ -13,7 +13,7 @@ RSpec.describe Indocker::ArtifactsSync::GitCloner do
       name: artifact.branch
     )
 
-    subject.clone(test_helper.shell, artifact)
+    subject.resolve(test_helper.shell, artifact)
   end
 
   it "pulls repo if it's already cloned" do
@@ -24,6 +24,6 @@ RSpec.describe Indocker::ArtifactsSync::GitCloner do
       name: artifact.branch
     )
 
-    subject.clone(test_helper.shell, artifact)
+    subject.resolve(test_helper.shell, artifact)
   end
 end

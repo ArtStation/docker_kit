@@ -37,6 +37,7 @@ RSpec.configure do |config|
     Indocker::Container['core.configuration_store'].reset!
     Indocker::Container['core.registry_store'].reset!
     Indocker::Container['core.artifact_store'].reset!
+    Indocker::Container['artifacts_sync.artifacts_updater'].reset!
   end
 end
 
