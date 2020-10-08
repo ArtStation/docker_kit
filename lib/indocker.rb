@@ -31,11 +31,11 @@ module Indocker
       autoload :Registry, 'core/registries/registry'
     end
 
-    module Repositories
-      autoload :AbstractRepository, 'core/repositories/abstract_repository'
-      autoload :RepositoryStore, 'core/repositories/repository_store'
-      autoload :Git, 'core/repositories/git'
-      autoload :Local, 'core/repositories/local'
+    module Artifacts
+      autoload :AbstractArtifact, 'core/artifacts/abstract_artifact'
+      autoload :ArtifactStore, 'core/artifacts/artifact_store'
+      autoload :Git, 'core/artifacts/git'
+      autoload :Local, 'core/artifacts/local'
     end
   end
 

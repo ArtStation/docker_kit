@@ -6,8 +6,8 @@ module Indocker
   end
 
   module Repositories
-    NoSync = Indocker::Core::Repositories::Local
-    Git = Indocker::Core::Repositories::Git
+    NoSync = Indocker::Core::Artifacts::Local
+    Git = Indocker::Core::Artifacts::Git
   end
 
   class << self

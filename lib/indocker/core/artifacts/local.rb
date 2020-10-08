@@ -1,4 +1,4 @@
-class Indocker::Core::Repositories::Local < Indocker::Core::Repositories::AbstractRepository
+class Indocker::Core::Artifacts::Local < Indocker::Core::Artifacts::AbstractArtifact
   def setup(root_path)
     @root_path = File.expand_path(root_path)
     self

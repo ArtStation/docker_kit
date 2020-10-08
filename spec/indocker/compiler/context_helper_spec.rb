@@ -1,7 +1,7 @@
 RSpec.describe Indocker::Compiler::ContextHelper do
   subject{ Indocker::Compiler::ContextHelper.new(
     image_store: test_helper.image_store,
-    repository_store: Indocker::Container['core.repository_store']
+    artifact_store: Indocker::Container['core.artifact_store']
   ) }
 
   context "image_url" do
@@ -19,11 +19,11 @@ RSpec.describe Indocker::Compiler::ContextHelper do
     end
   end
 
-  context "repository_path" do
-    it "returns repository cloned path" do
-      test_helper.add_repository(:example_repo, "git@github.com/myapp.git")
+  context "artifact_path" do
+    it "returns artifacts cloned path" do
+      test_helper.add_artifact(:example_repo, "git@github.com/myapp.git")
 
-      expect(subject.repository_path(:example_repo)).to eq("/tmp/indocker/repositories/example_repo")
+      expect(subject.artifact_path(:example_repo)).to eq("/tmp/indocker/artifacts/example_repo")
     end
   end
 end

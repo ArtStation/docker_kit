@@ -1,4 +1,4 @@
-class Indocker::Core::Repositories::Git < Indocker::Core::Repositories::AbstractRepository
+class Indocker::Core::Artifacts::Git < Indocker::Core::Artifacts::AbstractArtifact
   attr_reader :remote_url, :remote_name, :email, :password, :branch, :ssh_key
 
   DEFAULT_SSH_KEY = "id_rsa"
@@ -17,6 +17,6 @@ class Indocker::Core::Repositories::Git < Indocker::Core::Repositories::Abstract
   def cloned_path
     # TODO: We should refactor to not call container here
     configs = Indocker::Container['configs']
-    "#{configs.repository_clone_dir}/#{repository_name}"
+    "#{configs.artifact_clone_dir}/#{artifact_name}"
   end
 end

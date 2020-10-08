@@ -1,14 +1,14 @@
 class Indocker::Core::Configuration
-  attr_reader :name, :repositories, :registries
+  attr_reader :name, :artifacts, :registries
 
   Contract KeywordArgs[
-    name:               Symbol,
-    repositories:       Hash,
-    registries:         Hash,
+    name:            Symbol,
+    artifacts:       Hash,
+    registries:      Hash,
   ] => Any
-  def initialize(name:, repositories:, registries:)
+  def initialize(name:, artifacts:, registries:)
     @name = name
-    @repositories = repositories
+    @artifacts  = artifacts
     @registries = registries
   end
 end

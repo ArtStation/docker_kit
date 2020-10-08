@@ -15,17 +15,17 @@ RSpec.describe Indocker::Core::ConfigurationDefinition do
     end
   end
 
-  context "repository" do
-    it "saves repositories as hash" do
-      subject.use_repository(:main_production_repo, as: :main_repo)
+  context "artifact" do
+    it "saves artifacts as hash" do
+      subject.use_artifact(:main_production_repo, as: :main_repo)
 
-      expect(subject.to_attrs.repositories).to eq({main_repo: :main_production_repo})
+      expect(subject.to_attrs.artifacts).to eq({main_repo: :main_production_repo})
     end
 
     it "doesn't allow duplicates" do
-      subject.use_repository(:main_production_repo, as: :main_repo)
+      subject.use_artifact(:main_production_repo, as: :main_repo)
       expect{
-        subject.use_repository(:main_production_repo, as: :main_repo)
+        subject.use_artifact(:main_production_repo, as: :main_repo)
       }.to raise_error(Indocker::Core::ConfigurationDefinition::ResourceAlreadyAdded)
     end
   end

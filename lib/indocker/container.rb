@@ -41,8 +41,8 @@ class Indocker::Container
     Indocker::Core::Registries::RegistryStore.new
   end
 
-  register "core.repository_store" do
-    Indocker::Core::Repositories::RepositoryStore.new
+  register "core.artifact_store" do
+    Indocker::Core::Artifacts::ArtifactStore.new
   end
 
   register "tools.file_presence_checker" do

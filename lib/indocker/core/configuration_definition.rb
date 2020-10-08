@@ -6,32 +6,32 @@ class Indocker::Core::ConfigurationDefinition
   Contract Or[Symbol, String] => Any
   def initialize(configuration_name)
     @configuration_name = configuration_name.to_sym
-    @repositories = {}
-    @registries   = {}
+    @artifacts  = {}
+    @registries = {}
   end
 
   def to_attrs
     OpenStruct.new(
       name:             @configuration_name,
-      repositories:     @repositories,
+      artifacts:     @artifacts,
       registries:       @registries
     )
   end
 
-  def use_repository(repo_name, as:)
-    if @repositories.has_key?(as)
-      raise ResourceAlreadyAdded.new("alias name :#{as} is already used by repository: #{@repositories[as].inspect}")
+  def use_artifact(artifact_name, as:)
+    if @artifacts.has_key?(as)
+      raise ResourceAlreadyAdded.new("alias name :#{as} is already used by artifact: #{@artifacts[as].inspect}")
     end
-    @repositories[as] = repo_name
+    @artifacts[as] = artifact_name
 
     self
   end
 
-  def use_registry(repo_name, as:)
+  def use_registry(artifact_name, as:)
     if @registries.has_key?(as)
       raise ResourceAlreadyAdded.new("alias name :#{as} is already used by registry: #{@registries[as].inspect}")
     end
-    @registries[as] = repo_name
+    @registries[as] = artifact_name
 
     self
   end

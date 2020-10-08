@@ -61,8 +61,8 @@ class TestHelper
     Indocker::Container['core.registry_store'].add(registry)
   end
 
-  def add_repository(name, url)
-    repo = Indocker::Core::Repositories::Git.new(name).setup(remote_url: url)
-    Indocker::Container['core.repository_store'].add(repo)
+  def add_artifact(name, url)
+    repo = Indocker::Core::Artifacts::Git.new(name).setup(remote_url: url)
+    Indocker::Container['core.artifact_store'].add(repo)
   end
 end

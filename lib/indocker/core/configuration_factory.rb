@@ -3,18 +3,18 @@ class Indocker::Core::ConfigurationFactory
 
   include Indocker::Import[
     "core.registry_store",
-    "core.repository_store"
+    "core.artifact_store"
   ]
 
   def create(definition)
     configuration_attrs = definition.to_attrs
 
-    repositories = fetch_repositories(configuration_attrs.repositories)
+    artifacts  = fetch_artifacts(configuration_attrs.artifacts)
     registries = fetch_registries(configuration_attrs.registries)
 
     Indocker::Core::Configuration.new(
       name:           configuration_attrs.name,
-      repositories:   repositories,
+      artifacts:   artifacts,
       registries:     registries,
     )
   end
@@ -28,10 +28,10 @@ class Indocker::Core::ConfigurationFactory
       result
     end
 
-    def fetch_repositories(repositories)
+    def fetch_artifacts(artifacts)
       result = {}
-      repositories.each do |repo_alias, repo_name|
-        result[repo_alias] = repository_store.get_global(repo_name)
+      artifacts.each do |artifact_alias, artifact_name|
+        result[artifact_alias] = artifact_store.get_global(artifact_name)
       end
       result
     end
