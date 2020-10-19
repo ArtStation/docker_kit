@@ -118,6 +118,6 @@ class Indocker::Container
   end
 
   register "ui" do
-    Indocker::UI.new
+    Indocker::UI::Interactive.new
   end
 end

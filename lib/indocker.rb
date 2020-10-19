@@ -83,9 +83,12 @@ module Indocker
     autoload :Inspectable, 'extensions/inspectable'
   end
 
+  module UI
+    autoload :Interactive, 'ui/interactive'
+  end
+
   autoload :Configs, 'configs'
   autoload :CLI, 'cli'
-  autoload :UI, 'ui'
   autoload :Container, 'container'
 
   Import = Dry::AutoInject(Container)

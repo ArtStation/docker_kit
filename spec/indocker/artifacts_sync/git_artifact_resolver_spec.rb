@@ -9,8 +9,8 @@ RSpec.describe Indocker::ArtifactsSync::GitArtifactResolver do
     expect(subject.git_commands).to receive(:download_repo).with(
       instance_of(TestShell),
       remote_url: artifact_url, 
-      path: artifact.cloned_path, 
-      name: artifact.branch
+      path:       artifact.cloned_path, 
+      branch:     artifact.branch
     )
 
     subject.resolve(test_helper.shell, artifact)
@@ -20,8 +20,8 @@ RSpec.describe Indocker::ArtifactsSync::GitArtifactResolver do
     expect(subject.git_commands).to receive(:get_remote_url).and_return(artifact_url)
     expect(subject.git_commands).to receive(:force_pull_repo).with(
       instance_of(TestShell),
-      path: artifact.cloned_path, 
-      name: artifact.branch
+      path:   artifact.cloned_path, 
+      branch: artifact.branch
     )
 
     subject.resolve(test_helper.shell, artifact)

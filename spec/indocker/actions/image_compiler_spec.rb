@@ -5,8 +5,6 @@ RSpec.describe Indocker::Actions::ImageCompiler do
 
   before do
     allow(subject).to receive(:generate_build_id).and_return("200320")
-    
-    subject.ui.init
   end
 
   it "compiles image with dependencies" do
