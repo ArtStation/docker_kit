@@ -8,4 +8,17 @@ RSpec.describe Indocker do
     Indocker.set_configuration_name(:production)
     expect(Indocker.current_configuration.name).to eq(:production)
   end
+
+  context "build_helper" do
+    it "adds new methods to context helper" do
+      Indocker.build_helper do
+        def test_url
+          "test"
+        end
+      end
+
+      helper = Indocker::Compiler::ContextHelperFactory.new.create(test_helper.shell)
+      expect(helper.test_url).to eq("test")
+    end
+  end
 end

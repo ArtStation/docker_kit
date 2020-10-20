@@ -136,6 +136,10 @@ module Indocker
     def add_artifact(artifact)
       Container["core.artifact_store"].add(artifact)
     end
+
+    def build_helper(&proc)
+      Indocker::Compiler::ContextHelper.class_exec(&proc)
+    end
   end
 end
 
