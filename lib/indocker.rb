@@ -85,6 +85,7 @@ module Indocker
 
   module UI
     autoload :Interactive, 'ui/interactive'
+    autoload :Simple, 'ui/simple'
   end
 
   autoload :Configs, 'configs'
@@ -107,6 +108,14 @@ module Indocker
     def set_configuration_name(configuration_name)
       @configuration_name = configuration_name.to_sym
       @current_configuration = nil
+    end
+
+    def set_debug_mode(value)
+      @debug_mode = value
+    end
+    
+    def debug_mode?
+      !!@debug_mode
     end
 
     def current_configuration

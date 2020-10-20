@@ -118,6 +118,10 @@ class Indocker::Container
   end
 
   register "ui" do
-    Indocker::UI::Interactive.new
+    if Indocker.debug_mode?
+      Indocker::UI::Simple.new
+    else
+      Indocker::UI::Interactive.new
+    end
   end
 end

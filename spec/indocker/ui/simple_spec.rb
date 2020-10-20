@@ -1,5 +1,5 @@
-RSpec.describe Indocker::UI::Interactive do
-  subject{ Indocker::UI::Interactive.new }
+RSpec.describe Indocker::UI::Simple do
+  subject{ Indocker::UI::Simple.new }
 
   it "can create a task group" do
     task_group = subject.create_task_group

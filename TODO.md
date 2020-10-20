@@ -1,3 +1,2 @@
-- add debug mode
 - show result of docker build in logs
 - implement Indocker.build_helper do
