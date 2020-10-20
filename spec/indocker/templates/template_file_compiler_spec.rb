@@ -41,4 +41,14 @@ RSpec.describe Indocker::Templates::TemplateFileCompiler do
       subject.compile(shell, source_path)
     end
   end
+
+  context "destination_path has subdir" do
+    it "compiles a given erb template" do
+      destination_path = File.join(FIXTURES_PATH, "compiler", "configs", "erb_template.txt.compiled")
+      subject.compile(shell, source_path, destination_path: destination_path, context_helper: test_helper.context_helper)
+  
+      content = File.read(destination_path)
+      expect(content).to eq(%{hello world\ntest})
+    end
+  end
 end
