@@ -22,7 +22,11 @@ class Indocker::Tools::LoggerFactory
       severity_text  = severity.to_s
       severity_text  = severity_text.colorize(severity_color) if severity_color
 
-      "#{datetime.strftime("%Y/%m/%d %H:%M:%S")} #{severity_text.downcase}: #{msg}\n"
+      if level == Logger::INFO
+        "#{datetime.strftime("%Y/%m/%d %H:%M:%S").grey} #{msg}\n"
+      else
+        "#{datetime.strftime("%Y/%m/%d %H:%M:%S").grey} #{severity_text.downcase}: #{msg}\n"
+      end
     end
 
     logger

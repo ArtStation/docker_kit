@@ -73,6 +73,10 @@ class Indocker::Container
     Indocker::Shell::LocalShell.new
   end
 
+  register "shell.command_counter" do
+    Indocker::Shell::CommandCounter.new
+  end
+
   register "templates.template_compiler" do
     Indocker::Templates::TemplateCompiler.new
   end

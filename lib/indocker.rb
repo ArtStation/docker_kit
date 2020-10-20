@@ -50,6 +50,7 @@ module Indocker
     autoload :BashCommands, 'shell/bash_commands'
     autoload :DockerCommands, 'shell/docker_commands'
     autoload :GitCommands, 'shell/git_commands'
+    autoload :CommandCounter, 'shell/command_counter'
   end
 
   module Compiler

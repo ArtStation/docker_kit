@@ -1,14 +1,21 @@
 class Indocker::Shell::LocalShell < Indocker::Shell::AbstractShell
   include Indocker::Import[
     "tools.logger",
+    "shell.command_counter"
   ]
 
   def exec!(command)
-    logger.info("Executing command: #{command.to_s.cyan}")
+    command_number = command_counter.get_number.to_s.rjust(2, "0")
+    
+    logger.info("Executed command [#{command_number}]: #{command.to_s.cyan}")
 
     result = nil
     IO.popen(command, err: [:child, :out]) do |io|
       result = io.read.chomp.strip
+    end
+
+    if result && result != ""
+      logger.info("Finished command [#{command_number}] with result: \n#{result.grey}")
     end
 
     if $?.exitstatus != 0
