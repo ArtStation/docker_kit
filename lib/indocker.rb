@@ -42,6 +42,7 @@ module Indocker
   module Tools
     autoload :FilePresenceChecker, 'tools/file_presence_checker'
     autoload :LoggerFactory, 'tools/logger_factory'
+    autoload :FilesSync, 'tools/files_sync'
   end
 
   module Shell
@@ -50,6 +51,7 @@ module Indocker
     autoload :BashCommands, 'shell/bash_commands'
     autoload :DockerCommands, 'shell/docker_commands'
     autoload :GitCommands, 'shell/git_commands'
+    autoload :RsyncCommands, 'shell/rsync_commands'
     autoload :CommandCounter, 'shell/command_counter'
   end
 

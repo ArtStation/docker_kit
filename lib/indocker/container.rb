@@ -69,6 +69,10 @@ class Indocker::Container
     Indocker::Shell::GitCommands.new
   end
 
+  register "shell.rsync_commands" do
+    Indocker::Shell::RsyncCommands.new
+  end
+
   register "shell.local_shell" do
     Indocker::Shell::LocalShell.new
   end

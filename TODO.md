@@ -1,2 +1,2 @@
-- show result of docker build in logs
+- add version tag with date to image on build
 - implement Indocker.build_helper do
