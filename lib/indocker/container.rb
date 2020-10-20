@@ -113,6 +113,10 @@ class Indocker::Container
     Indocker::Compiler::ContextHelperFactory.new
   end
 
+  register "compiler.version_tag_builder" do
+    Indocker::Compiler::VersionTagBuilder.new
+  end
+
   register "artifacts_sync.artifacts_updater" do
     Indocker::ArtifactsSync::ArtifactsUpdater.new
   end

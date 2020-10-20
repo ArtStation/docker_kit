@@ -62,6 +62,7 @@ module Indocker
     autoload :ImageDependencyResolver, 'compiler/image_dependency_resolver'
     autoload :ContextHelper, 'compiler/context_helper'
     autoload :ContextHelperFactory, 'compiler/context_helper_factory'
+    autoload :VersionTagBuilder, 'compiler/version_tag_builder'
   end
 
   module Templates

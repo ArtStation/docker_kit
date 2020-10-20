@@ -4,14 +4,34 @@ RSpec.describe Indocker::Compiler::ImageBuilder do
   let(:image) { test_helper.image(:example) }
   let(:shell) { test_helper.shell }
 
+  class TestVersionTagBuilder
+    def get_version
+      "202010.202010"
+    end
+  end
+
+  before do
+    Indocker::Container.stub("compiler.version_tag_builder", TestVersionTagBuilder.new)
+  end
+
+  after do
+    Indocker::Container.unstub("compiler.version_tag_builder")
+  end
+
   it "builds image using docker" do
     expect(subject.docker_commands).to receive(:build).with(shell, "/tmp/build/example", ["-t=default/example:latest"])
     subject.build(shell, image, "/tmp/build/example")
   end
 
-  it "adds tag with remote registry url" do
+  it "adds tag with version if registry is not remote" do
+    expect(subject.docker_commands).to receive(:tag).with(shell, "default/example:latest", "202010.202010")
+    subject.build(shell, image, "/tmp/build/remote_image")
+  end
+
+  it "adds tag with remote registry url and version if registry is remote" do
     remote_image = test_helper.remote_image(:remote_image, "http://test.com")
 
+    expect(subject.docker_commands).to receive(:tag).with(shell, "remote/remote_image:latest", "202010.202010")
     expect(subject.docker_commands).to receive(:tag).with(shell, "remote/remote_image:latest", "http://test.com/remote/remote_image:latest")
     subject.build(shell, remote_image, "/tmp/build/remote_image")
   end
