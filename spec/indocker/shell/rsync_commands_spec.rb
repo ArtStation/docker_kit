@@ -6,21 +6,21 @@ RSpec.describe Indocker::Shell::RsyncCommands do
     it do
       allow(subject).to receive(:path_is_directory?).and_return(false)
 
-      expect(shell).to receive(:exec!).with(%Q{rsync /path/from /path/to})
+      expect(shell).to receive(:exec!).with(%Q{rsync -a /path/from /path/to})
       subject.rsync(shell, "/path/from", "/path/to")
     end
 
     it do
       allow(subject).to receive(:path_is_directory?).and_return(true)
       
-      expect(shell).to receive(:exec!).with(%Q{rsync /path/from/ /path/to})
+      expect(shell).to receive(:exec!).with(%Q{rsync -a /path/from/ /path/to})
       subject.rsync(shell, "/path/from", "/path/to")
     end
 
     it do
       allow(subject).to receive(:path_is_directory?).and_return(false)
       
-      expect(shell).to receive(:exec!).with(%Q{rsync /path/from /path/to --exclude=*excluded_path*})
+      expect(shell).to receive(:exec!).with(%Q{rsync -a /path/from /path/to --exclude=*excluded_path*})
       subject.rsync(shell, "/path/from", "/path/to", exclude: "*excluded_path*")
     end
   end

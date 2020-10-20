@@ -10,7 +10,7 @@ class Indocker::Shell::RsyncCommands
       args << "--exclude=#{exclude}"
     end
 
-    shell.exec!(%Q{rsync #{args.join(' ')}})
+    shell.exec!(%Q{rsync -a #{args.join(' ')}})
   end
 
   private
