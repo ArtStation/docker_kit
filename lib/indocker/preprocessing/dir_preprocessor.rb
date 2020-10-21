@@ -1,6 +1,6 @@
-class Indocker::Templates::TemplateDirCompiler
+class Indocker::Preprocessing::DirPreprocessor
   include Indocker::Import[
-    "templates.template_file_compiler",
+    "preprocessing.file_preprocessor",
     "shell.bash_commands"
   ]
 
@@ -9,7 +9,7 @@ class Indocker::Templates::TemplateDirCompiler
       relative_path = source_file_path.sub(source_dir, '')
       destination_file_path = File.join(destination_dir, relative_path)
 
-      template_file_compiler.compile(
+      file_preprocessor.compile(
         shell, source_file_path, 
         destination_path: destination_file_path, 
         context_helper: context_helper

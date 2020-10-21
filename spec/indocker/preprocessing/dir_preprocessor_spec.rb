@@ -1,5 +1,5 @@
-RSpec.describe Indocker::Templates::TemplateDirCompiler do
-  subject{ Indocker::Templates::TemplateDirCompiler.new }
+RSpec.describe Indocker::Preprocessing::DirPreprocessor do
+  subject{ Indocker::Preprocessing::DirPreprocessor.new }
 
   let(:context_helper) { test_helper.context_helper }
   let(:shell) { test_helper.shell }
@@ -17,12 +17,12 @@ RSpec.describe Indocker::Templates::TemplateDirCompiler do
       File.join(source_dir, "config/test.cfg")
     ])
 
-    expect(subject.template_file_compiler).to receive(:compile).with(
+    expect(subject.file_preprocessor).to receive(:compile).with(
       shell, File.join(source_dir, "erb_template.txt"), 
       destination_path: File.join(destination_dir, "erb_template.txt"),
       context_helper: context_helper
     )
-    expect(subject.template_file_compiler).to receive(:compile).with(
+    expect(subject.file_preprocessor).to receive(:compile).with(
       shell, File.join(source_dir, "config/test.cfg"),
       destination_path: File.join(destination_dir, "config/test.cfg"),
       context_helper: context_helper

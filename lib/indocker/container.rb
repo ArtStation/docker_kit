@@ -81,16 +81,16 @@ class Indocker::Container
     Indocker::Shell::CommandCounter.new
   end
 
-  register "templates.template_compiler" do
-    Indocker::Templates::TemplateCompiler.new
+  register "preprocessing.text_preprocessor" do
+    Indocker::Preprocessing::TextPreprocessor.new
   end
 
-  register "templates.template_file_compiler" do
-    Indocker::Templates::TemplateFileCompiler.new
+  register "preprocessing.file_preprocessor" do
+    Indocker::Preprocessing::FilePreprocessor.new
   end
 
-  register "templates.template_dir_compiler" do
-    Indocker::Templates::TemplateDirCompiler.new
+  register "preprocessing.dir_preprocessor" do
+    Indocker::Preprocessing::DirPreprocessor.new
   end
 
   register "compiler.image_builder" do

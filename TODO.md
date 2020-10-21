@@ -1,2 +1,3 @@
-- implement Indocker.build_helper do
+- add env files support, sync env files with kubernetes
+- add build servers support
 - add build vars support (use images instead of containers)

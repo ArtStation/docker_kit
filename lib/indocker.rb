@@ -65,10 +65,10 @@ module Indocker
     autoload :VersionTagBuilder, 'compiler/version_tag_builder'
   end
 
-  module Templates
-    autoload :TemplateCompiler, 'templates/template_compiler'
-    autoload :TemplateFileCompiler, 'templates/template_file_compiler'
-    autoload :TemplateDirCompiler, 'templates/template_dir_compiler'
+  module Preprocessing
+    autoload :TextPreprocessor, 'preprocessing/text_preprocessor'
+    autoload :FilePreprocessor, 'preprocessing/file_preprocessor'
+    autoload :DirPreprocessor, 'preprocessing/dir_preprocessor'
   end
 
   module ArtifactsSync

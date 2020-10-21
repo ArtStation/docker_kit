@@ -5,8 +5,8 @@ RSpec.describe Indocker::Compiler::ImageBuildDirCreator do
   let(:shell) { test_helper.shell }
 
   before do
-    allow(subject.template_dir_compiler).to receive(:compile)
-    allow(subject.template_file_compiler).to receive(:compile)
+    allow(subject.dir_preprocessor).to receive(:compile)
+    allow(subject.file_preprocessor).to receive(:compile)
     allow(shell).to receive(:write)
   end
 
@@ -18,10 +18,10 @@ RSpec.describe Indocker::Compiler::ImageBuildDirCreator do
   end
 
   it "compiles dockerfile & build context" do
-    expect(subject.template_dir_compiler).to receive(:compile).with(
+    expect(subject.dir_preprocessor).to receive(:compile).with(
       shell, "/images/example/build_context", "/tmp/images/example", context_helper: nil
     )
-    expect(subject.template_file_compiler).to receive(:compile).with(
+    expect(subject.file_preprocessor).to receive(:compile).with(
       shell, "/images/example/Dockerfile", destination_path: "/tmp/images/example/Dockerfile", context_helper: nil
     )
 

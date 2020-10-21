@@ -1,7 +1,7 @@
 require 'fileutils'
 
-RSpec.describe Indocker::Templates::TemplateFileCompiler do
-  subject{ Indocker::Templates::TemplateFileCompiler.new }
+RSpec.describe Indocker::Preprocessing::FilePreprocessor do
+  subject{ Indocker::Preprocessing::FilePreprocessor.new }
   
   let(:source_path) { File.join(FIXTURES_PATH, "compiler", "erb_template.txt") }
   let(:destination_path) { File.join(FIXTURES_PATH, "compiler", "erb_template.txt.compiled") }
@@ -16,12 +16,12 @@ RSpec.describe Indocker::Templates::TemplateFileCompiler do
     expect(content).to eq(%{hello world\ntest})
   end
 
-  it "raises TemplateCompileError on any error in template compilation" do
-    expect(subject.template_compiler).to receive(:compile){ raise SyntaxError }
+  it "raises PreprocessingError on any error in preprocessing" do
+    expect(subject.text_preprocessor).to receive(:compile){ raise SyntaxError }
 
     expect{ 
       subject.compile(shell, source_path, destination_path: destination_path, context_helper: test_helper.context_helper) 
-    }.to raise_error(Indocker::Templates::TemplateFileCompiler::TemplateCompileError)
+    }.to raise_error(Indocker::Preprocessing::FilePreprocessor::PreprocessingError)
   end
 
   context "destination_path is not provided" do

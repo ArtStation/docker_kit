@@ -1,5 +1,5 @@
-RSpec.describe Indocker::Templates::TemplateCompiler do
-  subject{ Indocker::Templates::TemplateCompiler.new }
+RSpec.describe Indocker::Preprocessing::TextPreprocessor do
+  subject{ Indocker::Preprocessing::TextPreprocessor.new }
 
   it "returns original content if not a erb template" do
     expect(subject.compile("test")).to eq("test")

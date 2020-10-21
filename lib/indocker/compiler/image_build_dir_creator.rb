@@ -1,7 +1,7 @@
 class Indocker::Compiler::ImageBuildDirCreator
   include Indocker::Import[
-    "templates.template_dir_compiler",
-    "templates.template_file_compiler",
+    "preprocessing.dir_preprocessor",
+    "preprocessing.file_preprocessor",
     "shell.bash_commands",
     "configs"
   ]
@@ -14,14 +14,14 @@ class Indocker::Compiler::ImageBuildDirCreator
     bash_commands.mkdir_p(shell, build_dir)
 
     if image.build_context_dir
-      template_dir_compiler.compile(
+      dir_preprocessor.compile(
         shell, image.build_context_dir, build_dir,
         context_helper: context_helper
       )
     end
 
     target_dockerfile = File.join(build_dir, configs.image_dockerfile_name)
-    template_file_compiler.compile(
+    file_preprocessor.compile(
       shell, image.dockerfile_path, 
       destination_path: target_dockerfile, 
       context_helper: context_helper
