@@ -45,6 +45,10 @@ class Indocker::Container
     Indocker::Core::Artifacts::ArtifactStore.new
   end
 
+  register "core.env_file_store" do
+    Indocker::Core::EnvFiles::EnvFileStore.new
+  end
+
   register "tools.file_presence_checker" do
     Indocker::Tools::FilePresenceChecker.new
   end

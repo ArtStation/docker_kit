@@ -37,6 +37,12 @@ module Indocker
       autoload :Git, 'core/artifacts/git'
       autoload :Local, 'core/artifacts/local'
     end
+
+    module EnvFiles
+      autoload :EnvFileStore, 'core/env_files/env_file_store'
+      autoload :AbstractEnvFile, 'core/env_files/abstract_env_file'
+      autoload :ArtifactFile, 'core/env_files/artifact_file'
+    end
   end
 
   module Tools

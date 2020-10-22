@@ -44,4 +44,19 @@ RSpec.describe Indocker::Core::ConfigurationDefinition do
       }.to raise_error(Indocker::Core::ConfigurationDefinition::ResourceAlreadyAdded)
     end
   end
+
+  context "env_file" do
+    it "saves env_files as hash" do
+      subject.use_env_file(:main_production_env_file, as: :main_registry)
+
+      expect(subject.to_attrs.env_files).to eq({main_registry: :main_production_env_file})
+    end
+
+    it "doesn't allow duplicates" do
+      subject.use_env_file(:main_production_env_file, as: :main_registry)
+      expect{
+        subject.use_env_file(:main_production_env_file, as: :main_registry)
+      }.to raise_error(Indocker::Core::ConfigurationDefinition::ResourceAlreadyAdded)
+    end
+  end
 end
