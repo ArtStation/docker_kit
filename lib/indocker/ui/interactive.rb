@@ -14,6 +14,12 @@ class Indocker::UI::Interactive
     CLI::UI::Spinner.spin(title, &block)
   end
 
+  def print_info(title, text)
+    CLI::UI::Frame.open(title) do
+      puts text
+    end
+  end
+
   private
     def init
       @initialized = true

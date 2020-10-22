@@ -24,6 +24,20 @@ class Indocker::CLI < Thor
     logger.info("---------------------------")
   end
 
+  desc "env ENV_FILE_NAME", "Return content of Env File ENV_FILE_NAME"
+  method_option :path, :type => :string
+  method_option :images_path, :type => :string
+  method_option :infra_path, :type => :string
+  method_option :configurations_path, :type => :string
+  method_option :debug, :type => :boolean, aliases: ["-d"]
+  method_option :configuration, :type => :string, aliases: ["-C"]
+  def env(env_file_name)
+    Indocker.set_debug_mode(options[:debug])
+
+    Indocker::Container['actions.configuration_loader'].call(options)
+    Indocker::Container['actions.env_file_reader'].call(env_file_name.to_sym, options)
+  end
+
   def self.exit_on_failure?
     true
   end

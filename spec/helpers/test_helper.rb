@@ -20,6 +20,14 @@ class TestHelper
   def image_store
     Indocker::Container['core.image_store']
   end
+
+  def artifact_store
+    Indocker::Container['core.artifact_store']
+  end
+
+  def registry_store
+    Indocker::Container['core.registry_store']
+  end
   
   def image_factory
     Indocker::Container['core.image_factory']
@@ -58,11 +66,11 @@ class TestHelper
 
   def add_registry(name, url)
     registry = Indocker::Core::Registries::Registry.new(name).set_remote_url(url)
-    Indocker::Container['core.registry_store'].add(registry)
+    registry_store.add(registry)
   end
 
   def add_artifact(name, url)
     artifact = Indocker::Core::Artifacts::Git.new(name).setup(remote_url: url)
-    Indocker::Container['core.artifact_store'].add(artifact)
+    artifact_store.add(artifact)
   end
 end

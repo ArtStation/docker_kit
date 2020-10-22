@@ -84,8 +84,15 @@ module Indocker
     autoload :NullArtifactResolver, 'artifacts_sync/null_artifact_resolver'
   end
 
+  module EnvFileReader
+    autoload :Reader, 'env_file_reader/reader'
+    autoload :AbstractEnvFileReader, 'env_file_reader/abstract_env_file_reader'
+    autoload :ArtifactFileReader, 'env_file_reader/artifact_file_reader'
+  end
+
   module Actions
     autoload :ImageCompiler, 'actions/image_compiler'
+    autoload :EnvFileReader, 'actions/env_file_reader'
     autoload :ConfigurationLoader, 'actions/configuration_loader'
   end
 
@@ -141,6 +148,10 @@ module Indocker
 
     def add_artifact(artifact)
       Container["core.artifact_store"].add(artifact)
+    end
+
+    def add_env_file(env_file)
+      Container["core.env_file_store"].add(env_file)
     end
 
     def build_helper(&proc)

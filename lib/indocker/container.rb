@@ -5,6 +5,10 @@ class Indocker::Container
     Indocker::Actions::ImageCompiler.new
   end
 
+  register "actions.env_file_reader" do
+    Indocker::Actions::EnvFileReader.new
+  end
+
   register "actions.configuration_loader" do
     Indocker::Actions::ConfigurationLoader.new
   end
@@ -131,6 +135,14 @@ class Indocker::Container
 
   register "artifacts_sync.null_artifact_resolver" do
     Indocker::ArtifactsSync::NullArtifactResolver.new
+  end
+
+  register "env_file_reader.reader" do
+    Indocker::EnvFileReader::Reader.new
+  end
+
+  register "env_file_reader.artifact_file_reader" do
+    Indocker::EnvFileReader::ArtifactFileReader.new
   end
 
   register "ui" do
