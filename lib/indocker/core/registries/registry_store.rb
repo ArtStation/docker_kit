@@ -2,10 +2,6 @@ class Indocker::Core::Registries::RegistryStore
   NotFoundError = Class.new(Indocker::NotFoundError)
   AlreadyAddedError = Class.new(Indocker::Error)
 
-  include Indocker::Import[
-    "shell.local_shell"
-  ]
-
   def add(registry)
     @@registries ||= {}
 

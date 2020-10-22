@@ -3,13 +3,13 @@ Indocker
   .registry(:default)
   .depends_on(:ruby, :app_sources)
   .before_build do |context_helper, build_dir|
-    files = %w(
-      test.txt
-    )
+    # copy file local artifact
+    source_path = context_helper.artifact_path(:indocker_example_data, "test.txt")
+    target_path = File.join(build_dir, "test.txt")
+    context_helper.shell.exec!("cp #{source_path} #{target_path}")
 
-    files.each do |file|
-      source_path = context_helper.artifact_path(:indocker_example_data, file)
-      target_path = File.join(build_dir, file)
-      context_helper.shell.exec!("cp #{source_path} #{target_path}")
-    end
+    # copy file local artifact
+    source_path = context_helper.artifact_path(:indocker_repo, "README.md")
+    target_path = File.join(build_dir, "README.md")
+    context_helper.shell.exec!("cp #{source_path} #{target_path}")
   end

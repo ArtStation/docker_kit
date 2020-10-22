@@ -4,6 +4,7 @@ FROM <%= image_url(:ruby) %>
 COPY --from=app_sources /app /app
 
 COPY test.txt test.txt
+COPY README.md README.md
 
 RUN ruby /app/source.rb
 
