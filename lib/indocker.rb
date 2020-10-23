@@ -19,6 +19,12 @@ module Indocker
     autoload :ImageFactory, 'core/image_factory'
     autoload :Image, 'core/image'
 
+    autoload :ServiceDefinition, 'core/service_definition'
+    autoload :ServiceDefinitionFactory, 'core/service_definition_factory'
+    autoload :ServiceStore, 'core/service_store'
+    autoload :ServiceFactory, 'core/service_factory'
+    autoload :Service, 'core/service'
+
     autoload :ConfigurationDefinition, 'core/configuration_definition'
     autoload :ConfigurationDefinitionFactory, 'core/configuration_definition_factory'
     autoload :ConfigurationStore, 'core/configuration_store'

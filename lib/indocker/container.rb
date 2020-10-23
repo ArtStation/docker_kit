@@ -33,6 +33,18 @@ class Indocker::Container
     Indocker::Core::ImageStore.new
   end
 
+  register "core.service_factory" do
+    Indocker::Core::ServiceFactory.new
+  end
+  
+  register "core.service_definition_factory" do
+    Indocker::Core::ServiceDefinitionFactory.new
+  end
+
+  register "core.service_store" do
+    Indocker::Core::ServiceStore.new
+  end
+
   register "core.configuration_definition_factory" do
     Indocker::Core::ConfigurationDefinitionFactory.new
   end
