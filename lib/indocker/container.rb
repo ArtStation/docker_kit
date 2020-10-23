@@ -149,6 +149,14 @@ class Indocker::Container
     Indocker::EnvFileReader::ArtifactFileReader.new
   end
 
+  register "template_reader.reader" do
+    Indocker::TemplateReader::Reader.new
+  end
+
+  register "template_reader.artifact_file_reader" do
+    Indocker::TemplateReader::ArtifactFileReader.new
+  end
+
   register "ui" do
     if Indocker.debug_mode?
       Indocker::UI::Simple.new

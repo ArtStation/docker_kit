@@ -8,7 +8,7 @@ RSpec.describe Indocker::EnvFileReader::ArtifactFileReader do
     test_helper.artifact_store.add(artifact)
   end
 
-  it "returns content of the artifact" do
+  it "returns parsed content of the artifact" do
     result = subject.read(test_helper.shell, env_file)
     expect(result).to eq({
       "RUBY_ENV"    => "review",

@@ -47,7 +47,7 @@ module Indocker
     module Templates
       autoload :TemplateStore, 'core/templates/template_store'
       autoload :AbstractTemplate, 'core/templates/abstract_template'
-      autoload :ErbTemplate, 'core/templates/erb_template'
+      autoload :ArtifactFile, 'core/templates/artifact_file'
     end
   end
 
@@ -94,6 +94,12 @@ module Indocker
     autoload :Reader, 'env_file_reader/reader'
     autoload :AbstractEnvFileReader, 'env_file_reader/abstract_env_file_reader'
     autoload :ArtifactFileReader, 'env_file_reader/artifact_file_reader'
+  end
+
+  module TemplateReader
+    autoload :Reader, 'template_reader/reader'
+    autoload :AbstractTemplateReader, 'template_reader/abstract_template_reader'
+    autoload :ArtifactFileReader, 'template_reader/artifact_file_reader'
   end
 
   module Actions

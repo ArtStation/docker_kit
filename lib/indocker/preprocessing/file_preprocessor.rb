@@ -1,5 +1,7 @@
 class Indocker::Preprocessing::FilePreprocessor
-  include Indocker::Import["preprocessing.text_preprocessor"]
+  include Indocker::Import[
+    "preprocessing.text_preprocessor"
+  ]
 
   PreprocessingError = Class.new(Indocker::Error)
 

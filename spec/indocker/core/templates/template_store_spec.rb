@@ -5,7 +5,7 @@ RSpec.describe Indocker::Core::Templates::TemplateStore do
 
   context "#get_global" do
     it "returns global template" do
-      template = Indocker::Core::Templates::ErbTemplate.new(:default, content: "template_content")
+      template = Indocker::Core::Templates::ArtifactFile.new(:default, artifact_name: :env_files, file_path: "path/to.file")
       subject.add(template)
 
       expect(subject.get_global(:default)).to eq(template)
@@ -18,7 +18,7 @@ RSpec.describe Indocker::Core::Templates::TemplateStore do
 
   context "#get_from_configuration" do
     it "returns configuration template" do
-      template = Indocker::Core::Templates::ErbTemplate.new(:production_default, content: "template_content")
+      template = Indocker::Core::Templates::ArtifactFile.new(:production_default, artifact_name: :env_files, file_path: "path/to.file")
       subject.add(template)
       test_helper.configuration_store.define(:production).use_template(:production_default, as: :default)
       Indocker.set_configuration_name(:production)
@@ -33,7 +33,7 @@ RSpec.describe Indocker::Core::Templates::TemplateStore do
 
   context "#add" do
     it "doesn't allow adding template twice" do
-      template = Indocker::Core::Templates::ErbTemplate.new(:default, content: "template_content")
+      template = Indocker::Core::Templates::ArtifactFile.new(:default, artifact_name: :env_files, file_path: "path/to.file")
       subject.add(template)
 
       expect{ subject.add(template) }.to raise_error(Indocker::Core::Templates::TemplateStore::AlreadyAddedError)
