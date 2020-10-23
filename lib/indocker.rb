@@ -106,6 +106,7 @@ module Indocker
   module Actions
     autoload :ImageCompiler, 'actions/image_compiler'
     autoload :EnvFileReader, 'actions/env_file_reader'
+    autoload :TemplateReader, 'actions/template_reader'
     autoload :ConfigurationLoader, 'actions/configuration_loader'
   end
 
@@ -165,6 +166,10 @@ module Indocker
 
     def add_env_file(env_file)
       Container["core.env_file_store"].add(env_file)
+    end
+
+    def add_template(template)
+      Container["core.template_store"].add(template)
     end
 
     def build_helper(&proc)

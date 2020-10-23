@@ -9,6 +9,10 @@ class Indocker::Container
     Indocker::Actions::EnvFileReader.new
   end
 
+  register "actions.template_reader" do
+    Indocker::Actions::TemplateReader.new
+  end
+
   register "actions.configuration_loader" do
     Indocker::Actions::ConfigurationLoader.new
   end

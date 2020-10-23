@@ -3,6 +3,10 @@ class TestHelper
     def hello_world
       "hello world"
     end
+
+    def configuration_name
+      :default
+    end
   
     def get_binding
       binding
@@ -27,6 +31,14 @@ class TestHelper
 
   def registry_store
     Indocker::Container['core.registry_store']
+  end
+
+  def env_file_store
+    Indocker::Container['core.env_file_store']
+  end
+
+  def template_store
+    Indocker::Container['core.template_store']
   end
   
   def image_factory

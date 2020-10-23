@@ -1,3 +1,2 @@
-- rename env_file_name, registry_name, artifact_name to name
 - add build servers support
 - add build vars support (use images instead of containers)

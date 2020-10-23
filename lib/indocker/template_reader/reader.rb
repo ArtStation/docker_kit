@@ -21,7 +21,7 @@ class Indocker::TemplateReader::Reader
 
     reader = @@readers[template.class]
 
-    raise ReaderNotFoundError, "Can't find reader for env file #{template}" if reader.nil?
+    raise ReaderNotFoundError, "Can't find reader for template #{template}" if reader.nil?
 
     context_helper = context_helper_factory.create(shell)
 
@@ -29,7 +29,7 @@ class Indocker::TemplateReader::Reader
   end
 
   def add_default_readers
-    use_reader(artifact_file_reader, template_class: Indocker::Core::EnvFiles::ArtifactFile)
+    use_reader(artifact_file_reader, template_class: Indocker::Core::Templates::ArtifactFile)
   end
 
   def reset!

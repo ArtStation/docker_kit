@@ -10,6 +10,6 @@ RSpec.describe Indocker::TemplateReader::ArtifactFileReader do
 
   it "returns preprocessed content of the artifact" do
     result = subject.read(test_helper.shell, template, context_helper: test_helper.context_helper)
-    expect(result).to eq("apiVersion: v1\nkind: Service\nmetadata:\n  title: \"hello world\"\nspec:\n  selector:\n    app: test-app")
+    expect(result).to eq("apiVersion: v1\nkind: Service\nmetadata:\n  configuration: \"default\"\nspec:\n  selector:\n    app: test-app")
   end
 end
