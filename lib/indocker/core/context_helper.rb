@@ -18,6 +18,10 @@ class Indocker::Core::ContextHelper
     [artifact.cloned_path, file_name].compact.join("/")
   end
 
+  def configuration_name
+    Indocker.current_configuration.name
+  end
+
   def get_binding
     binding
   end

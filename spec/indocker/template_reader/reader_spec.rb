@@ -2,7 +2,7 @@ RSpec.describe Indocker::TemplateReader::Reader do
   subject{ Indocker::TemplateReader::Reader.new }
 
   class ExampleTemplateReader < Indocker::TemplateReader::AbstractTemplateReader
-    def read(shell, template)
+    def read(shell, template, context_helper: nil)
       return {name: template.name}
     end
   end

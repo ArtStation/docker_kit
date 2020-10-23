@@ -33,4 +33,10 @@ RSpec.describe Indocker::Core::ContextHelper do
       expect(subject.artifact_path(:example_repo, "test.txt")).to eq("/tmp/indocker/artifacts/example_repo/test.txt")
     end
   end
+
+  context "configuration_name" do
+    it "returns configuration name" do
+      expect(subject.configuration_name).to eq(:default)
+    end
+  end
 end
