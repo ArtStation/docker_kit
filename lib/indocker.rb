@@ -43,6 +43,12 @@ module Indocker
       autoload :AbstractEnvFile, 'core/env_files/abstract_env_file'
       autoload :ArtifactFile, 'core/env_files/artifact_file'
     end
+
+    module Templates
+      autoload :TemplateStore, 'core/templates/template_store'
+      autoload :AbstractTemplate, 'core/templates/abstract_template'
+      autoload :ErbTemplate, 'core/templates/erb_template'
+    end
   end
 
   module Tools

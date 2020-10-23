@@ -53,6 +53,10 @@ class Indocker::Container
     Indocker::Core::EnvFiles::EnvFileStore.new
   end
 
+  register "core.template_store" do
+    Indocker::Core::Templates::TemplateStore.new
+  end
+
   register "tools.file_presence_checker" do
     Indocker::Tools::FilePresenceChecker.new
   end

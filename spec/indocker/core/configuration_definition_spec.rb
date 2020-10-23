@@ -59,4 +59,19 @@ RSpec.describe Indocker::Core::ConfigurationDefinition do
       }.to raise_error(Indocker::Core::ConfigurationDefinition::ResourceAlreadyAdded)
     end
   end
+
+  context "template" do
+    it "saves templates as hash" do
+      subject.use_template(:main_production_template, as: :main_registry)
+
+      expect(subject.to_attrs.templates).to eq({main_registry: :main_production_template})
+    end
+
+    it "doesn't allow duplicates" do
+      subject.use_template(:main_production_template, as: :main_registry)
+      expect{
+        subject.use_template(:main_production_template, as: :main_registry)
+      }.to raise_error(Indocker::Core::ConfigurationDefinition::ResourceAlreadyAdded)
+    end
+  end
 end

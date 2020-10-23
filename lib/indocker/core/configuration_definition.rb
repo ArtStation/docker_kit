@@ -9,6 +9,7 @@ class Indocker::Core::ConfigurationDefinition
     @artifacts  = {}
     @registries = {}
     @env_files  = {}
+    @templates  = {}
   end
 
   def to_attrs
@@ -16,7 +17,8 @@ class Indocker::Core::ConfigurationDefinition
       name:          @configuration_name,
       artifacts:     @artifacts,
       registries:    @registries,
-      env_files:     @env_files
+      env_files:     @env_files,
+      templates:     @templates
     )
   end
 
@@ -43,6 +45,15 @@ class Indocker::Core::ConfigurationDefinition
       raise ResourceAlreadyAdded.new("alias name :#{as} is already used by env_file: #{@env_files[as].inspect}")
     end
     @env_files[as] = env_file_name
+
+    self
+  end
+
+  def use_template(template_name, as:)
+    if @templates.has_key?(as)
+      raise ResourceAlreadyAdded.new("alias name :#{as} is already used by template: #{@templates[as].inspect}")
+    end
+    @templates[as] = template_name
 
     self
   end
