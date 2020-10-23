@@ -9,11 +9,11 @@ class Indocker::Core::Templates::TemplateStore
       raise ArgumentError.new("should be an instance of Indocker::Core::Templates::AbstractTemplate, got: #{template.inspect}")
     end
 
-    unless @@templates[template.template_name].nil?
-      raise AlreadyAddedError, "template #{template.template_name} was already added"
+    unless @@templates[template.name].nil?
+      raise AlreadyAddedError, "template #{template.name} was already added"
     end
 
-    @@templates[template.template_name] = template
+    @@templates[template.name] = template
   end
 
   def get(template_name)

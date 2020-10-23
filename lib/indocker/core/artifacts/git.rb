@@ -17,6 +17,6 @@ class Indocker::Core::Artifacts::Git < Indocker::Core::Artifacts::AbstractArtifa
   def cloned_path
     # TODO: We should refactor to not call container here
     configs = Indocker::Container['configs']
-    "#{configs.artifact_clone_dir}/#{artifact_name}"
+    "#{configs.artifact_clone_dir}/#{name}"
   end
 end

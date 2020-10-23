@@ -9,11 +9,11 @@ class Indocker::Core::Artifacts::ArtifactStore
       raise ArgumentError.new("should be an instance of Indocker::Core::Artifacts::AbstractArtifact, got: #{artifact.inspect}")
     end
 
-    unless @@artifacts[artifact.artifact_name].nil?
-      raise AlreadyAddedError, "artifact #{artifact.artifact_name} was already added"
+    unless @@artifacts[artifact.name].nil?
+      raise AlreadyAddedError, "artifact #{artifact.name} was already added"
     end
 
-    @@artifacts[artifact.artifact_name] = artifact
+    @@artifacts[artifact.name] = artifact
   end
 
   def get(artifact_name)

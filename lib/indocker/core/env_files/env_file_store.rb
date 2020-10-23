@@ -9,11 +9,11 @@ class Indocker::Core::EnvFiles::EnvFileStore
       raise ArgumentError.new("should be an instance of Indocker::Core::EnvFiles::AbstractEnvFile, got: #{env_file.inspect}")
     end
 
-    unless @@env_files[env_file.env_file_name].nil?
-      raise AlreadyAddedError, "env_file #{env_file.env_file_name} was already added"
+    unless @@env_files[env_file.name].nil?
+      raise AlreadyAddedError, "env_file #{env_file.name} was already added"
     end
 
-    @@env_files[env_file.env_file_name] = env_file
+    @@env_files[env_file.name] = env_file
   end
 
   def get(env_file_name)

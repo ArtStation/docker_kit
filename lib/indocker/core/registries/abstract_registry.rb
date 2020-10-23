@@ -1,10 +1,10 @@
 class Indocker::Core::Registries::AbstractRegistry
   include Indocker::Extensions::Inspectable
 
-  attr_reader :registry_name
+  attr_reader :name
 
   def initialize(registry_name)
-    @registry_name = registry_name
+    @name = registry_name
   end
 
   def path

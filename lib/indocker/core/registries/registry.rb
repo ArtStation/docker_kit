@@ -7,7 +7,7 @@ class Indocker::Core::Registries::Registry < Indocker::Core::Registries::Abstrac
   alias_method :setup, :set_remote_url
 
   def path
-    registry_name.to_s
+    name.to_s
   end
 
   def remote_path

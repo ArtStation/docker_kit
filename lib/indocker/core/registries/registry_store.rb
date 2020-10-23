@@ -9,11 +9,11 @@ class Indocker::Core::Registries::RegistryStore
       raise ArgumentError.new("should be an instance of Indocker::Core::Registries::AbstractRegistry, got: #{registry.inspect}")
     end
 
-    unless @@registries[registry.registry_name].nil?
-      raise AlreadyAddedError, "registry #{registry.registry_name} was already added"
+    unless @@registries[registry.name].nil?
+      raise AlreadyAddedError, "registry #{registry.name} was already added"
     end
 
-    @@registries[registry.registry_name] = registry
+    @@registries[registry.name] = registry
   end
 
   def get(registry_name)

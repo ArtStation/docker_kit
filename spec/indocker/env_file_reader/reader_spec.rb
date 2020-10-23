@@ -3,7 +3,7 @@ RSpec.describe Indocker::EnvFileReader::Reader do
 
   class ExampleReader < Indocker::EnvFileReader::AbstractEnvFileReader
     def read(shell, env_file)
-      return {name: env_file.env_file_name}
+      return {name: env_file.name}
     end
   end
 

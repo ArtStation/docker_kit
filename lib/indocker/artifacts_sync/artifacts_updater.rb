@@ -23,7 +23,7 @@ class Indocker::ArtifactsSync::ArtifactsUpdater
     artifacts.each do |artifact|
       resolver = @@resolvers[artifact.class]
 
-      logger.info "Updating artifact #{artifact.artifact_name.to_s.green}"
+      logger.info "Updating artifact #{artifact.name.to_s.green}"
       
       raise ResolverNotFoundError, "Can't find resolver for artifact #{artifact}" if resolver.nil?
 
