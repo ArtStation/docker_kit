@@ -1,5 +1,5 @@
-RSpec.describe Indocker::Compiler::ImageBuildDirCreator do
-  subject{ Indocker::Compiler::ImageBuildDirCreator.new }
+RSpec.describe Indocker::ImageCompiler::ImageBuildDirCreator do
+  subject{ Indocker::ImageCompiler::ImageBuildDirCreator.new }
 
   let(:image) { test_helper.image(:example) }
   let(:shell) { test_helper.shell }

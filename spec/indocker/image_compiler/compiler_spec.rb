@@ -1,5 +1,5 @@
-RSpec.describe Indocker::Compiler::ImageCompiler do
-  subject{ Indocker::Compiler::ImageCompiler.new }
+RSpec.describe Indocker::ImageCompiler::Compiler do
+  subject{ Indocker::ImageCompiler::Compiler.new }
 
   let(:image) { test_helper.image(:example) }
   let(:shell) { test_helper.shell }

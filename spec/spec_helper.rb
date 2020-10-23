@@ -43,6 +43,7 @@ RSpec.configure do |config|
     Indocker::Container['artifacts_sync.artifacts_updater'].reset!
     Indocker::Container['env_file_reader.reader'].reset!
     Indocker::Container['template_reader.reader'].reset!
+    Indocker::Container['tools.file_presence_checker'].reset!
   end
 end
 

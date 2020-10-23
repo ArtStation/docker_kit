@@ -125,24 +125,24 @@ class Indocker::Container
     Indocker::Preprocessing::DirPreprocessor.new
   end
 
-  register "compiler.image_builder" do
-    Indocker::Compiler::ImageBuilder.new
+  register "image_compiler.compiler" do
+    Indocker::ImageCompiler::Compiler.new
   end
 
-  register "compiler.image_build_dir_creator" do
-    Indocker::Compiler::ImageBuildDirCreator.new
+  register "image_compiler.image_builder" do
+    Indocker::ImageCompiler::ImageBuilder.new
   end
 
-  register "compiler.image_compiler" do
-    Indocker::Compiler::ImageCompiler.new
+  register "image_compiler.image_build_dir_creator" do
+    Indocker::ImageCompiler::ImageBuildDirCreator.new
   end
 
-  register "compiler.image_dependency_resolver" do
-    Indocker::Compiler::ImageDependencyResolver.new
+  register "image_compiler.image_dependency_resolver" do
+    Indocker::ImageCompiler::ImageDependencyResolver.new
   end
 
-  register "compiler.version_tag_builder" do
-    Indocker::Compiler::VersionTagBuilder.new
+  register "image_compiler.version_tag_builder" do
+    Indocker::ImageCompiler::VersionTagBuilder.new
   end
 
   register "artifacts_sync.artifacts_updater" do

@@ -1,7 +1,7 @@
-class Indocker::Compiler::ImageBuilder
+class Indocker::ImageCompiler::ImageBuilder
   include Indocker::Import[
     "shell.docker_commands",
-    "compiler.version_tag_builder"
+    "image_compiler.version_tag_builder"
   ]
 
   Contract Indocker::Shell::AbstractShell, Indocker::Core::Image, String, KeywordArgs[

@@ -1,5 +1,5 @@
-RSpec.describe Indocker::Compiler::ImageBuilder do
-  subject{ Indocker::Compiler::ImageBuilder.new }
+RSpec.describe Indocker::ImageCompiler::ImageBuilder do
+  subject{ Indocker::ImageCompiler::ImageBuilder.new }
 
   let(:image) { test_helper.image(:example) }
   let(:shell) { test_helper.shell }
@@ -11,11 +11,11 @@ RSpec.describe Indocker::Compiler::ImageBuilder do
   end
 
   before do
-    Indocker::Container.stub("compiler.version_tag_builder", TestVersionTagBuilder.new)
+    Indocker::Container.stub("image_compiler.version_tag_builder", TestVersionTagBuilder.new)
   end
 
   after do
-    Indocker::Container.unstub("compiler.version_tag_builder")
+    Indocker::Container.unstub("image_compiler.version_tag_builder")
   end
 
   it "builds image using docker" do

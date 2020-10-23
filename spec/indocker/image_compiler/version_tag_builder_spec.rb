@@ -1,5 +1,5 @@
-RSpec.describe Indocker::Compiler::VersionTagBuilder do
-  subject { Indocker::Compiler::VersionTagBuilder.new }
+RSpec.describe Indocker::ImageCompiler::VersionTagBuilder do
+  subject { Indocker::ImageCompiler::VersionTagBuilder.new }
 
   context "get_version" do
     it "returns tag with current date and time" do

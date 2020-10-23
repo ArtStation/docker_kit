@@ -1,5 +1,5 @@
-RSpec.describe Indocker::Compiler::ImageDependencyResolver do
-  subject{ Indocker::Compiler::ImageDependencyResolver.new }
+RSpec.describe Indocker::ImageCompiler::ImageDependencyResolver do
+  subject{ Indocker::ImageCompiler::ImageDependencyResolver.new }
 
   let!(:imageA) { test_helper.image_store.define(:imageA).depends_on(:imageB) }
   let!(:imageB) { test_helper.image_store.define(:imageB).depends_on(:imageC, :imageD) }
@@ -23,7 +23,7 @@ RSpec.describe Indocker::Compiler::ImageDependencyResolver do
 
       expect{
         subject.get_recursive_deps(:image1)
-      }.to raise_error(Indocker::Compiler::ImageDependencyResolver::CircularDependencyError)
+      }.to raise_error(Indocker::ImageCompiler::ImageDependencyResolver::CircularDependencyError)
     end
 
     it "raises exception if dependency is not found" do

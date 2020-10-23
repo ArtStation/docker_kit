@@ -1,7 +1,7 @@
 class Indocker::Actions::ImageCompiler
   include Indocker::Import[
-    "compiler.image_compiler",
-    "compiler.image_dependency_resolver",
+    "image_compiler.compiler",
+    "image_compiler.image_dependency_resolver",
     "shell.local_shell",
     "tools.logger",
     "configs",

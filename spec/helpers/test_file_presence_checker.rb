@@ -30,4 +30,8 @@ class TestFilePresenceChecker < Indocker::Tools::FilePresenceChecker
     @lost_paths ||= []
     @lost_paths.include?(path)
   end
+
+  def reset!
+    @lost_paths = []
+  end
 end

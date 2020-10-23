@@ -1,4 +1,4 @@
-class Indocker::Compiler::ImageBuildDirCreator
+class Indocker::ImageCompiler::ImageBuildDirCreator
   include Indocker::Import[
     "preprocessing.dir_preprocessor",
     "preprocessing.file_preprocessor",

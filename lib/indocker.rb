@@ -76,12 +76,12 @@ module Indocker
     autoload :CommandCounter, 'shell/command_counter'
   end
 
-  module Compiler
-    autoload :ImageBuilder, 'compiler/image_builder'
-    autoload :ImageBuildDirCreator, 'compiler/image_build_dir_creator'
-    autoload :ImageCompiler, 'compiler/image_compiler'
-    autoload :ImageDependencyResolver, 'compiler/image_dependency_resolver'
-    autoload :VersionTagBuilder, 'compiler/version_tag_builder'
+  module ImageCompiler
+    autoload :Compiler, 'image_compiler/compiler'
+    autoload :ImageBuilder, 'image_compiler/image_builder'
+    autoload :ImageBuildDirCreator, 'image_compiler/image_build_dir_creator'
+    autoload :ImageDependencyResolver, 'image_compiler/image_dependency_resolver'
+    autoload :VersionTagBuilder, 'image_compiler/version_tag_builder'
   end
 
   module Preprocessing

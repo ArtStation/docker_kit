@@ -1,4 +1,4 @@
-class Indocker::Compiler::ImageDependencyResolver
+class Indocker::ImageCompiler::ImageDependencyResolver
   CircularDependencyError = Class.new(Indocker::Error)
   DependencyNotFoundError = Class.new(Indocker::NotFoundError)
 
