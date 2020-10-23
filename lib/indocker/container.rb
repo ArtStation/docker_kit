@@ -57,6 +57,10 @@ class Indocker::Container
     Indocker::Core::Templates::TemplateStore.new
   end
 
+  register "core.context_helper_factory" do
+    Indocker::Core::ContextHelperFactory.new
+  end
+
   register "tools.file_presence_checker" do
     Indocker::Tools::FilePresenceChecker.new
   end
@@ -119,10 +123,6 @@ class Indocker::Container
 
   register "compiler.image_dependency_resolver" do
     Indocker::Compiler::ImageDependencyResolver.new
-  end
-
-  register "compiler.context_helper_factory" do
-    Indocker::Compiler::ContextHelperFactory.new
   end
 
   register "compiler.version_tag_builder" do

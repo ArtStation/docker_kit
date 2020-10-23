@@ -6,7 +6,7 @@ class Indocker::Compiler::ImageBuilder
 
   Contract Indocker::Shell::AbstractShell, Indocker::Core::Image, String, KeywordArgs[
     args: Maybe[Any],
-    context_helper: Maybe[Indocker::Compiler::ContextHelper]
+    context_helper: Maybe[Indocker::Core::ContextHelper]
   ] => Any
   def build(shell, image, build_dir, context_helper: nil, args: [])
     image.before_build_callback.call(context_helper, build_dir) if image.before_build_callback

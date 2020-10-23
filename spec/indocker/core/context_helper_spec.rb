@@ -1,5 +1,5 @@
-RSpec.describe Indocker::Compiler::ContextHelper do
-  subject{ Indocker::Compiler::ContextHelper.new(
+RSpec.describe Indocker::Core::ContextHelper do
+  subject{ Indocker::Core::ContextHelper.new(
     image_store: test_helper.image_store,
     artifact_store: Indocker::Container['core.artifact_store'],
     shell: test_helper.shell

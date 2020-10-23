@@ -25,6 +25,9 @@ module Indocker
     autoload :ConfigurationFactory, 'core/configuration_factory'
     autoload :Configuration, 'core/configuration'
 
+    autoload :ContextHelper, 'core/context_helper'
+    autoload :ContextHelperFactory, 'core/context_helper_factory'
+
     module Registries
       autoload :AbstractRegistry, 'core/registries/abstract_registry'
       autoload :RegistryStore, 'core/registries/registry_store'
@@ -72,8 +75,6 @@ module Indocker
     autoload :ImageBuildDirCreator, 'compiler/image_build_dir_creator'
     autoload :ImageCompiler, 'compiler/image_compiler'
     autoload :ImageDependencyResolver, 'compiler/image_dependency_resolver'
-    autoload :ContextHelper, 'compiler/context_helper'
-    autoload :ContextHelperFactory, 'compiler/context_helper_factory'
     autoload :VersionTagBuilder, 'compiler/version_tag_builder'
   end
 
@@ -167,7 +168,7 @@ module Indocker
     end
 
     def build_helper(&proc)
-      Indocker::Compiler::ContextHelper.class_exec(&proc)
+      Indocker::Core::ContextHelper.class_exec(&proc)
     end
   end
 end

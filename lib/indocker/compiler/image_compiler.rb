@@ -2,7 +2,7 @@ class Indocker::Compiler::ImageCompiler
   include Indocker::Import[
     "compiler.image_build_dir_creator",
     "compiler.image_builder",
-    "compiler.context_helper_factory",
+    "core.context_helper_factory",
     "core.image_store"
   ]
 

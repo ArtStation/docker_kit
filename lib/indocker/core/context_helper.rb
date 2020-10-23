@@ -1,4 +1,4 @@
-class Indocker::Compiler::ContextHelper
+class Indocker::Core::ContextHelper
   attr_reader :shell, :artifact_store, :image_store
 
   def initialize(image_store:, artifact_store:, shell:)
