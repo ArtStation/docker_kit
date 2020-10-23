@@ -9,13 +9,13 @@ class Indocker::EnvFileReader::ArtifactFileReader < Indocker::EnvFileReader::Abs
     file_parts = [artifact.cloned_path, env_file.file_path].compact
     file_path  = File.join(*file_parts)
 
-    read_file(file_path)
+    read_file(shell, file_path)
   end
 
   private
-    def read_file(file_path)
+    def read_file(shell, file_path)
       result = {}
-      content = File.read(file_path)
+      content = shell.read(file_path)
       Parser.call(content)
     end
 
