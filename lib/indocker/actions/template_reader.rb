@@ -12,7 +12,7 @@ class Indocker::Actions::TemplateReader
     template = template_store.get(template_name)
     context_helper = context_helper_factory.build_image_context(local_shell)
 
-    result = reader.read(local_shell, template, context_helper: context_helper)
+    result = reader.read(local_shell, template)
 
     ui.print_info(template_name.to_s, result)
   end

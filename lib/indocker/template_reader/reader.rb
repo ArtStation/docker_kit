@@ -15,14 +15,14 @@ class Indocker::TemplateReader::Reader
     @@readers[template_class] = template_reader
   end
 
-  def read(shell, template, context_helper: nil)
+  def read(shell, template)
     add_default_readers
 
     reader = @@readers[template.class]
 
     raise ReaderNotFoundError, "Can't find reader for template #{template}" if reader.nil?
 
-    reader.read(shell, template, context_helper: context_helper)
+    reader.read(shell, template)
   end
 
   def add_default_readers

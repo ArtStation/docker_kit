@@ -3,15 +3,17 @@ class Indocker::ServiceHandler::ServiceReader
     "core.template_store",
     "core.context_helper_factory",
     "template_reader.reader",
-    "shell.local_shell",
+    "preprocessing.text_preprocessor"
   ]
 
   def read(shell, service)
     template = template_store.get(service.template_name)
 
-    context_helper = context_helper_factory.build_service_context(local_shell, service)
+    context_helper = context_helper_factory.build_service_context(shell, service)
 
-    result = reader.read(local_shell, template, context_helper: context_helper)
+    template = reader.read(shell, template)
+
+    result = text_preprocessor.compile(template, context_helper: context_helper)
 
     result
   end

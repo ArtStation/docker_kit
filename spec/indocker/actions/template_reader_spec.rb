@@ -11,7 +11,7 @@ RSpec.describe Indocker::Actions::TemplateReader do
   end
 
   it "prints content of template file" do
-    expect(subject.ui).to receive(:print_info).with("test_template", /configuration\: \"default\"/)
+    expect(subject.ui).to receive(:print_info).with("test_template", /apiVersion: v1/)
     subject.call(:test_template, {})
   end
 end
