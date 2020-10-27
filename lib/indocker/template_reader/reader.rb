@@ -3,7 +3,6 @@ class Indocker::TemplateReader::Reader
 
   include Indocker::Import[
     "template_reader.artifact_file_reader",
-    "core.context_helper_factory",
   ]
 
   def use_reader(template_reader, template_class:)
@@ -16,14 +15,12 @@ class Indocker::TemplateReader::Reader
     @@readers[template_class] = template_reader
   end
 
-  def read(shell, template)
+  def read(shell, template, context_helper: nil)
     add_default_readers
 
     reader = @@readers[template.class]
 
     raise ReaderNotFoundError, "Can't find reader for template #{template}" if reader.nil?
-
-    context_helper = context_helper_factory.build_image_context(shell)
 
     reader.read(shell, template, context_helper: context_helper)
   end

@@ -3,7 +3,7 @@ RSpec.describe Indocker::Actions::TemplateReader do
 
   let(:shell) { test_helper.shell }
   let(:artifact) { Indocker::Core::Artifacts::Local.new(:templates).setup(File.join(FIXTURES_PATH, "templates")) }
-  let(:template) { Indocker::Core::Templates::ArtifactFile.new(:test_template, artifact_name: :templates, file_path: "service.yml") }
+  let(:template) { Indocker::Core::Templates::ArtifactFile.new(:test_template, artifact_name: :templates, file_path: "configuration.yml") }
 
   before do
     test_helper.artifact_store.add(artifact)

@@ -7,4 +7,8 @@ class Indocker::Core::ContextHelper::ServiceHelper < Indocker::Core::ContextHelp
     )
     @service = service
   end
+
+  def service_name
+    @service.name
+  end
 end
