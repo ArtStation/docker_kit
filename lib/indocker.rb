@@ -121,6 +121,7 @@ module Indocker
     autoload :ImageCompiler, 'actions/image_compiler'
     autoload :EnvFileReader, 'actions/env_file_reader'
     autoload :TemplateReader, 'actions/template_reader'
+    autoload :ServiceReader, 'actions/service_reader'
     autoload :ConfigurationLoader, 'actions/configuration_loader'
   end
 
@@ -144,6 +145,10 @@ module Indocker
       image_path = caller[0].split(':').first
   
       Container["core.image_store"].define(image_name, image_path.split('image.rb').first)
+    end
+
+    def define_service(service_name)  
+      Container["core.service_store"].define(service_name)
     end
 
     def define_configuration(configuration_name)

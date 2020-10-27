@@ -173,6 +173,10 @@ class Indocker::Container
     Indocker::TemplateReader::ArtifactFileReader.new
   end
 
+  register "service_handler.service_reader" do
+    Indocker::ServiceHandler::ServiceReader.new
+  end
+
   register "ui" do
     if Indocker.debug_mode?
       Indocker::UI::Simple.new

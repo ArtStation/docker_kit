@@ -25,6 +25,10 @@ class TestHelper
     Indocker::Container['core.image_store']
   end
 
+  def service_store
+    Indocker::Container['core.service_store']
+  end
+
   def artifact_store
     Indocker::Container['core.artifact_store']
   end
