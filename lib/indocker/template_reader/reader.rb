@@ -23,7 +23,7 @@ class Indocker::TemplateReader::Reader
 
     raise ReaderNotFoundError, "Can't find reader for template #{template}" if reader.nil?
 
-    context_helper = context_helper_factory.create(shell)
+    context_helper = context_helper_factory.build_image_context(shell)
 
     reader.read(shell, template, context_helper: context_helper)
   end

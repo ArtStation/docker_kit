@@ -31,8 +31,12 @@ module Indocker
     autoload :ConfigurationFactory, 'core/configuration_factory'
     autoload :Configuration, 'core/configuration'
 
-    autoload :ContextHelper, 'core/context_helper'
-    autoload :ContextHelperFactory, 'core/context_helper_factory'
+    module ContextHelper
+      autoload :BaseHelper, 'core/context_helper/base_helper'
+      autoload :ImageHelper, 'core/context_helper/image_helper'
+      autoload :ServiceHelper, 'core/context_helper/service_helper'
+      autoload :ContextHelperFactory, 'core/context_helper/context_helper_factory'
+    end
 
     module Registries
       autoload :AbstractRegistry, 'core/registries/abstract_registry'
@@ -109,6 +113,10 @@ module Indocker
     autoload :ArtifactFileReader, 'template_reader/artifact_file_reader'
   end
 
+  module ServiceHandler
+    autoload :ServiceReader, 'service_handler/service_reader'
+  end
+
   module Actions
     autoload :ImageCompiler, 'actions/image_compiler'
     autoload :EnvFileReader, 'actions/env_file_reader'
@@ -179,7 +187,7 @@ module Indocker
     end
 
     def build_helper(&proc)
-      Indocker::Core::ContextHelper.class_exec(&proc)
+      Indocker::Core::ContextHelper::BaseHelper.class_exec(&proc)
     end
   end
 end

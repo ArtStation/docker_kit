@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe Indocker::Core::ServiceStore do
   subject{ Indocker::Core::ServiceStore.new }
-  let(:test_definition) { test_helper.service_definition(:example) }
+  let(:test_definition) { test_helper.service_definition(:example).template(:service) }
    
   context "#define" do
     it "defines an service and returns ServiceDefinition" do

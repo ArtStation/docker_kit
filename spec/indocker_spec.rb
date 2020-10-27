@@ -17,7 +17,7 @@ RSpec.describe Indocker do
         end
       end
 
-      helper = Indocker::Core::ContextHelperFactory.new.create(test_helper.shell)
+      helper = Indocker::Core::ContextHelper::ContextHelperFactory.new.build_image_context(test_helper.shell)
       expect(helper.test_url).to eq("test")
     end
   end

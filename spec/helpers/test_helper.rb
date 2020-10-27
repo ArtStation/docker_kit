@@ -68,6 +68,10 @@ class TestHelper
     Indocker::Container['core.service_definition_factory']
   end
 
+  def service_factory
+    Indocker::Container['core.service_factory']
+  end
+
   def service_definition(name)
     service_definition_factory.create(name)
   end

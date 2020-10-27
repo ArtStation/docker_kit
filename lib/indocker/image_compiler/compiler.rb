@@ -12,7 +12,7 @@ class Indocker::ImageCompiler::Compiler
 
     image_build_dir = File.join(builds_dir, image.name.to_s)
 
-    context_helper = context_helper_factory.create(shell)
+    context_helper = context_helper_factory.build_image_context(shell)
     image_build_dir_creator.create(shell, image, image_build_dir, context_helper: context_helper)
 
     image_builder.build(shell, image, image_build_dir, context_helper: context_helper, args: [])

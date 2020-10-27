@@ -74,7 +74,7 @@ class Indocker::Container
   end
 
   register "core.context_helper_factory" do
-    Indocker::Core::ContextHelperFactory.new
+    Indocker::Core::ContextHelper::ContextHelperFactory.new
   end
 
   register "tools.file_presence_checker" do
