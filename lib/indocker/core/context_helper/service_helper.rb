@@ -9,6 +9,11 @@ class Indocker::Core::ContextHelper::ServiceHelper < Indocker::Core::ContextHelp
   end
 
   def service_name
-    @service.name
+    @service.name.to_s
+  end
+
+  def service_uri
+    service_name
+      .sub("_", "-")
   end
 end

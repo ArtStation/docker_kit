@@ -13,6 +13,10 @@ class Indocker::Container
     Indocker::Actions::TemplateReader.new
   end
 
+  register "actions.service_reader" do
+    Indocker::Actions::ServiceReader.new
+  end
+
   register "actions.configuration_loader" do
     Indocker::Actions::ConfigurationLoader.new
   end

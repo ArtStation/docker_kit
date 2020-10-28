@@ -38,7 +38,7 @@ class Indocker::CLI < Thor
     Indocker::Container['actions.env_file_reader'].call(env_file_name.to_sym, options)
   end
 
-  desc "env TEMPLATE_NAME", "Return content of Template TEMPLATE_NAME"
+  desc "template TEMPLATE_NAME", "Return content of Template TEMPLATE_NAME"
   method_option :path, :type => :string
   method_option :images_path, :type => :string
   method_option :infra_path, :type => :string
@@ -50,6 +50,20 @@ class Indocker::CLI < Thor
 
     Indocker::Container['actions.configuration_loader'].call(options)
     Indocker::Container['actions.template_reader'].call(template_name.to_sym, options)
+  end
+
+  desc "service SERVICE_NAME", "Return content of Service SERVICE_NAME"
+  method_option :path, :type => :string
+  method_option :images_path, :type => :string
+  method_option :infra_path, :type => :string
+  method_option :configurations_path, :type => :string
+  method_option :debug, :type => :boolean, aliases: ["-d"]
+  method_option :configuration, :type => :string, aliases: ["-C"]
+  def service(service_name)
+    Indocker.set_debug_mode(options[:debug])
+
+    Indocker::Container['actions.configuration_loader'].call(options)
+    Indocker::Container['actions.service_reader'].call(service_name.to_sym, options)
   end
 
   def self.exit_on_failure?
