@@ -15,21 +15,15 @@ class Indocker::UI::Interactive
   end
 
   def print_info(title, text)
-    CLI::UI::Frame.open(title) do
-      puts text
-    end
+    print_in_frame(title, text, color: :white)
   end
 
   def print_error(title, text)
-    CLI::UI::Frame.open(title, color: :red) do
-      puts text
-    end
+    print_in_frame(title, text, color: :red)
   end
 
   def print_warning(title, text)
-    CLI::UI::Frame.open(title, color: :yellow) do
-      puts text
-    end
+    print_in_frame(title, text, color: :yellow)
   end
 
   private
@@ -40,5 +34,11 @@ class Indocker::UI::Interactive
 
     def init_if_needed
       init unless @initialized
+    end
+
+    def print_in_frame(title, text, color:)
+      CLI::UI::Frame.open(title, color: color) do
+        puts text
+      end
     end
 end

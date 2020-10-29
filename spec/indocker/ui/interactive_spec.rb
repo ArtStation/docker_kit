@@ -26,4 +26,19 @@ RSpec.describe Indocker::UI::Interactive do
 
     expect(counter).to eq(1)
   end
+
+  it "can print info message" do
+    expect(subject).to receive(:print_in_frame)
+    subject.print_info("some title", 'some text')
+  end
+
+  it "can print info message" do
+    expect(subject).to receive(:print_in_frame)
+    subject.print_error("some title", 'some text')
+  end
+
+  it "can print info message" do
+    expect(subject).to receive(:print_in_frame)
+    subject.print_warning("some title", 'some text')
+  end
 end

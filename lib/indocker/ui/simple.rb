@@ -57,14 +57,19 @@ class Indocker::UI::Simple
   end
 
   def print_info(title, text)
-    puts "#{title.blue}\r\n #{text}"
+    print_text(title, text, color: String::Colors::BLUE)
   end
 
   def print_error(title, text)
-    puts "#{title.red}\r\n #{text.red}"
+    print_text(title, text, color: String::Colors::RED)
   end
 
   def print_warning(title, text)
-    puts "#{title.yellow}\r\n #{text.yellow}"
+    print_text(title, text, color: String::Colors::YELLOW)
   end
+
+  private
+    def print_text(title, text, color:)
+      puts "#{title.colorize(color)}\r\n #{text.colorize(color)}"
+    end
 end
