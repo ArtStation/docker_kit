@@ -10,7 +10,8 @@ class Indocker::Core::ServiceFactory
 
     Indocker::Core::Service.new(
       name:           service_attrs.name,
-      template_name:  service_attrs.template_name
+      template_name:  service_attrs.template_name,
+      tags:           service_attrs.tags
     )
   end
 end

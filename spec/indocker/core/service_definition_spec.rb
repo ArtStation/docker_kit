@@ -28,4 +28,24 @@ RSpec.describe Indocker::Core::ServiceDefinition do
       expect(definition.to_service_attrs.template_name).to eq(:service_template)
     end
   end
+
+  context "tags" do
+    it "sets tags with string" do
+      definition = subject.tags("some_tag")
+  
+      expect(definition.to_service_attrs.tags).to eq([:some_tag])
+    end
+
+    it "sets tags with array of symbols" do
+      definition = subject.tags([:some_tag])
+  
+      expect(definition.to_service_attrs.tags).to eq([:some_tag])
+    end
+
+    it "sets tags with proc" do
+      definition = subject.tags{ [:some_tag] }
+  
+      expect(definition.to_service_attrs.tags).to eq([:some_tag])
+    end
+  end
 end

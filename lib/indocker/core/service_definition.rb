@@ -9,12 +9,19 @@ class Indocker::Core::ServiceDefinition
   def to_service_attrs
     OpenStruct.new(
       name:           @service_name,
-      template_name:  get_value(@template_name)
+      template_name:  get_value(@template_name),
+      tags:           Array(get_value(@tags)).map(&:to_sym)
     )
   end
 
   def template(value = nil, &block)
     @template_name = block_given? ? block : value
+
+    self
+  end
+
+  def tags(value = nil, &block)
+    @tags = block_given? ? block : value
 
     self
   end
