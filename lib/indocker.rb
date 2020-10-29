@@ -73,11 +73,12 @@ module Indocker
   module Shell
     autoload :AbstractShell, 'shell/abstract_shell'
     autoload :LocalShell, 'shell/local_shell'
+    autoload :CommandCounter, 'shell/command_counter'
     autoload :BashCommands, 'shell/bash_commands'
     autoload :DockerCommands, 'shell/docker_commands'
     autoload :GitCommands, 'shell/git_commands'
     autoload :RsyncCommands, 'shell/rsync_commands'
-    autoload :CommandCounter, 'shell/command_counter'
+    autoload :KubectlCommands, 'shell/kubectl_commands'
   end
 
   module ImageCompiler

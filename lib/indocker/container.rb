@@ -109,6 +109,10 @@ class Indocker::Container
     Indocker::Shell::RsyncCommands.new
   end
 
+  register "shell.kubectl_commands" do
+    Indocker::Shell::KubectlCommands.new
+  end
+
   register "shell.local_shell" do
     Indocker::Shell::LocalShell.new
   end
