@@ -15,7 +15,7 @@ class Indocker::UI::Interactive
   end
 
   def print_info(title, text)
-    print_in_frame(title, text, color: :white)
+    print_in_frame(title, text, color: :blue)
   end
 
   def print_error(title, text)
