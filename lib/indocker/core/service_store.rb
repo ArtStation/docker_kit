@@ -53,4 +53,16 @@ class Indocker::Core::ServiceStore
   def reset!
     @@service_definitions = {}
   end
+
+  def all_definitions
+    @@service_definitions ||= {}
+  end
+
+  def count
+    all_definitions.count
+  end
+
+  def exists?(service_name)
+    !all_definitions[service_name].nil?
+  end
 end

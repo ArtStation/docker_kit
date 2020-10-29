@@ -116,6 +116,7 @@ module Indocker
 
   module ServiceDeployer
     autoload :ServiceReader, 'service_deployer/service_reader'
+    autoload :ServiceListResolver, 'service_deployer/service_list_resolver'
   end
 
   module Actions

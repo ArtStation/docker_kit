@@ -53,7 +53,7 @@ class Indocker::Actions::ConfigurationLoader
     end
 
     if configuration_store.count == 1 && configuration_name.nil?
-      first_configurations = configuration_store.configuration_definitions.values.first
+      first_configurations = configuration_store.all_definitions.values.first
       configuration_name   = first_configurations.configuration_name
     end
 

@@ -58,15 +58,15 @@ class Indocker::Core::ConfigurationStore
     @@configuration_definitions = {}
   end
 
-  def configuration_definitions
+  def all_definitions
     @@configuration_definitions ||= {}
   end
 
   def count
-    configuration_definitions.count
+    all_definitions.count
   end
 
   def exists?(configuration_name)
-    !configuration_definitions[configuration_name].nil?
+    !all_definitions[configuration_name].nil?
   end
 end
