@@ -37,5 +37,11 @@ class Indocker::Shell::LocalShell < Indocker::Shell::AbstractShell
     command = %Q{find -L #{path}  -type f}
     command += " -name #{name}" if name
     exec!(command).split(/[\r\n]+/)
+  rescue => e
+    if e.message.include?("No such file or directory")
+      raise DirNotFoundError.new("Dir not found: #{path}")
+    else
+      raise e
+    end
   end
 end

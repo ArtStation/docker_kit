@@ -20,6 +20,18 @@ class Indocker::UI::Interactive
     end
   end
 
+  def print_error(title, text)
+    CLI::UI::Frame.open(title, color: :red) do
+      puts text
+    end
+  end
+
+  def print_warning(title, text)
+    CLI::UI::Frame.open(title, color: :yellow) do
+      puts text
+    end
+  end
+
   private
     def init
       @initialized = true

@@ -1,5 +1,6 @@
 class Indocker::Shell::AbstractShell
   ShellError = Class.new(Indocker::Error)
+  DirNotFoundError = Class.new(ShellError)
 
   def exec!(command)
     raise Indocker::NotImplementedError, "must be implemented"

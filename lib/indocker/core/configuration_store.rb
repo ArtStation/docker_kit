@@ -5,7 +5,8 @@ class Indocker::Core::ConfigurationStore
   include Indocker::Import[
     "core.configuration_factory",
     "core.configuration_definition_factory",
-    "shell.local_shell"
+    "shell.local_shell",
+    "tools.logger"
   ]
 
   def define(configuration_name)
@@ -44,6 +45,9 @@ class Indocker::Core::ConfigurationStore
     files = local_shell.recursive_list_files(dir_path).each do |path|
       load_definition(path)
     end
+  rescue Indocker::Shell::AbstractShell::DirNotFoundError
+    logger.warn("Directory with configurations not found: #{dir_path}")
+    []
   end
 
   def load_definition(file_path)

@@ -28,7 +28,7 @@ class Indocker::Core::ServiceStore
     @@service_definitions ||= {}
 
     if @@service_definitions[service_name].nil?
-      raise NotFoundError, "service #{service_name} not found"
+      raise NotFoundError, "service '#{service_name}' not found"
     end
 
     @@service_definitions[service_name]

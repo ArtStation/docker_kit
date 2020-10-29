@@ -28,7 +28,7 @@ class Indocker::Core::EnvFiles::EnvFileStore
     env_file = @@env_files[env_file_name]
 
     if env_file.nil?
-      raise NotFoundError, "env_file #{env_file_name} not found"
+      raise NotFoundError, "env_file '#{env_file_name}' not found"
     end
     
     env_file

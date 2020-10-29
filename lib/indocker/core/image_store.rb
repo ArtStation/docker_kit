@@ -5,7 +5,8 @@ class Indocker::Core::ImageStore
   include Indocker::Import[
     "core.image_factory",
     "core.image_definition_factory",
-    "shell.local_shell"
+    "shell.local_shell",
+    "tools.logger"
   ]
 
   def define(image_name, image_dir = nil)
@@ -44,6 +45,9 @@ class Indocker::Core::ImageStore
     files = local_shell.recursive_list_files(dir_path, name: "image.rb").each do |path|
       load_definition(path)
     end
+  rescue Indocker::Shell::AbstractShell::DirNotFoundError
+    logger.warn("Directory with images not found: #{dir_path}")
+    []
   end
 
   def load_definition(file_path)

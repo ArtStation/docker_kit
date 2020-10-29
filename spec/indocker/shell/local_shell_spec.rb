@@ -53,5 +53,17 @@ RSpec.describe Indocker::Shell::LocalShell do
       
       expect(result.sort).to eq([file_1_path])
     end
+
+    it "raises not found error if directory not found" do
+      expect(subject).to receive(:exec!).and_raise(Indocker::Shell::AbstractShell::ShellError.new("No such file or directory"))
+
+      expect{ subject.recursive_list_files(test_dir) }.to raise_error(Indocker::Shell::AbstractShell::DirNotFoundError)
+    end
+
+    it "reraises error if different error happens" do
+      expect(subject).to receive(:exec!).and_raise(Indocker::Shell::AbstractShell::ShellError.new("Random error"))
+
+      expect{ subject.recursive_list_files(test_dir) }.to raise_error(Indocker::Shell::AbstractShell::ShellError)
+    end
   end
 end

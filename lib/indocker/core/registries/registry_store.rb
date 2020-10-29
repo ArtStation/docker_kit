@@ -28,7 +28,7 @@ class Indocker::Core::Registries::RegistryStore
     registry = @@registries[registry_name]
 
     if registry.nil?
-      raise NotFoundError, "registry #{registry_name} not found"
+      raise NotFoundError, "registry '#{registry_name}' not found"
     end
     
     registry

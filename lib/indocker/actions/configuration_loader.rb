@@ -25,11 +25,19 @@ class Indocker::Actions::ConfigurationLoader
     logger.info "  Configurations path: #{configurations_path.to_s.yellow}"
     logger.info "  Configuration name: #{configuration_name.to_s.yellow}"
 
+    unless File.exists?(root_path)
+      ui.print_warning "WARNING", "Indocker root path #{root_path} doesn't exist. You may want to pass it --path parameter."
+    end
+
     configuration_store.define(:_default_)
     configuration_store.load_definitions(configurations_path)
     Indocker.set_configuration_name(configuration_name)
 
-    load_infrastructure(infra_path)
+    begin
+      load_infrastructure(infra_path)
+    rescue Indocker::Shell::AbstractShell::DirNotFoundError
+      logger.warn("Directory with infrastructure not found: #{infra_path}")
+    end
 
     ui.create_task("Updating artifacts") do |task|
       artifacts = Indocker.current_configuration.artifacts.values

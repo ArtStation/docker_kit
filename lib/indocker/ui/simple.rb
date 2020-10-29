@@ -55,4 +55,16 @@ class Indocker::UI::Simple
     task.execute
     task.wait
   end
+
+  def print_info(title, text)
+    puts "#{title.blue}\r\n #{text}"
+  end
+
+  def print_error(title, text)
+    puts "#{title.red}\r\n #{text.red}"
+  end
+
+  def print_warning(title, text)
+    puts "#{title.yellow}\r\n #{text.yellow}"
+  end
 end

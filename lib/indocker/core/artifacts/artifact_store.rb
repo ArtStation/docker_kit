@@ -28,7 +28,7 @@ class Indocker::Core::Artifacts::ArtifactStore
     artifact = @@artifacts[artifact_name]
 
     if artifact.nil?
-      raise NotFoundError, "artifact #{artifact_name} not found"
+      raise NotFoundError, "artifact '#{artifact_name}' not found"
     end
     
     artifact

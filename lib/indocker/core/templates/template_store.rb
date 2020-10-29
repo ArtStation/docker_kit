@@ -28,7 +28,7 @@ class Indocker::Core::Templates::TemplateStore
     template = @@templates[template_name]
 
     if template.nil?
-      raise NotFoundError, "template #{template_name} not found"
+      raise NotFoundError, "template '#{template_name}' not found"
     end
     
     template
