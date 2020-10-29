@@ -59,11 +59,11 @@ class Indocker::Core::ConfigurationStore
   end
 
   def configuration_definitions
-    @@configuration_definitions
+    @@configuration_definitions ||= {}
   end
 
-  def any?
-    configuration_definitions && configuration_definitions.any?
+  def count
+    configuration_definitions.count
   end
 
   def exists?(configuration_name)

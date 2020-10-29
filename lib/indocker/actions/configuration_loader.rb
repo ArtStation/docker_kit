@@ -16,7 +16,7 @@ class Indocker::Actions::ConfigurationLoader
     images_path = options[:images_path] || File.join(root_path, configs.images_dirname)
     infra_path  = options[:infra_path]  || File.join(root_path, configs.infra_dirname)
     configurations_path  = options[:configurations_path]  || File.join(root_path, configs.configurations_dirname)
-    configuration_name   = options[:configuration] || :_default_
+    configuration_name   = options[:configuration]
 
     logger.info "Launching indocker with:"
     logger.info "  Root path: #{root_path.to_s.yellow}"
@@ -47,8 +47,18 @@ class Indocker::Actions::ConfigurationLoader
   def load_configurations(configurations_path, configuration_name)
     configuration_store.load_definitions(configurations_path)
 
-    unless configuration_store.any?
+    if configuration_store.count.zero?
       configuration_store.define(:_default_)
+      configuration_name ||= :_default_
+    end
+
+    if configuration_store.count == 1 && configuration_name.nil?
+      first_configurations = configuration_store.configuration_definitions.values.first
+      configuration_name   = first_configurations.configuration_name
+    end
+
+    if configuration_store.count > 1 && configuration_name.nil?
+      raise Indocker::Error, "Please set configuration name using -C option"
     end
 
     Indocker.set_configuration_name(configuration_name)
