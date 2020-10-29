@@ -22,16 +22,6 @@ RSpec.describe Indocker::ArtifactsSync::ArtifactsUpdater do
   let(:artifact1) { ExampleArtifact1.new(:example) }
   let(:artifact2) { ExampleArtifact2.new(:example) }
 
-  it "calls the resolver for this artifact on update" do
-    subject.use_resolver(resolver1, artifact_class: ExampleArtifact1)
-    subject.use_resolver(resolver2, artifact_class: ExampleArtifact2)
-
-    subject.update(test_helper.shell, [artifact1, artifact2])
-
-    expect(resolver1.resolved_artifacts).to include(artifact1)
-    expect(resolver2.resolved_artifacts).to include(artifact2)
-  end
-
   it "raises error if resolver not found for class" do
     expect {
       subject.update(test_helper.shell, [artifact1])
@@ -41,6 +31,16 @@ RSpec.describe Indocker::ArtifactsSync::ArtifactsUpdater do
   it "raises an error if resolver is not instance of abstract resolver" do
     expect {
       subject.use_resolver(Indocker, artifact_class: ExampleArtifact1)
-  }.to raise_error(ArgumentError)
+    }.to raise_error(ArgumentError)
+  end
+
+  it "calls the resolver for this artifact on update" do
+    subject.use_resolver(resolver1, artifact_class: ExampleArtifact1)
+    subject.use_resolver(resolver2, artifact_class: ExampleArtifact2)
+
+    subject.update(test_helper.shell, [artifact1, artifact2])
+
+    expect(resolver1.resolved_artifacts).to include(artifact1)
+    expect(resolver2.resolved_artifacts).to include(artifact2)
   end
 end

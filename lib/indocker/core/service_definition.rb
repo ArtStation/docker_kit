@@ -20,8 +20,8 @@ class Indocker::Core::ServiceDefinition
     self
   end
 
-  def tags(value = nil, &block)
-    @tags = block_given? ? block : value
+  def tags(*value, &block)
+    @tags = block_given? ? block : Array(value).flatten
 
     self
   end

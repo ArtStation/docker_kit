@@ -30,10 +30,10 @@ RSpec.describe Indocker::Core::ServiceDefinition do
   end
 
   context "tags" do
-    it "sets tags with string" do
-      definition = subject.tags("some_tag")
+    it "sets tags with multiple arguments" do
+      definition = subject.tags("some_tag", "another_tag")
   
-      expect(definition.to_service_attrs.tags).to eq([:some_tag])
+      expect(definition.to_service_attrs.tags).to eq([:some_tag, :another_tag])
     end
 
     it "sets tags with array of symbols" do
