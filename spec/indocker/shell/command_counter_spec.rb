@@ -1,6 +1,8 @@
 RSpec.describe Indocker::Shell::CommandCounter do
   subject { Indocker::Shell::CommandCounter.new }
 
+  before { subject.reset! }
+
   it do
     expect(subject.get_number).to eq(1)
 

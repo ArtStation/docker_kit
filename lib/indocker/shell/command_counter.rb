@@ -10,4 +10,10 @@ class Indocker::Shell::CommandCounter
       @@number
     end
   end
+
+  def reset!
+    @mutex.synchronize do
+      @@number = 0
+    end
+  end
 end

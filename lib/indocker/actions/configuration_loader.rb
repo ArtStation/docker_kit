@@ -29,15 +29,8 @@ class Indocker::Actions::ConfigurationLoader
       ui.print_warning "WARNING", "Indocker root path #{root_path} doesn't exist. You may want to pass it --path parameter."
     end
 
-    configuration_store.define(:_default_)
-    configuration_store.load_definitions(configurations_path)
-    Indocker.set_configuration_name(configuration_name)
-
-    begin
-      load_infrastructure(infra_path)
-    rescue Indocker::Shell::AbstractShell::DirNotFoundError
-      logger.warn("Directory with infrastructure not found: #{infra_path}")
-    end
+    load_configurations(configurations_path, configuration_name)
+    load_infrastructure(infra_path)
 
     ui.create_task("Updating artifacts") do |task|
       artifacts = Indocker.current_configuration.artifacts.values
@@ -50,10 +43,22 @@ class Indocker::Actions::ConfigurationLoader
       task.update_title("Loaded #{files.count} image definitions")
     end
   end
+  
+  def load_configurations(configurations_path, configuration_name)
+    configuration_store.load_definitions(configurations_path)
+
+    unless configuration_store.any?
+      configuration_store.define(:_default_)
+    end
+
+    Indocker.set_configuration_name(configuration_name)
+  end
 
   def load_infrastructure(infra_path)
     local_shell.recursive_list_files(infra_path).each do |path|
       require(path)
     end
+  rescue Indocker::Shell::AbstractShell::DirNotFoundError
+    logger.warn("Directory with infrastructure not found: #{infra_path}")
   end
 end

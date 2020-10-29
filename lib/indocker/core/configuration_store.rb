@@ -57,4 +57,16 @@ class Indocker::Core::ConfigurationStore
   def reset!
     @@configuration_definitions = {}
   end
+
+  def configuration_definitions
+    @@configuration_definitions
+  end
+
+  def any?
+    configuration_definitions && configuration_definitions.any?
+  end
+
+  def exists?(configuration_name)
+    !configuration_definitions[configuration_name].nil?
+  end
 end

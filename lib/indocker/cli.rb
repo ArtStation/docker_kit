@@ -52,7 +52,7 @@ class Indocker::CLI < Thor
     Indocker.set_debug_mode(options[:debug])
 
     Indocker::Container['actions.configuration_loader'].call(options)
-    Indocker::Container['actions.kubectl_applier'].call(file_path, options)
+    Indocker::Container['actions.kubectl_applier'].call(File.expand_path(file_path), options)
   end
 
   def self.exit_on_failure?
