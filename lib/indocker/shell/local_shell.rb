@@ -30,6 +30,10 @@ class Indocker::Shell::LocalShell < Indocker::Shell::AbstractShell
   end
 
   def write(file_path, content)
+    dir_path = File.dirname(file_path)
+    unless Dir.exists?(dir_path)
+      FileUtils.mkdir_p(dir_path)
+    end
     File.write(file_path, content)
   end
 

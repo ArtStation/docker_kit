@@ -55,6 +55,17 @@ class Indocker::CLI < Thor
     Indocker::Container['actions.kubectl_applier'].call(File.expand_path(file_path), options)
   end
 
+  desc "deploy CONTEXT_NAME", "Deploy CONTEXT_NAME with kubectl"
+  method_option :services,   :type => :array, aliases: ["-s"]
+  method_option :tags,       :type => :array, aliases: ["-t"]
+  def deploy
+    Indocker.set_debug_mode(options[:debug])
+
+    Indocker::Container['actions.configuration_loader'].call(options)
+
+    Indocker::Container['actions.service_applier'].call(services: options[:services], tags: options[:tags])
+  end
+
   def self.exit_on_failure?
     true
   end

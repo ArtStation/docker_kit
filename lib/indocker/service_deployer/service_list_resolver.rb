@@ -4,11 +4,10 @@ class Indocker::ServiceDeployer::ServiceListResolver
   ]
 
   Contract KeywordArgs[
-    name:     Optional[Maybe[String]],
     services: Optional[ArrayOf[String]],
     tags:     Optional[ArrayOf[String]]
   ] => ArrayOf[String]
-  def resolve(name: nil, services: [], tags: [])
+  def resolve(services: [], tags: [])
     all_definitions = service_store.all_definitions.values
 
     included_services, excluded_services = split_by_inclusion(services)

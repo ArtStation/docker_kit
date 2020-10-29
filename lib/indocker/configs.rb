@@ -19,11 +19,12 @@ class Indocker::Configs
   INFRA_DIRNAME          = "infrastructure".freeze
   CONFIGURATIONS_DIRNAME = "configurations".freeze
   ARTIFACT_CLONE_DIR     = "/tmp/indocker/artifacts"
+  SERVICE_CONFIG_DIR     = "/tmp/indocker/services"
 
   attr_accessor :image_dockerfile_name, :image_build_context_dir, :image_tag,
                 :docker_ignore_list, :image_compile_dir, 
                 :indocker_dirname, :images_dirname, :infra_dirname, :configurations_dirname,
-                :artifact_clone_dir
+                :artifact_clone_dir, :service_config_dir
 
   def initialize
     @image_dockerfile_name   = IMAGE_DOCKERFILE_NAME
@@ -36,5 +37,6 @@ class Indocker::Configs
     @infra_dirname           = INFRA_DIRNAME
     @configurations_dirname  = CONFIGURATIONS_DIRNAME
     @artifact_clone_dir      = ARTIFACT_CLONE_DIR
+    @service_config_dir      = SERVICE_CONFIG_DIR
   end
 end

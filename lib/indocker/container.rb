@@ -17,6 +17,10 @@ class Indocker::Container
     Indocker::Actions::ServiceReader.new
   end
 
+  register "actions.service_applier" do
+    Indocker::Actions::ServiceApplier.new
+  end
+
   register "actions.configuration_loader" do
     Indocker::Actions::ConfigurationLoader.new
   end
@@ -187,6 +191,10 @@ class Indocker::Container
 
   register "service_deployer.service_reader" do
     Indocker::ServiceDeployer::ServiceReader.new
+  end
+
+  register "service_deployer.service_list_resolver" do
+    Indocker::ServiceDeployer::ServiceListResolver.new
   end
 
   register "ui" do
