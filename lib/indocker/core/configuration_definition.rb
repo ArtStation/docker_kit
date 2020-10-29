@@ -18,7 +18,8 @@ class Indocker::Core::ConfigurationDefinition
       artifacts:     @artifacts,
       registries:    @registries,
       env_files:     @env_files,
-      templates:     @templates
+      templates:     @templates,
+      kubecfg_path:  @kubecfg_path
     )
   end
 
@@ -54,6 +55,12 @@ class Indocker::Core::ConfigurationDefinition
       raise ResourceAlreadyAdded.new("alias name :#{as} is already used by template: #{@templates[as].inspect}")
     end
     @templates[as] = template_name
+
+    self
+  end
+
+  def kubecfg_path(path)
+    @kubecfg_path = path
 
     self
   end

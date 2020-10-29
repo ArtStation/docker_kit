@@ -21,7 +21,8 @@ class Indocker::Core::ConfigurationFactory
       artifacts:      artifacts,
       registries:     registries,
       env_files:      env_files,
-      templates:      templates
+      templates:      templates,
+      kubecfg_path:   configuration_attrs.kubecfg_path
     )
   end
 

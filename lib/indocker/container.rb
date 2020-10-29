@@ -21,6 +21,10 @@ class Indocker::Container
     Indocker::Actions::ConfigurationLoader.new
   end
 
+  register "actions.kubectl_applier" do
+    Indocker::Actions::KubectlApplier.new
+  end
+
   register "configs" do
     Indocker::Configs.new
   end

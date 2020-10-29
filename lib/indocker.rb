@@ -124,6 +124,7 @@ module Indocker
     autoload :TemplateReader, 'actions/template_reader'
     autoload :ServiceReader, 'actions/service_reader'
     autoload :ConfigurationLoader, 'actions/configuration_loader'
+    autoload :KubectlApplier, 'actions/kubectl_applier'
   end
 
   module Extensions

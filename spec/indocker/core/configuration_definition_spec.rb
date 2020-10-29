@@ -74,4 +74,12 @@ RSpec.describe Indocker::Core::ConfigurationDefinition do
       }.to raise_error(Indocker::Core::ConfigurationDefinition::ResourceAlreadyAdded)
     end
   end
+
+  context "kubecfg" do
+    it "sets kubecgf path for confuguration" do
+      subject.kubecfg_path("/path/to/kube.cfg")
+
+      expect(subject.to_attrs.kubecfg_path).to eq("/path/to/kube.cfg")
+    end
+  end
 end

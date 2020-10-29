@@ -1,15 +1,14 @@
 require 'thor'
 
 class Indocker::CLI < Thor
+  class_option :path, :type => :string
+  class_option :images_path, :type => :string
+  class_option :infra_path, :type => :string
+  class_option :configurations_path, :type => :string
+  class_option :debug, :type => :boolean, aliases: ["-d"]
+  class_option :configuration, :type => :string, aliases: ["-C"]
 
   desc "compile IMAGE_NAMES", "Compile image with IMAGE_NAMES (comma-separated)"
-  method_option :path, :type => :string
-  method_option :images_path, :type => :string
-  method_option :infra_path, :type => :string
-  method_option :configurations_path, :type => :string
-  method_option :debug, :type => :boolean, aliases: ["-d"]
-
-  method_option :configuration, :type => :string, aliases: ["-C"]
   def compile(image_names_str)
     Indocker.set_debug_mode(options[:debug])
     
@@ -25,12 +24,6 @@ class Indocker::CLI < Thor
   end
 
   desc "env ENV_FILE_NAME", "Return content of Env File ENV_FILE_NAME"
-  method_option :path, :type => :string
-  method_option :images_path, :type => :string
-  method_option :infra_path, :type => :string
-  method_option :configurations_path, :type => :string
-  method_option :debug, :type => :boolean, aliases: ["-d"]
-  method_option :configuration, :type => :string, aliases: ["-C"]
   def env(env_file_name)
     Indocker.set_debug_mode(options[:debug])
 
@@ -39,12 +32,6 @@ class Indocker::CLI < Thor
   end
 
   desc "template TEMPLATE_NAME", "Return content of Template TEMPLATE_NAME"
-  method_option :path, :type => :string
-  method_option :images_path, :type => :string
-  method_option :infra_path, :type => :string
-  method_option :configurations_path, :type => :string
-  method_option :debug, :type => :boolean, aliases: ["-d"]
-  method_option :configuration, :type => :string, aliases: ["-C"]
   def template(template_name)
     Indocker.set_debug_mode(options[:debug])
 
@@ -53,17 +40,19 @@ class Indocker::CLI < Thor
   end
 
   desc "service SERVICE_NAME", "Return content of Service SERVICE_NAME"
-  method_option :path, :type => :string
-  method_option :images_path, :type => :string
-  method_option :infra_path, :type => :string
-  method_option :configurations_path, :type => :string
-  method_option :debug, :type => :boolean, aliases: ["-d"]
-  method_option :configuration, :type => :string, aliases: ["-C"]
   def service(service_name)
     Indocker.set_debug_mode(options[:debug])
 
     Indocker::Container['actions.configuration_loader'].call(options)
     Indocker::Container['actions.service_reader'].call(service_name.to_sym, options)
+  end
+
+  desc "apply FILE_PATH", "Apply FILE_PATH with kubectl"
+  def apply(file_path)
+    Indocker.set_debug_mode(options[:debug])
+
+    Indocker::Container['actions.configuration_loader'].call(options)
+    Indocker::Container['actions.kubectl_applier'].call(file_path, options)
   end
 
   def self.exit_on_failure?

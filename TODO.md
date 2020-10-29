@@ -1,2 +1,3 @@
+- add spec for Indocker::Actions::KubectlApplier
 - add build servers support
 - add build vars support (use images instead of containers)
