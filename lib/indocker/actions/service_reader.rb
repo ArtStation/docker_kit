@@ -11,5 +11,7 @@ class Indocker::Actions::ServiceReader
     service = service_store.get_service(service_name)
 
     result = service_reader.read(local_shell, service)
+
+    ui.print_info(service_name.to_s, result)
   end
 end
