@@ -1,4 +1,4 @@
-class Indocker::ServiceHandler::ServiceReader
+class Indocker::ServiceDeployer::ServiceReader
   include Indocker::Import[
     "core.template_store",
     "core.context_helper_factory",

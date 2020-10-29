@@ -114,8 +114,8 @@ module Indocker
     autoload :ArtifactFileReader, 'template_reader/artifact_file_reader'
   end
 
-  module ServiceHandler
-    autoload :ServiceReader, 'service_handler/service_reader'
+  module ServiceDeployer
+    autoload :ServiceReader, 'service_deployer/service_reader'
   end
 
   module Actions

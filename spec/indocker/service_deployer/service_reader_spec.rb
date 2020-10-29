@@ -1,5 +1,5 @@
-RSpec.describe Indocker::ServiceHandler::ServiceReader do
-  subject{ Indocker::ServiceHandler::ServiceReader.new }
+RSpec.describe Indocker::ServiceDeployer::ServiceReader do
+  subject{ Indocker::ServiceDeployer::ServiceReader.new }
 
   let(:artifact) { Indocker::Core::Artifacts::Local.new(:templates).setup(File.join(FIXTURES_PATH, "templates")) }
   let(:template) { Indocker::Core::Templates::ArtifactFile.new(:service_template, artifact_name: :templates, file_path: "service.yml") }

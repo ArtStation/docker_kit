@@ -185,8 +185,8 @@ class Indocker::Container
     Indocker::TemplateReader::ArtifactFileReader.new
   end
 
-  register "service_handler.service_reader" do
-    Indocker::ServiceHandler::ServiceReader.new
+  register "service_deployer.service_reader" do
+    Indocker::ServiceDeployer::ServiceReader.new
   end
 
   register "ui" do

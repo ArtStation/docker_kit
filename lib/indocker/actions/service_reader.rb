@@ -1,7 +1,7 @@
 class Indocker::Actions::ServiceReader
   include Indocker::Import[
     "core.service_store",
-    "service_handler.service_reader",
+    "service_deployer.service_reader",
     "shell.local_shell",
     "ui"
   ]
