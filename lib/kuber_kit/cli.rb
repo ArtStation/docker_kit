@@ -63,7 +63,7 @@ class KuberKit::CLI < Thor
 
     KuberKit::Container['actions.configuration_loader'].call(options)
 
-    KuberKit::Container['actions.service_applier'].call(services: options[:services], tags: options[:tags])
+    KuberKit::Container['actions.service_deployer'].call(services: options[:services], tags: options[:tags])
   end
 
   def self.exit_on_failure?
