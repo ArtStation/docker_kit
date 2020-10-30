@@ -1,3 +1,3 @@
-- service factory should make sure that service exists
+- service factory should make sure that template exists
 - add build servers support
 - add build vars support (use images instead of containers)

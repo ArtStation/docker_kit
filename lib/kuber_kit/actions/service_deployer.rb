@@ -16,7 +16,7 @@ class KuberKit::Actions::ServiceDeployer
       tags:     tags || []
     )
     service_names.each do |service_name|
-      deployer.deploy(local_shell, service_name.to_sym)
+      deployer.deploy(local_shell, service_name.to_sym, :kubernetes)
     end
   end
 end

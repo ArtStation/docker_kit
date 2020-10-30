@@ -118,6 +118,11 @@ module KuberKit
     autoload :Deployer, 'service_deployer/deployer'
     autoload :ServiceReader, 'service_deployer/service_reader'
     autoload :ServiceListResolver, 'service_deployer/service_list_resolver'
+
+    module Strategies
+      autoload :Abstract, 'service_deployer/strategies/abstract'
+      autoload :Kubernetes, 'service_deployer/strategies/kubernetes'
+    end
   end
 
   module Actions

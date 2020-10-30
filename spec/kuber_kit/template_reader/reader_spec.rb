@@ -38,6 +38,6 @@ RSpec.describe KuberKit::TemplateReader::Reader do
   it "raises an error if reader is not an instance of abstract reader" do
     expect {
       subject.use_reader(KuberKit, artifact_class: ExampleArtifact1)
-  }.to raise_error(ArgumentError)
+    }.to raise_error(ArgumentError)
   end
 end

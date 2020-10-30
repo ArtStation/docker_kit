@@ -2,15 +2,45 @@ RSpec.describe KuberKit::ServiceDeployer::Deployer do
   subject{ KuberKit::ServiceDeployer::Deployer.new }
 
   let(:shell) { test_helper.shell }
-  let(:shell) { test_helper.shell }
+ 
+
+  class ExampleStrategy < KuberKit::ServiceDeployer::Strategies::Abstract
+    def initialize(name:)
+      @name = name
+    end
+
+    def deploy(shell, service_name)
+      return {name: @name}
+    end
+  end
+
+  let(:strategy2) { ExampleStrategy.new(name: :strategy2) }
+  let(:strategy1) { ExampleStrategy.new(name: :strategy1) }
 
   before do
     service_helper.register_service(:auth_app)
   end
 
-  it "prints content of service config" do
-    expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
-    expect(subject.kubectl_commands).to receive(:apply_file).with(shell, "/tmp/kuber_kit/services/auth_app.yml", kubecfg_path: nil)
-    subject.deploy(shell, :auth_app)
+  it "calls the strategy with given name" do
+    subject.register_strategy(:strategy1, strategy1)
+    subject.register_strategy(:strategy2, strategy2)
+
+    result1 = subject.deploy(test_helper.shell, :auth_app, :strategy1)
+    result2 = subject.deploy(test_helper.shell, :auth_app, :strategy2)
+
+    expect(result1[:name]).to eq(:strategy1)
+    expect(result2[:name]).to eq(:strategy2)
+  end
+
+  it "raises error if strategy not found" do
+    expect {
+      subject.deploy(test_helper.shell, :auth_app, :strategy3)
+    }.to raise_error(KuberKit::ServiceDeployer::Deployer::StrategyNotFoundError)
+  end
+
+  it "raises an error if strategy is not an instance of abstract reader" do
+    expect {
+      subject.register_strategy(:strategy4, KuberKit)
+    }.to raise_error(ArgumentError)
   end
 end

@@ -201,6 +201,10 @@ class KuberKit::Container
     KuberKit::ServiceDeployer::ServiceListResolver.new
   end
 
+  register "service_deployer.strategies.kubernetes" do
+    KuberKit::ServiceDeployer::Strategies::Kubernetes.new
+  end
+
   register "ui" do
     if KuberKit.debug_mode?
       KuberKit::UI::Simple.new
