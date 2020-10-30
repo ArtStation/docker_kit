@@ -1,4 +1,4 @@
-class TestShell < DockerKit::Shell::LocalShell
+class TestShell < KuberKit::Shell::LocalShell
   def exec!(command)
     return true
   end

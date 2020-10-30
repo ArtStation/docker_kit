@@ -3,6 +3,6 @@
 
 require 'rubygems'
 require 'bundler/setup'
-require "docker_kit"
+require "kuber_kit"
 
-DockerKit::CLI.start(ARGV)
+KuberKit::CLI.start(ARGV)

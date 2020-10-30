@@ -5,7 +5,7 @@
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'docker_kit'
+gem 'kuber_kit'
 ```
 
 ## Launch compilation for example images

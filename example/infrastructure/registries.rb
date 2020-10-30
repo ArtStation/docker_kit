@@ -1,4 +1,4 @@
-DockerKit.add_registry(
-  DockerKit::Registries::Remote
+KuberKit.add_registry(
+  KuberKit::Registries::Remote
     .new(:review_default)
 )

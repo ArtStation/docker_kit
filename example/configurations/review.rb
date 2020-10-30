@@ -1,4 +1,4 @@
-DockerKit
+KuberKit
   .define_configuration(:review)
   .use_registry(:review_default, as: :default)
-  .use_artifact(:docker_kit_repo, as: :docker_kit_repo)
+  .use_artifact(:kuber_kit_repo, as: :kuber_kit_repo)
