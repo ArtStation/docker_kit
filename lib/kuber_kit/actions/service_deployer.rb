@@ -3,6 +3,7 @@ class KuberKit::Actions::ServiceDeployer
     "service_deployer.service_list_resolver",
     "service_deployer.deployer",
     "shell.local_shell",
+    "tools.logger",
     "ui"
   ]
 
@@ -15,8 +16,20 @@ class KuberKit::Actions::ServiceDeployer
       services: services || [],
       tags:     tags || []
     )
+
+    task_group = ui.create_task_group
+
     service_names.each do |service_name|
-      deployer.deploy(local_shell, service_name.to_sym, KuberKit.current_configuration.deploy_strategy)
+
+      logger.info("Started deploying: #{service_name.to_s.green}")
+      task_group.add("Deploying #{service_name.to_s.yellow}") do |task|
+        deployer.deploy(local_shell, service_name.to_sym)
+
+        task.update_title("Deployed #{service_name.to_s.green}")
+        logger.info("Finished deploying: #{service_name.to_s.green}")
+      end
     end
+
+    task_group.wait
   end
 end

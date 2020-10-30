@@ -193,6 +193,10 @@ class KuberKit::Container
     KuberKit::ServiceDeployer::Deployer.new
   end
 
+  register "service_deployer.service_restarter" do
+    KuberKit::ServiceDeployer::ServiceRestarter.new
+  end
+
   register "service_deployer.service_reader" do
     KuberKit::ServiceDeployer::ServiceReader.new
   end
