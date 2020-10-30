@@ -23,7 +23,7 @@ class KuberKit::Core::ConfigurationFactory
       registries:       registries,
       env_files:        env_files,
       templates:        templates,
-      kubecfg_path:     configuration_attrs.kubecfg_path,
+      kubeconfig_path:  configuration_attrs.kubeconfig_path,
       deploy_strategy:  configuration_attrs.deploy_strategy || configs.deploy_strategy
     )
   end

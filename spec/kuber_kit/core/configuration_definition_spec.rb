@@ -75,11 +75,11 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
     end
   end
 
-  context "kubecfg" do
-    it "sets kubecgf path for confuguration" do
-      subject.kubecfg_path("/path/to/kube.cfg")
+  context "kubeconfig_path" do
+    it "sets kubeconfig_path for confuguration" do
+      subject.kubeconfig_path("/path/to/kube.cfg")
 
-      expect(subject.to_attrs.kubecfg_path).to eq("/path/to/kube.cfg")
+      expect(subject.to_attrs.kubeconfig_path).to eq("/path/to/kube.cfg")
     end
   end
 

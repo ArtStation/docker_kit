@@ -19,7 +19,7 @@ class KuberKit::Core::ConfigurationDefinition
       registries:       @registries,
       env_files:        @env_files,
       templates:        @templates,
-      kubecfg_path:     @kubecfg_path,
+      kubeconfig_path:  @kubeconfig_path,
       deploy_strategy:  @deploy_strategy
     )
   end
@@ -60,8 +60,8 @@ class KuberKit::Core::ConfigurationDefinition
     self
   end
 
-  def kubecfg_path(path)
-    @kubecfg_path = path
+  def kubeconfig_path(path)
+    @kubeconfig_path = path
 
     self
   end

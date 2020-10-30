@@ -11,8 +11,8 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
     config_path    = "#{configs.service_config_dir}/#{service.name}.yml"
     shell.write(config_path, service_config)
 
-    kubecfg_path = KuberKit.current_configuration.kubecfg_path
-    kubectl_commands.apply_file(shell, config_path, kubecfg_path: kubecfg_path)
-    kubectl_commands.rolling_restart(shell, service.uri, kubecfg_path: kubecfg_path)
+    kubeconfig_path = KuberKit.current_configuration.kubeconfig_path
+    kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path)
+    kubectl_commands.rolling_restart(shell, service.uri, kubeconfig_path: kubeconfig_path)
   end
 end

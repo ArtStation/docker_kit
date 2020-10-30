@@ -9,8 +9,8 @@ RSpec.describe KuberKit::Shell::KubectlCommands do
     end
 
     it do
-      expect(shell).to receive(:exec!).with(%Q{KUBECFG=/path/to/kube.cfg kubectl apply -f /file/to/apply.yml})
-      subject.apply_file(shell, "/file/to/apply.yml", kubecfg_path: "/path/to/kube.cfg")
+      expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=/path/to/kube.cfg kubectl apply -f /file/to/apply.yml})
+      subject.apply_file(shell, "/file/to/apply.yml", kubeconfig_path: "/path/to/kube.cfg")
     end
   end
 
@@ -21,8 +21,8 @@ RSpec.describe KuberKit::Shell::KubectlCommands do
     end
 
     it do
-      expect(shell).to receive(:exec!).with(%Q{KUBECFG=/path/to/kube.cfg kubectl patch deployment my_deployment -p "\{\\"spec\\":\\"some_update\\"\}"})
-      subject.patch_deployment(shell, "my_deployment", {spec: "some_update"}, kubecfg_path: "/path/to/kube.cfg")
+      expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=/path/to/kube.cfg kubectl patch deployment my_deployment -p "\{\\"spec\\":\\"some_update\\"\}"})
+      subject.patch_deployment(shell, "my_deployment", {spec: "some_update"}, kubeconfig_path: "/path/to/kube.cfg")
     end
   end
 
@@ -36,8 +36,8 @@ RSpec.describe KuberKit::Shell::KubectlCommands do
             }
           }
         }
-      }}, kubecfg_path: "/path/to/kube.cfg")
-      subject.rolling_restart(shell, "my_deployment", kubecfg_path: "/path/to/kube.cfg")
+      }}, kubeconfig_path: "/path/to/kube.cfg")
+      subject.rolling_restart(shell, "my_deployment", kubeconfig_path: "/path/to/kube.cfg")
     end
   end
 end
