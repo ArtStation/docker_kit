@@ -5,7 +5,8 @@ class KuberKit::Core::ServiceStore
   include KuberKit::Import[
     "core.service_factory",
     "core.service_definition_factory",
-    "shell.local_shell"
+    "shell.local_shell",
+    "tools.logger"
   ]
 
   def define(service_name)
@@ -44,6 +45,9 @@ class KuberKit::Core::ServiceStore
     files = local_shell.recursive_list_files(dir_path, name: "*.rb").each do |path|
       load_definition(path)
     end
+  rescue KuberKit::Shell::AbstractShell::DirNotFoundError
+    logger.warn("Directory with services not found: #{dir_path}")
+    []
   end
 
   def load_definition(file_path)
