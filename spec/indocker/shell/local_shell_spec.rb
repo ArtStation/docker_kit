@@ -34,6 +34,15 @@ RSpec.describe Indocker::Shell::LocalShell do
 
       FileUtils.rm(updating_file_path)
     end
+
+    it "overrides content of file if it already exists" do
+      subject.write(updating_file_path, "test")
+      subject.write(updating_file_path, "test")
+
+      expect(File.read(updating_file_path)).to eq("test")
+
+      FileUtils.rm(updating_file_path)
+    end
   end
 
   context "#recursive_list_files" do

@@ -1,3 +1,2 @@
-- create specs for local_shell.write when file exists
 - add build servers support
 - add build vars support (use images instead of containers)
