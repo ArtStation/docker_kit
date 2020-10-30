@@ -5,7 +5,8 @@ class KuberKit::Core::ConfigurationFactory
     "core.registry_store",
     "core.artifact_store",
     "core.env_file_store",
-    "core.template_store"
+    "core.template_store",
+    "configs"
   ]
 
   def create(definition)
@@ -17,12 +18,13 @@ class KuberKit::Core::ConfigurationFactory
     templates  = fetch_templates(configuration_attrs.templates)
 
     KuberKit::Core::Configuration.new(
-      name:           configuration_attrs.name,
-      artifacts:      artifacts,
-      registries:     registries,
-      env_files:      env_files,
-      templates:      templates,
-      kubecfg_path:   configuration_attrs.kubecfg_path
+      name:             configuration_attrs.name,
+      artifacts:        artifacts,
+      registries:       registries,
+      env_files:        env_files,
+      templates:        templates,
+      kubecfg_path:     configuration_attrs.kubecfg_path,
+      deploy_strategy:  configuration_attrs.deploy_strategy || configs.deploy_strategy
     )
   end
 

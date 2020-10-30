@@ -21,11 +21,12 @@ class KuberKit::Configs
   CONFIGURATIONS_DIRNAME = "configurations".freeze
   ARTIFACT_CLONE_DIR     = "/tmp/kuber_kit/artifacts"
   SERVICE_CONFIG_DIR     = "/tmp/kuber_kit/services"
+  DEPLOY_STRATEGY        = :kubernetes
 
   attr_accessor :image_dockerfile_name, :image_build_context_dir, :image_tag,
                 :docker_ignore_list, :image_compile_dir, 
                 :kuber_kit_dirname, :images_dirname, :services_dirname, :infra_dirname, :configurations_dirname,
-                :artifact_clone_dir, :service_config_dir
+                :artifact_clone_dir, :service_config_dir, :deploy_strategy
 
   def initialize
     @image_dockerfile_name   = IMAGE_DOCKERFILE_NAME
@@ -40,5 +41,6 @@ class KuberKit::Configs
     @configurations_dirname  = CONFIGURATIONS_DIRNAME
     @artifact_clone_dir      = ARTIFACT_CLONE_DIR
     @service_config_dir      = SERVICE_CONFIG_DIR
+    @deploy_strategy         = DEPLOY_STRATEGY
   end
 end

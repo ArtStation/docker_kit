@@ -14,12 +14,13 @@ class KuberKit::Core::ConfigurationDefinition
 
   def to_attrs
     OpenStruct.new(
-      name:          @configuration_name,
-      artifacts:     @artifacts,
-      registries:    @registries,
-      env_files:     @env_files,
-      templates:     @templates,
-      kubecfg_path:  @kubecfg_path
+      name:             @configuration_name,
+      artifacts:        @artifacts,
+      registries:       @registries,
+      env_files:        @env_files,
+      templates:        @templates,
+      kubecfg_path:     @kubecfg_path,
+      deploy_strategy:  @deploy_strategy
     )
   end
 
@@ -61,6 +62,12 @@ class KuberKit::Core::ConfigurationDefinition
 
   def kubecfg_path(path)
     @kubecfg_path = path
+
+    self
+  end
+
+  def deploy_strategy(path)
+    @deploy_strategy = path
 
     self
   end

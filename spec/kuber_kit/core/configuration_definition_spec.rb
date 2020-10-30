@@ -82,4 +82,12 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
       expect(subject.to_attrs.kubecfg_path).to eq("/path/to/kube.cfg")
     end
   end
+
+  context "deploy_strategy" do
+    it "sets deployment strategy confuguration" do
+      subject.deploy_strategy(:docker_compose)
+
+      expect(subject.to_attrs.deploy_strategy).to eq(:docker_compose)
+    end
+  end
 end
