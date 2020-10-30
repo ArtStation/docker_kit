@@ -10,7 +10,7 @@ class Indocker::Actions::KubectlApplier
     kubecfg_path = Indocker.current_configuration.kubecfg_path
     ui.create_task("Applying file: #{file_path}") do |task|
       kubectl_commands.apply_file(local_shell, file_path, kubecfg_path: kubecfg_path)
-      task.update_title("Applyed file: #{file_path}")
+      task.update_title("Applied file: #{file_path}")
     end
     nil
   end

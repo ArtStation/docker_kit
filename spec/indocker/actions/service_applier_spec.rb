@@ -15,6 +15,6 @@ RSpec.describe Indocker::Actions::ServiceApplier do
   it "prints content of service config" do
     expect(subject.local_shell).to receive(:write).with("/tmp/indocker/services/auth_app.yml", /apiVersion: v1/)
     expect(subject.kubectl_commands).to receive(:apply_file).with(subject.local_shell, "/tmp/indocker/services/auth_app.yml", kubecfg_path: nil)
-    subject.call(:auth_app, {})
+    subject.call(services: ["auth_app"], tags: [])
   end
 end

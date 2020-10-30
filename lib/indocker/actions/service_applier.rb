@@ -33,7 +33,7 @@ class Indocker::Actions::ServiceApplier
 
     ui.create_task("Applying file: #{file_path}") do |task|
       kubectl_commands.apply_file(local_shell, file_path, kubecfg_path: kubecfg_path)
-      task.update_title("Applyed file: #{file_path}")
+      task.update_title("Applied file: #{file_path}")
     end
   end
 end

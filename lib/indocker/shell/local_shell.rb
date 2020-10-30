@@ -1,3 +1,5 @@
+require 'fileutils'
+
 class Indocker::Shell::LocalShell < Indocker::Shell::AbstractShell
   include Indocker::Import[
     "tools.logger",
@@ -30,11 +32,13 @@ class Indocker::Shell::LocalShell < Indocker::Shell::AbstractShell
   end
 
   def write(file_path, content)
-    dir_path = File.dirname(file_path)
-    unless Dir.exists?(dir_path)
-      FileUtils.mkdir_p(dir_path)
-    end
+    ensure_directory_exists(file_path)
+
     File.write(file_path, content)
+
+    logger.info("Created file #{file_path.to_s.cyan}\r\n#{content.grey}")
+
+    true
   end
 
   def recursive_list_files(path, name: nil)
@@ -48,4 +52,13 @@ class Indocker::Shell::LocalShell < Indocker::Shell::AbstractShell
       raise e
     end
   end
+
+  private
+    def ensure_directory_exists(file_path)
+      dir_path = File.dirname(file_path)
+
+      unless Dir.exists?(dir_path)
+        FileUtils.mkdir_p(dir_path)
+      end
+    end
 end
