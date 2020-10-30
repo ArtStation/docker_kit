@@ -25,6 +25,7 @@ class KuberKit::Core::ServiceStore
     @@service_definitions[service_definition.service_name] = service_definition
   end
 
+  Contract Symbol => Any
   def get_definition(service_name)
     @@service_definitions ||= {}
 
@@ -35,6 +36,7 @@ class KuberKit::Core::ServiceStore
     @@service_definitions[service_name]
   end
 
+  Contract Symbol => Any
   def get_service(service_name)
     definition = get_definition(service_name)
 

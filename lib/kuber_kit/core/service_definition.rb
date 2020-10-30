@@ -10,7 +10,8 @@ class KuberKit::Core::ServiceDefinition
     OpenStruct.new(
       name:           @service_name,
       template_name:  get_value(@template_name),
-      tags:           Array(get_value(@tags)).map(&:to_sym)
+      tags:           Array(get_value(@tags)).map(&:to_sym),
+      images:         Array(get_value(@images)).map(&:to_sym),
     )
   end
 
@@ -22,6 +23,12 @@ class KuberKit::Core::ServiceDefinition
 
   def tags(*value, &block)
     @tags = block_given? ? block : Array(value).flatten
+
+    self
+  end
+
+  def images(*value, &block)
+    @images = block_given? ? block : Array(value).flatten
 
     self
   end

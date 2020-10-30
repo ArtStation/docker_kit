@@ -25,6 +25,7 @@ class KuberKit::Core::ImageStore
     @@image_definitions[image_definition.image_name] = image_definition
   end
 
+  Contract Symbol => Any
   def get_definition(image_name)
     @@image_definitions ||= {}
 
@@ -35,6 +36,7 @@ class KuberKit::Core::ImageStore
     @@image_definitions[image_name]
   end
 
+  Contract Symbol => Any
   def get_image(image_name)
     definition = get_definition(image_name)
 

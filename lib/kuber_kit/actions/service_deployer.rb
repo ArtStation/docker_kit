@@ -1,7 +1,9 @@
 class KuberKit::Actions::ServiceDeployer
   include KuberKit::Import[
+    "actions.image_compiler",
     "service_deployer.service_list_resolver",
     "service_deployer.deployer",
+    "core.service_store",
     "shell.local_shell",
     "tools.logger",
     "ui"
@@ -17,6 +19,17 @@ class KuberKit::Actions::ServiceDeployer
       tags:     tags || []
     )
 
+    services = service_names.map do |service_name|
+      service_store.get_service(service_name.to_sym)
+    end
+
+    images_names = services.map(&:images).flatten.uniq
+
+    compile_images(images_names)
+    deploy_services(service_names)
+  end
+
+  def deploy_services(service_names)
     task_group = ui.create_task_group
 
     service_names.each do |service_name|
@@ -31,5 +44,9 @@ class KuberKit::Actions::ServiceDeployer
     end
 
     task_group.wait
+  end
+
+  def compile_images(images_names)
+    image_compiler.call(images_names, {}) if images_names.any?
   end
 end

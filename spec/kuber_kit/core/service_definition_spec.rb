@@ -29,7 +29,7 @@ RSpec.describe KuberKit::Core::ServiceDefinition do
     end
   end
 
-  context "tags" do
+  context "images" do
     it "sets tags with multiple arguments" do
       definition = subject.tags("some_tag", "another_tag")
   
@@ -46,6 +46,26 @@ RSpec.describe KuberKit::Core::ServiceDefinition do
       definition = subject.tags{ [:some_tag] }
   
       expect(definition.to_service_attrs.tags).to eq([:some_tag])
+    end
+  end
+
+  context "images" do
+    it "sets images with multiple arguments" do
+      definition = subject.images("some_image", "another_image")
+  
+      expect(definition.to_service_attrs.images).to eq([:some_image, :another_image])
+    end
+
+    it "sets images with array of symbols" do
+      definition = subject.images([:some_image])
+  
+      expect(definition.to_service_attrs.images).to eq([:some_image])
+    end
+
+    it "sets images with proc" do
+      definition = subject.images{ [:some_image] }
+  
+      expect(definition.to_service_attrs.images).to eq([:some_image])
     end
   end
 end

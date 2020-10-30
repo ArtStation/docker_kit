@@ -11,7 +11,8 @@ class KuberKit::Core::ServiceFactory
     KuberKit::Core::Service.new(
       name:           service_attrs.name,
       template_name:  service_attrs.template_name,
-      tags:           service_attrs.tags
+      tags:           service_attrs.tags,
+      images:         service_attrs.images
     )
   end
 end

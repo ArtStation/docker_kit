@@ -25,6 +25,7 @@ class KuberKit::Core::ConfigurationStore
     @@configuration_definitions[configuration_definition.configuration_name] = configuration_definition
   end
 
+  Contract Symbol => Any
   def get_definition(configuration_name)
     @@configuration_definitions ||= {}
 
@@ -35,6 +36,7 @@ class KuberKit::Core::ConfigurationStore
     @@configuration_definitions[configuration_name]
   end
 
+  Contract Symbol => Any
   def get_configuration(configuration_name)
     definition = get_definition(configuration_name)
 
