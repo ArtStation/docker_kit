@@ -15,6 +15,6 @@ class KuberKit::Core::Service
   end
 
   def uri
-    name.to_s.sub("_", "-")
+    name.to_s.gsub("_", "-")
   end
 end
