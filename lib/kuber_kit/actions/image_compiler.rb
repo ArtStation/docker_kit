@@ -43,7 +43,7 @@ class KuberKit::Actions::ImageCompiler
 
     def compile_image(image_name, build_id)
       compile_dir = generate_compile_dir(build_id: build_id)
-      image_compiler.compile(local_shell, image_name, compile_dir)
+      compiler.compile(local_shell, image_name, compile_dir)
     end
 
     def generate_build_id
