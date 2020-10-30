@@ -1,4 +1,4 @@
-# Aliases for compatibility with old DockerKit
+# Aliases for compatibility with Indocker
 module DockerKit
   module Registries
     Local = DockerKit::Core::Registries::Registry
@@ -16,3 +16,4 @@ module DockerKit
     end
   end
 end
+Indocker = DockerKit

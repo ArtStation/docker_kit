@@ -202,4 +202,4 @@ module DockerKit
   end
 end
 
-require 'docker_kit/extensions/compat'
+require 'docker_kit/extensions/indocker_compat'
