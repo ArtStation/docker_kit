@@ -25,10 +25,6 @@ class TestHelper
     KuberKit::Container['core.image_store']
   end
 
-  def service_store
-    KuberKit::Container['core.service_store']
-  end
-
   def artifact_store
     KuberKit::Container['core.artifact_store']
   end
@@ -66,18 +62,6 @@ class TestHelper
     add_registry(:remote, url)
     remote_image_def = image_definition(:remote_image).registry(:remote)
     remote_image = image_factory.create(remote_image_def)
-  end
-
-  def service_definition_factory
-    KuberKit::Container['core.service_definition_factory']
-  end
-
-  def service_factory
-    KuberKit::Container['core.service_factory']
-  end
-
-  def service_definition(name)
-    service_definition_factory.create(name)
   end
 
   def configuration_store

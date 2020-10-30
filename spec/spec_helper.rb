@@ -52,3 +52,7 @@ end
 def test_helper
   TestHelper.new
 end
+
+def service_helper
+  ServiceHelper.new
+end

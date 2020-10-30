@@ -2,8 +2,8 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceListResolver do
   subject{ KuberKit::ServiceDeployer::ServiceListResolver.new }
 
   before do
-    test_helper.service_store.define("auth_app").tags("web", "auth")
-    test_helper.service_store.define("marketplace_app").tags("web", "marketplace")
+    service_helper.store.define("auth_app").tags("web", "auth")
+    service_helper.store.define("marketplace_app").tags("web", "marketplace")
   end
 
   context "resolve" do

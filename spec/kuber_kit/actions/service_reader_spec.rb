@@ -9,7 +9,7 @@ RSpec.describe KuberKit::Actions::ServiceReader do
     test_helper.artifact_store.add(artifact)
     test_helper.template_store.add(template)
 
-    test_helper.service_store.define(:auth_app).template(:service)
+    service_helper.store.define(:auth_app).template(:service)
   end
 
   it "prints content of service config" do

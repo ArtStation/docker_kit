@@ -2,8 +2,7 @@ require 'spec_helper'
 
 RSpec.describe KuberKit::Core::ServiceFactory do
   subject{ KuberKit::Core::ServiceFactory.new() }
-  let(:service_definition_factory) { test_helper.service_definition_factory }
-  let(:test_definition) { service_definition_factory.create(:example).template(:service) }
+  let(:test_definition) { service_helper.definition(:example).template(:service) }
 
   it "builds image based on image definition" do
     service = subject.create(test_definition)
@@ -13,7 +12,7 @@ RSpec.describe KuberKit::Core::ServiceFactory do
   end
 
   it "raises error if template name wasn't set" do
-    test_definition = service_definition_factory.create(:example)
+    test_definition = service_helper.definition_factory.create(:example)
     
     expect{subject.create(test_definition)}.to raise_error(KuberKit::Core::ServiceFactory::AttributeNotSetError)
   end

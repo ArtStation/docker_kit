@@ -17,8 +17,8 @@ class KuberKit::Container
     KuberKit::Actions::ServiceReader.new
   end
 
-  register "actions.service_applier" do
-    KuberKit::Actions::ServiceApplier.new
+  register "actions.service_deployer" do
+    KuberKit::Actions::ServiceDeployer.new
   end
 
   register "actions.configuration_loader" do
@@ -187,6 +187,10 @@ class KuberKit::Container
 
   register "template_reader.artifact_file_reader" do
     KuberKit::TemplateReader::ArtifactFileReader.new
+  end
+
+  register "service_deployer.deployer" do
+    KuberKit::ServiceDeployer::Deployer.new
   end
 
   register "service_deployer.service_reader" do

@@ -115,8 +115,8 @@ module KuberKit
   end
 
   module ServiceDeployer
+    autoload :Deployer, 'service_deployer/deployer'
     autoload :ServiceReader, 'service_deployer/service_reader'
-    autoload :ServiceApplier, 'service_deployer/service_applier'
     autoload :ServiceListResolver, 'service_deployer/service_list_resolver'
   end
 
@@ -125,7 +125,7 @@ module KuberKit
     autoload :EnvFileReader, 'actions/env_file_reader'
     autoload :TemplateReader, 'actions/template_reader'
     autoload :ServiceReader, 'actions/service_reader'
-    autoload :ServiceApplier, 'actions/service_applier'
+    autoload :ServiceDeployer, 'actions/service_deployer'
     autoload :ConfigurationLoader, 'actions/configuration_loader'
     autoload :KubectlApplier, 'actions/kubectl_applier'
   end

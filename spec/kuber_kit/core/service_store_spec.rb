@@ -2,7 +2,7 @@ require 'spec_helper'
 
 RSpec.describe KuberKit::Core::ServiceStore do
   subject{ KuberKit::Core::ServiceStore.new }
-  let(:test_definition) { test_helper.service_definition(:example).template(:service) }
+  let(:test_definition) { service_helper.definition(:example).template(:service) }
    
   context "#define" do
     it "defines an service and returns ServiceDefinition" do
