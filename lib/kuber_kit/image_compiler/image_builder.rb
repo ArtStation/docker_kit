@@ -5,10 +5,9 @@ class KuberKit::ImageCompiler::ImageBuilder
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Image, String, KeywordArgs[
-    args: Maybe[Any],
-    context_helper: Maybe[KuberKit::Core::ContextHelper]
+    context_helper: Maybe[KuberKit::Core::ContextHelper::BaseHelper::CONTRACT]
   ] => Any
-  def build(shell, image, build_dir, context_helper: nil, args: [])
+  def build(shell, image, build_dir, context_helper: nil)
     image.before_build_callback.call(context_helper, build_dir) if image.before_build_callback
 
     docker_commands.build(shell, build_dir, ["-t=#{image.registry_url}"])

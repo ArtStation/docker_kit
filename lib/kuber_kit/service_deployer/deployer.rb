@@ -6,6 +6,7 @@ class KuberKit::ServiceDeployer::Deployer
     "configs",
   ]
 
+  Contract KuberKit::Shell::AbstractShell, Symbol => Any
   def deploy(shell, service_name)
     service = service_store.get_service(service_name)
     kubecfg_path = KuberKit.current_configuration.kubecfg_path

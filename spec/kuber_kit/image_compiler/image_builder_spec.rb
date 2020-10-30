@@ -48,13 +48,13 @@ RSpec.describe KuberKit::ImageCompiler::ImageBuilder do
     after_counter = 0
 
     image_def = test_helper.image_definition(:image)
-      .before_build{ before_counter += 1 }
-      .after_build{ after_counter += 1 }
+      .before_build{ |context_helper, build_dir| before_counter += context_helper.hello_world.size }
+      .after_build{ |context_helper, build_dir| after_counter += context_helper.hello_world.size }
     image = test_helper.image_factory.create(image_def)
 
-    subject.build(shell, image, "/tmp/build/example")
+    subject.build(shell, image, "/tmp/build/example", context_helper: test_helper.context_helper)
 
-    expect(before_counter).to eq(1)
-    expect(after_counter).to eq(1)
+    expect(before_counter).to eq(11)
+    expect(after_counter).to eq(11)
   end
 end

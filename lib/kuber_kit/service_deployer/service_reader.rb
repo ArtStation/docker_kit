@@ -6,6 +6,7 @@ class KuberKit::ServiceDeployer::ServiceReader
     "preprocessing.text_preprocessor"
   ]
 
+  Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service => Any
   def read(shell, service)
     template = template_store.get(service.template_name)
 

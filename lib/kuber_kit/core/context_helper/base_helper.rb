@@ -1,4 +1,6 @@
 class KuberKit::Core::ContextHelper::BaseHelper
+  CONTRACT = RespondTo[:get_binding]
+
   attr_reader :shell, :artifact_store, :image_store
 
   def initialize(image_store:, artifact_store:, shell:)
