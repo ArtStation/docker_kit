@@ -2,6 +2,7 @@ class KuberKit::Actions::ConfigurationLoader
   include KuberKit::Import[
     "core.registry_store",
     "core.image_store",
+    "core.service_store",
     "core.configuration_store",
     "artifacts_sync.artifacts_updater",
     "tools.logger",
@@ -12,15 +13,17 @@ class KuberKit::Actions::ConfigurationLoader
 
   Contract Hash => Any
   def call(options)
-    root_path   = options[:path] || File.join(Dir.pwd, configs.kuber_kit_dirname)
-    images_path = options[:images_path] || File.join(root_path, configs.images_dirname)
-    infra_path  = options[:infra_path]  || File.join(root_path, configs.infra_dirname)
+    root_path     = options[:path] || File.join(Dir.pwd, configs.kuber_kit_dirname)
+    images_path   = options[:images_path] || File.join(root_path, configs.images_dirname)
+    services_path = options[:services_path] || File.join(root_path, configs.services_dirname)
+    infra_path    = options[:infra_path]  || File.join(root_path, configs.infra_dirname)
     configurations_path  = options[:configurations_path]  || File.join(root_path, configs.configurations_dirname)
     configuration_name   = options[:configuration]
 
     logger.info "Launching kuber_kit with:"
     logger.info "  Root path: #{root_path.to_s.yellow}"
     logger.info "  Images path: #{images_path.to_s.yellow}"
+    logger.info "  Services path: #{services_path.to_s.yellow}"
     logger.info "  Infrastructure path: #{infra_path.to_s.yellow}"
     logger.info "  Configurations path: #{configurations_path.to_s.yellow}"
     logger.info "  Configuration name: #{configuration_name.to_s.yellow}"
@@ -41,6 +44,11 @@ class KuberKit::Actions::ConfigurationLoader
     ui.create_task("Loading image definitions") do |task|
       files = image_store.load_definitions(images_path)
       task.update_title("Loaded #{files.count} image definitions")
+    end
+
+    ui.create_task("Loading service definitions") do |task|
+      files = service_store.load_definitions(services_path)
+      task.update_title("Loaded #{files.count} service definitions")
     end
   end
   
