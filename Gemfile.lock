@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    indocker (0.1.0)
+    docker_kit (0.1.0)
       cli-ui
       contracts-lite
       dry-auto_inject
@@ -57,7 +57,7 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 1.17)
-  indocker!
+  docker_kit!
   pry
   rake (~> 10.0)
   rspec (~> 3.0)

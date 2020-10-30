@@ -1,17 +1,17 @@
-# Indocker
+# Docker Kit
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'indocker'
+gem 'docker_kit'
 ```
 
 ## Launch compilation for example images
 
 ```
-bin/indocker compile ruby_app,ruby_app2 --path=./example -C review
+bin/kit compile ruby_app,ruby_app2 --path=./example -C review
 ```
 
 ## License

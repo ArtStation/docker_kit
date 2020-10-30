@@ -1,4 +1,4 @@
-Indocker.add_env_file(
-  Indocker::Core::EnvFiles::ArtifactFile
-    .new(:test, artifact_name: :indocker_example_data, file_path: "test.env")
+DockerKit.add_env_file(
+  DockerKit::Core::EnvFiles::ArtifactFile
+    .new(:test, artifact_name: :docker_kit_example_data, file_path: "test.env")
 )

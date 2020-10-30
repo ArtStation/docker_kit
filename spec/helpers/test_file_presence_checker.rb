@@ -1,4 +1,4 @@
-class TestFilePresenceChecker < Indocker::Tools::FilePresenceChecker
+class TestFilePresenceChecker < DockerKit::Tools::FilePresenceChecker
   def file_checked?(file_path)
     @checked_files ||= []
     @checked_files.include?(file_path)

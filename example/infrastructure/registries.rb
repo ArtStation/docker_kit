@@ -1,4 +1,4 @@
-Indocker.add_registry(
-  Indocker::Registries::Remote
+DockerKit.add_registry(
+  DockerKit::Registries::Remote
     .new(:review_default)
 )
