@@ -13,7 +13,6 @@ class KuberKit::Core::ContextHelper::ServiceHelper < KuberKit::Core::ContextHelp
   end
 
   def service_uri
-    service_name
-      .sub("_", "-")
+    @service.uri
   end
 end

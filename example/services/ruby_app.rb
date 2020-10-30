@@ -1,3 +1,3 @@
 KuberKit
-  .define_service(:auth_app)
+  .define_service(:ruby_app)
   .template(:service)

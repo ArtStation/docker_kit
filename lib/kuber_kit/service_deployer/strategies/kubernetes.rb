@@ -16,5 +16,6 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
 
     kubecfg_path = KuberKit.current_configuration.kubecfg_path
     kubectl_commands.apply_file(shell, file_path, kubecfg_path: kubecfg_path)
+    kubectl_commands.rolling_restart(shell, service.uri, kubecfg_path: kubecfg_path)
   end
 end

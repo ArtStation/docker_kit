@@ -11,4 +11,8 @@ class KuberKit::Core::Service
     @template_name = template_name
     @tags = tags
   end
+
+  def uri
+    name.to_s.sub("_", "-")
+  end
 end
