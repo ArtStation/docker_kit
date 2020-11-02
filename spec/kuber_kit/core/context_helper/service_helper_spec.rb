@@ -27,6 +27,12 @@ RSpec.describe KuberKit::Core::ContextHelper::ServiceHelper do
       expect(subject.attribute(:scale)).to eq(2)
     end
 
+    it "returns attribute rewritten in configuration" do
+      test_helper.configuration_store.get_definition(:default).enabled_services(auth_app: {scale: 3})
+
+      expect(subject.attribute(:scale)).to eq(3)
+    end
+
     it "returns nil if attribute is nil" do
       expect(subject.attribute(:nil_attr)).to eq(nil)
     end

@@ -10,6 +10,8 @@ class KuberKit::Core::ConfigurationDefinition
     @registries = {}
     @env_files  = {}
     @templates  = {}
+    @enabled_services   = []
+    @services_attributes = {}
   end
 
   def to_attrs
@@ -20,7 +22,9 @@ class KuberKit::Core::ConfigurationDefinition
       env_files:        @env_files,
       templates:        @templates,
       kubeconfig_path:  @kubeconfig_path,
-      deploy_strategy:  @deploy_strategy
+      deploy_strategy:  @deploy_strategy,
+      enabled_services: @enabled_services,
+      services_attributes: @services_attributes
     )
   end
 
@@ -68,6 +72,13 @@ class KuberKit::Core::ConfigurationDefinition
 
   def deploy_strategy(path)
     @deploy_strategy = path
+
+    self
+  end
+
+  def enabled_services(services_hash)
+    @enabled_services += services_hash.keys.map(&:to_sym)
+    @services_attributes = @services_attributes.merge(services_hash)
 
     self
   end

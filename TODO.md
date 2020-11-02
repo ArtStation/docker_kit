@@ -1,4 +1,7 @@
+- add contracts for all definition classes
+- list services and require confirmation before deployment
 - rename service reader to service config reader
 - service factory should make sure that template exists
 - add build servers support
 - add build vars support (use images instead of containers)
+- template should be able to depend on image?

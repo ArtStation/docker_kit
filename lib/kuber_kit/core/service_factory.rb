@@ -8,12 +8,15 @@ class KuberKit::Core::ServiceFactory
       raise AttributeNotSetError, "Please set template for service using #template method"
     end
 
+    configuration_attributes = KuberKit.current_configuration.service_attributes(service_attrs.name)
+    attributes = (service_attrs.attributes || {}).merge(configuration_attributes)
+
     KuberKit::Core::Service.new(
       name:           service_attrs.name,
       template_name:  service_attrs.template_name,
       tags:           service_attrs.tags,
       images:         service_attrs.images,
-      attributes:     service_attrs.attributes || {}
+      attributes:     attributes
     )
   end
 end

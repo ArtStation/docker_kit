@@ -90,4 +90,19 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
       expect(subject.to_attrs.deploy_strategy).to eq(:docker_compose)
     end
   end
+
+  context "enabled_services" do
+    it "appends service to enabled services" do
+      subject.enabled_services(service_1: {}, service_2: {})
+      subject.enabled_services(service_3: {}, service_4: {})
+
+      expect(subject.to_attrs.enabled_services).to eq([:service_1, :service_2, :service_3, :service_4])
+    end
+
+    it "defines attributes for service" do
+      subject.enabled_services(my_service: {scale: 1})
+
+      expect(subject.to_attrs.services_attributes[:my_service]).to eq({scale: 1})
+    end
+  end
 end
