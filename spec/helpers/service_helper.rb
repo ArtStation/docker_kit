@@ -15,8 +15,8 @@ class ServiceHelper
     definition_factory.create(name)
   end
 
-  def service(name, template_name = :service_template)
-    service_definition = definition(name).template(template_name)
+  def service(name, template: :service_template, attributes: {})
+    service_definition = definition(name).template(template).attributes(attributes)
     factory.create(service_definition)
   end
 

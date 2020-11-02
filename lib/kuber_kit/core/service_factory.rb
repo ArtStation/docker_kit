@@ -12,7 +12,8 @@ class KuberKit::Core::ServiceFactory
       name:           service_attrs.name,
       template_name:  service_attrs.template_name,
       tags:           service_attrs.tags,
-      images:         service_attrs.images
+      images:         service_attrs.images,
+      attributes:     service_attrs.attributes || {}
     )
   end
 end

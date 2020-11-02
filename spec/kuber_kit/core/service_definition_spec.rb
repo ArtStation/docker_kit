@@ -68,4 +68,18 @@ RSpec.describe KuberKit::Core::ServiceDefinition do
       expect(definition.to_service_attrs.images).to eq([:some_image])
     end
   end
+
+  context "attributes" do
+    it "sets attributes with hash" do
+      definition = subject.attributes({scale: 2})
+  
+      expect(definition.to_service_attrs.attributes).to eq({scale: 2})
+    end
+
+    it "sets attributes with proc" do
+      definition = subject.attributes{ {scale: 2} }
+  
+      expect(definition.to_service_attrs.attributes).to eq({scale: 2})
+    end
+  end
 end

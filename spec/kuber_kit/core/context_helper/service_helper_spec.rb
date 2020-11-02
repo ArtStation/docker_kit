@@ -1,4 +1,4 @@
-RSpec.describe KuberKit::Core::ContextHelper::BaseHelper do
+RSpec.describe KuberKit::Core::ContextHelper::ServiceHelper do
   let(:service) { service_helper.service(:auth_app) }
 
   subject{ KuberKit::Core::ContextHelper::ServiceHelper.new(
@@ -17,6 +17,22 @@ RSpec.describe KuberKit::Core::ContextHelper::BaseHelper do
   context "service_uri" do
     it "returns parametrized service name of current service" do
       expect(subject.service_uri).to eq("auth-app")
+    end
+  end
+
+  context "attribute" do
+    let(:service) { service_helper.service(:auth_app, attributes: {scale: 2, nil_attr: nil}) }
+    
+    it "returns attribute assigned to the service" do
+      expect(subject.attribute(:scale)).to eq(2)
+    end
+
+    it "returns nil if attribute is nil" do
+      expect(subject.attribute(:nil_attr)).to eq(nil)
+    end
+
+    it "raises an error if attribute wasn't set" do
+      expect{ subject.attribute(:unset_attr) }.to raise_error(KuberKit::Core::Service::AttributeNotSet)
     end
   end
 end

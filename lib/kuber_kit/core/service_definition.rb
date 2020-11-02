@@ -12,6 +12,7 @@ class KuberKit::Core::ServiceDefinition
       template_name:  get_value(@template_name),
       tags:           Array(get_value(@tags)).map(&:to_sym),
       images:         Array(get_value(@images)).map(&:to_sym),
+      attributes:     get_value(@attributes),
     )
   end
 
@@ -29,6 +30,12 @@ class KuberKit::Core::ServiceDefinition
 
   def images(*value, &block)
     @images = block_given? ? block : Array(value).flatten
+
+    self
+  end
+
+  def attributes(value = nil, &block)
+    @attributes = block_given? ? block : value
 
     self
   end

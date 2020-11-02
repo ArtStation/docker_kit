@@ -15,4 +15,8 @@ class KuberKit::Core::ContextHelper::ServiceHelper < KuberKit::Core::ContextHelp
   def service_uri
     @service.uri
   end
+
+  def attribute(attribute_name)
+    @service.attribute(attribute_name)
+  end
 end
