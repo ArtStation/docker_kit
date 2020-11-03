@@ -11,6 +11,6 @@ class KuberKit::ServiceDeployer::ActionHandler
 
     strategy_name = strategy_detector.call(service)
 
-    deployer.restart(shell, service, strategy_name)
+    deployer.deploy(shell, service, strategy_name)
   end
 end
