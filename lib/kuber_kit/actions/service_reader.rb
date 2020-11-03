@@ -10,5 +10,7 @@ class KuberKit::Actions::ServiceReader
     result = service_reader.call(local_shell, service_name)
 
     ui.print_info(service_name.to_s, result)
+  rescue KuberKit::Error => e
+    ui.print_error("Error", e.message)
   end
 end

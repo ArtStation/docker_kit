@@ -13,5 +13,7 @@ class KuberKit::Actions::KubectlApplier
       task.update_title("Applied file: #{file_path}")
     end
     nil
+  rescue KuberKit::Error => e
+    ui.print_error("Error", e.message)
   end
 end

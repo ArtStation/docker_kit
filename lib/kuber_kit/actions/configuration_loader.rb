@@ -50,6 +50,8 @@ class KuberKit::Actions::ConfigurationLoader
       files = service_store.load_definitions(services_path)
       task.update_title("Loaded #{files.count} service definitions")
     end
+  rescue KuberKit::Error => e
+    ui.print_error("Error", e.message)
   end
   
   def load_configurations(configurations_path, configuration_name)

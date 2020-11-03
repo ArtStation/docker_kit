@@ -31,6 +31,8 @@ class KuberKit::Actions::ServiceDeployer
 
     compile_images(images_names)
     deploy_services(service_names)
+  rescue KuberKit::Error => e
+    ui.print_error("Error", e.message)
   end
 
   def deploy_services(service_names)

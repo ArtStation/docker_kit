@@ -21,6 +21,8 @@ class KuberKit::Actions::ImageCompiler
     end
 
     compile_simultaneously(image_names - resolved_dependencies, build_id)
+  rescue KuberKit::Error => e
+    ui.print_error("Error", e.message)
   end
 
   private
