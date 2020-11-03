@@ -19,6 +19,10 @@ class KuberKit::Actions::ServiceDeployer
       tags:     tags || []
     )
 
+    unless service_names.any?
+      ui.print_warning "WARNING", "No service found with given options, nothing will be deployed."
+    end
+
     services = service_names.map do |service_name|
       service_store.get_service(service_name.to_sym)
     end

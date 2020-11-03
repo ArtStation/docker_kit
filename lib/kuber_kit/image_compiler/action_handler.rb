@@ -14,7 +14,8 @@ class KuberKit::ImageCompiler::ActionHandler
     compiler.compile(shell, image, compile_dir)
   end
 
-  def generate_compile_dir(build_id:)
-    File.join(configs.image_compile_dir, build_id)
-  end
+  private
+    def generate_compile_dir(build_id:)
+      File.join(configs.image_compile_dir, build_id)
+    end
 end
