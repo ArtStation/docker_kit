@@ -201,6 +201,10 @@ class KuberKit::Container
     KuberKit::ServiceDeployer::ActionHandler.new
   end
 
+  register "service_deployer.strategy_detector" do
+    KuberKit::ServiceDeployer::StrategyDetector.new
+  end
+
   register "service_deployer.deployer" do
     KuberKit::ServiceDeployer::Deployer.new
   end
