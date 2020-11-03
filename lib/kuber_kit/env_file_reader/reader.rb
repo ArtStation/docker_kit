@@ -2,14 +2,14 @@ class KuberKit::EnvFileReader::Reader
   ReaderNotFoundError = Class.new(KuberKit::NotFoundError)
 
   include KuberKit::Import[
-    "env_file_reader.artifact_file_reader",
+    "env_file_reader.strategies.artifact_file",
   ]
 
   def use_reader(env_file_reader, env_file_class:)
     @@readers ||= {}
 
-    if !env_file_reader.is_a?(KuberKit::EnvFileReader::AbstractEnvFileReader)
-      raise ArgumentError.new("should be an instance of KuberKit::EnvFileReader::AbstractEnvFileReader, got: #{env_file_reader.inspect}")
+    if !env_file_reader.is_a?(KuberKit::EnvFileReader::Strategies::Abstract)
+      raise ArgumentError.new("should be an instance of KuberKit::EnvFileReader::Strategies::Abstract, got: #{env_file_reader.inspect}")
     end
 
     @@readers[env_file_class] = env_file_reader
@@ -26,7 +26,7 @@ class KuberKit::EnvFileReader::Reader
   end
 
   def add_default_readers
-    use_reader(artifact_file_reader, env_file_class: KuberKit::Core::EnvFiles::ArtifactFile)
+    use_reader(artifact_file, env_file_class: KuberKit::Core::EnvFiles::ArtifactFile)
   end
 
   def reset!

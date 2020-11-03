@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::EnvFileReader::AbstractEnvFileReader do
-  subject{ KuberKit::EnvFileReader::AbstractEnvFileReader.new }
+RSpec.describe KuberKit::EnvFileReader::Strategies::Abstract do
+  subject{ KuberKit::EnvFileReader::Strategies::Abstract.new }
 
   let(:env_file) { KuberKit::Core::EnvFiles::ArtifactFile.new(:test_env, artifact_name: :env_files, file_path: "test.env") }
 

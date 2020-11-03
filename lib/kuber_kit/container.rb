@@ -185,8 +185,8 @@ class KuberKit::Container
     KuberKit::EnvFileReader::Reader.new
   end
 
-  register "env_file_reader.artifact_file_reader" do
-    KuberKit::EnvFileReader::ArtifactFileReader.new
+  register "env_file_reader.strategies.artifact_file" do
+    KuberKit::EnvFileReader::Strategies::ArtifactFile.new
   end
 
   register "template_reader.reader" do

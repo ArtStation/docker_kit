@@ -1,4 +1,4 @@
-class KuberKit::EnvFileReader::ArtifactFileReader < KuberKit::EnvFileReader::AbstractEnvFileReader
+class KuberKit::EnvFileReader::Strategies::ArtifactFile < KuberKit::EnvFileReader::Strategies::Abstract
   include KuberKit::Import[
     "core.artifact_store"
   ]

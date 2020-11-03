@@ -1,7 +1,7 @@
 RSpec.describe KuberKit::EnvFileReader::Reader do
   subject{ KuberKit::EnvFileReader::Reader.new }
 
-  class ExampleReader < KuberKit::EnvFileReader::AbstractEnvFileReader
+  class ExampleReader < KuberKit::EnvFileReader::Strategies::Abstract
     def read(shell, env_file)
       return {name: env_file.name}
     end
