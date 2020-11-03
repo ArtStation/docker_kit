@@ -189,12 +189,12 @@ class KuberKit::Container
     KuberKit::TemplateReader::ArtifactFileReader.new
   end
 
-  register "service_deployer.deployer" do
-    KuberKit::ServiceDeployer::Deployer.new
+  register "service_deployer.action_handler" do
+    KuberKit::ServiceDeployer::ActionHandler.new
   end
 
-  register "service_deployer.service_restarter" do
-    KuberKit::ServiceDeployer::ServiceRestarter.new
+  register "service_deployer.deployer" do
+    KuberKit::ServiceDeployer::Deployer.new
   end
 
   register "service_deployer.service_reader" do

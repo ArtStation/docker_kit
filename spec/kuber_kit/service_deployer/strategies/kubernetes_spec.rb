@@ -4,9 +4,9 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
   let(:shell) { test_helper.shell }
   let(:service) { service_helper.register_service(:auth_app) }
 
-  it "prints content of service config" do
+  it do
     expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
     expect(subject.kubectl_commands).to receive(:apply_file).with(shell, "/tmp/kuber_kit/services/auth_app.yml", kubeconfig_path: nil)
-    subject.restart(shell, service)
+    subject.deploy(shell, service)
   end
 end

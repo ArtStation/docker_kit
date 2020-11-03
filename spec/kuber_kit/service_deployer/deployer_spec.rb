@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::ServiceDeployer::ServiceRestarter do
-  subject{ KuberKit::ServiceDeployer::ServiceRestarter.new }
+RSpec.describe KuberKit::ServiceDeployer::Deployer do
+  subject{ KuberKit::ServiceDeployer::Deployer.new }
 
   let(:shell) { test_helper.shell }
   let(:service) { service_helper.register_service(:auth_app) }
@@ -9,7 +9,7 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceRestarter do
       @name = name
     end
 
-    def restart(shell, service)
+    def deploy(shell, service)
       return {name: @name}
     end
   end
@@ -21,8 +21,8 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceRestarter do
     subject.register_strategy(:strategy1, strategy1)
     subject.register_strategy(:strategy2, strategy2)
 
-    result1 = subject.restart(test_helper.shell, service, :strategy1)
-    result2 = subject.restart(test_helper.shell, service, :strategy2)
+    result1 = subject.deploy(test_helper.shell, service, :strategy1)
+    result2 = subject.deploy(test_helper.shell, service, :strategy2)
 
     expect(result1[:name]).to eq(:strategy1)
     expect(result2[:name]).to eq(:strategy2)
@@ -30,8 +30,8 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceRestarter do
 
   it "raises error if strategy not found" do
     expect {
-      subject.restart(test_helper.shell, service, :strategy3)
-    }.to raise_error(KuberKit::ServiceDeployer::ServiceRestarter::StrategyNotFoundError)
+      subject.deploy(test_helper.shell, service, :strategy3)
+    }.to raise_error(KuberKit::ServiceDeployer::Deployer::StrategyNotFoundError)
   end
 
   it "raises an error if strategy is not an instance of abstract reader" do

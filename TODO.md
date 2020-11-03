@@ -1,4 +1,4 @@
-- add contracts for all definition classes
+- limit amount of simultaneous image builds
 - list services and require confirmation before deployment
 - rename service reader to service config reader
 - service factory should make sure that template exists

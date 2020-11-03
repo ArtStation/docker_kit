@@ -115,8 +115,8 @@ module KuberKit
   end
 
   module ServiceDeployer
+    autoload :ActionHandler, 'service_deployer/action_handler'
     autoload :Deployer, 'service_deployer/deployer'
-    autoload :ServiceRestarter, 'service_deployer/service_restarter'
     autoload :ServiceReader, 'service_deployer/service_reader'
     autoload :ServiceListResolver, 'service_deployer/service_list_resolver'
 

@@ -6,7 +6,7 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service => Any
-  def restart(shell, service)
+  def deploy(shell, service)
     service_config = service_reader.read(shell, service)
     config_path    = "#{configs.service_config_dir}/#{service.name}.yml"
     shell.write(config_path, service_config)
