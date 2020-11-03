@@ -1,7 +1,7 @@
 RSpec.describe KuberKit::ServiceReader::Reader do
   subject{ KuberKit::ServiceReader::Reader.new }
 
-  let(:service) { service_helper.register_service(:auth_app) }
+  let(:service) { service_helper.service(:auth_app) }
 
   it "returns service config" do
     result = subject.read(test_helper.shell, service)

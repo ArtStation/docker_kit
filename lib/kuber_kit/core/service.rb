@@ -22,9 +22,13 @@ class KuberKit::Core::Service
     name.to_s.gsub("_", "-")
   end
 
-  def attribute(attribute_name)
-    unless attributes.has_key?(attribute_name.to_sym)
+  def attribute(attribute_name, default: nil)
+    if !attributes.has_key?(attribute_name.to_sym) && default.nil?
       raise AttributeNotSet, "attribute #{attribute_name} was not set"
+    end
+
+    if !attributes.has_key?(attribute_name.to_sym) && !default.nil?
+      return default
     end
 
     attributes[attribute_name.to_sym]

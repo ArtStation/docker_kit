@@ -42,4 +42,12 @@ class KuberKit::Core::Artifacts::ArtifactStore
   def reset!
     @@artifacts = {}
   end
+
+  def all_definitions
+    @@artifacts ||= {}
+  end
+
+  def exists?(artifact_name)
+    !all_definitions[artifact_name].nil?
+  end
 end

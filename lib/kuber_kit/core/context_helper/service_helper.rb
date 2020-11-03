@@ -17,7 +17,7 @@ class KuberKit::Core::ContextHelper::ServiceHelper < KuberKit::Core::ContextHelp
     @service.uri
   end
 
-  def attribute(attribute_name)
-    @service.attribute(attribute_name)
+  def attribute(attribute_name, default: nil)
+    @service.attribute(attribute_name, default: default)
   end
 end

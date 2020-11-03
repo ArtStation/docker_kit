@@ -13,6 +13,11 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
 
     kubeconfig_path = KuberKit.current_configuration.kubeconfig_path
     kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path)
-    kubectl_commands.rolling_restart(shell, service.uri, kubeconfig_path: kubeconfig_path)
+
+    deployment_restart_enabled = service.attribute(:deployment_restart_enabled, default: true)
+    deployment_restart_name    = service.attribute(:deployment_restart_name, default: service.uri)
+    if deployment_restart_enabled
+      kubectl_commands.rolling_restart(shell, deployment_restart_name, kubeconfig_path: kubeconfig_path)
+    end
   end
 end

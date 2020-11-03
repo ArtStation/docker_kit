@@ -38,8 +38,18 @@ RSpec.describe KuberKit::Core::ContextHelper::ServiceHelper do
       expect(subject.attribute(:nil_attr)).to eq(nil)
     end
 
-    it "raises an error if attribute wasn't set" do
-      expect{ subject.attribute(:unset_attr) }.to raise_error(KuberKit::Core::Service::AttributeNotSet)
+    context "attribute is not set" do
+      it "raises an error if no default attribute" do
+        expect{ subject.attribute(:unset_attr) }.to raise_error(KuberKit::Core::Service::AttributeNotSet)
+      end
+  
+      it "doesn't raise error if default value is provided" do
+        expect(subject.attribute(:unset_attr, default: 2)).to eq(2)
+      end
+  
+      it "returns false if default value is false" do
+        expect(subject.attribute(:unset_attr, default: false)).to eq(false)
+      end
     end
   end
 end

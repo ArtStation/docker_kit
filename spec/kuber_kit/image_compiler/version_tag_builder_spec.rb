@@ -1,6 +1,6 @@
 RSpec.describe KuberKit::ImageCompiler::VersionTagBuilder do
   subject { KuberKit::ImageCompiler::VersionTagBuilder.new }
-
+  
   context "get_version" do
     it "returns tag with current date and time" do
       version = subject.get_version

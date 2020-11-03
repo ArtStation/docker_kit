@@ -42,4 +42,12 @@ class KuberKit::Core::Templates::TemplateStore
   def reset!
     @@templates = {}
   end
+
+  def all_definitions
+    @@templates ||= {}
+  end
+
+  def exists?(template_name)
+    !all_definitions[template_name].nil?
+  end
 end
