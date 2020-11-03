@@ -2,11 +2,11 @@ class KuberKit::Actions::ServiceDeployer
   include KuberKit::Import[
     "actions.image_compiler",
     "service_deployer.service_list_resolver",
-    "service_deployer.action_handler",
     "core.service_store",
     "shell.local_shell",
     "tools.logger",
-    "ui"
+    "ui",
+    service_deployer: "service_deployer.action_handler",
   ]
 
   Contract KeywordArgs[
@@ -36,7 +36,7 @@ class KuberKit::Actions::ServiceDeployer
 
       logger.info("Started deploying: #{service_name.to_s.green}")
       task_group.add("Deploying #{service_name.to_s.yellow}") do |task|
-        action_handler.call(local_shell, service_name.to_sym)
+        service_deployer.call(local_shell, service_name.to_sym)
 
         task.update_title("Deployed #{service_name.to_s.green}")
         logger.info("Finished deploying: #{service_name.to_s.green}")

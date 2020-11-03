@@ -8,7 +8,7 @@ RSpec.describe KuberKit::Actions::ServiceDeployer do
   end
 
   it "deploys services found by resolver" do
-    expect(subject.action_handler).to receive(:call).with(subject.local_shell, :auth_app)
+    expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :auth_app)
     subject.call(services: ["auth_app"], tags: [])
   end
 end

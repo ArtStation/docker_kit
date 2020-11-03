@@ -1,10 +1,10 @@
 class KuberKit::Actions::ImageCompiler
   include KuberKit::Import[
-    "image_compiler.action_handler",
     "image_compiler.image_dependency_resolver",
     "shell.local_shell",
     "tools.logger",
-    "ui"
+    "ui",
+    image_compiler: "image_compiler.action_handler",
   ]
 
   Contract ArrayOf[Symbol], Hash => Any
@@ -30,7 +30,7 @@ class KuberKit::Actions::ImageCompiler
 
         logger.info("Started compiling: #{image_name.to_s.green}")
         task_group.add("Compiling #{image_name.to_s.yellow}") do |task|
-          action_handler.call(local_shell, image_name, build_id)
+          image_compiler.call(local_shell, image_name, build_id)
 
           task.update_title("Compiled #{image_name.to_s.green}")
           logger.info("Finished compiling: #{image_name.to_s.green}")
