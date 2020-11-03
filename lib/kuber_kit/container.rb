@@ -173,6 +173,10 @@ class KuberKit::Container
     KuberKit::ArtifactsSync::NullArtifactResolver.new
   end
 
+  register "env_file_reader.action_handler" do
+    KuberKit::EnvFileReader::ActionHandler.new
+  end
+
   register "env_file_reader.reader" do
     KuberKit::EnvFileReader::Reader.new
   end
