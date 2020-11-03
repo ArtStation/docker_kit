@@ -141,6 +141,10 @@ class KuberKit::Container
     KuberKit::Preprocessing::DirPreprocessor.new
   end
 
+  register "image_compiler.action_handler" do
+    KuberKit::ImageCompiler::ActionHandler.new
+  end
+
   register "image_compiler.compiler" do
     KuberKit::ImageCompiler::Compiler.new
   end

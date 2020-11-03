@@ -1,10 +1,9 @@
 class KuberKit::Actions::ImageCompiler
   include KuberKit::Import[
-    "image_compiler.compiler",
+    "image_compiler.action_handler",
     "image_compiler.image_dependency_resolver",
     "shell.local_shell",
     "tools.logger",
-    "configs",
     "ui"
   ]
 
@@ -31,7 +30,7 @@ class KuberKit::Actions::ImageCompiler
 
         logger.info("Started compiling: #{image_name.to_s.green}")
         task_group.add("Compiling #{image_name.to_s.yellow}") do |task|
-          compile_image(image_name, build_id)
+          action_handler.call(local_shell, image_name, build_id)
 
           task.update_title("Compiled #{image_name.to_s.green}")
           logger.info("Finished compiling: #{image_name.to_s.green}")
@@ -41,16 +40,7 @@ class KuberKit::Actions::ImageCompiler
       task_group.wait
     end
 
-    def compile_image(image_name, build_id)
-      compile_dir = generate_compile_dir(build_id: build_id)
-      compiler.compile(local_shell, image_name, compile_dir)
-    end
-
     def generate_build_id
       Time.now.strftime("%H%M%S")
-    end
-
-    def generate_compile_dir(build_id:)
-      File.join(configs.image_compile_dir, build_id)
     end
 end

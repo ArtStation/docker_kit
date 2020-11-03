@@ -3,13 +3,10 @@ class KuberKit::ImageCompiler::Compiler
     "image_compiler.image_build_dir_creator",
     "image_compiler.image_builder",
     "core.context_helper_factory",
-    "core.image_store"
   ]
 
-  Contract KuberKit::Shell::AbstractShell, Symbol, String => Any
-  def compile(shell, image_name, builds_dir)
-    image = image_store.get_image(image_name)
-
+  Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Image, String => Any
+  def compile(shell, image, builds_dir)
     image_build_dir = File.join(builds_dir, image.name.to_s)
 
     context_helper = context_helper_factory.build_image_context(shell)

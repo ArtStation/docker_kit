@@ -82,6 +82,7 @@ module KuberKit
   end
 
   module ImageCompiler
+    autoload :ActionHandler, 'image_compiler/action_handler'
     autoload :Compiler, 'image_compiler/compiler'
     autoload :ImageBuilder, 'image_compiler/image_builder'
     autoload :ImageBuildDirCreator, 'image_compiler/image_build_dir_creator'
