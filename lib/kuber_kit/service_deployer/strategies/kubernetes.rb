@@ -1,13 +1,13 @@
 class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeployer::Strategies::Abstract
   include KuberKit::Import[
-    "service_deployer.service_reader",
+    "service_reader.reader",
     "shell.kubectl_commands",
     "configs",
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service => Any
   def deploy(shell, service)
-    service_config = service_reader.read(shell, service)
+    service_config = reader.read(shell, service)
     config_path    = "#{configs.service_config_dir}/#{service.name}.yml"
     shell.write(config_path, service_config)
 

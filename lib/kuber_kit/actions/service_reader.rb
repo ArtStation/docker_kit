@@ -1,16 +1,13 @@
 class KuberKit::Actions::ServiceReader
   include KuberKit::Import[
-    "core.service_store",
-    "service_deployer.service_reader",
     "shell.local_shell",
-    "ui"
+    "ui",
+    service_reader: "service_reader.action_handler",
   ]
 
   Contract Symbol, Hash => Any
   def call(service_name, options)
-    service = service_store.get_service(service_name)
-
-    result = service_reader.read(local_shell, service)
+    result = service_reader.call(local_shell, service_name)
 
     ui.print_info(service_name.to_s, result)
   end

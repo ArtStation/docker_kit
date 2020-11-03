@@ -1,4 +1,4 @@
-class KuberKit::ServiceDeployer::ServiceReader
+class KuberKit::ServiceReader::Reader
   include KuberKit::Import[
     "core.template_store",
     "core.context_helper_factory",

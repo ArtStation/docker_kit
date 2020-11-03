@@ -123,13 +123,17 @@ module KuberKit
     autoload :ActionHandler, 'service_deployer/action_handler'
     autoload :StrategyDetector, 'service_deployer/strategy_detector'
     autoload :Deployer, 'service_deployer/deployer'
-    autoload :ServiceReader, 'service_deployer/service_reader'
     autoload :ServiceListResolver, 'service_deployer/service_list_resolver'
 
     module Strategies
       autoload :Abstract, 'service_deployer/strategies/abstract'
       autoload :Kubernetes, 'service_deployer/strategies/kubernetes'
     end
+  end
+
+  module ServiceReader
+    autoload :ActionHandler, 'service_reader/action_handler'
+    autoload :Reader, 'service_reader/reader'
   end
 
   module Actions

@@ -209,16 +209,20 @@ class KuberKit::Container
     KuberKit::ServiceDeployer::Deployer.new
   end
 
-  register "service_deployer.service_reader" do
-    KuberKit::ServiceDeployer::ServiceReader.new
-  end
-
   register "service_deployer.service_list_resolver" do
     KuberKit::ServiceDeployer::ServiceListResolver.new
   end
 
   register "service_deployer.strategies.kubernetes" do
     KuberKit::ServiceDeployer::Strategies::Kubernetes.new
+  end
+
+  register "service_reader.action_handler" do
+    KuberKit::ServiceReader::ActionHandler.new
+  end
+
+  register "service_reader.reader" do
+    KuberKit::ServiceReader::Reader.new
   end
 
   register "ui" do

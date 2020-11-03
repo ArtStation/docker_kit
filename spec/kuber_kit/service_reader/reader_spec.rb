@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::ServiceDeployer::ServiceReader do
-  subject{ KuberKit::ServiceDeployer::ServiceReader.new }
+RSpec.describe KuberKit::ServiceReader::Reader do
+  subject{ KuberKit::ServiceReader::Reader.new }
 
   let(:service) { service_helper.register_service(:auth_app) }
 
