@@ -1,8 +1,9 @@
 RSpec.describe KuberKit::Core::ContextHelper::BaseHelper do
   subject{ KuberKit::Core::ContextHelper::BaseHelper.new(
-    image_store: test_helper.image_store,
-    artifact_store: KuberKit::Container['core.artifact_store'],
-    shell: test_helper.shell
+    image_store:      test_helper.image_store,
+    artifact_store:   KuberKit::Container['core.artifact_store'],
+    env_file_reader:  KuberKit::Container['env_file_reader.action_handler'],
+    shell:            test_helper.shell
   ) }
 
   context "image_url" do
@@ -37,6 +38,20 @@ RSpec.describe KuberKit::Core::ContextHelper::BaseHelper do
   context "configuration_name" do
     it "returns configuration name" do
       expect(subject.configuration_name).to eq(:default)
+    end
+  end
+
+  context "env_file" do
+    let(:artifact) { KuberKit::Core::Artifacts::Local.new(:env_files).setup(File.join(FIXTURES_PATH, "env_files")) }
+    let(:env_file) { KuberKit::Core::EnvFiles::ArtifactFile.new(:test_env, artifact_name: :env_files, file_path: "test.env") }
+
+    before do
+      test_helper.env_file_store.add(env_file)
+      test_helper.artifact_store.add(artifact)
+    end
+
+    it "returns content of env file" do
+      expect(subject.env_file(:test_env)["RUBY_ENV"]).to eq("review")
     end
   end
 end

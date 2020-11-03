@@ -2,10 +2,11 @@ RSpec.describe KuberKit::Core::ContextHelper::ServiceHelper do
   let(:service) { service_helper.service(:auth_app) }
 
   subject{ KuberKit::Core::ContextHelper::ServiceHelper.new(
-    image_store:    test_helper.image_store,
-    artifact_store: KuberKit::Container['core.artifact_store'],
-    shell:          test_helper.shell,
-    service:        service
+    image_store:      test_helper.image_store,
+    artifact_store:   KuberKit::Container['core.artifact_store'],
+    shell:            test_helper.shell,
+    env_file_reader:  KuberKit::Container['env_file_reader.action_handler'],
+    service:          service
   ) }
 
   context "service_name" do
