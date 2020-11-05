@@ -45,11 +45,13 @@ RSpec.describe KuberKit::Actions::ConfigurationLoader do
       subject.call({configuration: "some_configuration"})
     end
 
-    it "raises error if no configuration is selected" do
+    it "print_error error if no configuration is selected" do
       test_helper.configuration_store.define(:some_configuration)
       test_helper.configuration_store.define(:another_configuration)
 
-      expect{ subject.call({}) }.to raise_error(KuberKit::Error)
+      expect(subject.ui).to receive(:print_error).with("Error", /Please set configuration name/)
+
+      subject.call({})
     end
   end
 end

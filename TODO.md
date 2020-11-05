@@ -1,6 +1,6 @@
 - limit amount of simultaneous image builds
 - list services and require confirmation before deployment
-- service factory should make sure that template exists
 - add build servers support
 - add build vars support (use images instead of containers)
+- template should be able to set default attributes
 - template should be able to depend on image?

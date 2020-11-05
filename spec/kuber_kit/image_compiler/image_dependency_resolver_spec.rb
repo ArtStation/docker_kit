@@ -60,6 +60,17 @@ RSpec.describe KuberKit::ImageCompiler::ImageDependencyResolver do
       expect(subject.get_next([:imageA, :imageB], resolved: [:imageC, :imageD, :imageB])).to eq([])
     end
 
+    it "doesn't exceed the limit" do
+      test_helper.image_store.define(:image1).depends_on(:image2, :image3, :image4, :image5)
+      test_helper.image_store.define(:image2)
+      test_helper.image_store.define(:image3)
+      test_helper.image_store.define(:image4)
+      test_helper.image_store.define(:image5)
+
+      expect(subject.get_next([:image1], resolved: [], limit: 3)).to eq([:image2, :image3, :image4])
+      expect(subject.get_next([:image1], resolved: [], limit: 4)).to eq([:image2, :image3, :image4, :image5])
+    end
+
     it "returns empty for independent images" do
       expect(subject.get_next([:imageC, :imageD])).to eq([])
     end

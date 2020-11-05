@@ -7,16 +7,19 @@ class KuberKit::ImageCompiler::ImageDependencyResolver
   ]
   
   Contract Any, KeywordArgs[
-    resolved: Optional[ArrayOf[Symbol]]
+    resolved: Optional[ArrayOf[Symbol]],
+    limit:    Optional[Maybe[Num]]
   ] => Any
-  def get_next(image_names, resolved: [])
+  def get_next(image_names, resolved: [], limit: nil)
     deps = Array(image_names).map { |i| get_recursive_deps(i) }.flatten.uniq
 
     ready_to_resolve = deps.select do |dep_name|
       unresolved_deps = get_deps(dep_name) - resolved
       unresolved_deps.empty?
     end
-    ready_to_resolve - resolved
+    unresolved_deps = ready_to_resolve - resolved
+    unresolved_deps = unresolved_deps.take(limit) if limit
+    unresolved_deps
   end
 
   def get_recursive_deps(image_name, dependency_tree: [])

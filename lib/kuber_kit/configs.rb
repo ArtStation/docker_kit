@@ -14,33 +14,35 @@ class KuberKit::Configs
     'tmp',
     'logs'
   ]
-  KUBER_KIT_DIRNAME      = "kuber_kit".freeze
-  IMAGES_DIRNAME         = "images".freeze
-  SERVICES_DIRNAME       = "services".freeze
-  INFRA_DIRNAME          = "infrastructure".freeze
-  CONFIGURATIONS_DIRNAME = "configurations".freeze
-  ARTIFACT_CLONE_DIR     = "/tmp/kuber_kit/artifacts"
-  SERVICE_CONFIG_DIR     = "/tmp/kuber_kit/services"
-  DEPLOY_STRATEGY        = :kubernetes
+  KUBER_KIT_DIRNAME           = "kuber_kit".freeze
+  IMAGES_DIRNAME              = "images".freeze
+  SERVICES_DIRNAME            = "services".freeze
+  INFRA_DIRNAME               = "infrastructure".freeze
+  CONFIGURATIONS_DIRNAME      = "configurations".freeze
+  ARTIFACT_CLONE_DIR          = "/tmp/kuber_kit/artifacts"
+  SERVICE_CONFIG_DIR          = "/tmp/kuber_kit/services"
+  DEPLOY_STRATEGY             = :kubernetes
+  COMPILE_SIMULTANEOUS_LIMIT  = 5
 
   attr_accessor :image_dockerfile_name, :image_build_context_dir, :image_tag,
                 :docker_ignore_list, :image_compile_dir, 
                 :kuber_kit_dirname, :images_dirname, :services_dirname, :infra_dirname, :configurations_dirname,
-                :artifact_clone_dir, :service_config_dir, :deploy_strategy
+                :artifact_clone_dir, :service_config_dir, :deploy_strategy, :compile_simultaneous_limit
 
   def initialize
-    @image_dockerfile_name   = IMAGE_DOCKERFILE_NAME
-    @image_build_context_dir = IMAGE_BUILD_CONTEXT_DIR
-    @image_tag               = IMAGE_TAG
-    @image_compile_dir       = IMAGE_COMPILE_DIR
-    @docker_ignore_list      = DOCKER_IGNORE_LIST
-    @kuber_kit_dirname       = KUBER_KIT_DIRNAME
-    @images_dirname          = IMAGES_DIRNAME
-    @services_dirname        = SERVICES_DIRNAME
-    @infra_dirname           = INFRA_DIRNAME
-    @configurations_dirname  = CONFIGURATIONS_DIRNAME
-    @artifact_clone_dir      = ARTIFACT_CLONE_DIR
-    @service_config_dir      = SERVICE_CONFIG_DIR
-    @deploy_strategy         = DEPLOY_STRATEGY
+    @image_dockerfile_name      = IMAGE_DOCKERFILE_NAME
+    @image_build_context_dir    = IMAGE_BUILD_CONTEXT_DIR
+    @image_tag                  = IMAGE_TAG
+    @image_compile_dir          = IMAGE_COMPILE_DIR
+    @docker_ignore_list         = DOCKER_IGNORE_LIST
+    @kuber_kit_dirname          = KUBER_KIT_DIRNAME
+    @images_dirname             = IMAGES_DIRNAME
+    @services_dirname           = SERVICES_DIRNAME
+    @infra_dirname              = INFRA_DIRNAME
+    @configurations_dirname     = CONFIGURATIONS_DIRNAME
+    @artifact_clone_dir         = ARTIFACT_CLONE_DIR
+    @service_config_dir         = SERVICE_CONFIG_DIR
+    @deploy_strategy            = DEPLOY_STRATEGY
+    @compile_simultaneous_limit = COMPILE_SIMULTANEOUS_LIMIT
   end
 end
