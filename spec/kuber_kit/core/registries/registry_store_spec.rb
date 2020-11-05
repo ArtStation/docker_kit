@@ -16,7 +16,7 @@ RSpec.describe KuberKit::Core::Registries::RegistryStore do
     end
 
     it "raises error if registry is not found" do
-      expect{ subject.get_global(:default) }.to raise_error(KuberKit::Core::Registries::RegistryStore::NotFoundError)
+      expect{ subject.get_global(:default) }.to raise_error(KuberKit::Core::Store::NotFoundError)
     end
   end
 
@@ -32,19 +32,6 @@ RSpec.describe KuberKit::Core::Registries::RegistryStore do
 
     it "returns nil if registry is not found" do
       expect(subject.get_from_configuration(:default)).to be_nil
-    end
-  end
-
-  context "#add" do
-    it "doesn't allow adding registry twice" do
-      registry = KuberKit::Core::Registries::Registry.new(:default)
-      subject.add(registry)
-
-      expect{ subject.add(registry) }.to raise_error(KuberKit::Core::Registries::RegistryStore::AlreadyAddedError)
-    end
-
-    it "doesn't allow adding not registry class" do
-      expect{ subject.add(12) }.to raise_error(ArgumentError)
     end
   end
 end

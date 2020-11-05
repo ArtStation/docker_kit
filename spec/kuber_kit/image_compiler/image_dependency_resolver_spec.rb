@@ -31,7 +31,7 @@ RSpec.describe KuberKit::ImageCompiler::ImageDependencyResolver do
 
       expect{
         subject.get_recursive_deps(:image1)
-      }.to raise_error(KuberKit::Core::ImageStore::NotFoundError)
+      }.to raise_error(KuberKit::Core::Store::NotFoundError)
     end
   end
 

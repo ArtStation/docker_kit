@@ -1,7 +1,4 @@
 class KuberKit::Core::ImageStore
-  NotFoundError = Class.new(KuberKit::Error)
-  AlreadyAddedError = Class.new(KuberKit::Error)
-
   include KuberKit::Import[
     "core.image_factory",
     "core.image_definition_factory",
@@ -16,24 +13,12 @@ class KuberKit::Core::ImageStore
   end
 
   def add_definition(image_definition)
-    @@image_definitions ||= {}
-
-    unless @@image_definitions[image_definition.image_name].nil?
-      raise AlreadyAddedError, "image #{image_definition.image_name} was already added"
-    end
-
-    @@image_definitions[image_definition.image_name] = image_definition
+    definitions_store.add(image_definition.image_name, image_definition)
   end
 
   Contract Symbol => Any
   def get_definition(image_name)
-    @@image_definitions ||= {}
-
-    if @@image_definitions[image_name].nil?
-      raise NotFoundError, "image #{image_name} not found"
-    end
-
-    @@image_definitions[image_name]
+    definitions_store.get(image_name)
   end
 
   Contract Symbol => Any
@@ -57,6 +42,11 @@ class KuberKit::Core::ImageStore
   end
 
   def reset!
-    @@image_definitions = {}
+    definitions_store.reset!
   end
+
+  private
+    def definitions_store
+      @@definitions_store ||= KuberKit::Core::Store.new(KuberKit::Core::ImageDefinition)
+    end
 end

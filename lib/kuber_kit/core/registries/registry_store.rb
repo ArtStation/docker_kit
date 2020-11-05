@@ -1,19 +1,6 @@
 class KuberKit::Core::Registries::RegistryStore
-  NotFoundError = Class.new(KuberKit::NotFoundError)
-  AlreadyAddedError = Class.new(KuberKit::Error)
-
   def add(registry)
-    @@registries ||= {}
-
-    if !registry.is_a?(KuberKit::Core::Registries::AbstractRegistry)
-      raise ArgumentError.new("should be an instance of KuberKit::Core::Registries::AbstractRegistry, got: #{registry.inspect}")
-    end
-
-    unless @@registries[registry.name].nil?
-      raise AlreadyAddedError, "registry #{registry.name} was already added"
-    end
-
-    @@registries[registry.name] = registry
+    store.add(registry.name, registry)
   end
 
   def get(registry_name)
@@ -24,14 +11,7 @@ class KuberKit::Core::Registries::RegistryStore
   end
 
   def get_global(registry_name)
-    @@registries ||= {}
-    registry = @@registries[registry_name]
-
-    if registry.nil?
-      raise NotFoundError, "registry '#{registry_name}' not found"
-    end
-    
-    registry
+    store.get(registry_name)
   end
 
   def get_from_configuration(registry_name)
@@ -44,6 +24,11 @@ class KuberKit::Core::Registries::RegistryStore
   end
 
   def reset!
-    @@registries = {}
+    store.reset!
   end
+
+  private
+    def store
+      @@store ||= KuberKit::Core::Store.new(KuberKit::Core::Registries::AbstractRegistry)
+    end
 end

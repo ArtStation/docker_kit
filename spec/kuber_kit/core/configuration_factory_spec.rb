@@ -23,7 +23,7 @@ RSpec.describe KuberKit::Core::ConfigurationFactory do
   it "raises exception if registry is not found" do
     definition = test_definition.use_registry(:main_production_registry, as: :main_registry)
 
-    expect{ subject.create(definition) }.to raise_error(KuberKit::Core::Registries::RegistryStore::NotFoundError)
+    expect{ subject.create(definition) }.to raise_error(KuberKit::Core::Store::NotFoundError)
   end
 
   it "sets artifacts from definition" do
@@ -38,6 +38,6 @@ RSpec.describe KuberKit::Core::ConfigurationFactory do
   it "raises exception if artifact is not found" do
     definition = test_definition.use_artifact(:main_production_repo, as: :main_repo)
 
-    expect{ subject.create(definition) }.to raise_error(KuberKit::Core::Artifacts::ArtifactStore::NotFoundError)
+    expect{ subject.create(definition) }.to raise_error(KuberKit::Core::Store::NotFoundError)
   end
 end

@@ -1,7 +1,4 @@
 class KuberKit::Core::ServiceStore
-  NotFoundError = Class.new(KuberKit::Error)
-  AlreadyAddedError = Class.new(KuberKit::Error)
-
   include KuberKit::Import[
     "core.service_factory",
     "core.service_definition_factory",
@@ -16,24 +13,12 @@ class KuberKit::Core::ServiceStore
   end
 
   def add_definition(service_definition)
-    @@service_definitions ||= {}
-
-    unless @@service_definitions[service_definition.service_name].nil?
-      raise AlreadyAddedError, "service #{service_definition.service_name} was already added"
-    end
-
-    @@service_definitions[service_definition.service_name] = service_definition
+    definitions_store.add(service_definition.service_name, service_definition)
   end
 
   Contract Symbol => Any
   def get_definition(service_name)
-    @@service_definitions ||= {}
-
-    if @@service_definitions[service_name].nil?
-      raise NotFoundError, "service '#{service_name}' not found"
-    end
-
-    @@service_definitions[service_name]
+    definitions_store.get(service_name)
   end
 
   Contract Symbol => Any
@@ -57,18 +42,23 @@ class KuberKit::Core::ServiceStore
   end
 
   def reset!
-    @@service_definitions = {}
-  end
-
-  def all_definitions
-    @@service_definitions ||= {}
+    definitions_store.reset!
   end
 
   def count
-    all_definitions.count
+    definitions_store.size
+  end
+
+  def all_definitions
+    definitions_store.items
   end
 
   def exists?(service_name)
-    !all_definitions[service_name].nil?
+    definitions_store.exists?(service_name)
   end
+
+  private
+    def definitions_store
+      @@definitions_store ||= KuberKit::Core::Store.new(KuberKit::Core::ServiceDefinition)
+    end
 end

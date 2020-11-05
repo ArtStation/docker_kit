@@ -1,7 +1,4 @@
 class KuberKit::Core::ConfigurationStore
-  NotFoundError = Class.new(KuberKit::NotFoundError)
-  AlreadyAddedError = Class.new(KuberKit::Error)
-
   include KuberKit::Import[
     "core.configuration_factory",
     "core.configuration_definition_factory",
@@ -16,24 +13,12 @@ class KuberKit::Core::ConfigurationStore
   end
 
   def add_definition(configuration_definition)
-    @@configuration_definitions ||= {}
-
-    unless @@configuration_definitions[configuration_definition.configuration_name].nil?
-      raise AlreadyAddedError, "image #{configuration_definition.configuration_name} was already added"
-    end
-
-    @@configuration_definitions[configuration_definition.configuration_name] = configuration_definition
+    definitions_store.add(configuration_definition.configuration_name, configuration_definition)
   end
 
   Contract Symbol => Any
   def get_definition(configuration_name)
-    @@configuration_definitions ||= {}
-
-    if @@configuration_definitions[configuration_name].nil?
-      raise NotFoundError, "configuration #{configuration_name} not found"
-    end
-
-    @@configuration_definitions[configuration_name]
+    definitions_store.get(configuration_name)
   end
 
   Contract Symbol => Any
@@ -57,18 +42,23 @@ class KuberKit::Core::ConfigurationStore
   end
 
   def reset!
-    @@configuration_definitions = {}
-  end
-
-  def all_definitions
-    @@configuration_definitions ||= {}
+    definitions_store.reset!
   end
 
   def count
-    all_definitions.count
+    definitions_store.size
   end
 
   def exists?(configuration_name)
-    !all_definitions[configuration_name].nil?
+    definitions_store.exists?(configuration_name)
   end
+
+  def all_definitions
+    definitions_store.items
+  end
+
+  private
+    def definitions_store
+      @@definitions_store ||= KuberKit::Core::Store.new(KuberKit::Core::ConfigurationDefinition)
+    end
 end

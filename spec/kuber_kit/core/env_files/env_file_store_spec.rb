@@ -12,7 +12,7 @@ RSpec.describe KuberKit::Core::EnvFiles::EnvFileStore do
     end
 
     it "raises error if env_file is not found" do
-      expect{ subject.get_global(:default) }.to raise_error(KuberKit::Core::EnvFiles::EnvFileStore::NotFoundError)
+      expect{ subject.get_global(:default) }.to raise_error(KuberKit::Core::Store::NotFoundError)
     end
   end
 
@@ -28,19 +28,6 @@ RSpec.describe KuberKit::Core::EnvFiles::EnvFileStore do
 
     it "returns nil if env_file is not found" do
       expect(subject.get_from_configuration(:default)).to be_nil
-    end
-  end
-
-  context "#add" do
-    it "doesn't allow adding env_file twice" do
-      env_file = KuberKit::Core::EnvFiles::ArtifactFile.new(:default, artifact_name: :env_files, file_path: "path/to.file")
-      subject.add(env_file)
-
-      expect{ subject.add(env_file) }.to raise_error(KuberKit::Core::EnvFiles::EnvFileStore::AlreadyAddedError)
-    end
-
-    it "doesn't allow adding not env_file class" do
-      expect{ subject.add(12) }.to raise_error(ArgumentError)
     end
   end
 end

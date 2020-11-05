@@ -30,19 +30,7 @@ RSpec.describe KuberKit::Core::ImageStore do
     end
 
     it "raises NotFound error if image is not found" do
-      expect{ subject.get_definition(:example) }.to raise_error(KuberKit::Core::ImageStore::NotFoundError)
-    end
-  end
-
-  context "#add_definition" do
-    it "adds ImageDefinition object to the store" do
-      subject.add_definition(test_definition)
-      expect(subject.get_definition(:example)).to be_a(KuberKit::Core::ImageDefinition)
-    end
-
-    it "doesn't allow adding a definition twice" do
-      subject.add_definition(test_definition)
-      expect{ subject.add_definition(test_definition) }.to raise_error(KuberKit::Core::ImageStore::AlreadyAddedError)
+      expect{ subject.get_definition(:example) }.to raise_error(KuberKit::Core::Store::NotFoundError)
     end
   end
 

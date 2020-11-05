@@ -30,19 +30,7 @@ RSpec.describe KuberKit::Core::ServiceStore do
     end
 
     it "raises NotFound error if service is not found" do
-      expect{ subject.get_definition(:example) }.to raise_error(KuberKit::Core::ServiceStore::NotFoundError)
-    end
-  end
-
-  context "#add_definition" do
-    it "adds ServiceDefinition object to the store" do
-      subject.add_definition(test_definition)
-      expect(subject.get_definition(:example)).to be_a(KuberKit::Core::ServiceDefinition)
-    end
-
-    it "doesn't allow adding a definition twice" do
-      subject.add_definition(test_definition)
-      expect{ subject.add_definition(test_definition) }.to raise_error(KuberKit::Core::ServiceStore::AlreadyAddedError)
+      expect{ subject.get_definition(:example) }.to raise_error(KuberKit::Core::Store::NotFoundError)
     end
   end
 

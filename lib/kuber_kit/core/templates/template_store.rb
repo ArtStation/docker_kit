@@ -1,7 +1,4 @@
 class KuberKit::Core::Templates::TemplateStore
-  NotFoundError = Class.new(KuberKit::NotFoundError)
-  AlreadyAddedError = Class.new(KuberKit::Error)
-
   def add(template)
     store.add(template.name, template)
   end
@@ -30,7 +27,8 @@ class KuberKit::Core::Templates::TemplateStore
     store.exists?(template_name)
   end
 
-  def store
-    @@store ||= KuberKit::Core::Store.new(KuberKit::Core::Templates::AbstractTemplate)
-  end
+  private
+    def store
+      @@store ||= KuberKit::Core::Store.new(KuberKit::Core::Templates::AbstractTemplate)
+    end
 end
