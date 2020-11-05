@@ -8,11 +8,20 @@ Add this line to your application's Gemfile:
 gem 'kuber_kit'
 ```
 
-## Launch compilation for example images
+## Development
+
+### Launch compilation
 
 ```
-bin/kit compile ruby_app,ruby_app2 --path=./example -C review
+bin/kit compile ruby_app,ruby_app2 --path=./example
 ```
+
+### Launch deployment
+
+```
+bin/kit compile -s ruby_app,ruby_app2 --path=./example
+```
+
 
 ## License
 
