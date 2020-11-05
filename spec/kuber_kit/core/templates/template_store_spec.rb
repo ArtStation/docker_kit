@@ -12,7 +12,7 @@ RSpec.describe KuberKit::Core::Templates::TemplateStore do
     end
 
     it "raises error if template is not found" do
-      expect{ subject.get_global(:default) }.to raise_error(KuberKit::Core::Templates::TemplateStore::NotFoundError)
+      expect{ subject.get_global(:default) }.to raise_error(KuberKit::Core::Store::NotFoundError)
     end
   end
 
@@ -28,19 +28,6 @@ RSpec.describe KuberKit::Core::Templates::TemplateStore do
 
     it "returns nil if template is not found" do
       expect(subject.get_from_configuration(:default)).to be_nil
-    end
-  end
-
-  context "#add" do
-    it "doesn't allow adding template twice" do
-      template = KuberKit::Core::Templates::ArtifactFile.new(:default, artifact_name: :env_files, file_path: "path/to.file")
-      subject.add(template)
-
-      expect{ subject.add(template) }.to raise_error(KuberKit::Core::Templates::TemplateStore::AlreadyAddedError)
-    end
-
-    it "doesn't allow adding not template class" do
-      expect{ subject.add(12) }.to raise_error(ArgumentError)
     end
   end
 end

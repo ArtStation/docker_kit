@@ -31,6 +31,8 @@ module KuberKit
     autoload :ConfigurationFactory, 'core/configuration_factory'
     autoload :Configuration, 'core/configuration'
 
+    autoload :Store, 'core/store'
+
     module ContextHelper
       autoload :BaseHelper, 'core/context_helper/base_helper'
       autoload :ImageHelper, 'core/context_helper/image_helper'

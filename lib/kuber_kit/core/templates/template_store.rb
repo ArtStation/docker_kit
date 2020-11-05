@@ -3,17 +3,7 @@ class KuberKit::Core::Templates::TemplateStore
   AlreadyAddedError = Class.new(KuberKit::Error)
 
   def add(template)
-    @@templates ||= {}
-
-    if !template.is_a?(KuberKit::Core::Templates::AbstractTemplate)
-      raise ArgumentError.new("should be an instance of KuberKit::Core::Templates::AbstractTemplate, got: #{template.inspect}")
-    end
-
-    unless @@templates[template.name].nil?
-      raise AlreadyAddedError, "template #{template.name} was already added"
-    end
-
-    @@templates[template.name] = template
+    store.add(template.name, template)
   end
 
   def get(template_name)
@@ -24,14 +14,7 @@ class KuberKit::Core::Templates::TemplateStore
   end
 
   def get_global(template_name)
-    @@templates ||= {}
-    template = @@templates[template_name]
-
-    if template.nil?
-      raise NotFoundError, "template '#{template_name}' not found"
-    end
-    
-    template
+    store.get(template_name)
   end
 
   def get_from_configuration(template_name)
@@ -40,14 +23,14 @@ class KuberKit::Core::Templates::TemplateStore
   end
 
   def reset!
-    @@templates = {}
-  end
-
-  def all_definitions
-    @@templates ||= {}
+    store.reset!
   end
 
   def exists?(template_name)
-    !all_definitions[template_name].nil?
+    store.exists?(template_name)
+  end
+
+  def store
+    @@store ||= KuberKit::Core::Store.new(KuberKit::Core::Templates::AbstractTemplate)
   end
 end
