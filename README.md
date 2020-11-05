@@ -1,4 +1,4 @@
-# Docker Kit
+# KuberKit
 
 ## Installation
 

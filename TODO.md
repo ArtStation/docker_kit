@@ -1,4 +1,3 @@
-- limit amount of simultaneous image builds
 - list services and require confirmation before deployment
 - add build servers support
 - add build vars support (use images instead of containers)
