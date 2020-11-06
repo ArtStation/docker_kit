@@ -69,16 +69,20 @@ class KuberKit::Container
     KuberKit::Core::ConfigurationStore.new
   end
 
-  register "core.registry_store" do
-    KuberKit::Core::Registries::RegistryStore.new
-  end
-
   register "core.artifact_store" do
     KuberKit::Core::Artifacts::ArtifactStore.new
   end
 
+  register "core.build_server_store" do
+    KuberKit::Core::BuildServers::BuildServerStore.new
+  end
+
   register "core.env_file_store" do
     KuberKit::Core::EnvFiles::EnvFileStore.new
+  end
+
+  register "core.registry_store" do
+    KuberKit::Core::Registries::RegistryStore.new
   end
 
   register "core.template_store" do

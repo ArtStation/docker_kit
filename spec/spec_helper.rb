@@ -42,6 +42,7 @@ RSpec.configure do |config|
     KuberKit::Container['core.artifact_store'].reset!
     KuberKit::Container['core.env_file_store'].reset!
     KuberKit::Container['core.template_store'].reset!
+    KuberKit::Container['core.build_server_store'].reset!
     KuberKit::Container['artifacts_sync.artifacts_updater'].reset!
     KuberKit::Container['env_file_reader.reader'].reset!
     KuberKit::Container['template_reader.reader'].reset!

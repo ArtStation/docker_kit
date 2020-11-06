@@ -33,6 +33,25 @@ module KuberKit
 
     autoload :Store, 'core/store'
 
+    module Artifacts
+      autoload :AbstractArtifact, 'core/artifacts/abstract_artifact'
+      autoload :ArtifactStore, 'core/artifacts/artifact_store'
+      autoload :Git, 'core/artifacts/git'
+      autoload :Local, 'core/artifacts/local'
+    end
+
+    module BuildServers
+      autoload :AbstractBuildServer, 'core/build_servers/abstract_build_server'
+      autoload :BuildServerStore, 'core/build_servers/build_server_store'
+      autoload :BuildServer, 'core/build_servers/build_server'
+    end
+
+    module EnvFiles
+      autoload :EnvFileStore, 'core/env_files/env_file_store'
+      autoload :AbstractEnvFile, 'core/env_files/abstract_env_file'
+      autoload :ArtifactFile, 'core/env_files/artifact_file'
+    end
+
     module ContextHelper
       autoload :BaseHelper, 'core/context_helper/base_helper'
       autoload :ImageHelper, 'core/context_helper/image_helper'
@@ -44,19 +63,6 @@ module KuberKit
       autoload :AbstractRegistry, 'core/registries/abstract_registry'
       autoload :RegistryStore, 'core/registries/registry_store'
       autoload :Registry, 'core/registries/registry'
-    end
-
-    module Artifacts
-      autoload :AbstractArtifact, 'core/artifacts/abstract_artifact'
-      autoload :ArtifactStore, 'core/artifacts/artifact_store'
-      autoload :Git, 'core/artifacts/git'
-      autoload :Local, 'core/artifacts/local'
-    end
-
-    module EnvFiles
-      autoload :EnvFileStore, 'core/env_files/env_file_store'
-      autoload :AbstractEnvFile, 'core/env_files/abstract_env_file'
-      autoload :ArtifactFile, 'core/env_files/artifact_file'
     end
 
     module Templates
