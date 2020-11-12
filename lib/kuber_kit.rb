@@ -226,6 +226,10 @@ module KuberKit
       Container["core.template_store"].add(template)
     end
 
+    def add_build_server(build_server)
+      Container["core.build_server_store"].add(build_server)
+    end
+
     def build_helper(&proc)
       KuberKit::Core::ContextHelper::BaseHelper.class_exec(&proc)
     end

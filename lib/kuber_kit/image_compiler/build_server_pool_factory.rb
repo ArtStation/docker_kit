@@ -3,7 +3,7 @@ class KuberKit::ImageCompiler::BuildServerPoolFactory
     "shell.local_shell",
   ]
 
-  def create(ssh_shell_class:)
+  def create(ssh_shell_class: KuberKit::Shell::SshShell)
     KuberKit::ImageCompiler::BuildServerPool.new(
       local_shell:      local_shell,
       build_servers:    KuberKit.current_configuration.build_servers,

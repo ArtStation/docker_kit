@@ -149,6 +149,10 @@ class KuberKit::Container
     KuberKit::ImageCompiler::ActionHandler.new
   end
 
+  register "image_compiler.build_server_pool_factory" do
+    KuberKit::ImageCompiler::BuildServerPoolFactory.new
+  end
+
   register "image_compiler.compiler" do
     KuberKit::ImageCompiler::Compiler.new
   end
