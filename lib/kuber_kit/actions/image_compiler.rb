@@ -3,7 +3,6 @@ class KuberKit::Actions::ImageCompiler
     "image_compiler.image_dependency_resolver",
     "shell.local_shell",
     "tools.logger",
-    "configs",
     "ui",
     image_compiler: "image_compiler.action_handler",
   ]
@@ -11,19 +10,10 @@ class KuberKit::Actions::ImageCompiler
   Contract ArrayOf[Symbol], Hash => Any
   def call(image_names, options)
     build_id = generate_build_id
-    compile_limit = configs.compile_simultaneous_limit
 
-
-    resolved_dependencies = []
-    next_dependencies = image_dependency_resolver.get_next(image_names, limit: compile_limit)
-
-    while (next_dependencies - resolved_dependencies).any?
-      compile_simultaneously(next_dependencies, build_id)
-      resolved_dependencies += next_dependencies
-      next_dependencies = image_dependency_resolver.get_next(image_names, resolved: resolved_dependencies, limit: compile_limit)
+    image_dependency_resolver.each_with_deps(image_names) do |dep_image_names|
+      compile_simultaneously(dep_image_names, build_id)
     end
-
-    compile_simultaneously(image_names - resolved_dependencies, build_id)
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
   end

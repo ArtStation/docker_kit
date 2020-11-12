@@ -3,10 +3,27 @@ class KuberKit::ImageCompiler::ImageDependencyResolver
   DependencyNotFoundError = Class.new(KuberKit::NotFoundError)
 
   include KuberKit::Import[
-    "core.image_store"
+    "core.image_store",
+    "configs"
   ]
+
+  Contract Or[Symbol, ArrayOf[Symbol]], Proc => Any
+  def each_with_deps(image_names, &block)
+    compile_limit = configs.compile_simultaneous_limit
+
+    resolved_dependencies = []
+    next_dependencies = get_next(image_names, limit: compile_limit)
+
+    while (next_dependencies - resolved_dependencies).any?
+      block.call(next_dependencies)
+      resolved_dependencies += next_dependencies
+      next_dependencies = get_next(image_names, resolved: resolved_dependencies, limit: compile_limit)
+    end
+
+    block.call(image_names - resolved_dependencies)
+  end
   
-  Contract Any, KeywordArgs[
+  Contract Or[Symbol, ArrayOf[Symbol]], KeywordArgs[
     resolved: Optional[ArrayOf[Symbol]],
     limit:    Optional[Maybe[Num]]
   ] => Any
