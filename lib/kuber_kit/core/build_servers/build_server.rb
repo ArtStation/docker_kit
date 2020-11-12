@@ -1,6 +1,4 @@
 class KuberKit::Core::BuildServers::BuildServer < KuberKit::Core::BuildServers::AbstractBuildServer
-  attr_reader :host, :user, :port
-
   def setup(host:, user:, port:)
     @host = host
     @user = user

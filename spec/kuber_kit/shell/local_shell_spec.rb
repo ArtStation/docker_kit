@@ -32,7 +32,7 @@ RSpec.describe KuberKit::Shell::LocalShell do
 
       expect(File.read(updating_file_path)).to eq("test")
 
-      FileUtils.rm(updating_file_path)
+      subject.delete(updating_file_path)
     end
 
     it "overrides content of file if it already exists" do
@@ -41,7 +41,7 @@ RSpec.describe KuberKit::Shell::LocalShell do
 
       expect(File.read(updating_file_path)).to eq("test")
 
-      FileUtils.rm(updating_file_path)
+      subject.delete(updating_file_path)
     end
   end
 

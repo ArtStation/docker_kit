@@ -41,6 +41,10 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     true
   end
 
+  def delete(file_path)
+    FileUtils.rm(file_path)
+  end
+
   def recursive_list_files(path, name: nil)
     command = %Q{find -L #{path}  -type f}
     command += " -name #{name}" if name

@@ -5,6 +5,7 @@ PATH
       cli-ui
       contracts-lite
       dry-auto_inject
+      net-ssh
       thor
 
 GEM
@@ -29,6 +30,7 @@ GEM
       concurrent-ruby (~> 1.0)
     dry-equalizer (0.3.0)
     method_source (1.0.0)
+    net-ssh (6.1.0)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)

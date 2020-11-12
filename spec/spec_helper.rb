@@ -57,3 +57,14 @@ end
 def service_helper
   ServiceHelper.new
 end
+
+
+def ssh_test_connection
+  {
+    enabled: false,
+    host:   "", 
+    user:   "", 
+    port:   22, 
+    folder: ""
+  }
+end
