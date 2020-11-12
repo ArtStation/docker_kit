@@ -5,6 +5,8 @@ class KuberKit::Core::BuildServers::BuildServer < KuberKit::Core::BuildServers::
     @host = host
     @user = user
     @port = port
+
+    self
   end
 
   def host

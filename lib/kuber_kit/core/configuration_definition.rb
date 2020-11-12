@@ -10,6 +10,7 @@ class KuberKit::Core::ConfigurationDefinition
     @registries = {}
     @env_files  = {}
     @templates  = {}
+    @build_servers      = []
     @enabled_services   = []
     @services_attributes = {}
   end
@@ -24,6 +25,7 @@ class KuberKit::Core::ConfigurationDefinition
       kubeconfig_path:  @kubeconfig_path,
       deploy_strategy:  @deploy_strategy,
       enabled_services: @enabled_services,
+      build_servers:    @build_servers,
       services_attributes: @services_attributes
     )
   end
@@ -60,6 +62,14 @@ class KuberKit::Core::ConfigurationDefinition
       raise ResourceAlreadyAdded.new("alias name :#{as} is already used by template: #{@templates[as].inspect}")
     end
     @templates[as] = template_name
+
+    self
+  end
+
+  def use_build_server(build_server_name)
+    unless @build_servers.include?(build_server_name)
+      @build_servers.push(build_server_name)
+    end
 
     self
   end

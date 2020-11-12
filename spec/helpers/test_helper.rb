@@ -40,6 +40,10 @@ class TestHelper
   def template_store
     KuberKit::Container['core.template_store']
   end
+
+  def build_server_store
+    KuberKit::Container['core.build_server_store']
+  end
   
   def image_factory
     KuberKit::Container['core.image_factory']
@@ -84,5 +88,14 @@ class TestHelper
   def add_artifact(name, url)
     artifact = KuberKit::Core::Artifacts::Git.new(name).setup(remote_url: url)
     artifact_store.add(artifact)
+  end
+
+  def add_build_server(name)
+    build_server = KuberKit::Core::BuildServers::BuildServer.new(name).setup(
+      host: "example.com",
+      user: "root",
+      port: 22
+    )
+    build_server_store.add(build_server)
   end
 end

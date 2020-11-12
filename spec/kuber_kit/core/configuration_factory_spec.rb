@@ -35,6 +35,15 @@ RSpec.describe KuberKit::Core::ConfigurationFactory do
     expect(configuration.artifacts[:main_repo]).to be_a(KuberKit::Core::Artifacts::Git)
   end
 
+  it "sets build servers from definition" do
+    test_helper.add_build_server(:main_server)
+
+    definition = test_definition.use_build_server(:main_server)
+    configuration = subject.create(definition)
+
+    expect(configuration.build_servers.first).to be_a(KuberKit::Core::BuildServers::BuildServer)
+  end
+
   it "raises exception if artifact is not found" do
     definition = test_definition.use_artifact(:main_production_repo, as: :main_repo)
 

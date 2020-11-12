@@ -105,4 +105,12 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
       expect(subject.to_attrs.services_attributes[:my_service]).to eq({scale: 1})
     end
   end
+
+  context "build server" do
+    it "saves build_servers as array" do
+      subject.use_build_server(:main_build_server)
+
+      expect(subject.to_attrs.build_servers).to eq([:main_build_server])
+    end
+  end
 end

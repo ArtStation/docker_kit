@@ -6,6 +6,7 @@ class KuberKit::Core::ConfigurationFactory
     "core.artifact_store",
     "core.env_file_store",
     "core.template_store",
+    "core.build_server_store",
     "configs"
   ]
 
@@ -16,6 +17,7 @@ class KuberKit::Core::ConfigurationFactory
     registries = fetch_registries(configuration_attrs.registries)
     env_files  = fetch_env_files(configuration_attrs.env_files)
     templates  = fetch_templates(configuration_attrs.templates)
+    build_servers = fetch_build_servers(configuration_attrs.build_servers)
 
     KuberKit::Core::Configuration.new(
       name:             configuration_attrs.name,
@@ -25,7 +27,8 @@ class KuberKit::Core::ConfigurationFactory
       templates:        templates,
       kubeconfig_path:  configuration_attrs.kubeconfig_path,
       deploy_strategy:  configuration_attrs.deploy_strategy || configs.deploy_strategy,
-      services_attributes: configuration_attrs.services_attributes
+      services_attributes: configuration_attrs.services_attributes,
+      build_servers:    build_servers
     )
   end
 
@@ -60,5 +63,11 @@ class KuberKit::Core::ConfigurationFactory
         result[template_alias] = template_store.get_global(template_name)
       end
       result
+    end
+
+    def fetch_build_servers(build_servers)
+      build_servers.map do |build_server_name|
+        build_server_store.get(build_server_name)
+      end
     end
 end
