@@ -16,4 +16,10 @@ RSpec.describe KuberKit::Actions::ServiceReader do
     expect(subject.ui).to receive(:print_info).with("auth_app", /apiVersion: v1/)
     subject.call(:auth_app, {})
   end
+
+  it "prints error if error happen" do
+    expect(subject.ui).to receive(:print_error)
+    allow(subject.service_reader).to receive(:call).and_raise(KuberKit::Error.new("Some error"))
+    subject.call(:auth_app, {})
+  end
 end

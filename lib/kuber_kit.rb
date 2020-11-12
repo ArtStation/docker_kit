@@ -95,6 +95,8 @@ module KuberKit
 
   module ImageCompiler
     autoload :ActionHandler, 'image_compiler/action_handler'
+    autoload :BuildServerPool, 'image_compiler/build_server_pool'
+    autoload :BuildServerPoolFactory, 'image_compiler/build_server_pool_factory'
     autoload :Compiler, 'image_compiler/compiler'
     autoload :ImageBuilder, 'image_compiler/image_builder'
     autoload :ImageBuildDirCreator, 'image_compiler/image_build_dir_creator'

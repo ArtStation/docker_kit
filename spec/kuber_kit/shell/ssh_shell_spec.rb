@@ -81,10 +81,18 @@ RSpec.describe KuberKit::Shell::SshShell do
         expect{ subject.recursive_list_files(test_dir) }.to raise_error(KuberKit::Shell::AbstractShell::DirNotFoundError)
       end
 
-      it "reraises error if different error happens" do
+      it "re-raises error if different error happens" do
         expect(subject).to receive(:exec!).and_raise(KuberKit::Shell::AbstractShell::ShellError.new("Random error"))
 
         expect{ subject.recursive_list_files(test_dir) }.to raise_error(KuberKit::Shell::AbstractShell::ShellError)
+      end
+    end
+
+    context "#disconnect" do
+      it "marks shell disconnected" do
+        subject.disconnect
+        
+        expect(subject.connected?).to eq(false)
       end
     end
   end

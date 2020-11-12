@@ -14,4 +14,10 @@ RSpec.describe KuberKit::Actions::EnvFileReader do
     expect(subject.ui).to receive(:print_info).with("test_env", /RUBY_ENV/)
     subject.call(:test_env, {})
   end
+
+  it "prints error if error happen" do
+    expect(subject.ui).to receive(:print_error)
+    allow(subject.env_file_reader).to receive(:call).and_raise(KuberKit::Error.new("Some error"))
+    subject.call(:auth_app, {})
+  end
 end

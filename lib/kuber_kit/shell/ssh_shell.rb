@@ -11,10 +11,19 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
     @ssh_session = Net::SSH.start(host, user, {port: port})
   end
 
+  def connected?
+    !!@ssh_session
+  end
+
   def ssh_session
-    raise ArgumentError, "ssh session is not created, please call #connect" if @ssh_session.nil?
+    raise ArgumentError, "ssh session is not created, please call #connect" unless connected?
 
     @ssh_session
+  end
+  
+  def disconnect
+    @ssh_session.close
+    @ssh_session = nil
   end
 
   def exec!(command, log_command: true)
