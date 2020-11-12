@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'net/ssh'
+require 'net/scp'
 
 class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
   include KuberKit::Import[
@@ -22,6 +23,7 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
   end
   
   def disconnect
+    return unless connected?
     @ssh_session.close
     @ssh_session = nil
   end
@@ -72,13 +74,22 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
     stdout_data
   end
 
+  def upload_file(local_path, remote_path)
+    ssh_session.scp.upload(local_path, remote_path)
+    ssh_session.loop
+    logger.info("Uploaded file #{local_path} > #{remote_path}")
+  end
+
   def read(file_path)
     exec!("cat #{file_path}")
   end
 
   def write(file_path, content)
-    content = content.gsub("'", "\'").gsub('"', '\"')
-    exec!("echo \"#{content}\" > #{file_path}", log_command: false)
+    Tempfile.create do |file| 
+      file << content
+      file.flush
+      upload_file(file.path, file_path)
+    end
 
     logger.info("Created file #{file_path.to_s.cyan}\r\n#{content.grey}")
 

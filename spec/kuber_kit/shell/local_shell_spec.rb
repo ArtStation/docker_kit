@@ -25,6 +25,19 @@ RSpec.describe KuberKit::Shell::LocalShell do
     end
   end
 
+  context "#upload_file" do
+    let(:original_file_path) { File.join(FIXTURES_PATH, "shell", "test.txt") }
+    let(:uploaded_file_path) { File.join(FIXTURES_PATH, "shell", "test.txt.to_be_uploaded") }
+
+    it "writes content of the file" do
+      subject.upload_file(original_file_path, uploaded_file_path)
+
+      expect(subject.read(uploaded_file_path)).to eq("test")
+
+      subject.delete(uploaded_file_path)
+    end
+  end
+
   context "#write" do
     let(:updating_file_path) { File.join(FIXTURES_PATH, "shell", "test.txt.to_be_updated") }
 

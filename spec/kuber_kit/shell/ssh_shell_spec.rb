@@ -12,6 +12,10 @@ RSpec.describe KuberKit::Shell::SshShell do
     )
   end
 
+  after do
+    subject.disconnect
+  end
+
   if ssh_test_connection[:enabled]
     context "#exec!" do
       it "executes given command via ssh and returns result" do
@@ -27,6 +31,19 @@ RSpec.describe KuberKit::Shell::SshShell do
         }.to raise_error(KuberKit::Shell::LocalShell::ShellError) 
       end
     end
+
+    context "#upload_file" do
+      let(:original_file_path) { File.join(FIXTURES_PATH, "shell", "test.txt") }
+      let(:uploaded_file_path) { File.join(ssh_fixtures_dir, "shell", "test.txt.to_be_uploaded") }
+
+      it "writes content of the file" do
+        subject.upload_file(original_file_path, uploaded_file_path)
+
+        expect(subject.read(uploaded_file_path)).to eq("test")
+
+        subject.delete(uploaded_file_path)
+      end
+    end
     
     context "#read" do
       let(:test_file_path) { File.join(ssh_fixtures_dir, "shell", "test.txt") }
@@ -40,9 +57,9 @@ RSpec.describe KuberKit::Shell::SshShell do
       let(:updating_file_path) { File.join(ssh_fixtures_dir, "shell", "test.subject.delete.txt") }
 
       it "writes content of the file" do
-        subject.write(updating_file_path, %{"test" '123'})
+        subject.write(updating_file_path, %{"test"\r'123'})
 
-        expect(subject.read(updating_file_path)).to eq(%{"test" '123'})
+        expect(subject.read(updating_file_path)).to eq(%{"test"\r'123'})
 
         subject.delete(updating_file_path)
       end

@@ -27,6 +27,11 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     result
   end
 
+  # For local shell, there is no difference between upload and copy
+  def upload_file(local_path, remote_path)
+    FileUtils.cp(local_path, remote_path)
+  end
+
   def read(file_path)
     File.read(file_path)
   end
