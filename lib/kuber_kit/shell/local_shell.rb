@@ -42,7 +42,15 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
   end
 
   def delete(file_path)
-    FileUtils.rm(file_path)
+    exec!("rm #{file_path}")
+  end
+
+  def file_exists?(file_path)
+    exec!("test -f #{file_path} && echo 'true' || echo 'false'") == 'true'
+  end
+
+  def dir_exists?(dir_path)
+    exec!("test -d #{dir_path} && echo 'true' || echo 'false'") == 'true'
   end
 
   def recursive_list_files(path, name: nil)

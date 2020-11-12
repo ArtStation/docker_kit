@@ -1,6 +1,9 @@
 RSpec.describe KuberKit::Shell::LocalShell do
   subject{ KuberKit::Shell::LocalShell.new }
 
+  let(:test_dir_path) { File.join(FIXTURES_PATH, "shell") }
+  let(:test_file_path) { File.join(FIXTURES_PATH, "shell", "test.txt") }
+
   context "#exec!" do
     it "executes given command locally and returns result" do
       path = File.expand_path(__dir__)
@@ -17,8 +20,6 @@ RSpec.describe KuberKit::Shell::LocalShell do
   end
   
   context "#read" do
-    let(:test_file_path) { File.join(FIXTURES_PATH, "shell", "test.txt") }
-
     it "reads content of the file" do
       expect(subject.read(test_file_path)).to eq("test")
     end
@@ -42,6 +43,34 @@ RSpec.describe KuberKit::Shell::LocalShell do
       expect(File.read(updating_file_path)).to eq("test")
 
       subject.delete(updating_file_path)
+    end
+  end
+
+  context "#file_exists?" do
+    it "returns true if file exists" do
+      expect(subject.file_exists?(test_file_path)).to eq(true)
+    end
+
+    it "returns false if it's dir and not file" do
+      expect(subject.file_exists?(test_dir_path)).to eq(false)
+    end
+
+    it "returns false if file does not exist" do
+      expect(subject.file_exists?("/some/not/existing.file")).to eq(false)
+    end
+  end
+
+  context "#dir_exists?" do
+    it "returns true if dir exists" do
+      expect(subject.dir_exists?(test_dir_path)).to eq(true)
+    end
+
+    it "returns false if it's file and not dir" do
+      expect(subject.dir_exists?(test_file_path)).to eq(false)
+    end
+
+    it "returns true if file does not exist" do
+      expect(subject.dir_exists?("/some/not/existing/dir")).to eq(false)
     end
   end
 

@@ -85,10 +85,6 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
     true
   end
 
-  def delete(file_path)
-    exec!("rm #{file_path}")
-  end
-
   private
     def ensure_directory_exists(file_path)
       exec!("mkdir -p #{file_path}")
