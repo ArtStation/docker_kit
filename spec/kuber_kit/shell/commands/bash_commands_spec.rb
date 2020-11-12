@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::Shell::BashCommands do
-  subject { KuberKit::Shell::BashCommands.new }
+RSpec.describe KuberKit::Shell::Commands::BashCommands do
+  subject { KuberKit::Shell::Commands::BashCommands.new }
   let(:shell) { KuberKit::Shell::LocalShell.new }
 
   context "#rm" do

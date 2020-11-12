@@ -1,4 +1,4 @@
-class KuberKit::Shell::BashCommands
+class KuberKit::Shell::Commands::BashCommands
   def rm(shell, path)
     shell.exec!(%Q{rm "#{path}"})
   end

@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::Shell::GitCommands do
-  subject { KuberKit::Shell::GitCommands.new }
+RSpec.describe KuberKit::Shell::Commands::GitCommands do
+  subject { KuberKit::Shell::Commands::GitCommands.new }
   let(:shell) { KuberKit::Shell::LocalShell.new }
 
   context "#get_remote_url" do

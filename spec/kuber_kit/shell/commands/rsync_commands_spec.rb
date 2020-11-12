@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::Shell::RsyncCommands do
-  subject { KuberKit::Shell::RsyncCommands.new }
+RSpec.describe KuberKit::Shell::Commands::RsyncCommands do
+  subject { KuberKit::Shell::Commands::RsyncCommands.new }
   let(:shell) { KuberKit::Shell::LocalShell.new }
 
   context "#rsync" do

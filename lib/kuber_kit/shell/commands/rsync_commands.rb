@@ -1,4 +1,4 @@
-class KuberKit::Shell::RsyncCommands
+class KuberKit::Shell::Commands::RsyncCommands
   def rsync(shell, source_path, target_path, exclude: nil)
     # Add a trailing slash to directory to have behavior similar to CP command
     if path_is_directory?(source_path) && !source_path.end_with?("/")

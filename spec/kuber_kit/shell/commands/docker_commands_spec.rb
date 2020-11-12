@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::Shell::DockerCommands do
-  subject { KuberKit::Shell::DockerCommands.new }
+RSpec.describe KuberKit::Shell::Commands::DockerCommands do
+  subject { KuberKit::Shell::Commands::DockerCommands.new }
   let(:shell) { KuberKit::Shell::LocalShell.new }
 
   context "#build" do

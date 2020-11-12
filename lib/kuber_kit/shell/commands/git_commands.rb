@@ -1,4 +1,4 @@
-class KuberKit::Shell::GitCommands
+class KuberKit::Shell::Commands::GitCommands
   def get_remote_url(shell, git_repo_path, remote_name: "origin")
     shell.exec! [
       "cd #{git_repo_path}",

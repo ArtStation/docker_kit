@@ -1,7 +1,7 @@
 require 'json'
 require 'shellwords'
 
-class KuberKit::Shell::KubectlCommands
+class KuberKit::Shell::Commands::KubectlCommands
   def apply_file(shell, file_path, kubeconfig_path: nil)
     command_parts = []
     if kubeconfig_path

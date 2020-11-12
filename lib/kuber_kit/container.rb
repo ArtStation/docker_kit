@@ -106,23 +106,23 @@ class KuberKit::Container
   end
 
   register "shell.bash_commands" do
-    KuberKit::Shell::BashCommands.new
+    KuberKit::Shell::Commands::BashCommands.new
   end
 
   register "shell.docker_commands" do
-    KuberKit::Shell::DockerCommands.new
+    KuberKit::Shell::Commands::DockerCommands.new
   end
 
   register "shell.git_commands" do
-    KuberKit::Shell::GitCommands.new
+    KuberKit::Shell::Commands::GitCommands.new
   end
 
   register "shell.rsync_commands" do
-    KuberKit::Shell::RsyncCommands.new
+    KuberKit::Shell::Commands::RsyncCommands.new
   end
 
   register "shell.kubectl_commands" do
-    KuberKit::Shell::KubectlCommands.new
+    KuberKit::Shell::Commands::KubectlCommands.new
   end
 
   register "shell.local_shell" do

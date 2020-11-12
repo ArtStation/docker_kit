@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::Shell::KubectlCommands do
-  subject { KuberKit::Shell::KubectlCommands.new }
+RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
+  subject { KuberKit::Shell::Commands::KubectlCommands.new }
   let(:shell) { KuberKit::Shell::LocalShell.new }
 
   context "#apply_file" do

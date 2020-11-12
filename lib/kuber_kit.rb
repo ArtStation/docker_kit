@@ -82,11 +82,14 @@ module KuberKit
     autoload :AbstractShell, 'shell/abstract_shell'
     autoload :LocalShell, 'shell/local_shell'
     autoload :CommandCounter, 'shell/command_counter'
-    autoload :BashCommands, 'shell/bash_commands'
-    autoload :DockerCommands, 'shell/docker_commands'
-    autoload :GitCommands, 'shell/git_commands'
-    autoload :RsyncCommands, 'shell/rsync_commands'
-    autoload :KubectlCommands, 'shell/kubectl_commands'
+
+    module Commands
+      autoload :BashCommands, 'shell/commands/bash_commands'
+      autoload :DockerCommands, 'shell/commands/docker_commands'
+      autoload :GitCommands, 'shell/commands/git_commands'
+      autoload :RsyncCommands, 'shell/commands/rsync_commands'
+      autoload :KubectlCommands, 'shell/commands/kubectl_commands'
+    end
   end
 
   module ImageCompiler

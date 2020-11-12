@@ -1,4 +1,4 @@
-class KuberKit::Shell::DockerCommands
+class KuberKit::Shell::Commands::DockerCommands
   def build(shell, build_dir, args = [])
     default_args = ["--rm=true"]
     args_list = (default_args + args).join(" ")
