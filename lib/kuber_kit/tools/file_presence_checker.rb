@@ -1,6 +1,10 @@
 class KuberKit::Tools::FilePresenceChecker
   FileNotFound = Class.new(KuberKit::Error)
 
+  include KuberKit::Import[
+    "shell.local_shell"
+  ]
+
   def check_file!(file_path)
     unless file_exists?(file_path)
       raise FileNotFound, "File not found at path: #{file_path}"
@@ -9,7 +13,7 @@ class KuberKit::Tools::FilePresenceChecker
   end
 
   def file_exists?(file_path)
-    File.exists?(file_path)
+    local_shell.file_exists?(file_path)
   end
 
   def check_dir!(dir_path)
@@ -20,6 +24,6 @@ class KuberKit::Tools::FilePresenceChecker
   end
 
   def dir_exists?(dir_path)
-    Dir.exists?(dir_path)
+    local_shell.dir_exists?(dir_path)
   end
 end

@@ -60,9 +60,9 @@ end
 
 
 def ssh_test_connection
-  ENV['SSH_TEST_ENABLED'] = "1"
-  ENV['SSH_TEST_HOST']    = "indocker.artstn.ninja"
-  ENV['SSH_TEST_USER']    = "kuber_kit"
+  # ENV['SSH_TEST_ENABLED'] = "1"
+  # ENV['SSH_TEST_HOST']    = "indocker.artstn.ninja"
+  # ENV['SSH_TEST_USER']    = "kuber_kit"
   {
     enabled:  ENV['SSH_TEST_ENABLED'] == '1',
     host:     ENV['SSH_TEST_HOST'], 
