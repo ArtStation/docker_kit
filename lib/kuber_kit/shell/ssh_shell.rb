@@ -1,7 +1,7 @@
 require 'fileutils'
 require 'net/ssh'
 
-class KuberKit::Shell::SshShell < KuberKit::Shell::AbstractShell
+class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
   include KuberKit::Import[
     "tools.logger",
     "shell.command_counter"
@@ -17,10 +17,12 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::AbstractShell
     @ssh_session
   end
 
-  def exec!(command)
+  def exec!(command, log_command: true)
     command_number = command_counter.get_number.to_s.rjust(2, "0")
     
-    logger.info("Executed command [#{command_number}]: #{command.to_s.cyan}")
+    if log_command
+      logger.info("Executed command [#{command_number}]: #{command.to_s.cyan}")
+    end
 
     stdout_data = ''
     stderr_data = ''
@@ -29,7 +31,6 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::AbstractShell
       ch.exec(command) do |ch, success|
         if !success
           raise ShellError, "Shell command failed: #{command}\r\n#{stdout_data}\r\n#{stderr_data}"
-          abort('failed')
         end
 
         channel.on_data do |ch,data|
@@ -67,31 +68,20 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::AbstractShell
   end
 
   def write(file_path, content)
-    exec!("echo #{content} > #{file_path}")
+    content = content.gsub("'", "\'").gsub('"', '\"')
+    exec!("echo \"#{content}\" > #{file_path}", log_command: false)
+
+    logger.info("Created file #{file_path.to_s.cyan}\r\n#{content.grey}")
+
+    true
   end
 
   def delete(file_path)
     exec!("rm #{file_path}")
   end
 
-  def recursive_list_files(path, name: nil)
-    command = %Q{find -L #{path}  -type f}
-    command += " -name #{name}" if name
-    exec!(command).split(/[\r\n]+/)
-  rescue => e
-    if e.message.include?("No such file or directory")
-      raise DirNotFoundError.new("Dir not found: #{path}")
-    else
-      raise e
-    end
-  end
-
   private
     def ensure_directory_exists(file_path)
-      dir_path = File.dirname(file_path)
-
-      unless Dir.exists?(dir_path)
-        FileUtils.mkdir_p(dir_path)
-      end
+      exec!("mkdir -p #{file_path}")
     end
 end

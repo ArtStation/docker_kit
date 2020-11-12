@@ -61,10 +61,10 @@ end
 
 def ssh_test_connection
   {
-    enabled: false,
-    host:   "", 
-    user:   "", 
+    enabled: true,
+    host:   "gvalmon.artstn.io", 
+    user:   "iskander", 
     port:   22, 
-    folder: ""
+    folder: "/home/iskander/data/kuber_kit"
   }
 end

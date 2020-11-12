@@ -40,9 +40,9 @@ RSpec.describe KuberKit::Shell::SshShell do
       let(:updating_file_path) { File.join(ssh_fixtures_dir, "shell", "test.subject.delete.txt") }
 
       it "writes content of the file" do
-        subject.write(updating_file_path, "test")
+        subject.write(updating_file_path, %{"test" '123'})
 
-        expect(subject.read(updating_file_path)).to eq("test")
+        expect(subject.read(updating_file_path)).to eq(%{"test" '123'})
 
         subject.delete(updating_file_path)
       end
