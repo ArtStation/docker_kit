@@ -75,7 +75,6 @@ module KuberKit
   module Tools
     autoload :FilePresenceChecker, 'tools/file_presence_checker'
     autoload :LoggerFactory, 'tools/logger_factory'
-    autoload :FilesSync, 'tools/files_sync'
   end
 
   module Shell
