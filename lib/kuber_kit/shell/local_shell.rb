@@ -3,7 +3,8 @@ require 'fileutils'
 class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
   include KuberKit::Import[
     "tools.logger",
-    "shell.command_counter"
+    "shell.command_counter",
+    "shell.rsync_commands",
   ]
 
   def exec!(command)
@@ -27,9 +28,8 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     result
   end
 
-  # For local shell, there is no difference between upload and copy
-  def upload_file(local_path, remote_path)
-    FileUtils.cp(local_path, remote_path)
+  def sync(local_path, remote_path)
+    rsync_commands.rsync(self, local_path, remote_path)
   end
 
   def read(file_path)

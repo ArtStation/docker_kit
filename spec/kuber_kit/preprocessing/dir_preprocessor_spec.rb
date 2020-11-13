@@ -8,7 +8,7 @@ RSpec.describe KuberKit::Preprocessing::DirPreprocessor do
   let(:destination_dir) { File.join(FIXTURES_PATH, "tmp") }
 
   before do
-    allow(shell).to receive(:upload_file)
+    allow(shell).to receive(:sync)
   end
 
   after do 
@@ -21,10 +21,10 @@ RSpec.describe KuberKit::Preprocessing::DirPreprocessor do
       File.join(source_dir, "config/test.cfg")
     ])
 
-    expect(shell).to receive(:upload_file).with(
+    expect(shell).to receive(:sync).with(
       File.join(source_dir, "erb_template.txt"), File.join(destination_dir, "erb_template.txt")
     )
-    expect(shell).to receive(:upload_file).with(
+    expect(shell).to receive(:sync).with(
       File.join(source_dir, "config/test.cfg"), File.join(destination_dir, "config/test.cfg")
     )
 

@@ -23,5 +23,12 @@ RSpec.describe KuberKit::Shell::Commands::RsyncCommands do
       expect(shell).to receive(:exec!).with(%Q{rsync -a /path/from /path/to --exclude=*excluded_path*})
       subject.rsync(shell, "/path/from", "/path/to", exclude: "*excluded_path*")
     end
+
+    it do
+      allow(subject).to receive(:path_is_directory?).and_return(false)
+      
+      expect(shell).to receive(:exec!).with(%Q{rsync -a /path/from user@example.com:/path/to})
+      subject.rsync(shell, "/path/from", "/path/to", target_host: "user@example.com")
+    end
   end
 end

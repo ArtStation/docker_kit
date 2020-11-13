@@ -28,7 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor"
   spec.add_dependency "cli-ui"
   spec.add_dependency "net-ssh"
-  spec.add_dependency "net-scp"
 
   spec.add_development_dependency "bundler", "~> 1.17"
   spec.add_development_dependency "rake", "~> 10.0"

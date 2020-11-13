@@ -1,83 +1,47 @@
 require 'fileutils'
-require 'net/ssh'
-require 'net/scp'
+require 'tempfile'
 
 class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
   include KuberKit::Import[
     "tools.logger",
-    "shell.command_counter"
+    "shell.command_counter",
+    "shell.rsync_commands",
+    "shell.local_shell"
   ]
 
   def connect(host:, user:, port:)
-    @ssh_session = Net::SSH.start(host, user, {port: port})
-  end
-
-  def connected?
-    !!@ssh_session
-  end
-
-  def ssh_session
-    raise ArgumentError, "ssh session is not created, please call #connect" unless connected?
-
-    @ssh_session
+    @ssh_session = KuberKit::Shell::SshSession.new(host: host, user: user, port: port)
   end
   
-  def disconnect
-    return unless connected?
-    @ssh_session.close
-    @ssh_session = nil
+  def connected?
+    @ssh_session && @ssh_session.connected?
   end
 
-  def exec!(command, log_command: true)
+  def disconnect
+    @ssh_session.disconnect if @ssh_session
+  end
+
+  def exec!(command)
     command_number = command_counter.get_number.to_s.rjust(2, "0")
     
-    if log_command
-      logger.info("Executed command [#{command_number}]: #{command.to_s.cyan}")
+    logger.info("Executed command [#{command_number}]: #{command.to_s.cyan}")
+
+    result = ssh_session.exec!(command)
+
+    if result && result != ""
+      logger.info("Finished command [#{command_number}] with result: \n#{result.grey}")
     end
 
-    stdout_data = ''
-    stderr_data = ''
-    exit_code = nil
-    channel = ssh_session.open_channel do |ch|
-      ch.exec(command) do |ch, success|
-        if !success
-          raise ShellError, "Shell command failed: #{command}\r\n#{stdout_data}\r\n#{stderr_data}"
-        end
-
-        channel.on_data do |ch,data|
-          stdout_data += data
-        end
-
-        channel.on_extended_data do |ch,type,data|
-          stderr_data += data
-        end
-
-        channel.on_request('exit-status') do |ch,data|
-          exit_code = data.read_long
-        end
-      end
-    end
-
-    channel.wait
-    ssh_session.loop
-
-    stdout_data = stdout_data.chomp.strip
-
-    if exit_code != 0
-      raise ShellError, "Shell command failed: #{command}\r\n#{stdout_data}\r\n#{stderr_data}"
-    end
-
-    if stdout_data && stdout_data != ""
-      logger.info("Finished command [#{command_number}] with result: \n#{stdout_data.grey}")
-    end
-
-    stdout_data
+    result
+  rescue KuberKit::Shell::SshSession::SshSessionError => e
+    raise ShellError.new(e.message)
   end
 
-  def upload_file(local_path, remote_path)
-    ssh_session.scp.upload(local_path, remote_path)
-    ssh_session.loop
-    logger.info("Uploaded file #{local_path} > #{remote_path}")
+  def sync(local_path, remote_path)
+    rsync_commands.rsync(
+      local_shell, local_path, remote_path, 
+      target_host: "#{ssh_session.user}@#{ssh_session.host}"
+    )
   end
 
   def read(file_path)
@@ -88,7 +52,7 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
     Tempfile.create do |file| 
       file << content
       file.flush
-      upload_file(file.path, file_path)
+      sync(file.path, file_path)
     end
 
     logger.info("Created file #{file_path.to_s.cyan}\r\n#{content.grey}")
@@ -97,6 +61,14 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
   end
 
   private
+    def ssh_session
+      unless connected?
+        raise ArgumentError, "ssh session is not created, please call #connect"
+      end
+
+      @ssh_session
+    end
+
     def ensure_directory_exists(file_path)
       exec!("mkdir -p #{file_path}")
     end

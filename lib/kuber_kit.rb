@@ -82,6 +82,7 @@ module KuberKit
     autoload :AbstractShell, 'shell/abstract_shell'
     autoload :LocalShell, 'shell/local_shell'
     autoload :SshShell, 'shell/ssh_shell'
+    autoload :SshSession, 'shell/ssh_session'
     autoload :CommandCounter, 'shell/command_counter'
 
     module Commands

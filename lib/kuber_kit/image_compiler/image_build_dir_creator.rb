@@ -23,7 +23,7 @@ class KuberKit::ImageCompiler::ImageBuildDirCreator
 
     # Upload dockerfile to build server and then preprocess
     target_dockerfile = File.join(build_dir, configs.image_dockerfile_name)
-    shell.upload_file(image.dockerfile_path, target_dockerfile)
+    shell.sync(image.dockerfile_path, target_dockerfile)
     file_preprocessor.compile(
       shell, target_dockerfile,
       context_helper: context_helper

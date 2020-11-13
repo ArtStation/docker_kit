@@ -10,7 +10,7 @@ class KuberKit::Preprocessing::DirPreprocessor
       relative_path = source_file_path.sub(local_source_dir, '')
       destination_file_path = File.join(remote_destination_dir, relative_path)
 
-      shell.upload_file(source_file_path, destination_file_path)
+      shell.sync(source_file_path, destination_file_path)
 
       file_preprocessor.compile(
         shell, destination_file_path, 
