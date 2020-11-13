@@ -17,4 +17,8 @@ class KuberKit::Shell::AbstractShell
   def recursive_list_files(path, name: nil)
     raise KuberKit::NotImplementedError, "must be implemented"
   end
+
+  def sync(local_path, remote_path, exclude: nil)
+    raise KuberKit::NotImplementedError, "must be implemented"
+  end
 end

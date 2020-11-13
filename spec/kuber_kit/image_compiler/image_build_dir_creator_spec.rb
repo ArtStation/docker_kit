@@ -5,7 +5,6 @@ RSpec.describe KuberKit::ImageCompiler::ImageBuildDirCreator do
   let(:shell) { test_helper.shell }
 
   before do
-    allow(subject.dir_preprocessor).to receive(:compile)
     allow(subject.file_preprocessor).to receive(:compile)
     allow(shell).to receive(:write)
     allow(shell).to receive(:sync)
@@ -19,8 +18,8 @@ RSpec.describe KuberKit::ImageCompiler::ImageBuildDirCreator do
   end
 
   it "compiles dockerfile & build context" do
-    expect(subject.dir_preprocessor).to receive(:compile).with(
-      shell, "/images/example/build_context", "/tmp/images/example", context_helper: nil
+    expect(shell).to receive(:sync).with(
+      "/images/example/build_context", "/tmp/images/example"
     )
     expect(shell).to receive(:sync).with(
       "/images/example/Dockerfile", "/tmp/images/example/Dockerfile"

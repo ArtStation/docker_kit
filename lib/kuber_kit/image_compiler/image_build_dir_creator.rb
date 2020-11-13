@@ -1,6 +1,5 @@
 class KuberKit::ImageCompiler::ImageBuildDirCreator
   include KuberKit::Import[
-    "preprocessing.dir_preprocessor",
     "preprocessing.file_preprocessor",
     "shell.bash_commands",
     "shell.local_shell",
@@ -14,14 +13,19 @@ class KuberKit::ImageCompiler::ImageBuildDirCreator
     bash_commands.rm_rf(shell, build_dir)
     bash_commands.mkdir_p(shell, build_dir)
 
-    if image.build_context_dir      
-      dir_preprocessor.compile(
-        shell, image.build_context_dir, build_dir,
-        context_helper: context_helper
-      )
+    if image.build_context_dir
+      # Sync build context and then preprocess
+      shell.sync(image.build_context_dir, build_dir)
+
+      shell.recursive_list_files(build_dir).each do |file_path|
+        file_preprocessor.compile(
+          shell, file_path, 
+          context_helper: context_helper
+        )
+      end
     end
 
-    # Upload dockerfile to build server and then preprocess
+    # Sync dockerfile and then preprocess
     target_dockerfile = File.join(build_dir, configs.image_dockerfile_name)
     shell.sync(image.dockerfile_path, target_dockerfile)
     file_preprocessor.compile(

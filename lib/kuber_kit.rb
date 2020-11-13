@@ -108,7 +108,6 @@ module KuberKit
   module Preprocessing
     autoload :TextPreprocessor, 'preprocessing/text_preprocessor'
     autoload :FilePreprocessor, 'preprocessing/file_preprocessor'
-    autoload :DirPreprocessor, 'preprocessing/dir_preprocessor'
   end
 
   module ArtifactsSync
