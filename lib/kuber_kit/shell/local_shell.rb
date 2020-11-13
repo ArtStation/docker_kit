@@ -7,18 +7,20 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     "shell.rsync_commands",
   ]
 
-  def exec!(command)
+  def exec!(command, log_command: true)
     command_number = command_counter.get_number.to_s.rjust(2, "0")
     
-    logger.info("Executed command [#{command_number}]: #{command.to_s.cyan}")
+    if log_command
+      logger.info("Execute: [#{command_number}]: #{command.to_s.cyan}")
+    end
 
     result = nil
     IO.popen(command, err: [:child, :out]) do |io|
       result = io.read.chomp.strip
     end
 
-    if result && result != ""
-      logger.info("Finished command [#{command_number}] with result: \n#{result.grey}")
+    if result && result != "" && log_command
+      logger.info("Finished [#{command_number}] with result: \n#{result.grey}")
     end
 
     if $?.exitstatus != 0
@@ -51,11 +53,11 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
   end
 
   def file_exists?(file_path)
-    exec!("test -f #{file_path} && echo 'true' || echo 'false'") == 'true'
+    exec!("test -f #{file_path} && echo 'true' || echo 'false'", log_command: false) == 'true'
   end
 
   def dir_exists?(dir_path)
-    exec!("test -d #{dir_path} && echo 'true' || echo 'false'") == 'true'
+    exec!("test -d #{dir_path} && echo 'true' || echo 'false'", log_command: false) == 'true'
   end
 
   def recursive_list_files(path, name: nil)

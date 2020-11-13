@@ -21,15 +21,17 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
     @ssh_session.disconnect if @ssh_session
   end
 
-  def exec!(command)
+  def exec!(command, log_command: true)
     command_number = command_counter.get_number.to_s.rjust(2, "0")
     
-    logger.info("Executed command [#{command_number}]: #{command.to_s.cyan}")
+    if log_command
+      logger.info("#{ssh_session.host.green} > Execute: [#{command_number}]: #{command.to_s.cyan}")
+    end
 
     result = ssh_session.exec!(command)
 
-    if result && result != ""
-      logger.info("Finished command [#{command_number}] with result: \n#{result.grey}")
+    if result && result != "" && log_command
+      logger.info("#{ssh_session.host.green} > Finished [#{command_number}] with result: \n#{result.grey}")
     end
 
     result

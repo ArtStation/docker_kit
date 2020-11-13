@@ -1,4 +1,4 @@
-FROM default/ruby
+FROM <%= image_url(:ruby) %>
 
 RUN mkdir -p /app
 WORKDIR /app
