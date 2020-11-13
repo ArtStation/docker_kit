@@ -1,4 +1,3 @@
-require 'fileutils'
 require 'tempfile'
 
 class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
