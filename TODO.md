@@ -1,5 +1,4 @@
 - list services and require confirmation before deployment
-- add build servers support
 - add build vars support (use images instead of containers)
 - template should be able to set default attributes
 - template should be able to depend on image?
