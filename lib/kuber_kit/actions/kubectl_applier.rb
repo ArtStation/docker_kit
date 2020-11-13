@@ -12,8 +12,11 @@ class KuberKit::Actions::KubectlApplier
       kubectl_commands.apply_file(local_shell, file_path, kubeconfig_path: kubeconfig_path)
       task.update_title("Applied file: #{file_path}")
     end
-    nil
+
+    true
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
+    
+    false
   end
 end

@@ -15,12 +15,18 @@ class KuberKit::CLI < Thor
     image_names = image_names_str.split(",").map(&:strip).map(&:to_sym)
 
     KuberKit::Container['actions.configuration_loader'].call(options)
-    KuberKit::Container['actions.image_compiler'].call(image_names, options)
+    result = KuberKit::Container['actions.image_compiler'].call(image_names, options)
 
-    logger = KuberKit::Container['tools.logger']
-    logger.info("---------------------------")
-    logger.info("Image compilation finished!")
-    logger.info("---------------------------")
+    if result
+      logger = KuberKit::Container['tools.logger']
+      logger.info("---------------------------")
+      logger.info("Image compilation finished!")
+      logger.info("---------------------------")
+    else
+      logger.info("-------------------------".red)
+      logger.info("Image compilation failed!".red)
+      logger.info("-------------------------".red)
+    end
   end
 
   desc "env ENV_FILE_NAME", "Return content of Env File ENV_FILE_NAME"

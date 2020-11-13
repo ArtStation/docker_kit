@@ -14,12 +14,17 @@ class KuberKit::Actions::ImageCompiler
     build_server_pool = build_server_pool_factory.create()
 
     image_dependency_resolver.each_with_deps(image_names) do |dep_image_names|
-      compile_simultaneously(dep_image_names, build_id, build_server_pool)
+      result = compile_simultaneously(dep_image_names, build_id, build_server_pool)
+      abort unless result
     end
 
     build_server_pool.disconnect_all
+
+    true
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
+
+    false
   end
 
   private

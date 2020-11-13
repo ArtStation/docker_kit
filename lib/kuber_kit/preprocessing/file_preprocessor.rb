@@ -1,6 +1,7 @@
 class KuberKit::Preprocessing::FilePreprocessor
   include KuberKit::Import[
-    "preprocessing.text_preprocessor"
+    "preprocessing.text_preprocessor",
+    "shell.bash_commands"
   ]
 
   PreprocessingError = Class.new(KuberKit::Error)
@@ -8,7 +9,7 @@ class KuberKit::Preprocessing::FilePreprocessor
   def compile(shell, source_path, destination_path: nil, context_helper: nil)
     destination_path ||= source_path
 
-    prepare_destination_dir(destination_path)
+    prepare_destination_dir(shell, destination_path)
 
     template = shell.read(source_path)
     content = text_preprocessor.compile(template, context_helper: context_helper)
@@ -27,7 +28,7 @@ class KuberKit::Preprocessing::FilePreprocessor
     raise PreprocessingError, "Error while processing template #{source_path}.\r\n#{message}"
   end
 
-  def prepare_destination_dir(destination_path)
-    FileUtils.mkdir_p(File.dirname(destination_path))
+  def prepare_destination_dir(shell, destination_path)
+    bash_commands.mkdir_p(shell, File.dirname(destination_path))
   end
 end

@@ -13,7 +13,10 @@ class KuberKit::Actions::TemplateReader
     result = reader.read(local_shell, template)
 
     ui.print_info(template_name.to_s, result)
+
+    true
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
+    false
   end
 end
