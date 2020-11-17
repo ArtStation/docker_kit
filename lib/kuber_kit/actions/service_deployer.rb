@@ -14,6 +14,10 @@ class KuberKit::Actions::ServiceDeployer
     tags:       Maybe[ArrayOf[String]],
   ] => Any
   def call(services:, tags:)
+    if services.empty? && tags.empty?
+      services, tags = show_tags_selection
+    end
+
     service_names = service_list_resolver.resolve(
       services: services || [],
       tags:     tags || []
@@ -58,5 +62,29 @@ class KuberKit::Actions::ServiceDeployer
 
   def compile_images(images_names)
     image_compiler.call(images_names, {}) if images_names.any?
+  end
+
+  def show_tags_selection()
+    specific_service_option = "deploy specific service"
+
+    tags = service_store.all_definitions.values.map(&:to_service_attrs).map(&:tags).flatten.uniq.map(&:to_s)
+
+    tags.push(specific_service_option)
+
+    ui.prompt("Please select which tag to deploy", tags) do |selected_tag|
+      if selected_tag == specific_service_option
+        show_service_selection
+      else
+        return [[], [selected_tag]]
+      end
+    end
+  end
+
+  def show_service_selection()
+    services = service_store.all_definitions.values.map(&:service_name).uniq.map(&:to_s)
+
+    ui.prompt("Please select which service to deploy", services) do |selected_service|
+      return [[selected_service], []]
+    end
   end
 end

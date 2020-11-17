@@ -37,7 +37,10 @@ class KuberKit::CLI < Thor
     KuberKit.set_debug_mode(options[:debug])
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
-      result = KuberKit::Container['actions.service_deployer'].call(services: options[:services], tags: options[:tags])
+      result = KuberKit::Container['actions.service_deployer'].call(
+        services: options[:services] || [], 
+        tags:     options[:tags] || []
+      )
     end
 
     logger = KuberKit::Container['tools.logger']
