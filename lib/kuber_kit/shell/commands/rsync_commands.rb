@@ -1,5 +1,5 @@
 class KuberKit::Shell::Commands::RsyncCommands
-  def rsync(shell, source_path, target_path, target_host: nil, exclude: nil)
+  def rsync(shell, source_path, target_path, target_host: nil, exclude: nil, delete: true)
     # Add a trailing slash to directory to have behavior similar to CP command
     if path_is_directory?(source_path) && !source_path.end_with?("/")
       source_path = "#{source_path}/"
@@ -13,7 +13,13 @@ class KuberKit::Shell::Commands::RsyncCommands
 
     args = [source_path, destination]
     if exclude
-      args << "--exclude=#{exclude}"
+      Array(exclude).each do |e|
+        args << "--exclude=#{e}"
+      end
+    end
+
+    if delete
+      args << "--delete"
     end
 
     shell.exec!(%Q{rsync -a #{args.join(' ')}})
