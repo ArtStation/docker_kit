@@ -26,6 +26,14 @@ class KuberKit::UI::Interactive
     print_in_frame(title, text, color: :yellow)
   end
 
+  def prompt(text, options, &callback)
+    CLI::UI::Prompt.ask(text) do |handler|
+      options.each do |option|
+        handler.option(option, &callback)
+      end
+    end
+  end
+
   private
     def init
       @initialized = true

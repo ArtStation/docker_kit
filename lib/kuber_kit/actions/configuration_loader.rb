@@ -65,13 +65,17 @@ class KuberKit::Actions::ConfigurationLoader
       configuration_name ||= :_default_
     end
 
+    all_configurations = configuration_store.all_definitions.values
     if configuration_store.count == 1 && configuration_name.nil?
-      first_configurations = configuration_store.all_definitions.values.first
+      first_configurations = all_configurations.first
       configuration_name   = first_configurations.configuration_name
     end
 
     if configuration_store.count > 1 && configuration_name.nil?
-      raise KuberKit::Error, "Please set configuration name using -C option"
+      options = all_configurations.map(&:configuration_name).map(&:to_s)
+      ui.prompt("Please select configuration name (or set it using -C option)", options) do |selection|
+        configuration_name = selection
+      end
     end
 
     KuberKit.set_configuration_name(configuration_name)

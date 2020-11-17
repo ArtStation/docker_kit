@@ -68,6 +68,12 @@ class KuberKit::UI::Simple
     print_text(title, text, color: String::Colors::YELLOW)
   end
 
+  def prompt(text, options, &callback)
+    print_info("Select", text)
+    result = $stdin.gets.chomp
+    callback.call(result)
+  end
+
   private
     def print_text(title, text, color:)
       puts "#{title.colorize(color)}\r\n #{text.colorize(color)}"
