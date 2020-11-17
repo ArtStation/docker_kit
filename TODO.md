@@ -1,4 +1,6 @@
+- when no service set to deploy, show tags selection
 - implement interactive shell.exec!
+- allow deploying only services enabled for specific configuration
 - list services and require confirmation before deployment
 - add build vars support (use images instead of containers)
 - template should be able to set default attributes
