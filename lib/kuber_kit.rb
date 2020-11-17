@@ -157,6 +157,7 @@ module KuberKit
     autoload :ServiceDeployer, 'actions/service_deployer'
     autoload :ConfigurationLoader, 'actions/configuration_loader'
     autoload :KubectlApplier, 'actions/kubectl_applier'
+    autoload :KubectlAttacher, 'actions/kubectl_attacher'
   end
 
   module Extensions

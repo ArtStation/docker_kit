@@ -13,6 +13,30 @@ class KuberKit::Shell::Commands::KubectlCommands
     shell.exec!(command_parts.join(" "))
   end
 
+  def exec(shell, pod_name, command, args: nil, kubeconfig_path: nil, interactive: false)
+    command_parts = []
+
+    if kubeconfig_path
+      command_parts << "KUBECONFIG=#{kubeconfig_path}"
+    end
+
+    command_parts << "kubectl exec"
+
+    if args
+      command_parts << args
+    end
+
+    command_parts << pod_name
+    command_parts << "-- #{command}"
+
+    # TODO: investigate how to do it with shell.
+    if interactive
+      system(command_parts.join(" "))
+    else
+      shell.exec!(command_parts.join(" "))
+    end
+  end
+
   def rolling_restart(shell, deployment_name, kubeconfig_path: nil)
     patch_deployment(shell, deployment_name, {
       spec: {

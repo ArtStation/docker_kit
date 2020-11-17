@@ -14,6 +14,23 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
     end
   end
 
+  context "#exec" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{kubectl exec my-pod -- bash})
+      subject.exec(shell, "my-pod", "bash")
+    end
+
+    it do
+      expect(shell).to receive(:exec!).with(%Q{kubectl exec -it my-pod -- bash})
+      subject.exec(shell, "my-pod", "bash", args: "-it")
+    end
+
+    it do
+      expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=/path/to/kube.cfg kubectl exec my-pod -- bash})
+      subject.exec(shell, "my-pod", "bash", kubeconfig_path: "/path/to/kube.cfg")
+    end
+  end
+
   context "#patch_deployment" do
     it do
       expect(shell).to receive(:exec!).with(%Q{kubectl patch deployment my_deployment -p "\{\\"spec\\":\\"some_update\\"\}"})

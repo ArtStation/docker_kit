@@ -29,6 +29,10 @@ class KuberKit::Container
     KuberKit::Actions::KubectlApplier.new
   end
 
+  register "actions.kubectl_attacher" do
+    KuberKit::Actions::KubectlAttacher.new
+  end
+
   register "configs" do
     KuberKit::Configs.new
   end

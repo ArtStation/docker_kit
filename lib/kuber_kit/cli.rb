@@ -88,6 +88,15 @@ class KuberKit::CLI < Thor
     end
   end
 
+  desc "attach POD_NAME", "Attach to POD_NAME with kubectl"
+  def attach(pod_name)
+    KuberKit.set_debug_mode(options[:debug])
+
+    if KuberKit::Container['actions.configuration_loader'].call(options)
+      KuberKit::Container['actions.kubectl_attacher'].call(pod_name, options)
+    end
+  end
+
   def self.exit_on_failure?
     true
   end
