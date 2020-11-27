@@ -1,4 +1,3 @@
-- add namespace support to kubectl commands
 - allow setting default configuration for kuberkit using env variable
 - implement interactive shell.exec!
 - allow deploying only services enabled for specific configuration

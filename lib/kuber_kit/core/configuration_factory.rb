@@ -27,6 +27,7 @@ class KuberKit::Core::ConfigurationFactory
       templates:        templates,
       kubeconfig_path:  configuration_attrs.kubeconfig_path,
       deploy_strategy:  configuration_attrs.deploy_strategy || configs.deploy_strategy,
+      deploy_namespace: configuration_attrs.deploy_namespace,
       services_attributes: configuration_attrs.services_attributes,
       build_servers:    build_servers
     )

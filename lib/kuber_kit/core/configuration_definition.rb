@@ -24,9 +24,10 @@ class KuberKit::Core::ConfigurationDefinition
       templates:        @templates,
       kubeconfig_path:  @kubeconfig_path,
       deploy_strategy:  @deploy_strategy,
+      deploy_namespace: @deploy_namespace,
       enabled_services: @enabled_services,
       build_servers:    @build_servers,
-      services_attributes: @services_attributes
+      services_attributes: @services_attributes,
     )
   end
 
@@ -76,6 +77,12 @@ class KuberKit::Core::ConfigurationDefinition
 
   def kubeconfig_path(path)
     @kubeconfig_path = path
+
+    self
+  end
+
+  def deploy_namespace(namespace)
+    @deploy_namespace = namespace
 
     self
   end

@@ -1,6 +1,6 @@
 class KuberKit::Core::Configuration
   attr_reader :name, :artifacts, :registries, :env_files, :templates, :kubeconfig_path, 
-              :deploy_strategy, :services_attributes, :build_servers
+              :deploy_strategy, :deploy_namespace, :services_attributes, :build_servers
 
   Contract KeywordArgs[
     name:            Symbol,
@@ -9,12 +9,13 @@ class KuberKit::Core::Configuration
     env_files:       Hash,
     templates:       Hash,
     kubeconfig_path: Maybe[String],
-    deploy_strategy: Symbol,
+    deploy_strategy:  Symbol,
+    deploy_namespace: Maybe[Symbol],
     services_attributes: HashOf[Symbol => Hash],
     build_servers:   ArrayOf[KuberKit::Core::BuildServers::AbstractBuildServer]
   ] => Any
   def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, 
-                 deploy_strategy:, services_attributes:, build_servers:)
+                 deploy_strategy:, deploy_namespace:, services_attributes:, build_servers:)
     @name             = name
     @artifacts        = artifacts
     @registries       = registries
@@ -22,6 +23,7 @@ class KuberKit::Core::Configuration
     @templates        = templates
     @kubeconfig_path  = kubeconfig_path
     @deploy_strategy  = deploy_strategy
+    @deploy_namespace = deploy_namespace
     @services_attributes = services_attributes
     @build_servers    = build_servers
   end
