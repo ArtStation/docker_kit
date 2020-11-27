@@ -1,6 +1,28 @@
 RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
   subject { KuberKit::Shell::Commands::KubectlCommands.new }
   let(:shell) { KuberKit::Shell::LocalShell.new }
+  
+  context "#kubectl_run" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{kubectl some_command})
+      subject.kubectl_run(shell, "some_command")
+    end
+
+    it do
+      expect(shell).to receive(:exec!).with(%Q{kubectl -n community some_command})
+      subject.kubectl_run(shell, "some_command", namespace: "community")
+    end
+
+    it do
+      expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=/path/to/kube.cfg kubectl some_command})
+      subject.kubectl_run(shell, "some_command", kubeconfig_path: "/path/to/kube.cfg")
+    end
+
+    it do
+      expect(shell).to receive(:exec!).with(%Q{kubectl some_command some_argument})
+      subject.kubectl_run(shell, ["some_command", "some_argument"])
+    end
+  end
 
   context "#apply_file" do
     it do
@@ -53,8 +75,8 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
             }
           }
         }
-      }}, kubeconfig_path: "/path/to/kube.cfg")
-      subject.rolling_restart(shell, "my_deployment", kubeconfig_path: "/path/to/kube.cfg")
+      }}, kubeconfig_path: "/path/to/kube.cfg", namespace: "test")
+      subject.rolling_restart(shell, "my_deployment", kubeconfig_path: "/path/to/kube.cfg", namespace: "test")
     end
   end
 end

@@ -1,4 +1,5 @@
-- when no service set to deploy, show tags selection
+- add namespace support to kubectl commands
+- allow setting default configuration for kuberkit using env variable
 - implement interactive shell.exec!
 - allow deploying only services enabled for specific configuration
 - list services and require confirmation before deployment
