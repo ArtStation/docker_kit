@@ -41,7 +41,7 @@ class KuberKit::Shell::Commands::KubectlCommands
     kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, interactive: interactive, namespace: namespace)
   end
 
-  def rolling_restart(shell, deployment_name, kubeconfig_path: nil, namespace: namespace)
+  def rolling_restart(shell, deployment_name, kubeconfig_path: nil, namespace: nil)
     patch_deployment(shell, deployment_name, {
       spec: {
         template: {

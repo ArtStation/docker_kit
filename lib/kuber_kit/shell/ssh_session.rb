@@ -56,5 +56,7 @@ class KuberKit::Shell::SshSession
     end
 
     stdout_data
+  rescue Net::SSH::Exception => e
+    raise SshSessionError, "Shell command failed: #{command}\r\n#{e.message}"
   end
 end
