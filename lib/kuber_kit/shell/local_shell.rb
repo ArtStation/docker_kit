@@ -30,8 +30,8 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     result
   end
 
-  def sync(local_path, remote_path, exclude: nil)
-    rsync_commands.rsync(self, local_path, remote_path, exclude: exclude)
+  def sync(local_path, remote_path, exclude: nil, delete: true)
+    rsync_commands.rsync(self, local_path, remote_path, exclude: exclude, delete: delete)
   end
 
   def read(file_path)

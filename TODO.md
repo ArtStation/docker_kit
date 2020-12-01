@@ -1,5 +1,6 @@
 - find a way to launch job on each run, e.g. for migrations
 - allow setting default configuration for kuberkit using env variable
+- add ability to set container health  checks
 - implement interactive shell.exec!
 - allow deploying only services enabled for specific configuration
 - list services and require confirmation before deployment

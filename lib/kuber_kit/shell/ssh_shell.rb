@@ -38,11 +38,12 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
     raise ShellError.new(e.message)
   end
 
-  def sync(local_path, remote_path, exclude: nil)
+  def sync(local_path, remote_path, exclude: nil, delete: true)
     rsync_commands.rsync(
       local_shell, local_path, remote_path, 
       target_host: "#{ssh_session.user}@#{ssh_session.host}",
-      exclude:     exclude
+      exclude:     exclude,
+      delete:      delete
     )
   end
 
