@@ -8,11 +8,12 @@ class KuberKit::Core::ServiceDefinition
 
   def to_service_attrs
     OpenStruct.new(
-      name:           @service_name,
-      template_name:  get_value(@template_name),
-      tags:           Array(get_value(@tags)).map(&:to_sym),
-      images:         Array(get_value(@images)).map(&:to_sym),
-      attributes:     get_value(@attributes),
+      name:             @service_name,
+      template_name:    get_value(@template_name),
+      tags:             Array(get_value(@tags)).map(&:to_sym),
+      images:           Array(get_value(@images)).map(&:to_sym),
+      attributes:       get_value(@attributes),
+      deploy_strategy:  get_value(@deploy_strategy),
     )
   end
 
@@ -36,6 +37,12 @@ class KuberKit::Core::ServiceDefinition
 
   def attributes(value = nil, &block)
     @attributes = block_given? ? block : value
+
+    self
+  end
+
+  def deploy_strategy(value = nil, &block)
+    @deploy_strategy = block_given? ? block : value
 
     self
   end

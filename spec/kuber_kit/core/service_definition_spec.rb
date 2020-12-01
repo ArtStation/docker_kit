@@ -29,7 +29,7 @@ RSpec.describe KuberKit::Core::ServiceDefinition do
     end
   end
 
-  context "images" do
+  context "tags" do
     it "sets tags with multiple arguments" do
       definition = subject.tags("some_tag", "another_tag")
   
@@ -80,6 +80,20 @@ RSpec.describe KuberKit::Core::ServiceDefinition do
       definition = subject.attributes{ {scale: 2} }
   
       expect(definition.to_service_attrs.attributes).to eq({scale: 2})
+    end
+  end
+
+  context "deploy_strategy" do
+    it "sets deploy strategy with symbol" do
+      definition = subject.deploy_strategy(:kubernetes_runner)
+  
+      expect(definition.to_service_attrs.deploy_strategy).to eq(:kubernetes_runner)
+    end
+
+    it "sets deploy strategy with proc" do
+      definition = subject.deploy_strategy{ :kubernetes_runner }
+  
+      expect(definition.to_service_attrs.deploy_strategy).to eq(:kubernetes_runner)
     end
   end
 end

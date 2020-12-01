@@ -65,6 +65,13 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
     end
   end
 
+  context "#delete_resource" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{kubectl delete job my-job})
+      subject.delete_resource(shell, "job", "my-job")
+    end
+  end
+
   context "#rolling_restart" do
     it do
       expect(subject).to receive(:patch_deployment).with(shell, "my_deployment", { spec: {
