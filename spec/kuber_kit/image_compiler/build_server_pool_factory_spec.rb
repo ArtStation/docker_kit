@@ -14,6 +14,6 @@ RSpec.describe KuberKit::ImageCompiler::BuildServerPoolFactory do
 
     pool = subject.create(ssh_shell_class: RemoteSshShell)
 
-    expect(pool.ssh_shells.first).to be_a(RemoteSshShell)
+    expect(pool.get_shell).to be_a(RemoteSshShell)
   end
 end
