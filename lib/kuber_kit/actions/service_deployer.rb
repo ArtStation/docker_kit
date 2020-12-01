@@ -68,7 +68,15 @@ class KuberKit::Actions::ServiceDeployer
     specific_service_option = "deploy specific service"
 
     tags = [specific_service_option]
-    tags += service_store.all_definitions.values.map(&:to_service_attrs).map(&:tags).flatten.uniq.map(&:to_s)
+    tags += service_store
+      .all_definitions
+      .values
+      .map(&:to_service_attrs)
+      .map(&:tags)
+      .flatten
+      .uniq
+      .sort
+      .map(&:to_s)
 
     ui.prompt("Please select which tag to deploy", tags) do |selected_tag|
       if selected_tag == specific_service_option
@@ -80,7 +88,13 @@ class KuberKit::Actions::ServiceDeployer
   end
 
   def show_service_selection()
-    services = service_store.all_definitions.values.map(&:service_name).uniq.map(&:to_s)
+    services = service_store
+      .all_definitions
+      .values
+      .map(&:service_name)
+      .uniq
+      .sort
+      .map(&:to_s)
 
     ui.prompt("Please select which service to deploy", services) do |selected_service|
       return [[selected_service], []]
