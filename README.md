@@ -17,13 +17,13 @@ gem 'kuber_kit'
 ### Launch compilation
 
 ```
-bin/kit compile ruby_app,ruby_app2 --path=./example
+bundle exec bin/kit compile ruby_app,ruby_app2 --path=./example
 ```
 
 ### Launch deployment
 
 ```
-bin/kit compile -s ruby_app,ruby_app2 --path=./example
+bundle exec bin/kit compile -s ruby_app,ruby_app2 --path=./example
 ```
 
 
