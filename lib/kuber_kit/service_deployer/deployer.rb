@@ -3,7 +3,8 @@ class KuberKit::ServiceDeployer::Deployer
 
   include KuberKit::Import[
     "core.service_store",
-    "service_deployer.strategies.kubernetes"
+    "service_deployer.strategies.kubernetes",
+    "service_deployer.strategies.kubernetes_runner"
   ]
 
   def register_strategy(strategy_name, strategy)
@@ -29,6 +30,7 @@ class KuberKit::ServiceDeployer::Deployer
 
   def add_default_strategies
     register_strategy(:kubernetes, kubernetes)
+    register_strategy(:kubernetes_runner, kubernetes_runner)
   end
 
   def reset!

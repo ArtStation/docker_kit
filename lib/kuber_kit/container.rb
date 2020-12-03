@@ -225,6 +225,10 @@ class KuberKit::Container
     KuberKit::ServiceDeployer::Strategies::Kubernetes.new
   end
 
+  register "service_deployer.strategies.kubernetes_runner" do
+    KuberKit::ServiceDeployer::Strategies::KubernetesRunner.new
+  end
+
   register "service_reader.action_handler" do
     KuberKit::ServiceReader::ActionHandler.new
   end
