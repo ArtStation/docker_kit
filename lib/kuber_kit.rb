@@ -141,6 +141,7 @@ module KuberKit
     module Strategies
       autoload :Abstract, 'service_deployer/strategies/abstract'
       autoload :Kubernetes, 'service_deployer/strategies/kubernetes'
+      autoload :KubernetesRunner, 'service_deployer/strategies/kubernetes_runner'
     end
   end
 
