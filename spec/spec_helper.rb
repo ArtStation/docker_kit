@@ -47,6 +47,7 @@ RSpec.configure do |config|
     KuberKit::Container['env_file_reader.reader'].reset!
     KuberKit::Container['template_reader.reader'].reset!
     KuberKit::Container['tools.file_presence_checker'].reset!
+    KuberKit::Container['configs.config_store'].reset!
   end
 end
 

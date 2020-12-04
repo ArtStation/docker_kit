@@ -1,13 +1,17 @@
 class KuberKit::Configs::ConfigStore
-  def initialize
-    @@items = {}
+  def items
+    @@items ||= {}
   end
 
   def set(key, value)
-    @@items[key] = value
+    items[key] = value
   end
 
   def get(key)
-    @@items[key]
+    items[key]
+  end
+
+  def reset!
+    @@items = {}
   end
 end
