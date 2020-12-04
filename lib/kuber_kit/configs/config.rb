@@ -1,4 +1,4 @@
-class KuberKit::Configs
+class KuberKit::Configs::Config
   IMAGE_DOCKERFILE_NAME = "Dockerfile".freeze
   IMAGE_BUILD_CONTEXT_DIR = "build_context".freeze
   IMAGE_TAG = 'latest'.freeze

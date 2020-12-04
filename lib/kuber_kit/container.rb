@@ -34,7 +34,7 @@ class KuberKit::Container
   end
 
   register "configs" do
-    KuberKit::Configs.new
+    KuberKit::Configs::Config.new
   end
 
   register "core.image_factory" do

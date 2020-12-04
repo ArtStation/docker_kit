@@ -72,6 +72,11 @@ module KuberKit
     end
   end
 
+  module Configs
+    autoload :ConfigStore, 'configs/config_store'
+    autoload :Config, 'configs/config'
+  end
+
   module Tools
     autoload :FilePresenceChecker, 'tools/file_presence_checker'
     autoload :LoggerFactory, 'tools/logger_factory'
@@ -173,7 +178,6 @@ module KuberKit
     autoload :Simple, 'ui/simple'
   end
 
-  autoload :Configs, 'configs'
   autoload :CLI, 'cli'
   autoload :Container, 'container'
 
