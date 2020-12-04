@@ -128,8 +128,11 @@ module KuberKit
 
   module TemplateReader
     autoload :Reader, 'template_reader/reader'
-    autoload :AbstractTemplateReader, 'template_reader/abstract_template_reader'
-    autoload :ArtifactFileReader, 'template_reader/artifact_file_reader'
+
+    module Strategies
+      autoload :Abstract, 'template_reader/strategies/abstract'
+      autoload :ArtifactFile, 'template_reader/strategies/artifact_file'
+    end
   end
 
   module ServiceDeployer

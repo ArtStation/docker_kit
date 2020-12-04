@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::TemplateReader::ArtifactFileReader do
-  subject{ KuberKit::TemplateReader::ArtifactFileReader.new }
+RSpec.describe KuberKit::TemplateReader::Strategies::ArtifactFile do
+  subject{ KuberKit::TemplateReader::Strategies::ArtifactFile.new }
 
   let(:artifact) { KuberKit::Core::Artifacts::Local.new(:templates).setup(File.join(FIXTURES_PATH, "templates")) }
   let(:template) { KuberKit::Core::Templates::ArtifactFile.new(:test_template, artifact_name: :templates, file_path: "configuration.yml") }

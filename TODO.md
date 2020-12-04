@@ -1,4 +1,4 @@
-- add config file support to kuber_kit root folder
+- add config file support to kuber_kit root folder, should allow setting minimal version of KuberKit
 - find a way to always deploy some service, e.g. for migrations and env_files
 - allow setting default configuration for kuberkit using env variable
 - add ability to set container health  checks

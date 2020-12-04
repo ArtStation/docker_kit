@@ -5,6 +5,11 @@ class KuberKit::EnvFileReader::Reader
     "env_file_reader.strategies.artifact_file",
   ]
 
+  def initialize(**injected_deps)
+    super(injected_deps)
+    add_default_strategies
+  end
+
   def use_reader(env_file_reader, env_file_class:)
     @@readers ||= {}
 
@@ -16,8 +21,6 @@ class KuberKit::EnvFileReader::Reader
   end
 
   def read(shell, env_file)
-    add_default_readers
-
     reader = @@readers[env_file.class]
 
     raise ReaderNotFoundError, "Can't find reader for env file #{env_file}" if reader.nil?
@@ -25,11 +28,12 @@ class KuberKit::EnvFileReader::Reader
     reader.read(shell, env_file)
   end
 
-  def add_default_readers
-    use_reader(artifact_file, env_file_class: KuberKit::Core::EnvFiles::ArtifactFile)
-  end
-
   def reset!
     @@readers = {}
   end
+
+  private
+    def add_default_strategies
+      use_reader(artifact_file, env_file_class: KuberKit::Core::EnvFiles::ArtifactFile)
+    end
 end

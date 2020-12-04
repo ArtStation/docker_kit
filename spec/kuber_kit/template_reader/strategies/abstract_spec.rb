@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::TemplateReader::AbstractTemplateReader do
-  subject{ KuberKit::TemplateReader::AbstractTemplateReader.new }
+RSpec.describe KuberKit::TemplateReader::Strategies::Abstract do
+  subject{ KuberKit::TemplateReader::Strategies::Abstract.new }
 
   let(:env_file) { KuberKit::Core::Templates::ArtifactFile.new(:test_template, artifact_name: :env_files, file_path: "test.erb") }
 

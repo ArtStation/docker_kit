@@ -1,4 +1,4 @@
-class KuberKit::TemplateReader::ArtifactFileReader < KuberKit::TemplateReader::AbstractTemplateReader
+class KuberKit::TemplateReader::Strategies::ArtifactFile < KuberKit::TemplateReader::Strategies::Abstract
   include KuberKit::Import[
     "core.artifact_store"
   ]

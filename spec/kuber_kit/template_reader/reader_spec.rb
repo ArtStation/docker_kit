@@ -1,7 +1,7 @@
 RSpec.describe KuberKit::TemplateReader::Reader do
   subject{ KuberKit::TemplateReader::Reader.new }
 
-  class ExampleTemplateReader < KuberKit::TemplateReader::AbstractTemplateReader
+  class ExampleTemplateReader < KuberKit::TemplateReader::Strategies::Abstract
     def read(shell, template, context_helper: nil)
       return {name: template.name}
     end

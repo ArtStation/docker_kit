@@ -7,6 +7,11 @@ class KuberKit::ServiceDeployer::Deployer
     "service_deployer.strategies.kubernetes_runner"
   ]
 
+  def initialize(**injected_deps)
+    super(injected_deps)
+    add_default_strategies
+  end
+
   def register_strategy(strategy_name, strategy)
     @@strategies ||= {}
 
@@ -19,8 +24,6 @@ class KuberKit::ServiceDeployer::Deployer
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service, Symbol => Any
   def deploy(shell, service, strategy_name)
-    add_default_strategies
-
     deployer = @@strategies[strategy_name]
 
     raise StrategyNotFoundError, "Can't find strategy with name #{strategy_name}" if deployer.nil?
@@ -28,12 +31,13 @@ class KuberKit::ServiceDeployer::Deployer
     deployer.deploy(shell, service)
   end
 
-  def add_default_strategies
-    register_strategy(:kubernetes, kubernetes)
-    register_strategy(:kubernetes_runner, kubernetes_runner)
-  end
-
   def reset!
     @@strategies = {}
   end
+
+  private
+    def add_default_strategies
+      register_strategy(:kubernetes, kubernetes)
+      register_strategy(:kubernetes_runner, kubernetes_runner)
+    end
 end
