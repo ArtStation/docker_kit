@@ -19,9 +19,17 @@ class KuberKit::ServiceDeployer::Strategies::KubernetesRunner < KuberKit::Servic
 
     deployment_delete_enabled = service.attribute(:deployment_delete_enabled, default: true)
     if deployment_delete_enabled
-      kubectl_commands.delete_resource(shell, deployment_resource_type, deployment_resource_name, kubeconfig_path: kubeconfig_path, namespace: deploy_namespace)
+      delete_resource_if_exists(shell, deployment_resource_type, deployment_resource_name, kubeconfig_path: kubeconfig_path, namespace: deploy_namespace)
     end
 
     kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path, namespace: deploy_namespace)
   end
+
+  private
+    def delete_resource_if_exists(shell, resource_type, resource_name, kubeconfig_path:, namespace: )
+      unless kubectl_commands.resource_exists?(shell, resource_type, resource_name, kubeconfig_path: kubeconfig_path, namespace: namespace)
+        return false
+      end
+      kubectl_commands.delete_resource(shell, resource_type, resource_name, kubeconfig_path: kubeconfig_path, namespace: namespace)
+    end
 end

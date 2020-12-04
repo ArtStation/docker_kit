@@ -1,4 +1,5 @@
-- find a way to launch job on each run, e.g. for migrations
+- add config file support to kuber_kit root folder
+- find a way to always deploy some service, e.g. for migrations and env_files
 - allow setting default configuration for kuberkit using env variable
 - add ability to set container health  checks
 - implement interactive shell.exec!
