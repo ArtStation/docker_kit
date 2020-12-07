@@ -32,10 +32,10 @@ RSpec.describe KuberKit::ImageCompiler::ImageBuildDirCreator do
   end
 
   it "creates a docker ignore file" do
-    KuberKit::Container["configs"].docker_ignore_list = ["log", "tmp"]
+    KuberKit::Container["configs"].docker_ignore_list = ["Dockerfile", "tmp"]
 
     expect(shell).to receive(:write).with(
-      "/tmp/images/example/.dockerignore", /Dockerfile/
+      "/tmp/images/example/.dockerignore", "Dockerfile\r\ntmp"
     )
 
     subject.create(shell, image, "/tmp/images/example")

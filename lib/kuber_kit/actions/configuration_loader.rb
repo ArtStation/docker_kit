@@ -1,4 +1,6 @@
 class KuberKit::Actions::ConfigurationLoader
+  APP_CONFIG_FILENAME = "config.rb".freeze
+
   include KuberKit::Import[
     "core.registry_store",
     "core.image_store",
@@ -14,6 +16,13 @@ class KuberKit::Actions::ConfigurationLoader
   Contract Hash => Any
   def call(options)
     root_path     = options[:path] || File.join(Dir.pwd, configs.kuber_kit_dirname)
+
+    # require config file first, in case if other dirs are overriden in config
+    config_file_path = File.join(root_path, APP_CONFIG_FILENAME)
+    if File.exists?(config_file_path)
+      require config_file_path
+    end
+
     images_path   = options[:images_path] || File.join(root_path, configs.images_dirname)
     services_path = options[:services_path] || File.join(root_path, configs.services_dirname)
     infra_path    = options[:infra_path]  || File.join(root_path, configs.infra_dirname)
@@ -30,6 +39,10 @@ class KuberKit::Actions::ConfigurationLoader
 
     unless File.exists?(root_path)
       ui.print_warning "WARNING", "KuberKit root path #{root_path} doesn't exist. You may want to pass it --path parameter."
+    end
+
+    if Gem::Version.new(KuberKit::VERSION) < Gem::Version.new(configs.kuber_kit_min_version)
+      raise KuberKit::Error, "The minimal required kuber_kit version is #{configs.kuber_kit_min_version}"
     end
 
     load_configurations(configurations_path, configuration_name)
