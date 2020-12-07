@@ -1,16 +1,13 @@
 class KuberKit::Actions::TemplateReader
   include KuberKit::Import[
-    "core.template_store",
-    "template_reader.reader",
     "shell.local_shell",
-    "ui"
+    "ui",
+    template_reader: "template_reader.action_handler",
   ]
 
   Contract Symbol, Hash => Any
   def call(template_name, options)
-    template = template_store.get(template_name)
-
-    result = reader.read(local_shell, template)
+    result = template_reader.call(local_shell, template_name)
 
     ui.print_info(template_name.to_s, result)
 

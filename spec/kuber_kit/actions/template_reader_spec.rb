@@ -17,7 +17,7 @@ RSpec.describe KuberKit::Actions::TemplateReader do
 
   it "prints error if error happen" do
     expect(subject.ui).to receive(:print_error)
-    allow(subject.reader).to receive(:call).and_raise(KuberKit::Error.new("Some error"))
+    allow(subject.template_reader).to receive(:call).and_raise(KuberKit::Error.new("Some error"))
     subject.call(:auth_app, {})
   end
 end

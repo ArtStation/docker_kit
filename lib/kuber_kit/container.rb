@@ -201,6 +201,10 @@ class KuberKit::Container
     KuberKit::EnvFileReader::Strategies::ArtifactFile.new
   end
 
+  register "template_reader.action_handler" do
+    KuberKit::TemplateReader::ActionHandler.new
+  end
+
   register "template_reader.reader" do
     KuberKit::TemplateReader::Reader.new
   end
