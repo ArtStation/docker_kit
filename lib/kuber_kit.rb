@@ -72,11 +72,6 @@ module KuberKit
     end
   end
 
-  module Configs
-    autoload :ConfigStore, 'configs/config_store'
-    autoload :Config, 'configs/config'
-  end
-
   module Tools
     autoload :FilePresenceChecker, 'tools/file_presence_checker'
     autoload :LoggerFactory, 'tools/logger_factory'
@@ -181,6 +176,7 @@ module KuberKit
 
   autoload :CLI, 'cli'
   autoload :Container, 'container'
+  autoload :Configs, 'configs'
 
   Import = Dry::AutoInject(Container)
 
@@ -241,6 +237,10 @@ module KuberKit
 
     def build_helper(&proc)
       KuberKit::Core::ContextHelper::BaseHelper.class_exec(&proc)
+    end
+
+    def configure(&proc)
+      Container["configs"]
     end
   end
 end
