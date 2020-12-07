@@ -1,9 +1,8 @@
+- list services and require confirmation before deployment
+- allow deploying only services enabled for specific configuration
 - find a way to always deploy some service, e.g. for migrations and env_files
 - allow setting default configuration for kuberkit using env variable
-- add ability to set container health  checks
+- add ability to set container health checks
 - implement interactive shell.exec!
-- allow deploying only services enabled for specific configuration
-- list services and require confirmation before deployment
-- add build vars support (use images instead of containers)
 - template should be able to set default attributes
 - template should be able to depend on image?

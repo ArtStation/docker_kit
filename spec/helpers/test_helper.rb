@@ -57,8 +57,8 @@ class TestHelper
     image_definition_factory.create(name)
   end
   
-  def image(name)
-    definition = image_definition(name)
+  def image(name, build_vars: {})
+    definition = image_definition(name).build_vars(build_vars)
     image_factory.create(definition)
   end
 

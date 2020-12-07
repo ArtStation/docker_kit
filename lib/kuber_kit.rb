@@ -57,7 +57,7 @@ module KuberKit
       autoload :ImageHelper, 'core/context_helper/image_helper'
       autoload :ServiceHelper, 'core/context_helper/service_helper'
       autoload :ContextHelperFactory, 'core/context_helper/context_helper_factory'
-      autoload :ContextArgs, 'core/context_helper/context_args'
+      autoload :ContextVars, 'core/context_helper/context_vars'
     end
 
     module Registries
@@ -217,7 +217,7 @@ module KuberKit
     end
 
     def global_build_vars
-      KuberKit::Core::ContextHelper::ContextArgs.new(current_configuration.global_build_vars)
+      KuberKit::Core::ContextHelper::ContextVars.new(current_configuration.global_build_vars)
     end
 
     def add_registry(registry)

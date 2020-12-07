@@ -17,7 +17,7 @@ RSpec.describe KuberKit do
         end
       end
 
-      helper = KuberKit::Core::ContextHelper::ContextHelperFactory.new.build_image_context(test_helper.shell)
+      helper = KuberKit::Core::ContextHelper::ContextHelperFactory.new.build_image_context(test_helper.shell, nil)
       expect(helper.test_url).to eq("test")
     end
   end

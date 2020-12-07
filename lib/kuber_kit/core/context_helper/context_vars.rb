@@ -1,8 +1,8 @@
-class KuberKit::Core::ContextHelper::ContextArgs
+class KuberKit::Core::ContextHelper::ContextVars
   attr_reader :parent, :parent_name
 
-  def initialize(context_args, parent_name = nil, parent = nil)
-    @context_args = context_args
+  def initialize(context_vars, parent_name = nil, parent = nil)
+    @context_vars = context_vars
     @parent_name  = parent_name
     @parent = parent
   end
@@ -12,8 +12,8 @@ class KuberKit::Core::ContextHelper::ContextArgs
       raise ArgumentError.new("context args does not accept any arguments")
     end
 
-    value = @context_args.fetch(name) do
-      raise(KuberKit::Error, "build arg '#{format_arg(name)}' is not defined, available args: #{@context_args.inspect}")
+    value = @context_vars.fetch(name) do
+      raise(KuberKit::Error, "build arg '#{format_arg(name)}' is not defined, available args: #{@context_vars.inspect}")
     end
 
     if value.is_a?(Hash)

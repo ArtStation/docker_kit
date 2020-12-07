@@ -5,12 +5,13 @@ class KuberKit::Core::ContextHelper::ContextHelperFactory
     env_file_reader: "env_file_reader.action_handler"
   ]
 
-  def build_image_context(shell)
+  def build_image_context(shell, image)
     KuberKit::Core::ContextHelper::ImageHelper.new(
       image_store:      image_store,
       artifact_store:   artifact_store,
       shell:            shell,
-      env_file_reader:  env_file_reader
+      env_file_reader:  env_file_reader,
+      image:            image
     )
   end
 

@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::Core::ContextHelper::ContextArgs do
-  subject { KuberKit::Core::ContextHelper::ContextArgs }
+RSpec.describe KuberKit::Core::ContextHelper::ContextVars do
+  subject { KuberKit::Core::ContextHelper::ContextVars }
 
   it "allows reading top level arguments" do
     result = subject.new({foo: "bar"})
