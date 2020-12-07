@@ -121,4 +121,20 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
       expect(subject.to_attrs.build_servers).to eq([:main_build_server])
     end
   end
+
+  context "global build vars" do
+    it "sets global build vars" do
+      subject.global_build_vars({
+        rails_app: {
+          compile_assets: true
+        }
+      })
+
+      expect(subject.to_attrs.global_build_vars).to eq({
+        rails_app: {
+          compile_assets: true
+        }
+      })
+    end
+  end
 end

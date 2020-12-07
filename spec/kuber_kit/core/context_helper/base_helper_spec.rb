@@ -54,4 +54,12 @@ RSpec.describe KuberKit::Core::ContextHelper::BaseHelper do
       expect(subject.env_file(:test_env)["RUBY_ENV"]).to eq("review")
     end
   end
+
+  context "global_build_vars" do
+    it "returns attribute rewritten in configuration" do
+      test_helper.configuration_store.get_definition(:default).global_build_vars({some: {foo: "bar"}})
+
+      expect(subject.global_build_vars.some.foo).to eq("bar")
+    end
+  end
 end

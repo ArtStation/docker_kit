@@ -57,6 +57,7 @@ module KuberKit
       autoload :ImageHelper, 'core/context_helper/image_helper'
       autoload :ServiceHelper, 'core/context_helper/service_helper'
       autoload :ContextHelperFactory, 'core/context_helper/context_helper_factory'
+      autoload :ContextArgs, 'core/context_helper/context_args'
     end
 
     module Registries
@@ -213,6 +214,10 @@ module KuberKit
         raise "Please set configuration name before calling current_configuration"
       end
       @current_configuration ||= Container['core.configuration_store'].get_configuration(@configuration_name)
+    end
+
+    def global_build_vars
+      KuberKit::Core::ContextHelper::ContextArgs.new(current_configuration.global_build_vars)
     end
 
     def add_registry(registry)

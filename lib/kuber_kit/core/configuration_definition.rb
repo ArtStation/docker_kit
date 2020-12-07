@@ -27,7 +27,8 @@ class KuberKit::Core::ConfigurationDefinition
       deploy_namespace: @deploy_namespace,
       enabled_services: @enabled_services,
       build_servers:    @build_servers,
-      services_attributes: @services_attributes,
+      services_attributes:  @services_attributes,
+      global_build_vars:    @global_build_vars,
     )
   end
 
@@ -96,6 +97,12 @@ class KuberKit::Core::ConfigurationDefinition
   def enabled_services(services_hash)
     @enabled_services += services_hash.keys.map(&:to_sym)
     @services_attributes = @services_attributes.merge(services_hash)
+
+    self
+  end
+
+  def global_build_vars(variables)
+    @global_build_vars = variables
 
     self
   end

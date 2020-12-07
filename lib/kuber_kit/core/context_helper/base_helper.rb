@@ -29,6 +29,10 @@ class KuberKit::Core::ContextHelper::BaseHelper
     KuberKit.current_configuration.name
   end
 
+  def global_build_vars
+    KuberKit.global_build_vars
+  end
+
   def get_binding
     binding
   end
