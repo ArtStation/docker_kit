@@ -240,7 +240,7 @@ module KuberKit
     end
 
     def configure(&proc)
-      Container["configs"]
+      yield(Container["configs"])
     end
   end
 end

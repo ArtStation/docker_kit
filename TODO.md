@@ -1,4 +1,4 @@
-- config file should allow setting minimal version of KuberKit
+- add global build vars support
 - find a way to always deploy some service, e.g. for migrations and env_files
 - allow setting default configuration for kuberkit using env variable
 - add ability to set container health  checks
