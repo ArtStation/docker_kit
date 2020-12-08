@@ -56,6 +56,11 @@ class KuberKit::Actions::ConfigurationLoader
 
     ui.create_task("Loading image definitions") do |task|
       files = image_store.load_definitions(images_path)
+
+      configs.additional_images_paths.each do |path|
+        files += image_store.load_definitions(path)
+      end
+
       task.update_title("Loaded #{files.count} image definitions")
     end
 
