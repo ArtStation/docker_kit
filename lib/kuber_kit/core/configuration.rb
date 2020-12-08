@@ -35,4 +35,9 @@ class KuberKit::Core::Configuration
   def service_attributes(service_name)
     services_attributes[service_name.to_sym] || {}
   end
+
+  def global_build_args
+    puts "WARNING: global_build_args is deprecated, please use global_build_vars instead"
+    global_build_vars
+  end
 end

@@ -117,11 +117,23 @@ RSpec.describe KuberKit::Core::ImageDefinition do
   
       expect(definition.to_image_attrs.before_build_callback).to be_a(Proc)
     end
+
+    it "accepts before_build as lambda variable" do
+      definition = subject.before_build( -> (context_helper, build_dir) { puts("block called") } )
+  
+      expect(definition.to_image_attrs.before_build_callback).to be_a(Proc)
+    end
   end
 
   context "before_build" do
     it "saves after_build as proc" do
       definition = subject.after_build{ puts("block called") }
+  
+      expect(definition.to_image_attrs.after_build_callback).to be_a(Proc)
+    end
+
+    it "accepts after_build as lambda variable" do
+      definition = subject.after_build( -> (context_helper, build_dir) { puts("block called") } )
   
       expect(definition.to_image_attrs.after_build_callback).to be_a(Proc)
     end

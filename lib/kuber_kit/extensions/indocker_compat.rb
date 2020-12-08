@@ -14,6 +14,10 @@ module KuberKit
     def build_configuration(configuration_name)
       define_configuration(configuration_name)
     end
+
+    def configuration
+      current_configuration
+    end
   end
 end
 Indocker = KuberKit

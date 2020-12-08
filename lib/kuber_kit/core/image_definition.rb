@@ -66,14 +66,14 @@ class KuberKit::Core::ImageDefinition
     self
   end
 
-  def before_build(&block)
-    @before_build_callback = block
+  def before_build(lambda_arg = nil, &block)
+    @before_build_callback = lambda_arg || block
 
     self
   end
 
-  def after_build(&block)
-    @after_build_callback = block
+  def after_build(lambda_arg = nil, &block)
+    @after_build_callback = lambda_arg || block
 
     self
   end
