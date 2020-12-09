@@ -94,10 +94,23 @@ class KuberKit::Core::ConfigurationDefinition
     self
   end
 
-  def enabled_services(services_hash)
-    @enabled_services += services_hash.keys.map(&:to_sym)
-    @services_attributes = @services_attributes.merge(services_hash)
+  def enabled_services(services)
+    if services.is_a?(Hash)
+      @enabled_services += services.keys.map(&:to_sym)
+      @services_attributes = @services_attributes.merge(services)
+      return self
+    end
 
+    if services.is_a?(Array)
+      @enabled_services += services.map(&:to_sym)
+      return self
+    end
+
+    raise KuberKit::Error, "#enabled_services method accepts only Array or Hash"
+  end
+
+  def service_attributes(services)
+    @services_attributes = @services_attributes.merge(services)
     self
   end
 

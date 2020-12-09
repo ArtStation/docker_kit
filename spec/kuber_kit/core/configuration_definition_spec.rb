@@ -112,6 +112,21 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
 
       expect(subject.to_attrs.services_attributes[:my_service]).to eq({scale: 1})
     end
+
+    it "allows using array to set enabled services" do
+      subject.enabled_services([:service_1, :service_2])
+      subject.enabled_services([:service_3])
+
+      expect(subject.to_attrs.enabled_services).to eq([:service_1, :service_2, :service_3])
+    end
+  end
+
+  context "service_attributes" do
+    it "defines attributes for services" do
+      subject.service_attributes(my_service: {scale: 1})
+
+      expect(subject.to_attrs.services_attributes[:my_service]).to eq({scale: 1})
+    end
   end
 
   context "build server" do
