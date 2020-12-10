@@ -27,7 +27,7 @@ class KuberKit::Actions::ConfigurationLoader
     services_path = options[:services_path] || File.join(root_path, configs.services_dirname)
     infra_path    = options[:infra_path]  || File.join(root_path, configs.infra_dirname)
     configurations_path  = options[:configurations_path]  || File.join(root_path, configs.configurations_dirname)
-    configuration_name   = options[:configuration]
+    configuration_name   = ENV["KUBER_KIT_CONFIGURATION"] || options[:configuration]
 
     logger.info "Launching kuber_kit with:"
     logger.info "  Root path: #{root_path.to_s.yellow}"

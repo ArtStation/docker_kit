@@ -3,7 +3,6 @@
 - add kit logs support, should work similar to kit attach
 - allow deploying only services enabled for specific configuration
 - find a way to always deploy some service, e.g. for migrations and env_files
-- allow setting default configuration for kuberkit using env variable
 - add ability to set container health checks
 - implement interactive shell.exec!
 - template should be able to set default attributes
