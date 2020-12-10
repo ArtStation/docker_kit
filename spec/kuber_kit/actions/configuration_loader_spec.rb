@@ -11,6 +11,18 @@ RSpec.describe KuberKit::Actions::ConfigurationLoader do
     subject.call(path: "/opt/kuber_kit")
   end
 
+  it "prints error if error happen" do
+    expect(subject.ui).to receive(:print_error)
+    allow(subject).to receive(:load_configurations).and_raise(KuberKit::Error.new("Some error"))
+    subject.call({})
+  end
+
+  it "prints error if minimal version is not met" do
+    expect(subject.ui).to receive(:print_error)
+    allow(subject.configs).to receive(:kuber_kit_min_version).and_return("100.0.0")
+    subject.call({})
+  end
+
   context "when no configuration exists" do
     it "adds default configiration" do
       test_helper.configuration_store.reset!

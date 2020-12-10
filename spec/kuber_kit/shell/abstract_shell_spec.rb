@@ -6,11 +6,20 @@ RSpec.describe KuberKit::Shell::AbstractShell do
   end
 
   it do
+    expect{ subject.interactive!("command") }.to raise_error(KuberKit::NotImplementedError)
+  end
+
+  it do
     expect{ subject.read("file_path") }.to raise_error(KuberKit::NotImplementedError)
   end
 
   it do
     expect{ subject.write("file_path", "content") }.to raise_error(KuberKit::NotImplementedError)
+  end
+
+
+  it do
+    expect{ subject.sync("local_path", "remote_path") }.to raise_error(KuberKit::NotImplementedError)
   end
 
   it do
