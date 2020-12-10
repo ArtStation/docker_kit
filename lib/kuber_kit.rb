@@ -88,6 +88,7 @@ module KuberKit
     module Commands
       autoload :BashCommands, 'shell/commands/bash_commands'
       autoload :DockerCommands, 'shell/commands/docker_commands'
+      autoload :DockerComposeCommands, 'shell/commands/docker_compose_commands'
       autoload :GitCommands, 'shell/commands/git_commands'
       autoload :RsyncCommands, 'shell/commands/rsync_commands'
       autoload :KubectlCommands, 'shell/commands/kubectl_commands'
@@ -145,6 +146,7 @@ module KuberKit
 
     module Strategies
       autoload :Abstract, 'service_deployer/strategies/abstract'
+      autoload :DockerCompose, 'service_deployer/strategies/docker_compose'
       autoload :Kubernetes, 'service_deployer/strategies/kubernetes'
       autoload :KubernetesRunner, 'service_deployer/strategies/kubernetes_runner'
     end

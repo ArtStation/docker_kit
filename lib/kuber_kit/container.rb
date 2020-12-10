@@ -117,6 +117,10 @@ class KuberKit::Container
     KuberKit::Shell::Commands::DockerCommands.new
   end
 
+  register "shell.docker_compose_commands" do
+    KuberKit::Shell::Commands::DockerComposeCommands.new
+  end
+
   register "shell.git_commands" do
     KuberKit::Shell::Commands::GitCommands.new
   end
@@ -231,6 +235,10 @@ class KuberKit::Container
 
   register "service_deployer.strategies.kubernetes_runner" do
     KuberKit::ServiceDeployer::Strategies::KubernetesRunner.new
+  end
+
+  register "service_deployer.strategies.docker_compose" do
+    KuberKit::ServiceDeployer::Strategies::DockerCompose.new
   end
 
   register "service_reader.action_handler" do
