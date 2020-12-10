@@ -12,12 +12,12 @@ class KuberKit::Core::ServiceFactory
     attributes = (service_attrs.attributes || {}).merge(configuration_attributes)
 
     KuberKit::Core::Service.new(
-      name:             service_attrs.name,
-      template_name:    service_attrs.template_name,
-      tags:             service_attrs.tags,
-      images:           service_attrs.images,
-      attributes:       attributes,
-      deploy_strategy:  service_attrs.deploy_strategy,
+      name:               service_attrs.name,
+      template_name:      service_attrs.template_name,
+      tags:               service_attrs.tags,
+      images:             service_attrs.images,
+      attributes:         attributes,
+      deployer_strategy:  service_attrs.deployer_strategy,
     )
   end
 end

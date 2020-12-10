@@ -16,7 +16,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::KubernetesRunner do
     expect(subject.kubectl_commands).to receive(:apply_file)
     expect(subject.kubectl_commands).to_not receive(:rolling_restart)
 
-    service = service_helper.service(:auth_job, attributes: {deployment_delete_enabled: false})
+    service = service_helper.service(:auth_job, attributes: {deployer_delete_enabled: false})
     subject.deploy(shell, service)
   end
 
@@ -25,7 +25,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::KubernetesRunner do
     expect(subject.kubectl_commands).to receive(:delete_resource).with(shell, "job", "custom-deployment", kubeconfig_path: nil, namespace: nil)
     expect(subject.kubectl_commands).to receive(:apply_file)
 
-    service = service_helper.service(:auth_job, attributes: {deployment_resource_name: "custom-deployment"})
+    service = service_helper.service(:auth_job, attributes: {deployer_resource_name: "custom-deployment"})
     subject.deploy(shell, service)
   end
 end

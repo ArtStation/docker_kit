@@ -1,6 +1,6 @@
 class KuberKit::ServiceDeployer::StrategyDetector
   Contract KuberKit::Core::Service => Symbol
   def call(service)
-    service.deploy_strategy || KuberKit.current_configuration.deploy_strategy
+    service.deployer_strategy || KuberKit.current_configuration.deployer_strategy
   end
 end

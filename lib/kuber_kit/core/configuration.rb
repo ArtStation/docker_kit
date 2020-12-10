@@ -1,6 +1,6 @@
 class KuberKit::Core::Configuration
   attr_reader :name, :artifacts, :registries, :env_files, :templates, :kubeconfig_path, 
-              :deploy_strategy, :deploy_namespace, :services_attributes, :build_servers,
+              :deployer_strategy, :deployer_namespace, :services_attributes, :build_servers,
               :global_build_vars
 
   Contract KeywordArgs[
@@ -10,14 +10,14 @@ class KuberKit::Core::Configuration
     env_files:       Hash,
     templates:       Hash,
     kubeconfig_path: Maybe[String],
-    deploy_strategy:  Symbol,
-    deploy_namespace: Maybe[Symbol],
+    deployer_strategy:  Symbol,
+    deployer_namespace: Maybe[Symbol],
     services_attributes: HashOf[Symbol => Hash],
     build_servers:   ArrayOf[KuberKit::Core::BuildServers::AbstractBuildServer],
     global_build_vars:   HashOf[Symbol => Any],
   ] => Any
   def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, 
-                 deploy_strategy:, deploy_namespace:, services_attributes:, build_servers:, 
+                 deployer_strategy:, deployer_namespace:, services_attributes:, build_servers:, 
                  global_build_vars:)
     @name             = name
     @artifacts        = artifacts
@@ -25,8 +25,8 @@ class KuberKit::Core::Configuration
     @env_files        = env_files
     @templates        = templates
     @kubeconfig_path  = kubeconfig_path
-    @deploy_strategy  = deploy_strategy
-    @deploy_namespace = deploy_namespace
+    @deployer_strategy  = deployer_strategy
+    @deployer_namespace = deployer_namespace
     @build_servers    = build_servers
     @services_attributes  = services_attributes
     @global_build_vars    = global_build_vars

@@ -11,14 +11,14 @@ class KuberKit::ServiceDeployer::Strategies::DockerCompose < KuberKit::ServiceDe
     config_path    = "#{configs.service_config_dir}/#{service.name}.yml"
     shell.write(config_path, service_config)
 
-    deployment_service_name = service.attribute(:deployment_service_name, default: service.name.to_s)
-    deployment_command_name = service.attribute(:deployment_command_name, default: "bash")
-    deployment_interactive  = service.attribute(:deployment_interactive, default: false)
+    deployer_service_name = service.attribute(:deployer_service_name, default: service.name.to_s)
+    deployer_command_name = service.attribute(:deployer_command_name, default: "bash")
+    deployer_interactive  = service.attribute(:deployer_interactive, default: false)
 
     docker_compose_commands.run(shell, config_path, 
-      service:      deployment_service_name, 
-      command:      deployment_command_name,
-      interactive:  deployment_interactive
+      service:      deployer_service_name, 
+      command:      deployer_command_name,
+      interactive:  deployer_interactive
     )
   end
 end

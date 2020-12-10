@@ -1,4 +1,3 @@
-- rename deploy/deployment to deployer in service attributes
 - list services and require confirmation before deployment
 - kit attach should list available deployments/pods, and ask for specific container if it has multiple containers
 - add kit logs support, should work similar to kit attach

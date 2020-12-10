@@ -57,8 +57,8 @@ class KuberKit::Shell::Commands::KubectlCommands
     kubectl_run(shell, command, kubeconfig_path: kubeconfig_path, namespace: namespace)
   end
 
-  def rolling_restart(shell, deployment_name, kubeconfig_path: nil, namespace: nil)
-    patch_deployment(shell, deployment_name, {
+  def rolling_restart(shell, deployer_name, kubeconfig_path: nil, namespace: nil)
+    patch_deployment(shell, deployer_name, {
       spec: {
         template: {
           metadata: {
@@ -71,10 +71,10 @@ class KuberKit::Shell::Commands::KubectlCommands
     }, kubeconfig_path: kubeconfig_path, namespace: namespace)
   end
 
-  def patch_deployment(shell, deployment_name, specs, kubeconfig_path: nil, namespace: nil)
+  def patch_deployment(shell, deployer_name, specs, kubeconfig_path: nil, namespace: nil)
     specs_json = JSON.dump(specs).gsub('"', '\"')
 
-    command = %Q{patch deployment #{deployment_name} -p "#{specs_json}"}
+    command = %Q{patch deployment #{deployer_name} -p "#{specs_json}"}
 
     kubectl_run(shell, command, kubeconfig_path: kubeconfig_path, namespace: namespace)
   end

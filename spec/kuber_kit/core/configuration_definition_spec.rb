@@ -83,19 +83,19 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
     end
   end
 
-  context "deploy_namespace" do
-    it "sets deploy_namespace for confuguration" do
-      subject.deploy_namespace("test")
+  context "deployer_namespace" do
+    it "sets deployer_namespace for confuguration" do
+      subject.deployer_namespace("test")
 
-      expect(subject.to_attrs.deploy_namespace).to eq("test")
+      expect(subject.to_attrs.deployer_namespace).to eq("test")
     end
   end
 
-  context "deploy_strategy" do
+  context "deployer_strategy" do
     it "sets deployment strategy confuguration" do
-      subject.deploy_strategy(:docker_compose)
+      subject.deployer_strategy(:docker_compose)
 
-      expect(subject.to_attrs.deploy_strategy).to eq(:docker_compose)
+      expect(subject.to_attrs.deployer_strategy).to eq(:docker_compose)
     end
   end
 

@@ -23,8 +23,8 @@ class KuberKit::Core::ConfigurationDefinition
       env_files:        @env_files,
       templates:        @templates,
       kubeconfig_path:  @kubeconfig_path,
-      deploy_strategy:  @deploy_strategy,
-      deploy_namespace: @deploy_namespace,
+      deployer_strategy:  @deployer_strategy,
+      deployer_namespace: @deployer_namespace,
       enabled_services: @enabled_services,
       build_servers:    @build_servers,
       services_attributes:  @services_attributes,
@@ -82,14 +82,14 @@ class KuberKit::Core::ConfigurationDefinition
     self
   end
 
-  def deploy_namespace(namespace)
-    @deploy_namespace = namespace
+  def deployer_namespace(namespace)
+    @deployer_namespace = namespace
 
     self
   end
 
-  def deploy_strategy(path)
-    @deploy_strategy = path
+  def deployer_strategy(path)
+    @deployer_strategy = path
 
     self
   end

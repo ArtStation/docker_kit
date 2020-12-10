@@ -12,17 +12,17 @@ class KuberKit::ServiceDeployer::Strategies::KubernetesRunner < KuberKit::Servic
     shell.write(config_path, service_config)
 
     kubeconfig_path  = KuberKit.current_configuration.kubeconfig_path
-    deploy_namespace = KuberKit.current_configuration.deploy_namespace
+    deployer_namespace = KuberKit.current_configuration.deployer_namespace
 
-    deployment_resource_name  = service.attribute(:deployment_resource_name, default: service.uri)
-    deployment_resource_type  = service.attribute(:deployment_resource_type, default: "job")
+    deployer_resource_name  = service.attribute(:deployer_resource_name, default: service.uri)
+    deployer_resource_type  = service.attribute(:deployer_resource_type, default: "job")
 
-    deployment_delete_enabled = service.attribute(:deployment_delete_enabled, default: true)
-    if deployment_delete_enabled
-      delete_resource_if_exists(shell, deployment_resource_type, deployment_resource_name, kubeconfig_path: kubeconfig_path, namespace: deploy_namespace)
+    deployer_delete_enabled = service.attribute(:deployer_delete_enabled, default: true)
+    if deployer_delete_enabled
+      delete_resource_if_exists(shell, deployer_resource_type, deployer_resource_name, kubeconfig_path: kubeconfig_path, namespace: deployer_namespace)
     end
 
-    kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path, namespace: deploy_namespace)
+    kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path, namespace: deployer_namespace)
   end
 
   private

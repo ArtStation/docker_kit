@@ -15,10 +15,10 @@ class ServiceHelper
     definition_factory.create(name)
   end
 
-  def service(name, template: :service_template, attributes: {}, deploy_strategy: nil)
+  def service(name, template: :service_template, attributes: {}, deployer_strategy: nil)
     setup_service_template(template)
 
-    service_definition = definition(name).template(template).attributes(attributes).deploy_strategy(deploy_strategy)
+    service_definition = definition(name).template(template).attributes(attributes).deployer_strategy(deployer_strategy)
     factory.create(service_definition)
   end
 

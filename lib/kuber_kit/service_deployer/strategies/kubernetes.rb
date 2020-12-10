@@ -12,14 +12,14 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
     shell.write(config_path, service_config)
 
     kubeconfig_path  = KuberKit.current_configuration.kubeconfig_path
-    deploy_namespace = KuberKit.current_configuration.deploy_namespace
+    deployer_namespace = KuberKit.current_configuration.deployer_namespace
 
-    kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path, namespace: deploy_namespace)
+    kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path, namespace: deployer_namespace)
 
-    deployment_restart_enabled = service.attribute(:deployment_restart_enabled, default: true)
-    deployment_restart_name    = service.attribute(:deployment_restart_name, default: service.uri)
-    if deployment_restart_enabled
-      kubectl_commands.rolling_restart(shell, deployment_restart_name, kubeconfig_path: kubeconfig_path, namespace: deploy_namespace)
+    deployer_restart_enabled = service.attribute(:deployer_restart_enabled, default: true)
+    deployer_restart_name    = service.attribute(:deployer_restart_name, default: service.uri)
+    if deployer_restart_enabled
+      kubectl_commands.rolling_restart(shell, deployer_restart_name, kubeconfig_path: kubeconfig_path, namespace: deployer_namespace)
     end
   end
 end

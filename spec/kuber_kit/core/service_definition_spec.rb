@@ -83,17 +83,17 @@ RSpec.describe KuberKit::Core::ServiceDefinition do
     end
   end
 
-  context "deploy_strategy" do
+  context "deployer_strategy" do
     it "sets deploy strategy with symbol" do
-      definition = subject.deploy_strategy(:kubernetes_runner)
+      definition = subject.deployer_strategy(:kubernetes_runner)
   
-      expect(definition.to_service_attrs.deploy_strategy).to eq(:kubernetes_runner)
+      expect(definition.to_service_attrs.deployer_strategy).to eq(:kubernetes_runner)
     end
 
     it "sets deploy strategy with proc" do
-      definition = subject.deploy_strategy{ :kubernetes_runner }
+      definition = subject.deployer_strategy{ :kubernetes_runner }
   
-      expect(definition.to_service_attrs.deploy_strategy).to eq(:kubernetes_runner)
+      expect(definition.to_service_attrs.deployer_strategy).to eq(:kubernetes_runner)
     end
   end
 end

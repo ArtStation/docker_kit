@@ -13,7 +13,7 @@ class KuberKit::Core::ServiceDefinition
       tags:             Array(get_value(@tags)).map(&:to_sym),
       images:           Array(get_value(@images)).map(&:to_sym),
       attributes:       get_value(@attributes),
-      deploy_strategy:  get_value(@deploy_strategy),
+      deployer_strategy:  get_value(@deployer_strategy),
     )
   end
 
@@ -41,8 +41,8 @@ class KuberKit::Core::ServiceDefinition
     self
   end
 
-  def deploy_strategy(value = nil, &block)
-    @deploy_strategy = block_given? ? block : value
+  def deployer_strategy(value = nil, &block)
+    @deployer_strategy = block_given? ? block : value
 
     self
   end

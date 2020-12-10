@@ -16,7 +16,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
     expect(subject.kubectl_commands).to receive(:apply_file)
     expect(subject.kubectl_commands).to_not receive(:rolling_restart)
 
-    service = service_helper.service(:auth_app, attributes: {deployment_restart_enabled: false})
+    service = service_helper.service(:auth_app, attributes: {deployer_restart_enabled: false})
     subject.deploy(shell, service)
   end
 
@@ -25,7 +25,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
     expect(subject.kubectl_commands).to receive(:apply_file)
     expect(subject.kubectl_commands).to receive(:rolling_restart).with(shell, "custom-deployment", kubeconfig_path: nil, namespace: nil)
 
-    service = service_helper.service(:auth_app, attributes: {deployment_restart_name: "custom-deployment"})
+    service = service_helper.service(:auth_app, attributes: {deployer_restart_name: "custom-deployment"})
     subject.deploy(shell, service)
   end
 end
