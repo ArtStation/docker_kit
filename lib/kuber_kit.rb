@@ -211,6 +211,10 @@ module KuberKit
       !!@debug_mode
     end
 
+    def deprecation_warnings_disabled?
+      Container["configs"].deprecation_warnings_disabled
+    end
+
     def current_configuration
       if @configuration_name.nil?
         raise "Please set configuration name before calling current_configuration"

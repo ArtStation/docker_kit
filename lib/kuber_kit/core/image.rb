@@ -33,7 +33,9 @@ class KuberKit::Core::Image
   end
 
   def build_args
-    puts "WARNING: build_args is deprecated, please use build_vars instead"
+    unless KuberKit.deprecation_warnings_disabled?
+      puts "WARNING: build_args is deprecated, please use build_vars instead"
+    end
     build_vars
   end
 end
