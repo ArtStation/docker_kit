@@ -13,7 +13,12 @@ class KuberKit::ServiceDeployer::Strategies::DockerCompose < KuberKit::ServiceDe
 
     deployment_service_name = service.attribute(:deployment_service_name, default: service.name.to_s)
     deployment_command_name = service.attribute(:deployment_command_name, default: "bash")
+    deployment_interactive  = service.attribute(:deployment_interactive, default: false)
 
-    docker_compose_commands.run(shell, config_path, service: deployment_service_name, command: deployment_command_name)
+    docker_compose_commands.run(shell, config_path, 
+      service:      deployment_service_name, 
+      command:      deployment_command_name,
+      interactive:  deployment_interactive
+    )
   end
 end

@@ -4,6 +4,5 @@
 - allow deploying only services enabled for specific configuration
 - find a way to always deploy some service, e.g. for migrations and env_files
 - add ability to set container health checks
-- implement interactive shell.exec!
 - template should be able to set default attributes
 - template should be able to depend on image?

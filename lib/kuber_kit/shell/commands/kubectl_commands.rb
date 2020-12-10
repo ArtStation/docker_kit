@@ -16,9 +16,8 @@ class KuberKit::Shell::Commands::KubectlCommands
 
     command_parts += Array(command_list)
 
-    # TODO: investigate how to do it with shell.
     if interactive
-      system(command_parts.join(" "))
+      shell.interactive!(command_parts.join(" "))
     else
       shell.exec!(command_parts.join(" "))
     end

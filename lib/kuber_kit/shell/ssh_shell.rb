@@ -38,6 +38,10 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
     raise ShellError.new(e.message)
   end
 
+  def interactive!(command, log_command: true)
+    raise "Currently interactive run is not supported for ssh shell."
+  end
+
   def sync(local_path, remote_path, exclude: nil, delete: true)
     rsync_commands.rsync(
       local_shell, local_path, remote_path, 

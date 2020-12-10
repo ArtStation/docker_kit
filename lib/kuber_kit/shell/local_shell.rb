@@ -30,6 +30,16 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     result
   end
 
+  def interactive!(command, log_command: true)
+    command_number = command_counter.get_number.to_s.rjust(2, "0")
+    
+    if log_command
+      logger.info("Interactive: [#{command_number}]: #{command.to_s.cyan}")
+    end
+
+    system(command)
+  end
+
   def sync(local_path, remote_path, exclude: nil, delete: true)
     rsync_commands.rsync(self, local_path, remote_path, exclude: exclude, delete: delete)
   end

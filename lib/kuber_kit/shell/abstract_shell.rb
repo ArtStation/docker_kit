@@ -6,6 +6,10 @@ class KuberKit::Shell::AbstractShell
     raise KuberKit::NotImplementedError, "must be implemented"
   end
 
+  def interactive!(command)
+    raise KuberKit::NotImplementedError, "must be implemented"
+  end
+
   def read(file_path)
     raise KuberKit::NotImplementedError, "must be implemented"
   end
