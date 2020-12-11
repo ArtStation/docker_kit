@@ -53,15 +53,15 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
     end
   end
 
-  context "#patch_deployment" do
+  context "#patch_resource" do
     it do
       expect(shell).to receive(:exec!).with(%Q{kubectl patch deployment my_deployment -p "\{\\"spec\\":\\"some_update\\"\}"})
-      subject.patch_deployment(shell, "my_deployment", {spec: "some_update"})
+      subject.patch_resource(shell, "deployment", "my_deployment", {spec: "some_update"})
     end
 
     it do
-      expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=/path/to/kube.cfg kubectl patch deployment my_deployment -p "\{\\"spec\\":\\"some_update\\"\}"})
-      subject.patch_deployment(shell, "my_deployment", {spec: "some_update"}, kubeconfig_path: "/path/to/kube.cfg")
+      expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=/path/to/kube.cfg kubectl patch job my_job -p "\{\\"spec\\":\\"some_update\\"\}"})
+      subject.patch_resource(shell, "job", "my_job", {spec: "some_update"}, kubeconfig_path: "/path/to/kube.cfg")
     end
   end
 
@@ -88,7 +88,7 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
 
   context "#rolling_restart" do
     it do
-      expect(subject).to receive(:patch_deployment).with(shell, "my_deployment", { spec: {
+      expect(subject).to receive(:patch_resource).with(shell, "deployment", "my_deployment", { spec: {
         template: {
           metadata: {
             labels: {
@@ -97,7 +97,7 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
           }
         }
       }}, kubeconfig_path: "/path/to/kube.cfg", namespace: "test")
-      subject.rolling_restart(shell, "my_deployment", kubeconfig_path: "/path/to/kube.cfg", namespace: "test")
+      subject.rolling_restart(shell, "deployment", "my_deployment", kubeconfig_path: "/path/to/kube.cfg", namespace: "test")
     end
   end
 end
