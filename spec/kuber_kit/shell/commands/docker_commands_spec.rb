@@ -28,6 +28,13 @@ RSpec.describe KuberKit::Shell::Commands::DockerCommands do
     end
   end
 
+  context "#container_exists?" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"status=running\" --filter=\"name=my-container\"}).and_return("1234")
+      expect(subject.container_exists?(shell, "my-container")).to eq(true)
+    end
+  end
+
   context "#get_container_id" do
     it do
       expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"status=running\" --filter=\"name=example_container\"})

@@ -5,6 +5,13 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
     "configs",
   ]
 
+  STRATEGY_OPTIONS = [
+    :resource_type,
+    :resource_name,
+    :delete_if_exists,
+    :restart_if_exists
+  ]
+
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service => Any
   def deploy(shell, service)
     service_config = reader.read(shell, service)
@@ -13,22 +20,28 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
 
     kubeconfig_path = KuberKit.current_configuration.kubeconfig_path
     namespace       = KuberKit.current_configuration.deployer_namespace
+
+    strategy_options = service.attribute(:deployer, default: {})
+    unknown_options  = strategy_options.keys.map(&:to_sym) - STRATEGY_OPTIONS
+    if unknown_options.any?
+      raise KuberKit::Error, "Unknow options for deployment strategy: #{unknown_options}. Available options: #{STRATEGY_OPTIONS}"
+    end
     
-    resource_type = service.attribute(:deployer_resource_type, default: "deployment")
-    resource_name = service.attribute(:deployer_resource_name, default: service.uri)
+    resource_type = strategy_options.fetch(:resource_type, "deployment")
+    resource_name = strategy_options.fetch(:resource_name, service.uri)
     
     resource_exists = kubectl_commands.resource_exists?(
       shell, resource_type, resource_name, kubeconfig_path: kubeconfig_path, namespace: namespace
     )
 
-    delete_enabled = service.attribute(:deployer_delete_if_exists, default: false)
+    delete_enabled = strategy_options.fetch(:delete_if_exists, false)
     if delete_enabled && resource_exists
       kubectl_commands.delete_resource(shell, resource_type, resource_name, kubeconfig_path: kubeconfig_path, namespace: namespace)
     end
 
     kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path, namespace: namespace)
 
-    restart_enabled = service.attribute(:deployer_restart_if_exists, default: true)
+    restart_enabled = strategy_options.fetch(:restart_if_exists, true)
     if restart_enabled && resource_exists
       kubectl_commands.rolling_restart(
         shell, resource_type, resource_name, 

@@ -14,6 +14,11 @@ class KuberKit::Shell::Commands::DockerCommands
     shell.exec!(%Q{docker push #{tag_name}})
   end
 
+  def container_exists?(shell, container_name)
+    result = get_container_id(shell, container_name)
+    result && result != ""
+  end
+
   def get_container_id(shell, container_name, only_healthy: false, status: "running")
     command_parts = []
     command_parts << "docker ps -a -q"
