@@ -233,6 +233,10 @@ class KuberKit::Container
     KuberKit::ServiceDeployer::Strategies::Kubernetes.new
   end
 
+  register "service_deployer.strategies.docker" do
+    KuberKit::ServiceDeployer::Strategies::Docker.new
+  end
+
   register "service_deployer.strategies.docker_compose" do
     KuberKit::ServiceDeployer::Strategies::DockerCompose.new
   end

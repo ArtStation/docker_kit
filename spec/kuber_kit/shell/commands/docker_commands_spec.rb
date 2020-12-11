@@ -28,6 +28,13 @@ RSpec.describe KuberKit::Shell::Commands::DockerCommands do
     end
   end
 
+  context "#delete_container" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{docker rm -f example_container})
+      subject.delete_container(shell, "example_container")
+    end
+  end
+
   context "#container_exists?" do
     it do
       expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"status=running\" --filter=\"name=my-container\"}).and_return("1234")

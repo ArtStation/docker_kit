@@ -4,6 +4,7 @@ class KuberKit::ServiceDeployer::Deployer
   include KuberKit::Import[
     "core.service_store",
     "service_deployer.strategies.kubernetes",
+    "service_deployer.strategies.docker",
     "service_deployer.strategies.docker_compose"
   ]
 
@@ -38,6 +39,7 @@ class KuberKit::ServiceDeployer::Deployer
   private
     def add_default_strategies
       register_strategy(:kubernetes, kubernetes)
+      register_strategy(:docker, docker)
       register_strategy(:docker_compose, docker_compose)
     end
 end

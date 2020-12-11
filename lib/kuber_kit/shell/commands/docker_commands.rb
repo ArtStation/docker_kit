@@ -14,9 +14,23 @@ class KuberKit::Shell::Commands::DockerCommands
     shell.exec!(%Q{docker push #{tag_name}})
   end
 
+  def run(shell, image_name, run_args: nil, run_command: nil)
+    command_parts = []
+    command_parts << "docker run"
+    command_parts << run_args if run_args
+    command_parts << image_name
+    command_parts << run_command if run_command
+
+    shell.exec!(command_parts.join(" "))
+  end
+
   def container_exists?(shell, container_name)
     result = get_container_id(shell, container_name)
     result && result != ""
+  end
+
+  def delete_container(shell, container_name)
+    shell.exec!(%Q{docker rm -f #{container_name}})
   end
 
   def get_container_id(shell, container_name, only_healthy: false, status: "running")

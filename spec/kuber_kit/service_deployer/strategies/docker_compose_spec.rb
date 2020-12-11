@@ -24,6 +24,6 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::DockerCompose do
 
   it "raises error if unknown strategy option is provided" do
     service = service_helper.service(:auth_app, attributes: {deployer: {unknown: "sh"}})
-    expect{ subject.deploy(shell, service) }.to raise_error(KuberKit::Error, /Unknow options for deployment strategy/)
+    expect{ subject.deploy(shell, service) }.to raise_error(KuberKit::Error, /Unknow options for deploy strategy/)
   end
 end
