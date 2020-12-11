@@ -27,4 +27,16 @@ RSpec.describe KuberKit::Shell::Commands::DockerCommands do
       subject.push(shell, "example_tag")
     end
   end
+
+  context "#get_container_id" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"status=running\" --filter=\"name=example_container\"})
+      subject.get_container_id(shell, "example_container")
+    end
+
+    it do
+      expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"health=healthy\" --filter=\"status=running\" --filter=\"name=example_container\"})
+      subject.get_container_id(shell, "example_container", only_healthy: true)
+    end
+  end
 end

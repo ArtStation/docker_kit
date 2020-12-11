@@ -37,7 +37,11 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
       logger.info("Interactive: [#{command_number}]: #{command.to_s.cyan}")
     end
 
-    system(command)
+    result = system(command)
+
+    if !$?.success?
+      raise ShellError, "Shell command failed: #{command}\r\n#{result}"
+    end
   end
 
   def sync(local_path, remote_path, exclude: nil, delete: true)
