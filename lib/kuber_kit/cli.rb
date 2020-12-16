@@ -100,6 +100,11 @@ class KuberKit::CLI < Thor
     end
   end
 
+  desc "version", "Print current version"
+  def version
+    puts KuberKit::VERSION
+  end
+
   def self.exit_on_failure?
     true
   end
