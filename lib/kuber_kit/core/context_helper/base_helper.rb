@@ -33,6 +33,13 @@ class KuberKit::Core::ContextHelper::BaseHelper
     KuberKit.global_build_vars
   end
 
+  def global_build_args
+    unless KuberKit.deprecation_warnings_disabled?
+      puts "DEPRECATION: global_build_args is deprecated, please use global_build_vars instead"
+    end
+    global_build_vars
+  end
+
   def get_binding
     binding
   end
