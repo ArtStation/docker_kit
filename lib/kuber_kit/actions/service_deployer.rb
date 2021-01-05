@@ -10,10 +10,11 @@ class KuberKit::Actions::ServiceDeployer
   ]
 
   Contract KeywordArgs[
-    services:   Maybe[ArrayOf[String]],
-    tags:       Maybe[ArrayOf[String]],
+    services:     Maybe[ArrayOf[String]],
+    tags:         Maybe[ArrayOf[String]],
+    skip_compile: Maybe[Bool],
   ] => Any
-  def call(services:, tags:)
+  def call(services:, tags:, skip_compile: false)
     if services.empty? && tags.empty?
       services, tags = show_tags_selection
     end
@@ -33,7 +34,7 @@ class KuberKit::Actions::ServiceDeployer
 
     images_names = services.map(&:images).flatten.uniq
 
-    compile_images(images_names)
+    compile_images(images_names) unless skip_compile
     deploy_services(service_names)
 
     true

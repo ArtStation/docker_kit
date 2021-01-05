@@ -22,10 +22,15 @@ class ServiceHelper
     factory.create(service_definition)
   end
 
-  def register_service(name, template_name = :service_template)
+  def register_service(name, template_name: :service_template, images: [])
     setup_service_template(template_name)
     
     service_definition = store.define(name).template(template_name)
+
+    if images.any?
+      service_definition.images(images)
+    end
+
     factory.create(service_definition)
   end
 

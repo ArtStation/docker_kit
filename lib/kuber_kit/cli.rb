@@ -31,15 +31,17 @@ class KuberKit::CLI < Thor
   end
 
   desc "deploy CONTEXT_NAME", "Deploy CONTEXT_NAME with kubectl"
-  method_option :services,   :type => :array, aliases: ["-s"]
-  method_option :tags,       :type => :array, aliases: ["-t"]
+  method_option :services,      :type => :array,    aliases: ["-s"]
+  method_option :tags,          :type => :array,    aliases: ["-t"]
+  method_option :skip_compile,  :type => :boolean,  aliases: ["-B"]
   def deploy
     KuberKit.set_debug_mode(options[:debug])
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       result = KuberKit::Container['actions.service_deployer'].call(
-        services: options[:services] || [], 
-        tags:     options[:tags] || []
+        services:     options[:services] || [], 
+        tags:         options[:tags] || [],
+        skip_compile: options[:skip_compile] || false
       )
     end
 
