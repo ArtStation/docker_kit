@@ -36,6 +36,11 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
       docker_commands.delete_container(shell, container_name)
     end
 
-    docker_commands.run(shell, image.remote_registry_url, run_args: docker_run_args, run_command: docker_run_command)
+    docker_commands.run(
+      shell, image.remote_registry_url, 
+      run_args:     docker_run_args, 
+      run_command:  docker_run_command,
+      detached:     !!strategy_options[:detached]
+    )
   end
 end
