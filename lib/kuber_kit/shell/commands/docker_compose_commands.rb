@@ -2,8 +2,8 @@ class KuberKit::Shell::Commands::DockerComposeCommands
   def run(shell, path, service:, command:, interactive: false, detached: false)
     command_parts = [
       "docker-compose",
-      "run",
       "-f #{path}",
+      "run",
     ]
     
     if detached

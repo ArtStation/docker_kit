@@ -7,7 +7,8 @@ class KuberKit::ServiceDeployer::Strategies::DockerCompose < KuberKit::ServiceDe
 
   STRATEGY_OPTIONS = [
     :service_name, 
-    :command_name
+    :command_name,
+    :detached
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service => Any

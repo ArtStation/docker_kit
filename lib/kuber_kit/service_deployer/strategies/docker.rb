@@ -8,6 +8,7 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
   STRATEGY_OPTIONS = [
     :container_name,
     :image_name,
+    :detached,
     :docker_run_args,
     :docker_run_command,
     :delete_if_exists
