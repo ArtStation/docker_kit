@@ -94,7 +94,7 @@ class KuberKit::CLI < Thor
   end
 
   desc "attach POD_NAME", "Attach to POD_NAME with kubectl"
-  def attach(pod_name)
+  def attach(pod_name = nil)
     KuberKit.set_debug_mode(options[:debug])
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
@@ -103,7 +103,7 @@ class KuberKit::CLI < Thor
   end
 
   desc "launch console in POD_NAME", "Attach to POD_NAME with kubectl & launch bin/console"
-  def console(pod_name)
+  def console(pod_name = nil)
     KuberKit.set_debug_mode(options[:debug])
 
     if KuberKit::Container['actions.configuration_loader'].call(options)

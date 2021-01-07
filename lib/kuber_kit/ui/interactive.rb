@@ -29,7 +29,13 @@ class KuberKit::UI::Interactive
   def prompt(text, options, &callback)
     CLI::UI::Prompt.ask(text) do |handler|
       options.each do |option|
-        handler.option(option, &callback)
+        if callback
+          handler.option(option, &callback)
+        else
+          handler.option(option) do |selection|
+            selection
+          end
+        end
       end
     end
   end

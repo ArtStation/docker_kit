@@ -71,7 +71,8 @@ class KuberKit::UI::Simple
   def prompt(text, options, &callback)
     print_info("Select", text)
     result = $stdin.gets.chomp
-    callback.call(result)
+    callback.call(result) if callback
+    result
   end
 
   private
