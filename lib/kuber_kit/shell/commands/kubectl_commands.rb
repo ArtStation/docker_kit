@@ -40,15 +40,26 @@ class KuberKit::Shell::Commands::KubectlCommands
     kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, interactive: interactive, namespace: namespace)
   end
 
-  def resource_exists?(shell, resource_type, resource_name, kubeconfig_path: nil, namespace: nil)
-    result = find_resources(shell, resource_type, resource_name, kubeconfig_path: kubeconfig_path, namespace: namespace)
-    result && result != ""
+  def get_resources(shell, resource_type, field_selector: nil, jsonpath: ".items[*].metadata.name", kubeconfig_path: nil, namespace: nil)
+    command_parts = []
+    command_parts << "get #{resource_type}"
+
+    if field_selector
+      command_parts << "--field-selector=#{field_selector}"
+    end
+
+    if jsonpath 
+      command_parts << "-o jsonpath='{#{jsonpath}}'"
+    end
+
+    kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, namespace: namespace)
   end
 
-  def find_resources(shell, resource_type, resource_name, jsonpath: ".items[*].metadata.name", kubeconfig_path: nil, namespace: nil)
-    command = %Q{get #{resource_type} --field-selector=metadata.name=#{resource_name} -o jsonpath='{#{jsonpath}}'}
-
-    kubectl_run(shell, command, kubeconfig_path: kubeconfig_path, namespace: namespace)
+  def resource_exists?(shell, resource_type, resource_name, kubeconfig_path: nil, namespace: nil)
+    result = get_resources(shell, resource_type, 
+      field_selector: "metadata.name=#{resource_name}", kubeconfig_path: kubeconfig_path, namespace: namespace
+    )
+    result && result != ""
   end
 
   def delete_resource(shell, resource_type, resource_name, kubeconfig_path: nil, namespace: nil)

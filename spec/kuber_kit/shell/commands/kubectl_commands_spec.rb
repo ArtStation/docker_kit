@@ -72,16 +72,16 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
     end
   end
 
-  context "#find_resources" do
+  context "#get_resources" do
     it do
-      expect(shell).to receive(:exec!).with(%Q{kubectl get job --field-selector=metadata.name=my-job -o jsonpath='{.items[*].metadata.name}'})
-      subject.find_resources(shell, "job", "my-job")
+      expect(shell).to receive(:exec!).with("kubectl get job --field-selector=metadata.name=my-job -o jsonpath='{.items[*].metadata.name}'")
+      subject.get_resources(shell, "job", field_selector: "metadata.name=my-job")
     end
   end
 
   context "#resource_exists?" do
     it do
-      expect(shell).to receive(:exec!).with(%Q{kubectl get job --field-selector=metadata.name=my-job -o jsonpath='{.items[*].metadata.name}'}).and_return("my-job")
+      expect(shell).to receive(:exec!).with("kubectl get job --field-selector=metadata.name=my-job -o jsonpath='{.items[*].metadata.name}'").and_return("my-job")
       expect(subject.resource_exists?(shell, "job", "my-job")).to eq(true)
     end
   end
