@@ -40,6 +40,18 @@ class KuberKit::Shell::Commands::KubectlCommands
     kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, interactive: interactive, namespace: namespace)
   end
 
+  def logs(shell, pod_name, args: nil, kubeconfig_path: nil, namespace: nil)
+    command_parts = []
+    command_parts << "logs"
+
+    if args
+      command_parts << args
+    end
+
+    command_parts << pod_name
+    kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, interactive: true, namespace: namespace)
+  end
+
   def get_resources(shell, resource_type, field_selector: nil, jsonpath: ".items[*].metadata.name", kubeconfig_path: nil, namespace: nil)
     command_parts = []
     command_parts << "get #{resource_type}"

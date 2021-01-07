@@ -167,6 +167,7 @@ module KuberKit
     autoload :KubectlApplier, 'actions/kubectl_applier'
     autoload :KubectlAttacher, 'actions/kubectl_attacher'
     autoload :KubectlConsole, 'actions/kubectl_console'
+    autoload :KubectlLogs, 'actions/kubectl_logs'
   end
 
   module Extensions

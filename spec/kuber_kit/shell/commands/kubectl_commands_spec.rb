@@ -53,6 +53,18 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
     end
   end
 
+  context "#logs" do
+    it do
+      expect(shell).to receive(:interactive!).with(%Q{kubectl logs my-pod})
+      subject.logs(shell, "my-pod")
+    end
+
+    it do
+      expect(shell).to receive(:interactive!).with(%Q{kubectl logs -it my-pod})
+      subject.logs(shell, "my-pod", args: "-it")
+    end
+  end
+
   context "#patch_resource" do
     it do
       expect(shell).to receive(:exec!).with(%Q{kubectl patch deployment my_deployment -p "\{\\"spec\\":\\"some_update\\"\}"})
