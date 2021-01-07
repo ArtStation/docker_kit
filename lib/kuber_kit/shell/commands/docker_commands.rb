@@ -14,9 +14,10 @@ class KuberKit::Shell::Commands::DockerCommands
     shell.exec!(%Q{docker push #{tag_name}})
   end
 
-  def run(shell, image_name, run_args: nil, run_command: nil)
+  def run(shell, image_name, run_args: nil, run_command: nil, detached: false)
     command_parts = []
     command_parts << "docker run"
+    command_parts << "-d" if detached
     command_parts << run_args if run_args
     command_parts << image_name
     command_parts << run_command if run_command

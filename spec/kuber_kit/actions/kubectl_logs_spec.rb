@@ -3,7 +3,7 @@ RSpec.describe KuberKit::Actions::KubectlLogs do
 
   it "shows logs using kubectl" do
     expect(subject.kubectl_commands).to receive(:logs).with(subject.local_shell, 
-      "auth-app", kubeconfig_path: nil, namespace: nil
+      "auth-app", args: nil, kubeconfig_path: nil, namespace: nil
     )
     subject.call("auth-app", {})
   end
@@ -16,7 +16,7 @@ RSpec.describe KuberKit::Actions::KubectlLogs do
       "Please select deployment to attach", ["deploy/test-app"]
     ).and_return("deploy/test-app")
     expect(subject.kubectl_commands).to receive(:logs).with(subject.local_shell, 
-      "deploy/test-app", kubeconfig_path: nil, namespace: nil
+      "deploy/test-app", args: nil, kubeconfig_path: nil, namespace: nil
     )
     subject.call(nil, {})
   end

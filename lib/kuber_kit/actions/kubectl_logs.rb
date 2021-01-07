@@ -16,7 +16,7 @@ class KuberKit::Actions::KubectlLogs
       pod_name  = ui.prompt("Please select deployment to attach", deploy_options)
     end
 
-    args = ""
+    args = nil
     if options[:follow]
       args = "-f"
     end

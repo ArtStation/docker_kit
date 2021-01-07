@@ -21,6 +21,18 @@ RSpec.describe KuberKit::Shell::Commands::DockerCommands do
     end
   end
 
+  context "#run" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{docker run example_image})
+      subject.run(shell, "example_image")
+    end
+
+    it do
+      expect(shell).to receive(:exec!).with(%Q{docker run -d example_image})
+      subject.run(shell, "example_image", detached: true)
+    end
+  end
+
   context "#push" do
     it do
       expect(shell).to receive(:exec!).with(%Q{docker push example_tag})
