@@ -102,6 +102,15 @@ class KuberKit::CLI < Thor
     end
   end
 
+  desc "launch console in POD_NAME", "Attach to POD_NAME with kubectl & launch bin/console"
+  def console(pod_name)
+    KuberKit.set_debug_mode(options[:debug])
+
+    if KuberKit::Container['actions.configuration_loader'].call(options)
+      KuberKit::Container['actions.kubectl_console'].call(pod_name, options)
+    end
+  end
+
   desc "version", "Print current version"
   def version
     puts KuberKit::VERSION

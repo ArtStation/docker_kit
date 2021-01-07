@@ -33,6 +33,10 @@ class KuberKit::Container
     KuberKit::Actions::KubectlAttacher.new
   end
 
+  register "actions.kubectl_console" do
+    KuberKit::Actions::KubectlConsole.new
+  end
+
   register "configs" do
     KuberKit::Configs.new
   end
