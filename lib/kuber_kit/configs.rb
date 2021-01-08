@@ -5,7 +5,7 @@ class KuberKit::Configs
     :image_dockerfile_name, :image_build_context_dir, :image_tag, :docker_ignore_list, :image_compile_dir, 
     :kuber_kit_dirname, :kuber_kit_min_version, :images_dirname, :services_dirname, :infra_dirname, :configurations_dirname,
     :artifact_clone_dir, :service_config_dir, :deployer_strategy, :compile_simultaneous_limit,
-    :additional_images_paths, :deprecation_warnings_disabled
+    :additional_images_paths, :deprecation_warnings_disabled, :log_file_path
   ]
   DOCKER_IGNORE_LIST = [
     'Dockerfile',
@@ -51,6 +51,7 @@ class KuberKit::Configs
     set :compile_simultaneous_limit, 5
     set :additional_images_paths, []
     set :deprecation_warnings_disabled, false
+    set :log_file_path,           "/tmp/kuber_kit.log"
   end
 
   def items

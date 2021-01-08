@@ -9,8 +9,12 @@ class KuberKit::Tools::LoggerFactory
     Logger::FATAL  => String::Colors::PURPLE,
   }
 
-  def create(stdout, level = nil)
-    logger = Logger.new(stdout)
+  include KuberKit::Import[
+    "configs",
+  ]
+
+  def create(stdout = nil, level = nil)
+    logger = Logger.new(stdout || configs.log_file_path)
 
     logger.level = level || Logger::DEBUG
 

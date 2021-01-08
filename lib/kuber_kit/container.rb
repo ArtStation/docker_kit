@@ -114,7 +114,7 @@ class KuberKit::Container
   end
 
   register "tools.logger" do
-    KuberKit::Container["tools.logger_factory"].create("/tmp/kuber_kit.log")
+    KuberKit::Container["tools.logger_factory"].create()
   end
 
   register "shell.bash_commands" do
