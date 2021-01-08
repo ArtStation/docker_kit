@@ -1,6 +1,6 @@
 # KuberKit
 
-[![Codeship Status for ArtStation/kuber_kit](https://app.codeship.com/projects/1286f0a6-3f90-4c1b-b426-721ed8a6571b/status?branch=master)](https://app.codeship.com/projects/417264)
+[![Rspec](https://github.com/ArtStation/kuber_kit/workflows/Rspec/badge.svg)](https://github.com/ArtStation/kuber_kit/actions?query=workflow%3ARspec)
 
 Solution for building & deploying applications on Kubernetes, written in Ruby.
 
