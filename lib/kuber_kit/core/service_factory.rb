@@ -1,12 +1,6 @@
 class KuberKit::Core::ServiceFactory
-  AttributeNotSetError = Class.new(KuberKit::Error)
-
   def create(definition)
     service_attrs = definition.to_service_attrs
-
-    if service_attrs.template_name.nil?
-      raise AttributeNotSetError, "Please set template for service using #template method"
-    end
 
     configuration_attributes = KuberKit.current_configuration.service_attributes(service_attrs.name)
     attributes = (service_attrs.attributes || {}).merge(configuration_attributes)

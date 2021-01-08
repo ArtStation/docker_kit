@@ -4,11 +4,11 @@ class KuberKit::Core::Service
   attr_reader :name, :template_name, :tags, :images, :attributes, :deployer_strategy
 
   Contract KeywordArgs[
-    name:             Symbol,
-    template_name:    Symbol,
-    tags:             ArrayOf[Symbol],
-    images:           ArrayOf[Symbol],
-    attributes:       HashOf[Symbol => Any],
+    name:               Symbol,
+    template_name:      Maybe[Symbol],
+    tags:               ArrayOf[Symbol],
+    images:             ArrayOf[Symbol],
+    attributes:         HashOf[Symbol => Any],
     deployer_strategy:  Maybe[Symbol]
   ] => Any
   def initialize(name:, template_name:, tags:, images:, attributes:, deployer_strategy:)
