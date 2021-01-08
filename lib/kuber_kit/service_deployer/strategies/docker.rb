@@ -9,8 +9,8 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     :container_name,
     :image_name,
     :detached,
-    :docker_run_args,
-    :docker_run_command,
+    :command_name,
+    :command_args,
     :delete_if_exists
   ]
 
@@ -22,9 +22,9 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
       raise KuberKit::Error, "Unknow options for deploy strategy: #{unknown_options}. Available options: #{STRATEGY_OPTIONS}"
     end
     
-    container_name    = strategy_options.fetch(:container_name, service.uri)
-    docker_run_args   = strategy_options.fetch(:docker_run_args, nil)
-    docker_run_command = strategy_options.fetch(:docker_run_command, nil)
+    container_name = strategy_options.fetch(:container_name, service.uri)
+    command_name   = strategy_options.fetch(:command_name, "bash")
+    command_args   = strategy_options.fetch(:command_args, nil)
 
     image_name = strategy_options.fetch(:image_name, nil)
     if image_name.nil?
@@ -39,9 +39,9 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
 
     docker_commands.run(
       shell, image.remote_registry_url, 
-      run_args:     docker_run_args, 
-      run_command:  docker_run_command,
-      detached:     !!strategy_options[:detached]
+      command:    command_name,
+      args:       command_args, 
+      detached:   !!strategy_options[:detached]
     )
   end
 end

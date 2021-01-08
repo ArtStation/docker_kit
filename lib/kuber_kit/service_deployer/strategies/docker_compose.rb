@@ -8,6 +8,7 @@ class KuberKit::ServiceDeployer::Strategies::DockerCompose < KuberKit::ServiceDe
   STRATEGY_OPTIONS = [
     :service_name, 
     :command_name,
+    :command_args,
     :detached
   ]
 
@@ -25,10 +26,12 @@ class KuberKit::ServiceDeployer::Strategies::DockerCompose < KuberKit::ServiceDe
 
     service_name = strategy_options.fetch(:service_name, service.name.to_s)
     command_name = strategy_options.fetch(:command_name, "bash")
+    command_args = strategy_options.fetch(:command_args, nil)
 
     docker_compose_commands.run(shell, config_path, 
       service:  service_name, 
       command:  command_name,
+      args:     command_args, 
       detached: !!strategy_options[:detached]
     )
   end
