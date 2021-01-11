@@ -76,7 +76,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
 
   def recursive_list_files(path, name: nil)
     command = %Q{find -L #{path}  -type f}
-    command += " -name #{name}" if name
+    command += " -name '#{name}'" if name
     exec!(command).split(/[\r\n]+/)
   rescue => e
     if e.message.include?("No such file or directory")
