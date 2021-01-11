@@ -37,6 +37,11 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
       docker_commands.delete_container(shell, container_name)
     end
 
+    command_args = Array(command_args)
+    if container_name
+      command_args << "-n #{container_name}"
+    end
+
     docker_commands.run(
       shell, image.remote_registry_url, 
       command:    command_name,

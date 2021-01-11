@@ -8,7 +8,7 @@ class KuberKit::Shell::Commands::DockerComposeCommands
     
 
     command_parts << "-d" if detached
-    command_parts << args if args
+    command_parts << Array(args).join(" ") if args
     command_parts << service
     command_parts << command if command
     

@@ -18,7 +18,7 @@ class KuberKit::Shell::Commands::DockerCommands
     command_parts = []
     command_parts << "docker run"
     command_parts << "-d" if detached
-    command_parts << args if args
+    command_parts << Array(args).join(" ") if args
     command_parts << image_name
     command_parts << command if command
 
