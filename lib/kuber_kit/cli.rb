@@ -1,6 +1,8 @@
 require 'thor'
 
 class KuberKit::CLI < Thor
+  APP_CONFIG_FILENAME = "config.rb".freeze
+
   class_option :path, :type => :string
   class_option :images_path, :type => :string
   class_option :infra_path, :type => :string
@@ -10,7 +12,7 @@ class KuberKit::CLI < Thor
 
   desc "compile IMAGE_NAMES", "Compile image with IMAGE_NAMES (comma-separated)"
   def compile(image_names_str)
-    KuberKit.set_debug_mode(options[:debug])
+    setup(options)
     
     image_names = image_names_str.split(",").map(&:strip).map(&:to_sym)
 
@@ -35,7 +37,7 @@ class KuberKit::CLI < Thor
   method_option :tags,          :type => :array,    aliases: ["-t"]
   method_option :skip_compile,  :type => :boolean,  aliases: ["-B"]
   def deploy
-    KuberKit.set_debug_mode(options[:debug])
+    setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       result = KuberKit::Container['actions.service_deployer'].call(
@@ -59,7 +61,7 @@ class KuberKit::CLI < Thor
 
   desc "env ENV_FILE_NAME", "Return content of Env File ENV_FILE_NAME"
   def env(env_file_name)
-    KuberKit.set_debug_mode(options[:debug])
+    setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       KuberKit::Container['actions.env_file_reader'].call(env_file_name.to_sym, options)
@@ -68,7 +70,7 @@ class KuberKit::CLI < Thor
 
   desc "template TEMPLATE_NAME", "Return content of Template TEMPLATE_NAME"
   def template(template_name)
-    KuberKit.set_debug_mode(options[:debug])
+    setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       KuberKit::Container['actions.template_reader'].call(template_name.to_sym, options)
@@ -77,7 +79,7 @@ class KuberKit::CLI < Thor
 
   desc "service SERVICE_NAME", "Return content of Service SERVICE_NAME"
   def service(service_name)
-    KuberKit.set_debug_mode(options[:debug])
+    setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       KuberKit::Container['actions.service_reader'].call(service_name.to_sym, options)
@@ -86,7 +88,7 @@ class KuberKit::CLI < Thor
 
   desc "apply FILE_PATH", "Apply FILE_PATH with kubectl"
   def apply(file_path)
-    KuberKit.set_debug_mode(options[:debug])
+    setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       KuberKit::Container['actions.kubectl_applier'].call(File.expand_path(file_path), options)
@@ -95,26 +97,26 @@ class KuberKit::CLI < Thor
 
   desc "attach POD_NAME", "Attach to POD_NAME using kubectl"
   def attach(pod_name = nil)
-    KuberKit.set_debug_mode(options[:debug])
+    setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       KuberKit::Container['actions.kubectl_attacher'].call(pod_name, options)
     end
   end
 
-  desc "launch console in POD_NAME", "Attach to POD_NAME using kubectl & launch bin/console"
+  desc "console POD_NAME", "Attach to POD_NAME using kubectl & launch bin/console"
   def console(pod_name = nil)
-    KuberKit.set_debug_mode(options[:debug])
+    setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       KuberKit::Container['actions.kubectl_console'].call(pod_name, options)
     end
   end
 
-  desc "show logs for POD_NAME", "Show logs for POD_NAME using kubectl"
+  desc "logs POD_NAME", "Show logs for POD_NAME using kubectl"
   method_option :follow,  :type => :boolean,  aliases: ["-f"]
   def logs(pod_name = nil)
-    KuberKit.set_debug_mode(options[:debug])
+    setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       KuberKit::Container['actions.kubectl_logs'].call(pod_name, options)
@@ -129,4 +131,16 @@ class KuberKit::CLI < Thor
   def self.exit_on_failure?
     true
   end
+
+  private
+    def setup(options)
+      KuberKit.set_debug_mode(options[:debug])
+
+      # We should load config before loading any bean, to make sure that bean won't be built with default config
+      root_path     = options[:path] || File.join(Dir.pwd, KuberKit::Container['configs'].kuber_kit_dirname)
+      config_file_path = File.join(root_path, APP_CONFIG_FILENAME)
+      if File.exists?(config_file_path)
+        require config_file_path
+      end
+    end
 end
