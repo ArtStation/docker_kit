@@ -28,6 +28,8 @@ class KuberKit::Actions::ConfigurationLoader
     logger.info "  Configurations path: #{configurations_path.to_s.yellow}"
     logger.info "  Configuration name: #{configuration_name.to_s.yellow}"
 
+    ui.print_info("Logs", "See logs at: #{configs.log_file_path}")
+
     unless File.exists?(root_path)
       ui.print_warning "WARNING", "KuberKit root path #{root_path} doesn't exist. You may want to pass it --path parameter."
     end
