@@ -49,7 +49,7 @@ RSpec.describe KuberKit::Shell::Commands::DockerCommands do
 
   context "#container_exists?" do
     it do
-      expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"status=running\" --filter=\"name=my-container\"}).and_return("1234")
+      expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"name=my-container\"}).and_return("1234")
       expect(subject.container_exists?(shell, "my-container")).to eq(true)
     end
   end
@@ -57,11 +57,11 @@ RSpec.describe KuberKit::Shell::Commands::DockerCommands do
   context "#get_container_id" do
     it do
       expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"status=running\" --filter=\"name=example_container\"})
-      subject.get_container_id(shell, "example_container")
+      subject.get_container_id(shell, "example_container", status: "running")
     end
 
     it do
-      expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"health=healthy\" --filter=\"status=running\" --filter=\"name=example_container\"})
+      expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"health=healthy\" --filter=\"name=example_container\"})
       subject.get_container_id(shell, "example_container", only_healthy: true)
     end
   end

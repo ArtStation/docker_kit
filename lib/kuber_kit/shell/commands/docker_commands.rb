@@ -29,8 +29,8 @@ class KuberKit::Shell::Commands::DockerCommands
     end
   end
 
-  def container_exists?(shell, container_name)
-    result = get_container_id(shell, container_name)
+  def container_exists?(shell, container_name, status: nil)
+    result = get_container_id(shell, container_name, status: status)
     result && result != ""
   end
 
@@ -38,15 +38,16 @@ class KuberKit::Shell::Commands::DockerCommands
     shell.exec!(%Q{docker rm -f #{container_name}})
   end
 
-  def get_container_id(shell, container_name, only_healthy: false, status: "running")
+  def get_container_id(shell, container_name, only_healthy: false, status: nil)
     command_parts = []
     command_parts << "docker ps -a -q"
 
     if only_healthy
       command_parts << "--filter=\"health=healthy\""
     end
-
-    command_parts << "--filter=\"status=#{status}\""
+    if status
+      command_parts << "--filter=\"status=#{status}\""
+    end
     command_parts << "--filter=\"name=#{container_name}\""
 
     shell.exec!(command_parts.join(" "))
