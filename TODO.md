@@ -6,3 +6,4 @@
 - find a way to always deploy some service, e.g. for migrations and env_files
 - template should be able to set default attributes
 - template should be able to depend on image?
+- cleanup image builds older than some date

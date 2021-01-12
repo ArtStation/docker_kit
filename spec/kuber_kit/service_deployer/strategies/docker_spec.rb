@@ -11,7 +11,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
 
   it "runs docker container" do
     expect(subject.docker_commands).to receive(:run).with(
-      shell, "default/auth_app:latest", detached: false, args: ["-n auth-app"], command: "bash"
+      shell, "default/auth_app:latest", detached: false, args: ["--name auth-app"], command: "bash"
     )
     subject.deploy(shell, service)
   end
@@ -19,7 +19,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
   it "deletes previous container if it's enabled for service" do
     expect(subject.docker_commands).to receive(:delete_container).with(shell, "auth-job")
     expect(subject.docker_commands).to receive(:run).with(
-      shell, "default/auth_app:latest", detached: false, args: ["-it", "-n auth-job"], command: "bash"
+      shell, "default/auth_app:latest", detached: false, args: ["-it", "--name auth-job"], command: "bash"
     )
 
     service = service_helper.service(:auth_job, attributes: {

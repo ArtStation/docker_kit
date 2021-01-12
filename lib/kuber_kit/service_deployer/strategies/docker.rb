@@ -39,7 +39,7 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
 
     command_args = Array(command_args)
     if container_name
-      command_args << "-n #{container_name}"
+      command_args << "--name #{container_name}"
     end
 
     docker_commands.run(
