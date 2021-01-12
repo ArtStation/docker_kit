@@ -1,6 +1,10 @@
 require 'cli/ui'
 
 class KuberKit::UI::Interactive
+  include KuberKit::Import[
+    "tools.logger",
+  ]
+
   class TaskGroup < CLI::UI::SpinGroup
   end
 
@@ -24,6 +28,11 @@ class KuberKit::UI::Interactive
 
   def print_warning(title, text)
     print_in_frame(title, text, color: :yellow)
+    logger.debug(text)
+  end
+
+  def print_debug(title, text)
+    logger.debug(text)
   end
 
   def prompt(text, options, &callback)

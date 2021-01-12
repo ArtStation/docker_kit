@@ -9,5 +9,5 @@ KuberKit.add_artifact(
 KuberKit.add_artifact(
   KuberKit::Core::Artifacts::Git
     .new(:kuber_kit_repo)
-    .setup(remote_url: "git@github.com:ArtStation/kuber_kit.git")
+    .setup(remote_url: "git@github.com:ArtStation/kuber_kit.git", branch: "main")
 )

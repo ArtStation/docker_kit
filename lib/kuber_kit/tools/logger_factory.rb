@@ -26,7 +26,7 @@ class KuberKit::Tools::LoggerFactory
       severity_text  = severity.to_s
       severity_text  = severity_text.colorize(severity_color) if severity_color
 
-      if level == Logger::INFO
+      if level == Logger::DEBUG
         "#{datetime.strftime("%Y/%m/%d %H:%M:%S").grey} #{msg}\n"
       else
         "#{datetime.strftime("%Y/%m/%d %H:%M:%S").grey} #{severity_text.downcase}: #{msg}\n"

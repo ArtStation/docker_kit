@@ -5,7 +5,6 @@ class KuberKit::Actions::ConfigurationLoader
     "core.service_store",
     "core.configuration_store",
     "artifacts_sync.artifacts_updater",
-    "tools.logger",
     "shell.local_shell",
     "ui",
     "configs"
@@ -20,18 +19,18 @@ class KuberKit::Actions::ConfigurationLoader
     configurations_path  = options[:configurations_path]  || File.join(root_path, configs.configurations_dirname)
     configuration_name   = ENV["KUBER_KIT_CONFIGURATION"] || options[:configuration]
 
-    logger.info "Launching kuber_kit with:"
-    logger.info "  Root path: #{root_path.to_s.yellow}"
-    logger.info "  Images path: #{images_path.to_s.yellow}"
-    logger.info "  Services path: #{services_path.to_s.yellow}"
-    logger.info "  Infrastructure path: #{infra_path.to_s.yellow}"
-    logger.info "  Configurations path: #{configurations_path.to_s.yellow}"
-    logger.info "  Configuration name: #{configuration_name.to_s.yellow}"
+    ui.print_debug "ConfigurationLoader", "Launching kuber_kit with:"
+    ui.print_debug "ConfigurationLoader", "  Root path: #{root_path.to_s.yellow}"
+    ui.print_debug "ConfigurationLoader", "  Images path: #{images_path.to_s.yellow}"
+    ui.print_debug "ConfigurationLoader", "  Services path: #{services_path.to_s.yellow}"
+    ui.print_debug "ConfigurationLoader", "  Infrastructure path: #{infra_path.to_s.yellow}"
+    ui.print_debug "ConfigurationLoader", "  Configurations path: #{configurations_path.to_s.yellow}"
+    ui.print_debug "ConfigurationLoader", "  Configuration name: #{configuration_name.to_s.yellow}"
 
     ui.print_info("Logs", "See logs at: #{configs.log_file_path}")
 
     unless File.exists?(root_path)
-      ui.print_warning "WARNING", "KuberKit root path #{root_path} doesn't exist. You may want to pass it --path parameter."
+      ui.print_warning "ConfigurationLoader", "KuberKit root path #{root_path} doesn't exist. You may want to pass it --path parameter."
     end
 
     if Gem::Version.new(KuberKit::VERSION) < Gem::Version.new(configs.kuber_kit_min_version)
@@ -97,6 +96,6 @@ class KuberKit::Actions::ConfigurationLoader
       require(path)
     end
   rescue KuberKit::Shell::AbstractShell::DirNotFoundError
-    logger.warn("Directory with infrastructure not found: #{infra_path}")
+    ui.print_warning("ConfigurationLoader", "Directory with infrastructure not found: #{infra_path}")
   end
 end

@@ -3,7 +3,7 @@ class KuberKit::Core::ConfigurationStore
     "core.configuration_factory",
     "core.configuration_definition_factory",
     "shell.local_shell",
-    "tools.logger"
+    "ui"
   ]
 
   def define(configuration_name)
@@ -33,7 +33,7 @@ class KuberKit::Core::ConfigurationStore
       load_definition(path)
     end
   rescue KuberKit::Shell::AbstractShell::DirNotFoundError
-    logger.warn("Directory with configurations not found: #{dir_path}")
+    ui.print_warning("ConfigurationStore", "Directory with configurations not found: #{dir_path}")
     []
   end
 

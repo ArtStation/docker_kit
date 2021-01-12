@@ -4,7 +4,6 @@ class KuberKit::Actions::ServiceDeployer
     "service_deployer.service_list_resolver",
     "core.service_store",
     "shell.local_shell",
-    "tools.logger",
     "ui",
     service_deployer: "service_deployer.action_handler",
   ]
@@ -25,7 +24,7 @@ class KuberKit::Actions::ServiceDeployer
     )
 
     unless service_names.any?
-      ui.print_warning "WARNING", "No service found with given options, nothing will be deployed."
+      ui.print_warning "ServiceDeployer", "No service found with given options, nothing will be deployed."
     end
 
     services = service_names.map do |service_name|
@@ -49,12 +48,12 @@ class KuberKit::Actions::ServiceDeployer
 
     service_names.each do |service_name|
 
-      logger.info("Started deploying: #{service_name.to_s.green}")
+      ui.print_debug("ServiceDeployer", "Started deploying: #{service_name.to_s.green}")
       task_group.add("Deploying #{service_name.to_s.yellow}") do |task|
         service_deployer.call(local_shell, service_name.to_sym)
 
         task.update_title("Deployed #{service_name.to_s.green}")
-        logger.info("Finished deploying: #{service_name.to_s.green}")
+        ui.print_debug("ServiceDeployer", "Finished deploying: #{service_name.to_s.green}")
       end
     end
 

@@ -2,7 +2,7 @@ require 'tempfile'
 
 class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
   include KuberKit::Import[
-    "tools.logger",
+    "ui",
     "shell.command_counter",
     "shell.rsync_commands",
     "shell.local_shell"
@@ -24,13 +24,13 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
     command_number = command_counter.get_number.to_s.rjust(2, "0")
     
     if log_command
-      logger.info("#{ssh_session.host.green} > Execute: [#{command_number}]: #{command.to_s.cyan}")
+      ui.print_debug("SshShell", "#{ssh_session.host.green} > Execute: [#{command_number}]: #{command.to_s.cyan}")
     end
 
     result = ssh_session.exec!(command)
 
     if result && result != "" && log_command
-      logger.info("#{ssh_session.host.green} > Finished [#{command_number}] with result: \n#{result.grey}")
+      ui.print_debug("SshShell", "#{ssh_session.host.green} > Finished [#{command_number}] with result: \n#{result.grey}")
     end
 
     result
@@ -62,7 +62,7 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
       sync(file.path, file_path)
     end
 
-    logger.info("Created file #{file_path.to_s.cyan}\r\n#{content.grey}")
+    ui.print_debug("Created file #{file_path.to_s.cyan}\r\n#{content.grey}")
 
     true
   end

@@ -2,16 +2,16 @@ require 'fileutils'
 
 class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
   include KuberKit::Import[
-    "tools.logger",
     "shell.command_counter",
     "shell.rsync_commands",
+    "ui",
   ]
 
   def exec!(command, log_command: true)
     command_number = command_counter.get_number.to_s.rjust(2, "0")
     
     if log_command
-      logger.info("Execute: [#{command_number}]: #{command.to_s.cyan}")
+      ui.print_debug("LocalShell", "Execute: [#{command_number}]: #{command.to_s.cyan}")
     end
 
     result = nil
@@ -20,7 +20,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     end
 
     if result && result != "" && log_command
-      logger.info("Finished [#{command_number}] with result: \n#{result.grey}")
+      ui.print_debug("LocalShell", "Finished [#{command_number}] with result: \n#{result.grey}")
     end
 
     if $?.exitstatus != 0
@@ -34,7 +34,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     command_number = command_counter.get_number.to_s.rjust(2, "0")
     
     if log_command
-      logger.info("Interactive: [#{command_number}]: #{command.to_s.cyan}")
+      ui.print_debug("LocalShell", "Interactive: [#{command_number}]: #{command.to_s.cyan}")
     end
 
     result = system(command)
@@ -57,7 +57,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
 
     File.write(file_path, content)
 
-    logger.info("Created file #{file_path.to_s.cyan}\r\n#{content.grey}")
+    ui.print_debug("LocalShell", "Created file #{file_path.to_s.cyan}\r\n#{content.grey}")
 
     true
   end

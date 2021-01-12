@@ -3,7 +3,6 @@ class KuberKit::Actions::ImageCompiler
     "image_compiler.image_dependency_resolver",
     "image_compiler.build_server_pool_factory",
     "shell.local_shell",
-    "tools.logger",
     "ui",
     image_compiler: "image_compiler.action_handler",
   ]
@@ -32,14 +31,14 @@ class KuberKit::Actions::ImageCompiler
       task_group = ui.create_task_group
       image_names.map do |image_name|
 
-        logger.info("Started compiling: #{image_name.to_s.green}")
+        ui.print_debug("ImageCompiler", "Started compiling: #{image_name.to_s.green}")
         task_group.add("Compiling #{image_name.to_s.yellow}") do |task|
           shell = build_server_pool.get_shell
           
           image_compiler.call(shell, image_name, build_id)
 
-          task.update_title("Compiled #{image_name.to_s.green}")
-          logger.info("Finished compiling: #{image_name.to_s.green}")
+          task.update_title("Finished compiling #{image_name}")
+          ui.print_debug("ImageCompiler", "Finished compiling: #{image_name}")
         end
         
       end

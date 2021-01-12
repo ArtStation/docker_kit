@@ -1,4 +1,8 @@
 class KuberKit::UI::Simple
+  include KuberKit::Import[
+    "tools.logger",
+  ]
+
   class Task
     def initialize(title, &callback)
       @title = title
@@ -11,9 +15,9 @@ class KuberKit::UI::Simple
       end
 
       @thread = Thread.new do
-        puts "Start task: #{@title.green}"
+        puts "- #{@title.green}"
         @callback.call(self)
-        puts "Finish task: #{@title.green}"
+        puts "- #{@title.grey}"
       end
     end
 
@@ -66,6 +70,11 @@ class KuberKit::UI::Simple
 
   def print_warning(title, text)
     print_text(title, text, color: String::Colors::YELLOW)
+    logger.debug(text)
+  end
+
+  def print_debug(title, text)
+    logger.debug(text)
   end
 
   def prompt(text, options, &callback)

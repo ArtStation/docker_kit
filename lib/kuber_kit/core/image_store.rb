@@ -3,7 +3,7 @@ class KuberKit::Core::ImageStore
     "core.image_factory",
     "core.image_definition_factory",
     "shell.local_shell",
-    "tools.logger"
+    "ui"
   ]
 
   def define(image_name, image_dir = nil)
@@ -33,7 +33,7 @@ class KuberKit::Core::ImageStore
       load_definition(path)
     end
   rescue KuberKit::Shell::AbstractShell::DirNotFoundError
-    logger.warn("Directory with images not found: #{dir_path}")
+    ui.print_warning("ImageStore", "Directory with images not found: #{dir_path}")
     []
   end
 

@@ -4,7 +4,8 @@ class KuberKit::ArtifactsSync::ArtifactsUpdater
   include KuberKit::Import[
     "artifacts_sync.git_artifact_resolver",
     "artifacts_sync.null_artifact_resolver",
-    "tools.logger"
+
+    "ui"
   ]
 
   def use_resolver(artifact_resolver, artifact_class:)
@@ -23,7 +24,7 @@ class KuberKit::ArtifactsSync::ArtifactsUpdater
     artifacts.each do |artifact|
       resolver = @@resolvers[artifact.class]
 
-      logger.info "Updating artifact #{artifact.name.to_s.green}"
+      ui.print_debug "ArtifactUpdater", "Updating artifact #{artifact.name.to_s.green}"
       
       raise ResolverNotFoundError, "Can't find resolver for artifact #{artifact}" if resolver.nil?
 

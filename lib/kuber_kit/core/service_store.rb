@@ -3,7 +3,7 @@ class KuberKit::Core::ServiceStore
     "core.service_factory",
     "core.service_definition_factory",
     "shell.local_shell",
-    "tools.logger"
+    "ui",
   ]
 
   def define(service_name)
@@ -33,7 +33,7 @@ class KuberKit::Core::ServiceStore
       load_definition(path)
     end
   rescue KuberKit::Shell::AbstractShell::DirNotFoundError
-    logger.warn("Directory with services not found: #{dir_path}")
+    ui.print_warning("ServiceStore", "Directory with services not found: #{dir_path}")
     []
   end
 
