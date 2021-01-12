@@ -21,15 +21,10 @@ class KuberKit::CLI < Thor
       result = KuberKit::Container['actions.image_compiler'].call(image_names, options)
     end
 
-    logger = KuberKit::Container['tools.logger']
     if result
-      logger.info("---------------------------")
-      logger.info("Image compilation finished!")
-      logger.info("---------------------------")
+      KuberKit::Container['ui'].print_result(true, "Image compilation finished!")
     else
-      logger.info("-------------------------".red)
-      logger.info("Image compilation failed!".red)
-      logger.info("-------------------------".red)
+      KuberKit::Container['ui'].print_result(false, "Image compilation failed!")
     end
   end
 
@@ -46,6 +41,12 @@ class KuberKit::CLI < Thor
         tags:         options[:tags] || [],
         skip_compile: options[:skip_compile] || false
       )
+    end
+
+    if result
+      KuberKit::Container['ui'].print_result(true, "Service deployment finished!")
+    else
+      KuberKit::Container['ui'].print_result(false, "Service deployment failed!")
     end
 
     logger = KuberKit::Container['tools.logger']

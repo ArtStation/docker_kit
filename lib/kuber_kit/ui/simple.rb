@@ -89,6 +89,18 @@ class KuberKit::UI::Simple
     logger.debug(text)
   end
 
+  def print_result(is_success, message, data = {})
+    if is_success
+      print_debug("Result", "---------------------------")
+      print_debug("Result", message)
+      print_debug("Result", "---------------------------")
+    else
+      print_debug("Result", "-------------------------".red)
+      print_debug("Result", message.red)
+      print_debug("Result", "-------------------------".red)
+    end
+  end
+
   def prompt(text, options, &callback)
     print_info("Select", text)
     result = $stdin.gets.chomp
