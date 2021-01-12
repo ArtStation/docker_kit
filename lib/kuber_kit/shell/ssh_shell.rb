@@ -62,7 +62,7 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
       sync(file.path, file_path)
     end
 
-    ui.print_debug("Created file #{file_path.to_s.cyan}\r\n#{content.grey}")
+    ui.print_debug("SshShell", "Created file #{file_path.to_s.cyan}\r\n  ----\r\n#{content.grey}\r\n  ----")
 
     true
   end

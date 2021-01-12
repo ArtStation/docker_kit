@@ -9,15 +9,23 @@ class KuberKit::UI::Simple
       @callback = callback
     end
 
+    def print_started
+      puts "- #{@title}"
+    end
+
+    def print_finished
+      puts "- #{@title.grey}"
+    end
+
     def execute
       if @thread
         raise "Already started execution of task '#{title}'"
       end
 
       @thread = Thread.new do
-        puts "- #{@title.green}"
+        print_started
         @callback.call(self)
-        puts "- #{@title.grey}"
+        print_finished
       end
     end
 
@@ -34,8 +42,12 @@ class KuberKit::UI::Simple
   end
 
   class TaskGroup
+    def initialize(task_class)
+      @task_class = task_class
+    end
+
     def add(task_title, &task_block)
-      task = Task.new(task_title, &task_block)
+      task = @task_class.new(task_title, &task_block)
       task.execute
       add_task(task)
     end
@@ -51,7 +63,7 @@ class KuberKit::UI::Simple
   end
 
   def create_task_group
-    TaskGroup.new
+    TaskGroup.new(KuberKit::UI::Simple::Task)
   end
 
   def create_task(title, &block)
@@ -84,7 +96,7 @@ class KuberKit::UI::Simple
     result
   end
 
-  private
+  protected
     def print_text(title, text, color:)
       puts "#{title.colorize(color)}\r\n #{text.colorize(color)}"
     end

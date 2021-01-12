@@ -20,7 +20,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     end
 
     if result && result != "" && log_command
-      ui.print_debug("LocalShell", "Finished [#{command_number}] with result: \n#{result.grey}")
+      ui.print_debug("LocalShell", "Finished [#{command_number}] with result: \n  ----\n#{result.grey}\n  ----")
     end
 
     if $?.exitstatus != 0
@@ -57,7 +57,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
 
     File.write(file_path, content)
 
-    ui.print_debug("LocalShell", "Created file #{file_path.to_s.cyan}\r\n#{content.grey}")
+    ui.print_debug("LocalShell", "Created file #{file_path.to_s.cyan}\r\n  ----\r\n#{content.grey}\r\n  ----")
 
     true
   end

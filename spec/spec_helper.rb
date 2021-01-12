@@ -16,7 +16,7 @@ KuberKit::Container.enable_stubs!
 KuberKit::Container.stub("tools.file_presence_checker", TestFilePresenceChecker.new)
 KuberKit::Container.stub("core.image_definition_factory", TestImageDefinitionFactory.new)
 
-KuberKit.set_debug_mode(true)
+KuberKit.set_ui_mode(:simple)
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

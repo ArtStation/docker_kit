@@ -177,6 +177,7 @@ module KuberKit
   module UI
     autoload :Interactive, 'ui/interactive'
     autoload :Simple, 'ui/simple'
+    autoload :Debug, 'ui/debug'
   end
 
   autoload :CLI, 'cli'
@@ -205,12 +206,12 @@ module KuberKit
       @current_configuration = nil
     end
 
-    def set_debug_mode(value)
-      @debug_mode = value
+    def set_ui_mode(value)
+      @ui_mode = value
     end
     
-    def debug_mode?
-      !!@debug_mode
+    def ui_mode
+      @ui_mode
     end
 
     def deprecation_warnings_disabled?

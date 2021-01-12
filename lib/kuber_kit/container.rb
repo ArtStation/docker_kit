@@ -258,7 +258,9 @@ class KuberKit::Container
   end
 
   register "ui" do
-    if KuberKit.debug_mode?
+    if KuberKit.ui_mode == :debug
+      KuberKit::UI::Debug.new
+    elsif KuberKit.ui_mode == :simple
       KuberKit::UI::Simple.new
     else
       KuberKit::UI::Interactive.new

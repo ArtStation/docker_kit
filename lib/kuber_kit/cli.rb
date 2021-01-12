@@ -7,6 +7,7 @@ class KuberKit::CLI < Thor
   class_option :images_path, :type => :string
   class_option :infra_path, :type => :string
   class_option :configurations_path, :type => :string
+  class_option :ui, :type => :string, :desc => "UI mode (interactive|debug|simple)"
   class_option :debug, :type => :boolean, aliases: ["-d"]
   class_option :configuration, :type => :string, aliases: ["-C"]
 
@@ -134,7 +135,11 @@ class KuberKit::CLI < Thor
 
   private
     def setup(options)
-      KuberKit.set_debug_mode(options[:debug])
+      if options[:debug]
+        KuberKit.set_ui_mode(:debug)
+      elsif options[:ui]
+        KuberKit.set_ui_mode(options[:ui].to_sym)
+      end
 
       # We should load config before loading any bean, to make sure that bean won't be built with default config
       root_path     = options[:path] || File.join(Dir.pwd, KuberKit::Container['configs'].kuber_kit_dirname)

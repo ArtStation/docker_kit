@@ -37,7 +37,7 @@ class KuberKit::Actions::ImageCompiler
           
           image_compiler.call(shell, image_name, build_id)
 
-          task.update_title("Finished compiling #{image_name}")
+          task.update_title("Compiled #{image_name.to_s.green}")
           ui.print_debug("ImageCompiler", "Finished compiling: #{image_name}")
         end
         
