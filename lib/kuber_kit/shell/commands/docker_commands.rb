@@ -30,15 +30,11 @@ class KuberKit::Shell::Commands::DockerCommands
   end
 
   def container_exists?(shell, container_name, status: nil)
-    result = get_container_id(shell, container_name, status: status)
+    result = get_containers(shell, container_name, status: status)
     result && result != ""
   end
 
-  def delete_container(shell, container_name)
-    shell.exec!(%Q{docker rm -f #{container_name}})
-  end
-
-  def get_container_id(shell, container_name, only_healthy: false, status: nil)
+  def get_containers(shell, container_name, only_healthy: false, status: nil)
     command_parts = []
     command_parts << "docker ps -a -q"
 
@@ -49,6 +45,50 @@ class KuberKit::Shell::Commands::DockerCommands
       command_parts << "--filter=\"status=#{status}\""
     end
     command_parts << "--filter=\"name=#{container_name}\""
+
+    shell.exec!(command_parts.join(" "))
+  end
+
+  def delete_container(shell, container_name)
+    shell.exec!("docker rm -f #{container_name}")
+  end
+
+  def create_network(name)
+    unless network_exists?(shell, name)
+      shell.exec!("docker network create #{name}")
+    end
+  end
+
+  def network_exists?(shell, network_name)
+    result = get_networks(shell, container_name)
+    result && result != ""
+  end
+
+  def get_networks(shell, network_name)
+    command_parts = []
+    command_parts << "docker network ls"
+    command_parts << "--filter=\"name=#{container_name}\""
+    command_parts << "--format \"{{.Name}}\""
+
+    shell.exec!(command_parts.join(" "))
+  end
+
+  def create_volume(name)
+    unless volume_exists?(shell, name)
+      shell.exec!("docker volume create #{name}")
+    end
+  end
+
+  def volume_exists?(shell, volume_name)
+    result = get_volumes(shell, container_name)
+    result && result != ""
+  end
+
+  def get_volumes(shell, volume_name)
+    command_parts = []
+    command_parts << "docker volume ls"
+    command_parts << "--filter=\"name=#{container_name}\""
+    command_parts << "--format \"{{.Name}}\""
 
     shell.exec!(command_parts.join(" "))
   end
