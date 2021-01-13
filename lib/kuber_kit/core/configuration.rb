@@ -1,35 +1,37 @@
 class KuberKit::Core::Configuration
   attr_reader :name, :artifacts, :registries, :env_files, :templates, :kubeconfig_path, 
-              :deployer_strategy, :deployer_namespace, :services_attributes, :build_servers,
-              :global_build_vars
+              :services_attributes, :build_servers, :global_build_vars,
+              :deployer_strategy, :deployer_namespace, :deployer_require_confirimation
 
   Contract KeywordArgs[
-    name:            Symbol,
-    artifacts:       Hash,
-    registries:      Hash,
-    env_files:       Hash,
-    templates:       Hash,
-    kubeconfig_path: Maybe[String],
-    deployer_strategy:  Symbol,
-    deployer_namespace: Maybe[Symbol],
-    services_attributes: HashOf[Symbol => Hash],
-    build_servers:   ArrayOf[KuberKit::Core::BuildServers::AbstractBuildServer],
-    global_build_vars:   HashOf[Symbol => Any],
+    name:                 Symbol,
+    artifacts:            Hash,
+    registries:           Hash,
+    env_files:            Hash,
+    templates:            Hash,
+    kubeconfig_path:      Maybe[String],
+    services_attributes:  HashOf[Symbol => Hash],
+    build_servers:        ArrayOf[KuberKit::Core::BuildServers::AbstractBuildServer],
+    global_build_vars:    HashOf[Symbol => Any],
+    deployer_strategy:              Symbol,
+    deployer_namespace:             Maybe[Symbol],
+    deployer_require_confirimation: Bool,
   ] => Any
   def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, 
-                 deployer_strategy:, deployer_namespace:, services_attributes:, build_servers:, 
-                 global_build_vars:)
-    @name             = name
-    @artifacts        = artifacts
-    @registries       = registries
-    @env_files        = env_files
-    @templates        = templates
-    @kubeconfig_path  = kubeconfig_path
-    @deployer_strategy  = deployer_strategy
-    @deployer_namespace = deployer_namespace
-    @build_servers    = build_servers
+                 services_attributes:, build_servers:, global_build_vars:,
+                 deployer_strategy:, deployer_namespace:, deployer_require_confirimation:)
+    @name                 = name
+    @artifacts            = artifacts
+    @registries           = registries
+    @env_files            = env_files
+    @templates            = templates
+    @kubeconfig_path      = kubeconfig_path
+    @build_servers        = build_servers
     @services_attributes  = services_attributes
     @global_build_vars    = global_build_vars
+    @deployer_strategy              = deployer_strategy
+    @deployer_namespace             = deployer_namespace
+    @deployer_require_confirimation = deployer_require_confirimation
   end
 
   def service_attributes(service_name)

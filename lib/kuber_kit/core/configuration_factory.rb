@@ -20,17 +20,18 @@ class KuberKit::Core::ConfigurationFactory
     build_servers = fetch_build_servers(configuration_attrs.build_servers)
 
     KuberKit::Core::Configuration.new(
-      name:               configuration_attrs.name,
-      artifacts:          artifacts,
-      registries:         registries,
-      env_files:          env_files,
-      templates:          templates,
-      kubeconfig_path:    configuration_attrs.kubeconfig_path,
-      deployer_strategy:  configuration_attrs.deployer_strategy || configs.deployer_strategy,
-      deployer_namespace: configuration_attrs.deployer_namespace,
-      build_servers:      build_servers,
+      name:                 configuration_attrs.name,
+      artifacts:            artifacts,
+      registries:           registries,
+      env_files:            env_files,
+      templates:            templates,
+      kubeconfig_path:      configuration_attrs.kubeconfig_path,
+      build_servers:        build_servers,
       services_attributes:  configuration_attrs.services_attributes,
       global_build_vars:    configuration_attrs.global_build_vars || {},
+      deployer_strategy:              configuration_attrs.deployer_strategy || configs.deployer_strategy,
+      deployer_namespace:             configuration_attrs.deployer_namespace,
+      deployer_require_confirimation: configuration_attrs.deployer_require_confirimation,
     )
   end
 

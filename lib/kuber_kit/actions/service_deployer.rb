@@ -9,11 +9,12 @@ class KuberKit::Actions::ServiceDeployer
   ]
 
   Contract KeywordArgs[
-    services:     Maybe[ArrayOf[String]],
-    tags:         Maybe[ArrayOf[String]],
-    skip_compile: Maybe[Bool],
+    services:             Maybe[ArrayOf[String]],
+    tags:                 Maybe[ArrayOf[String]],
+    skip_compile:         Maybe[Bool],
+    require_confirmation: Maybe[Bool],
   ] => Any
-  def call(services:, tags:, skip_compile: false)
+  def call(services:, tags:, skip_compile: false, require_confirmation: false)
     if services.empty? && tags.empty?
       services, tags = show_tags_selection
     end
@@ -25,6 +26,15 @@ class KuberKit::Actions::ServiceDeployer
 
     unless service_names.any?
       ui.print_warning "ServiceDeployer", "No service found with given options, nothing will be deployed."
+      return false
+    end
+
+    services_list = service_names.map(&:to_s).map(&:yellow).join(", ")
+    ui.print_info "ServiceDeployer", "The following services will be deployed: #{services_list}"
+
+    if require_confirmation
+      result = ui.prompt("Please confirm to continue deployment", ["confirm".green, "cancel".red])
+      return false unless result == "confirm".green
     end
 
     services = service_names.map do |service_name|

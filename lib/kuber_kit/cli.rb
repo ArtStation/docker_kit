@@ -29,17 +29,22 @@ class KuberKit::CLI < Thor
   end
 
   desc "deploy CONTEXT_NAME", "Deploy CONTEXT_NAME with kubectl"
-  method_option :services,      :type => :array,    aliases: ["-s"]
-  method_option :tags,          :type => :array,    aliases: ["-t"]
-  method_option :skip_compile,  :type => :boolean,  aliases: ["-B"]
+  method_option :services,              :type => :array,    aliases: ["-s"]
+  method_option :tags,                  :type => :array,    aliases: ["-t"]
+  method_option :skip_compile,          :type => :boolean,  aliases: ["-B"]
+  method_option :require_confirmation,  :type => :boolean,  aliases: ["-r"]
   def deploy
     setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
+      require_confirmation = options[:require_confirmation] || 
+                             KuberKit.current_configuration.deployer_require_confirimation ||
+                             false
       result = KuberKit::Container['actions.service_deployer'].call(
-        services:     options[:services] || [], 
-        tags:         options[:tags] || [],
-        skip_compile: options[:skip_compile] || false
+        services:             options[:services] || [], 
+        tags:                 options[:tags] || [],
+        skip_compile:         options[:skip_compile] || false,
+        require_confirmation: require_confirmation
       )
     end
 

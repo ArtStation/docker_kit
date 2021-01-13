@@ -17,18 +17,19 @@ class KuberKit::Core::ConfigurationDefinition
 
   def to_attrs
     OpenStruct.new(
-      name:             @configuration_name,
-      artifacts:        @artifacts,
-      registries:       @registries,
-      env_files:        @env_files,
-      templates:        @templates,
-      kubeconfig_path:  @kubeconfig_path,
-      deployer_strategy:  @deployer_strategy,
-      deployer_namespace: @deployer_namespace,
-      enabled_services: @enabled_services,
-      build_servers:    @build_servers,
+      name:                 @configuration_name,
+      artifacts:            @artifacts,
+      registries:           @registries,
+      env_files:            @env_files,
+      templates:            @templates,
+      kubeconfig_path:      @kubeconfig_path,
+      enabled_services:     @enabled_services,
+      build_servers:        @build_servers,
       services_attributes:  @services_attributes,
       global_build_vars:    @global_build_vars,
+      deployer_strategy:              @deployer_strategy,
+      deployer_namespace:             @deployer_namespace,
+      deployer_require_confirimation: @deployer_require_confirimation || false,
     )
   end
 
@@ -90,6 +91,12 @@ class KuberKit::Core::ConfigurationDefinition
 
   def deployer_strategy(path)
     @deployer_strategy = path
+
+    self
+  end
+
+  def deployer_require_confirimation
+    @deployer_require_confirimation = true
 
     self
   end

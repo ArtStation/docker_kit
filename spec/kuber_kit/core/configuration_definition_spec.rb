@@ -99,6 +99,14 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
     end
   end
 
+  context "deployer_require_confirimation" do
+    it "defines attributes for services" do
+      subject.deployer_require_confirimation()
+
+      expect(subject.to_attrs.deployer_require_confirimation).to eq(true)
+    end
+  end
+
   context "enabled_services" do
     it "appends service to enabled services" do
       subject.enabled_services(service_1: {}, service_2: {})
