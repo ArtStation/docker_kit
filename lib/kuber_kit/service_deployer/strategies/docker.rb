@@ -50,7 +50,8 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
       custom_args << "--network #{network}"
     end
     volumes.each do |volume|
-      docker_commands.create_volume(shell, volume)
+      volume_name, _ = volume.split(":")
+      docker_commands.create_volume(shell, volume_name) unless volume_name.start_with?("/")
       custom_args << "--volume #{volume}"
     end
 

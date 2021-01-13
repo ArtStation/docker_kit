@@ -16,13 +16,24 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
     subject.deploy(shell, service)
   end
 
-  it "creates volume and sets volume option" do
+  it "creates volume and sets volume option for named volume" do
     service = service_helper.service(:auth_app, attributes: {
-      deployer: {image_name: image.name, volumes: [:test_volume]}
+      deployer: {image_name: image.name, volumes: ["test_volume:/opt"]}
     })
-    expect(subject.docker_commands).to receive(:create_volume).with(shell, :test_volume)
+    expect(subject.docker_commands).to receive(:create_volume).with(shell, "test_volume")
     expect(subject.docker_commands).to receive(:run).with(
-      shell, "default/auth_app:latest", detached: false, args: ["--name auth-app", "--volume test_volume"], command: "bash"
+      shell, "default/auth_app:latest", detached: false, args: ["--name auth-app", "--volume test_volume:/opt"], command: "bash"
+    )
+    subject.deploy(shell, service)
+  end
+
+  it "sets volume option for local volume" do
+    service = service_helper.service(:auth_app, attributes: {
+      deployer: {image_name: image.name, volumes: ["/opt:/opt"]}
+    })
+    expect(subject.docker_commands).to_not receive(:create_volume)
+    expect(subject.docker_commands).to receive(:run).with(
+      shell, "default/auth_app:latest", detached: false, args: ["--name auth-app", "--volume /opt:/opt"], command: "bash"
     )
     subject.deploy(shell, service)
   end
