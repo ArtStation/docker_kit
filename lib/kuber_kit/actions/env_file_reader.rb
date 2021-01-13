@@ -15,6 +15,7 @@ class KuberKit::Actions::EnvFileReader
     true
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
+    
     false
   end
 end

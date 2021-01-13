@@ -64,6 +64,7 @@ class KuberKit::Actions::ConfigurationLoader
     true
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
+    
     false
   end
   

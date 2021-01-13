@@ -22,9 +22,9 @@ class KuberKit::CLI < Thor
     end
 
     if result
-      KuberKit::Container['ui'].print_result(true, "Image compilation finished!")
+      print_result("Image compilation finished!", result: result)
     else
-      KuberKit::Container['ui'].print_result(false, "Image compilation failed!")
+      exit 1
     end
   end
 
@@ -44,20 +44,9 @@ class KuberKit::CLI < Thor
     end
 
     if result
-      KuberKit::Container['ui'].print_result(true, "Service deployment finished!")
+      print_result("Service deployment finished!", result: result)
     else
-      KuberKit::Container['ui'].print_result(false, "Service deployment failed!")
-    end
-
-    logger = KuberKit::Container['tools.logger']
-    if result
-      logger.info("---------------------------")
-      logger.info("Service deployment finished!")
-      logger.info("---------------------------")
-    else
-      logger.info("-------------------------".red)
-      logger.info("Service deployment failed!".red)
-      logger.info("-------------------------".red)
+      exit 1
     end
   end
 
@@ -148,5 +137,9 @@ class KuberKit::CLI < Thor
       if File.exists?(config_file_path)
         require config_file_path
       end
+    end
+
+    def print_result(message, data = {})
+      KuberKit::Container['ui'].print_result(message, data)
     end
 end

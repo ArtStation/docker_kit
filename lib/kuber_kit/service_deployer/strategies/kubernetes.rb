@@ -39,7 +39,7 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
       kubectl_commands.delete_resource(shell, resource_type, resource_name, kubeconfig_path: kubeconfig_path, namespace: namespace)
     end
 
-    kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path, namespace: namespace)
+    apply_result = kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path, namespace: namespace)
 
     restart_enabled = strategy_options.fetch(:restart_if_exists, true)
     if restart_enabled && resource_exists
@@ -48,5 +48,7 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
         kubeconfig_path: kubeconfig_path, namespace: namespace
       )
     end
+    
+    apply_result
   end
 end

@@ -178,6 +178,7 @@ module KuberKit
     autoload :Interactive, 'ui/interactive'
     autoload :Simple, 'ui/simple'
     autoload :Debug, 'ui/debug'
+    autoload :Api, 'ui/api'
   end
 
   autoload :CLI, 'cli'

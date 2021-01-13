@@ -34,9 +34,9 @@ class KuberKit::Actions::ServiceDeployer
     images_names = services.map(&:images).flatten.uniq
 
     compile_images(images_names) unless skip_compile
-    deploy_services(service_names)
+    deployment_result = deploy_services(service_names)
 
-    true
+    { services: service_names, deployment: deployment_result }
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
 
@@ -46,11 +46,13 @@ class KuberKit::Actions::ServiceDeployer
   def deploy_services(service_names)
     task_group = ui.create_task_group
 
+    deployer_result = {}
+
     service_names.each do |service_name|
 
       ui.print_debug("ServiceDeployer", "Started deploying: #{service_name.to_s.green}")
       task_group.add("Deploying #{service_name.to_s.yellow}") do |task|
-        service_deployer.call(local_shell, service_name.to_sym)
+        deployer_result[service_name] = service_deployer.call(local_shell, service_name.to_sym)
 
         task.update_title("Deployed #{service_name.to_s.green}")
         ui.print_debug("ServiceDeployer", "Finished deploying: #{service_name.to_s.green}")
@@ -58,6 +60,8 @@ class KuberKit::Actions::ServiceDeployer
     end
 
     task_group.wait
+
+    deployer_result
   end
 
   def compile_images(images_names)

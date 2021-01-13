@@ -10,7 +10,13 @@ class KuberKit::ImageCompiler::ImageBuilder
   def build(shell, image, build_dir, context_helper: nil)
     image.before_build_callback.call(context_helper, build_dir) if image.before_build_callback
 
-    docker_commands.build(shell, build_dir, ["-t=#{image.registry_url}"])
+    build_options = ["-t=#{image.registry_url}"]
+    # use quite option for api mode ui, so it will only return built image id
+    if KuberKit.ui_mode == :api
+      build_options << "-q"
+    end
+
+    build_result = docker_commands.build(shell, build_dir, build_options)
 
     version_tag = version_tag_builder.get_version
     docker_commands.tag(shell, image.registry_url, version_tag)
@@ -21,5 +27,7 @@ class KuberKit::ImageCompiler::ImageBuilder
     end
 
     image.after_build_callback.call(context_helper, build_dir) if image.after_build_callback
+
+    build_result
   end
 end

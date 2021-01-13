@@ -14,6 +14,7 @@ class KuberKit::Actions::TemplateReader
     true
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
+    
     false
   end
 end

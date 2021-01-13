@@ -262,6 +262,8 @@ class KuberKit::Container
       KuberKit::UI::Debug.new
     elsif KuberKit.ui_mode == :simple
       KuberKit::UI::Simple.new
+    elsif KuberKit.ui_mode == :api
+      KuberKit::UI::Api.new
     else
       KuberKit::UI::Interactive.new
     end

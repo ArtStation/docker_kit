@@ -4,12 +4,12 @@ RSpec.describe KuberKit::Shell::Commands::DockerCommands do
 
   context "#build" do
     it do
-      expect(shell).to receive(:exec!).with(%Q{docker build /opt/build --rm=true})
+      expect(shell).to receive(:exec!).with(%Q{docker image build /opt/build --rm=true})
       subject.build(shell, "/opt/build")
     end
 
     it do
-      expect(shell).to receive(:exec!).with(%Q{docker build /opt/build --rm=true -t=example_image})
+      expect(shell).to receive(:exec!).with(%Q{docker image build /opt/build --rm=true -t=example_image})
       subject.build(shell, "/opt/build", ["-t=example_image"])
     end
   end

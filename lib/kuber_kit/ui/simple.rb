@@ -23,6 +23,8 @@ class KuberKit::UI::Simple
       end
 
       @thread = Thread.new do
+        Thread.current.abort_on_exception = true
+        Thread.current.report_on_exception = false
         print_started
         @callback.call(self)
         print_finished
@@ -89,16 +91,10 @@ class KuberKit::UI::Simple
     logger.debug(text)
   end
 
-  def print_result(is_success, message, data = {})
-    if is_success
-      print_debug("Result", "---------------------------")
-      print_debug("Result", message)
-      print_debug("Result", "---------------------------")
-    else
-      print_debug("Result", "-------------------------".red)
-      print_debug("Result", message.red)
-      print_debug("Result", "-------------------------".red)
-    end
+  def print_result(message, data = {})
+    print_debug("Result", "---------------------------")
+    print_debug("Result", message)
+    print_debug("Result", "---------------------------")
   end
 
   def prompt(text, options, &callback)
