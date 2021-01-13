@@ -31,6 +31,11 @@ RSpec.describe KuberKit::Shell::Commands::DockerCommands do
       expect(shell).to receive(:exec!).with(%Q{docker run -d example_image})
       subject.run(shell, "example_image", detached: true)
     end
+
+    it do
+      expect(shell).to receive(:interactive!).with(%Q{docker run -d example_image})
+      subject.run(shell, "example_image", detached: true, interactive: true)
+    end
   end
 
   context "#push" do
@@ -44,6 +49,34 @@ RSpec.describe KuberKit::Shell::Commands::DockerCommands do
     it do
       expect(shell).to receive(:exec!).with(%Q{docker rm -f example_container})
       subject.delete_container(shell, "example_container")
+    end
+  end
+
+  context "#create_volume" do
+    it do
+      expect(subject).to receive(:volume_exists?).and_return(false)
+      expect(shell).to receive(:exec!).with(%Q{docker volume create test_volume})
+      subject.create_volume(shell, "test_volume")
+    end
+
+    it do
+      expect(subject).to receive(:volume_exists?).and_return(true)
+      expect(shell).to_not receive(:exec!)
+      subject.create_volume(shell, "test_volume")
+    end
+  end
+
+  context "#create_network" do
+    it do
+      expect(subject).to receive(:network_exists?).and_return(false)
+      expect(shell).to receive(:exec!).with(%Q{docker network create test_network})
+      subject.create_network(shell, "test_network")
+    end
+
+    it do
+      expect(subject).to receive(:network_exists?).and_return(true)
+      expect(shell).to_not receive(:exec!)
+      subject.create_network(shell, "test_network")
     end
   end
 
@@ -63,6 +96,20 @@ RSpec.describe KuberKit::Shell::Commands::DockerCommands do
     it do
       expect(shell).to receive(:exec!).with(%Q{docker ps -a -q --filter=\"health=healthy\" --filter=\"name=example_container\"})
       subject.get_containers(shell, "example_container", only_healthy: true)
+    end
+  end
+
+  context "#network_exists?" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{docker network ls --filter=\"name=my-network\" --format \"\{\{.Name\}\}\"}).and_return("1234")
+      expect(subject.network_exists?(shell, "my-network")).to eq(true)
+    end
+  end
+
+  context "#volume_exists?" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{docker volume ls --filter=\"name=my-volume\" --format \"\{\{.Name\}\}\"}).and_return("1234")
+      expect(subject.volume_exists?(shell, "my-volume")).to eq(true)
     end
   end
 end

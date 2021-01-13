@@ -11,7 +11,9 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     :detached,
     :command_name,
     :command_args,
-    :delete_if_exists
+    :delete_if_exists,
+    :volumes,
+    :networks,
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service => Any
@@ -25,6 +27,8 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     container_name = strategy_options.fetch(:container_name, service.uri)
     command_name   = strategy_options.fetch(:command_name, "bash")
     command_args   = strategy_options.fetch(:command_args, nil)
+    networks       = strategy_options.fetch(:networks, [])
+    volumes        = strategy_options.fetch(:volumes, [])
 
     image_name = strategy_options.fetch(:image_name, nil)
     if image_name.nil?
@@ -40,6 +44,14 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     command_args = Array(command_args)
     if container_name
       command_args << "--name #{container_name}"
+    end
+    networks.each do |network|
+      docker_commands.create_network(shell, network)
+      command_args << "--network #{network}"
+    end
+    volumes.each do |volume|
+      docker_commands.create_volume(shell, volume)
+      command_args << "--volume #{volume}"
     end
 
     docker_commands.run(

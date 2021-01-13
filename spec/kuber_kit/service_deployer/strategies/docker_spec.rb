@@ -16,6 +16,28 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
     subject.deploy(shell, service)
   end
 
+  it "creates volume and sets volume option" do
+    service = service_helper.service(:auth_app, attributes: {
+      deployer: {image_name: image.name, volumes: [:test_volume]}
+    })
+    expect(subject.docker_commands).to receive(:create_volume).with(shell, :test_volume)
+    expect(subject.docker_commands).to receive(:run).with(
+      shell, "default/auth_app:latest", detached: false, args: ["--name auth-app", "--volume test_volume"], command: "bash"
+    )
+    subject.deploy(shell, service)
+  end
+
+  it "creates network and sets network option" do
+    service = service_helper.service(:auth_app, attributes: {
+      deployer: {image_name: image.name, networks: [:test_network]}
+    })
+    expect(subject.docker_commands).to receive(:create_network).with(shell, :test_network)
+    expect(subject.docker_commands).to receive(:run).with(
+      shell, "default/auth_app:latest", detached: false, args: ["--name auth-app", "--network test_network"], command: "bash"
+    )
+    subject.deploy(shell, service)
+  end
+
   it "deletes previous container if it's enabled for service" do
     expect(subject.docker_commands).to receive(:delete_container).with(shell, "auth-job")
     expect(subject.docker_commands).to receive(:run).with(
