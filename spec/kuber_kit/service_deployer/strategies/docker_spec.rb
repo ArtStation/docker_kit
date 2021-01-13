@@ -45,7 +45,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
     )
 
     service = service_helper.service(:auth_job, attributes: {
-      deployer: {image_name: image.name, delete_if_exists: true, command_args: "-it"}
+      deployer: {image_name: image.name, delete_if_exists: true, custom_args: "-it"}
     })
     subject.deploy(shell, service)
   end

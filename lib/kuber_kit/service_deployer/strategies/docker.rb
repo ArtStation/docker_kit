@@ -10,7 +10,7 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     :image_name,
     :detached,
     :command_name,
-    :command_args,
+    :custom_args,
     :delete_if_exists,
     :volumes,
     :networks,
@@ -26,7 +26,7 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     
     container_name = strategy_options.fetch(:container_name, service.uri)
     command_name   = strategy_options.fetch(:command_name, "bash")
-    command_args   = strategy_options.fetch(:command_args, nil)
+    custom_args   = strategy_options.fetch(:custom_args, nil)
     networks       = strategy_options.fetch(:networks, [])
     volumes        = strategy_options.fetch(:volumes, [])
 
@@ -41,23 +41,23 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
       docker_commands.delete_container(shell, container_name)
     end
 
-    command_args = Array(command_args)
+    custom_args = Array(custom_args)
     if container_name
-      command_args << "--name #{container_name}"
+      custom_args << "--name #{container_name}"
     end
     networks.each do |network|
       docker_commands.create_network(shell, network)
-      command_args << "--network #{network}"
+      custom_args << "--network #{network}"
     end
     volumes.each do |volume|
       docker_commands.create_volume(shell, volume)
-      command_args << "--volume #{volume}"
+      custom_args << "--volume #{volume}"
     end
 
     docker_commands.run(
       shell, image.remote_registry_url, 
       command:    command_name,
-      args:       command_args, 
+      args:       custom_args, 
       detached:   !!strategy_options[:detached]
     )
   end
