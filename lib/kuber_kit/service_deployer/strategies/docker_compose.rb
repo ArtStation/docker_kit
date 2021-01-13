@@ -25,8 +25,8 @@ class KuberKit::ServiceDeployer::Strategies::DockerCompose < KuberKit::ServiceDe
     end
 
     service_name = strategy_options.fetch(:service_name, service.name.to_s)
-    command_name = strategy_options.fetch(:command_name, "bash")
-    custom_args = strategy_options.fetch(:custom_args, nil)
+    command_name = strategy_options.fetch(:command_name, nil)
+    custom_args  = strategy_options.fetch(:custom_args, nil)
 
     docker_compose_commands.run(shell, config_path, 
       service:  service_name, 

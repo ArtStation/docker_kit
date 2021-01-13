@@ -25,8 +25,8 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     end
     
     container_name = strategy_options.fetch(:container_name, service.uri)
-    command_name   = strategy_options.fetch(:command_name, "bash")
-    custom_args   = strategy_options.fetch(:custom_args, nil)
+    command_name   = strategy_options.fetch(:command_name, nil)
+    custom_args    = strategy_options.fetch(:custom_args, nil)
     networks       = strategy_options.fetch(:networks, [])
     volumes        = strategy_options.fetch(:volumes, [])
 
