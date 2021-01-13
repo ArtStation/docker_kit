@@ -1,4 +1,5 @@
 - https://ttytoolkit.org/
+- do not show result for images list, if list is too large
 - kit status should show the list of services and their status, with ability to select & view logs
 - allow deploying only services enabled for specific configuration
 - find a way to always deploy some service, e.g. for migrations and env_files
