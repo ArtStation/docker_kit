@@ -15,6 +15,7 @@ class KuberKit::CLI < Thor
   def compile(image_names_str)
     setup(options)
     
+    started_at = Time.now.to_i
     image_names = image_names_str.split(",").map(&:strip).map(&:to_sym)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
@@ -22,7 +23,8 @@ class KuberKit::CLI < Thor
     end
 
     if result
-      print_result("Image compilation finished!", result: result)
+      time = (Time.now.to_i - started_at)
+      print_result("Image compilation finished! (#{time}s)", result: result)
     else
       exit 1
     end
@@ -40,6 +42,7 @@ class KuberKit::CLI < Thor
       require_confirmation = options[:require_confirmation] || 
                              KuberKit.current_configuration.deployer_require_confirimation ||
                              false
+      started_at = Time.now.to_i
       result = KuberKit::Container['actions.service_deployer'].call(
         services:             options[:services] || [], 
         tags:                 options[:tags] || [],
@@ -49,7 +52,8 @@ class KuberKit::CLI < Thor
     end
 
     if result
-      print_result("Service deployment finished!", result: result)
+      time = (Time.now.to_i - started_at)
+      print_result("Service deployment finished! (#{time}s)", result: result)
     else
       exit 1
     end
