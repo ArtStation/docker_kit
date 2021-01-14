@@ -29,6 +29,7 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     custom_args    = strategy_options.fetch(:custom_args, nil)
     networks       = strategy_options.fetch(:networks, [])
     volumes        = strategy_options.fetch(:volumes, [])
+    hostname       = strategy_options.fetch(:hostname, container_name)
 
     image_name = strategy_options.fetch(:image_name, nil)
     if image_name.nil?
@@ -44,6 +45,9 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     custom_args = Array(custom_args)
     if container_name
       custom_args << "--name #{container_name}"
+    end
+    if hostname
+      custom_args << "--hostname #{hostname}"
     end
     networks.each do |network|
       docker_commands.create_network(shell, network)

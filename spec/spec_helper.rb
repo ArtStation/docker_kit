@@ -7,6 +7,8 @@ require "kuber_kit"
 require 'pry'
 require 'dry/container/stub'
 
+ENV['KUBER_KIT_CONFIGURATION'] = nil
+
 Dir["#{File.dirname(__FILE__)}/helpers/**/*.rb"].each { |f| require f }
 
 FIXTURES_PATH = File.expand_path(File.join(File.dirname(__FILE__), 'fixtures'))
