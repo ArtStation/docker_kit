@@ -3,6 +3,7 @@ class KuberKit::Actions::ImageCompiler
     "image_compiler.image_dependency_resolver",
     "image_compiler.build_server_pool_factory",
     "shell.local_shell",
+    "configs",
     "ui",
     image_compiler: "image_compiler.action_handler",
   ]
@@ -15,6 +16,7 @@ class KuberKit::Actions::ImageCompiler
     compiled_images = []
     compilation_result = {}
     image_dependency_resolver.each_with_deps(image_names) do |dep_image_names|
+      ui.print_debug("ImageCompiler", "Scheduling to compile: #{dep_image_names.inspect}. Limit: #{configs.compile_simultaneous_limit}")
       result = compile_simultaneously(dep_image_names, build_id, build_server_pool)
       compiled_images += dep_image_names
       compilation_result = compilation_result.merge(result)
