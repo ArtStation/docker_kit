@@ -20,7 +20,9 @@ class KuberKit::ImageCompiler::ImageDependencyResolver
       next_dependencies = get_next(image_names, resolved: resolved_dependencies, limit: compile_limit)
     end
 
-    block.call(image_names - resolved_dependencies)
+    (image_names - resolved_dependencies).each_slice(compile_limit) do |group|
+      block.call(group)
+    end
   end
   
   Contract Or[Symbol, ArrayOf[Symbol]], KeywordArgs[

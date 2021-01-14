@@ -78,12 +78,12 @@ RSpec.describe KuberKit::ImageCompiler::ImageDependencyResolver do
 
   context "#each_with_deps" do
     it "iterates over dependencies and image itself" do
-      image1_def = test_helper.image_store.define(:image1)
-      image2_def = test_helper.image_store.define(:image2_a).depends_on(:image1)
-      image2_def = test_helper.image_store.define(:image2_b).depends_on(:image1)
-      image2_def = test_helper.image_store.define(:image3_a).depends_on(:image2_a)
-      image2_def = test_helper.image_store.define(:image3_b).depends_on(:image2_b, :image1)
-      image3_def = test_helper.image_store.define(:image4).depends_on(:image1, :image3_a, :image3_b)
+      test_helper.image_store.define(:image1)
+      test_helper.image_store.define(:image2_a).depends_on(:image1)
+      test_helper.image_store.define(:image2_b).depends_on(:image1)
+      test_helper.image_store.define(:image3_a).depends_on(:image2_a)
+      test_helper.image_store.define(:image3_b).depends_on(:image2_b, :image1)
+      test_helper.image_store.define(:image4).depends_on(:image1, :image3_a, :image3_b)
 
       callback = Proc.new {}
 
@@ -93,6 +93,22 @@ RSpec.describe KuberKit::ImageCompiler::ImageDependencyResolver do
       expect(callback).to receive(:call).with([:image4])
 
       subject.each_with_deps([:image4], &callback)
+    end
+
+    it "applies the limit to final images list as well" do
+      test_helper.image_store.define(:image1)
+      test_helper.image_store.define(:image2)
+      test_helper.image_store.define(:image3)
+      test_helper.image_store.define(:image4)
+      test_helper.image_store.define(:image5)
+      test_helper.image_store.define(:image6)
+
+      callback = Proc.new {}
+
+      expect(callback).to receive(:call).with([:image1, :image2, :image3, :image4, :image5])
+      expect(callback).to receive(:call).with([:image6])
+
+      subject.each_with_deps([:image1, :image2, :image3, :image4, :image5, :image6], &callback)
     end
   end
 end
