@@ -43,7 +43,11 @@ class KuberKit::Actions::ServiceDeployer
 
     images_names = services.map(&:images).flatten.uniq
 
-    compile_images(images_names) unless skip_compile
+    unless skip_compile
+      compile_result = compile_images(images_names)
+      return false unless compile_result
+    end
+
     deployment_result = deploy_services(service_names)
 
     { services: service_names, deployment: deployment_result }
@@ -75,7 +79,8 @@ class KuberKit::Actions::ServiceDeployer
   end
 
   def compile_images(images_names)
-    image_compiler.call(images_names, {}) if images_names.any?
+    return true if images_names.empty?
+    image_compiler.call(images_names, {})
   end
 
   def show_tags_selection()
