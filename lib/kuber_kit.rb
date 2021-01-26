@@ -254,6 +254,14 @@ module KuberKit
       KuberKit::Core::ContextHelper::BaseHelper.class_exec(&proc)
     end
 
+    def user
+      @user ||= ENV["KUBER_KIT_USERNAME"] || `whoami`.chomp
+    end
+
+    def user_id
+      @user_id ||= `id -u #{user}`.chomp
+    end
+
     def configure(&proc)
       yield(Container["configs"])
     end
