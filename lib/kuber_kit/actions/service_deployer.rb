@@ -97,12 +97,12 @@ class KuberKit::Actions::ServiceDeployer
       .sort
       .map(&:to_s)
 
-    ui.prompt("Please select which tag to deploy", tags) do |selected_tag|
-      if selected_tag == specific_service_option
-        show_service_selection
-      else
-        return [[], [selected_tag]]
-      end
+    selected_tag = ui.prompt("Please select which tag to deploy", tags)
+
+    if selected_tag == specific_service_option
+      show_service_selection
+    else
+      [[], [selected_tag]]
     end
   end
 
@@ -115,8 +115,11 @@ class KuberKit::Actions::ServiceDeployer
       .sort
       .map(&:to_s)
 
-    ui.prompt("Please select which service to deploy", services) do |selected_service|
-      return [[selected_service], []]
+    if services.empty?
+      return [[], []]
     end
+
+    selected_service = ui.prompt("Please select which service to deploy", services)
+    [[selected_service], []]
   end
 end

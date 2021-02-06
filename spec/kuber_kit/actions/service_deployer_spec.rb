@@ -4,7 +4,7 @@ RSpec.describe KuberKit::Actions::ServiceDeployer do
   let(:shell) { test_helper.shell }
 
   before do
-    service_helper.register_service(:auth_app, images: [:auth_image])
+    service_helper.register_service(:auth_app, images: [:auth_image], tags: ["auth"])
   end
 
   it "compiles images & deploys services found by resolver" do
@@ -20,7 +20,15 @@ RSpec.describe KuberKit::Actions::ServiceDeployer do
   end
 
   it "shows tags selection if no service found" do
-    expect(subject.ui).to receive(:prompt).with("Please select which tag to deploy", any_args).and_return([["auth_app"], []])
+    expect(subject.ui).to receive(:prompt).with("Please select which tag to deploy", any_args).and_return("auth")
+    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(true)
+    expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :auth_app)
+    subject.call(services: [], tags: [])
+  end
+
+  it "shows service selection if no tag selected" do
+    expect(subject.ui).to receive(:prompt).with("Please select which tag to deploy", any_args).and_return("deploy specific service")
+    expect(subject.ui).to receive(:prompt).with("Please select which service to deploy", any_args).and_return("auth_app")
     expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(true)
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :auth_app)
     subject.call(services: [], tags: [])

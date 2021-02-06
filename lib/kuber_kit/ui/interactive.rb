@@ -1,4 +1,5 @@
 require 'cli/ui'
+require "tty-prompt"
 
 class KuberKit::UI::Interactive
   include KuberKit::Import[
@@ -42,17 +43,8 @@ class KuberKit::UI::Interactive
   end
 
   def prompt(text, options, &callback)
-    CLI::UI::Prompt.ask(text) do |handler|
-      options.each do |option|
-        if callback
-          handler.option(option, &callback)
-        else
-          handler.option(option) do |selection|
-            selection
-          end
-        end
-      end
-    end
+    prompt = TTY::Prompt.new
+    prompt.select(text, options, filter: true)
   end
 
   private

@@ -84,9 +84,7 @@ class KuberKit::Actions::ConfigurationLoader
 
     if configuration_store.count > 1 && configuration_name.nil?
       options = all_configurations.map(&:configuration_name).map(&:to_s)
-      ui.prompt("Please select configuration name (or set it using -C option)", options) do |selection|
-        configuration_name = selection
-      end
+      configuration_name = ui.prompt("Please select configuration name (or set it using -C option)", options)
     end
 
     KuberKit.set_configuration_name(configuration_name)
