@@ -97,10 +97,9 @@ class KuberKit::UI::Simple
     print_debug("Result", "---------------------------")
   end
 
-  def prompt(text, options, &callback)
-    print_info("Select", text)
+  def prompt(text, options)
+    print_info("Select", text + "(#{options.join(', ')})")
     result = $stdin.gets.chomp
-    callback.call(result) if callback
     result
   end
 
