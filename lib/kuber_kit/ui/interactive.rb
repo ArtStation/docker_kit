@@ -1,22 +1,50 @@
 require 'cli/ui'
 require "tty-prompt"
+require "tty-spinner"
+
+class TTY::Spinner
+  def update_title(title)
+    success
+  end
+end
 
 class KuberKit::UI::Interactive
   include KuberKit::Import[
     "tools.logger",
   ]
 
-  class TaskGroup < CLI::UI::SpinGroup
+  class TaskGroup
+    attr_reader :spinners
+
+    def initialize(title = "")
+      @spinners = []
+    end
+
+    def add(title, &block)
+      spinner = TTY::Spinner.new("[:spinner] #{title}", format: :dots_6)
+      spinner.job(&block)
+      @spinners << spinner
+    end
+
+    def wait
+      jobs = []
+      @spinners.each do |spinner|
+        if spinner.job?
+          spinner.auto_spin
+          jobs << Thread.new { spinner.execute_job }
+        end
+      end
+      jobs.each(&:join)
+    end
   end
 
-  def create_task_group
-    init_if_needed
-    TaskGroup.new
+  def create_task_group(title = "")
+    TaskGroup.new(title)
   end
 
   def create_task(title, &block)
-    init_if_needed
-    CLI::UI::Spinner.spin(title, &block)
+    spinner = TTY::Spinner.new("[:spinner] #{title}", format: :dots_6)
+    spinner.run(&block)
   end
 
   def print_info(title, text)
@@ -42,7 +70,7 @@ class KuberKit::UI::Interactive
     print_debug("Result", "---------------------------")
   end
 
-  def prompt(text, options, &callback)
+  def prompt(text, options)
     prompt = TTY::Prompt.new
     prompt.select(text, options, filter: true)
   end

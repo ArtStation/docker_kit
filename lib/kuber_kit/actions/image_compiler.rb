@@ -33,7 +33,7 @@ class KuberKit::Actions::ImageCompiler
 
   private
     def compile_simultaneously(image_names, build_id, build_server_pool)
-      task_group = ui.create_task_group
+      task_group = ui.create_task_group("Compiling images")
       compiler_result = {}
       image_names.map do |image_name|
 

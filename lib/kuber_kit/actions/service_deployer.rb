@@ -34,7 +34,7 @@ class KuberKit::Actions::ServiceDeployer
 
     if require_confirmation
       result = ui.prompt("Please confirm to continue deployment", ["confirm".green, "cancel".red])
-      return false unless result == "confirm".green
+      return false unless ["confirm".green, "confirm", "yes"].include?(result)
     end
 
     services = service_names.map do |service_name|
@@ -58,7 +58,7 @@ class KuberKit::Actions::ServiceDeployer
   end
 
   def deploy_services(service_names)
-    task_group = ui.create_task_group
+    task_group = ui.create_task_group("Deploying services")
 
     deployer_result = {}
 
