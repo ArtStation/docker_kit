@@ -20,8 +20,9 @@ class KuberKit::Actions::ServiceDeployer
     end
 
     service_names = service_list_resolver.resolve(
-      services: services || [],
-      tags:     tags || []
+      services:         services || [],
+      tags:             tags || [],
+      enabled_services: KuberKit.current_configuration.enabled_services.map(&:to_s)
     )
 
     unless service_names.any?

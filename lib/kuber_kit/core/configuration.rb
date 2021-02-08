@@ -1,6 +1,6 @@
 class KuberKit::Core::Configuration
   attr_reader :name, :artifacts, :registries, :env_files, :templates, :kubeconfig_path, 
-              :services_attributes, :build_servers, :global_build_vars,
+              :services_attributes, :enabled_services, :build_servers, :global_build_vars,
               :deployer_strategy, :deployer_namespace, :deployer_require_confirimation
 
   Contract KeywordArgs[
@@ -11,6 +11,7 @@ class KuberKit::Core::Configuration
     templates:            Hash,
     kubeconfig_path:      Maybe[String],
     services_attributes:  HashOf[Symbol => Hash],
+    enabled_services:     ArrayOf[Symbol],
     build_servers:        ArrayOf[KuberKit::Core::BuildServers::AbstractBuildServer],
     global_build_vars:    HashOf[Symbol => Any],
     deployer_strategy:              Symbol,
@@ -18,7 +19,7 @@ class KuberKit::Core::Configuration
     deployer_require_confirimation: Bool,
   ] => Any
   def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, 
-                 services_attributes:, build_servers:, global_build_vars:,
+                 services_attributes:, enabled_services:, build_servers:, global_build_vars:,
                  deployer_strategy:, deployer_namespace:, deployer_require_confirimation:)
     @name                 = name
     @artifacts            = artifacts
@@ -28,6 +29,7 @@ class KuberKit::Core::Configuration
     @kubeconfig_path      = kubeconfig_path
     @build_servers        = build_servers
     @services_attributes  = services_attributes
+    @enabled_services     = enabled_services
     @global_build_vars    = global_build_vars
     @deployer_strategy              = deployer_strategy
     @deployer_namespace             = deployer_namespace

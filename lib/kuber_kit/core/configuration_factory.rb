@@ -28,6 +28,7 @@ class KuberKit::Core::ConfigurationFactory
       kubeconfig_path:      configuration_attrs.kubeconfig_path,
       build_servers:        build_servers,
       services_attributes:  configuration_attrs.services_attributes,
+      enabled_services:     configuration_attrs.enabled_services,
       global_build_vars:    configuration_attrs.global_build_vars || {},
       deployer_strategy:              configuration_attrs.deployer_strategy || configs.deployer_strategy,
       deployer_namespace:             configuration_attrs.deployer_namespace,

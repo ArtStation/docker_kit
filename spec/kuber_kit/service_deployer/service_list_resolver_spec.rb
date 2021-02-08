@@ -46,6 +46,16 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceListResolver do
       result = subject.resolve(tags: ["web", "-au*"])
       expect(result).to eq(["marketplace_app"])
     end
+
+    it "returns only enabled services, if list is not empty" do
+      result = subject.resolve(tags: ["web"], enabled_services: ["auth_app"])
+      expect(result).to eq(["auth_app"])
+    end
+
+    it "ignores enabled services list if it's empty" do
+      result = subject.resolve(tags: ["web"], enabled_services: [])
+      expect(result).to eq(["auth_app", "marketplace_app"])
+    end
   end
 
   context "split_by_inclusion" do
