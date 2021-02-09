@@ -18,6 +18,7 @@ class KuberKit::Actions::ConfigurationLoader
     infra_path    = options[:infra_path]  || File.join(root_path, configs.infra_dirname)
     configurations_path  = options[:configurations_path]  || File.join(root_path, configs.configurations_dirname)
     configuration_name   = options[:configuration] || ENV["KUBER_KIT_CONFIGURATION"]
+    load_inventory = options.fetch(:load_inventory, true)
 
     ui.print_debug "ConfigurationLoader", "Launching kuber_kit with:"
     ui.print_debug "ConfigurationLoader", "  Root path: #{root_path.to_s.yellow}"
@@ -40,25 +41,27 @@ class KuberKit::Actions::ConfigurationLoader
     load_configurations(configurations_path, configuration_name)
     load_infrastructure(infra_path)
 
-    ui.create_task("Updating artifacts") do |task|
-      artifacts = KuberKit.current_configuration.artifacts.values
-      artifacts_updater.update(local_shell, artifacts)
-      task.update_title("Updated #{artifacts.count} artifacts")
-    end
-
-    ui.create_task("Loading image definitions") do |task|
-      files = image_store.load_definitions(images_path)
-
-      configs.additional_images_paths.each do |path|
-        files += image_store.load_definitions(path)
+    if load_inventory
+      ui.create_task("Updating artifacts") do |task|
+        artifacts = KuberKit.current_configuration.artifacts.values
+        artifacts_updater.update(local_shell, artifacts)
+        task.update_title("Updated #{artifacts.count} artifacts")
       end
 
-      task.update_title("Loaded #{files.count} image definitions")
-    end
+      ui.create_task("Loading image definitions") do |task|
+        files = image_store.load_definitions(images_path)
 
-    ui.create_task("Loading service definitions") do |task|
-      files = service_store.load_definitions(services_path)
-      task.update_title("Loaded #{files.count} service definitions")
+        configs.additional_images_paths.each do |path|
+          files += image_store.load_definitions(path)
+        end
+
+        task.update_title("Loaded #{files.count} image definitions")
+      end
+
+      ui.create_task("Loading service definitions") do |task|
+        files = service_store.load_definitions(services_path)
+        task.update_title("Loaded #{files.count} service definitions")
+      end
     end
     
     true

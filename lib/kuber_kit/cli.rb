@@ -108,7 +108,7 @@ class KuberKit::CLI < Thor
   def console(pod_name = nil)
     setup(options)
 
-    if KuberKit::Container['actions.configuration_loader'].call(options)
+    if KuberKit::Container['actions.configuration_loader'].call(options.merge(load_inventory: false))
       KuberKit::Container['actions.kubectl_console'].call(pod_name, options)
     end
   end
@@ -118,7 +118,7 @@ class KuberKit::CLI < Thor
   def logs(pod_name = nil)
     setup(options)
 
-    if KuberKit::Container['actions.configuration_loader'].call(options)
+    if KuberKit::Container['actions.configuration_loader'].call(options.merge(load_inventory: false))
       KuberKit::Container['actions.kubectl_logs'].call(pod_name, options)
     end
   end
@@ -127,7 +127,7 @@ class KuberKit::CLI < Thor
   def describe(pod_name = nil)
     setup(options)
 
-    if KuberKit::Container['actions.configuration_loader'].call(options)
+    if KuberKit::Container['actions.configuration_loader'].call(options.merge(load_inventory: false))
       KuberKit::Container['actions.kubectl_describe'].call(pod_name, options)
     end
   end

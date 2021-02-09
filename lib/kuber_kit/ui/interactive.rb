@@ -44,7 +44,9 @@ class KuberKit::UI::Interactive
 
   def prompt(text, options, &callback)
     prompt = TTY::Prompt.new
-    prompt.select(text, options, filter: true)
+    prompt.select(text, options, filter: true, per_page: 10)
+  rescue  TTY::Reader::InputInterrupt
+    raise KuberKit::Error.new("Selection cancelled.")
   end
 
   private
