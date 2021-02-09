@@ -2,6 +2,7 @@ class KuberKit::Actions::KubectlLogs
   include KuberKit::Import[
     "shell.kubectl_commands",
     "shell.local_shell",
+    "kubernetes.resources_fetcher",
     "ui"
   ]
 
@@ -11,9 +12,7 @@ class KuberKit::Actions::KubectlLogs
     deployer_namespace = KuberKit.current_configuration.deployer_namespace
 
     if !pod_name 
-      deployments     = kubectl_commands.get_resources(local_shell, "deployments", jsonpath: ".items[*].metadata.name")
-      deploy_options  = deployments.split(" ").map{|d| "deploy/#{d}" }
-      pod_name  = ui.prompt("Please select deployment to attach", deploy_options)
+      pod_name = resources_fetcher.call("attach")
     end
 
     args = nil

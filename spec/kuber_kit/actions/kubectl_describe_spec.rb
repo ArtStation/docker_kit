@@ -9,11 +9,8 @@ RSpec.describe KuberKit::Actions::KubectlDescribe do
   end
 
   it "shows a deployments selection if no resource_name provided" do
-    expect(subject.kubectl_commands).to receive(:get_resources).with(
-      subject.local_shell,  "deployments", any_args
-    ).and_return("test-app")
-    expect(subject.ui).to receive(:prompt).with(
-      "Please select resource to describe",  ["deploy/test-app", "ingresses", "pods"]
+    expect(subject.resources_fetcher).to receive(:call).with(
+      "describe", include_ingresses: true, include_pods: true
     ).and_return("deploy/test-app")
     expect(subject.kubectl_commands).to receive(:describe).with(subject.local_shell, 
       "deploy/test-app", args: nil, kubeconfig_path: nil, namespace: nil

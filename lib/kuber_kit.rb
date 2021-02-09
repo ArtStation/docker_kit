@@ -175,6 +175,10 @@ module KuberKit
     autoload :Inspectable, 'extensions/inspectable'
   end
 
+  module Kubernetes
+    autoload :ResourcesFetcher, 'kubernetes/resources_fetcher'
+  end
+
   module UI
     autoload :Interactive, 'ui/interactive'
     autoload :Simple, 'ui/simple'

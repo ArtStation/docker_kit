@@ -261,6 +261,10 @@ class KuberKit::Container
     KuberKit::ServiceReader::Reader.new
   end
 
+  register "kubernetes.resources_fetcher" do
+    KuberKit::Kubernetes::ResourcesFetcher.new
+  end
+
   register "ui" do
     if KuberKit.ui_mode == :debug
       KuberKit::UI::Debug.new
