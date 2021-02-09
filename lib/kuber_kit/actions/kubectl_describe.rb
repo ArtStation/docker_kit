@@ -50,5 +50,7 @@ class KuberKit::Actions::KubectlDescribe
       options   = ingresses.split(" ").map{|d| "pods/#{d}" }
       return ui.prompt("Please select pod to describe", options)
     end
+    
+    option
   end
 end
