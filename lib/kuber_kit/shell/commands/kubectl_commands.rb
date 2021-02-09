@@ -63,7 +63,9 @@ class KuberKit::Shell::Commands::KubectlCommands
     result = kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, namespace: namespace)
 
     # Hide warnings manually, until appropriate kubectl option will be available
-    result.split("\n").reject{|n| n.start_with?("Warning:") }.join("\n")
+    result = result.split("\n").reject{|n| n.start_with?("Warning:") }.join("\n") if result.is_a?(String)
+
+    result
   end
 
   def resource_exists?(shell, resource_type, resource_name, kubeconfig_path: nil, namespace: nil)

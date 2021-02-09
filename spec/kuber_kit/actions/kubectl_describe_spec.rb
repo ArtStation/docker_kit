@@ -13,7 +13,7 @@ RSpec.describe KuberKit::Actions::KubectlDescribe do
       subject.local_shell,  "deployments", any_args
     ).and_return("test-app")
     expect(subject.ui).to receive(:prompt).with(
-      "Please select deployment to describe", ["deploy/test-app"]
+      "Please select resource to describe",  ["deploy/test-app", "ingresses", "pods"]
     ).and_return("deploy/test-app")
     expect(subject.kubectl_commands).to receive(:describe).with(subject.local_shell, 
       "deploy/test-app", args: nil, kubeconfig_path: nil, namespace: nil
