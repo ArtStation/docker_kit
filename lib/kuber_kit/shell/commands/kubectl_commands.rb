@@ -14,7 +14,7 @@ class KuberKit::Shell::Commands::KubectlCommands
       command_parts << "-n #{namespace}"
     end
 
-    command_parts += Array(command_list)
+    command_parts += Array(command_list).compact
 
     if interactive
       shell.interactive!(command_parts.join(" "))
@@ -41,15 +41,11 @@ class KuberKit::Shell::Commands::KubectlCommands
   end
 
   def logs(shell, pod_name, args: nil, kubeconfig_path: nil, namespace: nil)
-    command_parts = []
-    command_parts << "logs"
+    kubectl_run(shell, ["logs", args, pod_name], kubeconfig_path: kubeconfig_path, interactive: true, namespace: namespace)
+  end
 
-    if args
-      command_parts << args
-    end
-
-    command_parts << pod_name
-    kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, interactive: true, namespace: namespace)
+  def describe(shell, resource_name, args: nil, kubeconfig_path: nil, namespace: nil)
+    kubectl_run(shell, ["describe", args, resource_name], kubeconfig_path: kubeconfig_path, interactive: true, namespace: namespace)
   end
 
   def get_resources(shell, resource_type, field_selector: nil, jsonpath: ".items[*].metadata.name", kubeconfig_path: nil, namespace: nil)

@@ -30,7 +30,7 @@ class KuberKit::CLI < Thor
     end
   end
 
-  desc "deploy CONTEXT_NAME", "Deploy CONTEXT_NAME with kubectl"
+  desc "deploy -t CONTEXT_NAME", "Deploy CONTEXT_NAME with kubectl"
   method_option :services,              :type => :array,    aliases: ["-s"], repeatable: true
   method_option :tags,                  :type => :array,    aliases: ["-t"], repeatable: true
   method_option :skip_compile,          :type => :boolean,  aliases: ["-B"]
@@ -120,6 +120,15 @@ class KuberKit::CLI < Thor
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       KuberKit::Container['actions.kubectl_logs'].call(pod_name, options)
+    end
+  end
+
+  desc "describe RESOURCE_NAME", "Show description for RESOURCE_NAME using kubectl"
+  def describe(pod_name = nil)
+    setup(options)
+
+    if KuberKit::Container['actions.configuration_loader'].call(options)
+      KuberKit::Container['actions.kubectl_describe'].call(pod_name, options)
     end
   end
 
