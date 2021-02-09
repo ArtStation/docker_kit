@@ -20,7 +20,7 @@ RSpec.describe KuberKit::Actions::KubectlLogs do
 
   it "prints error if error happen" do
     expect(subject.ui).to receive(:print_error)
-    allow(subject.kubectl_commands).to receive(:exec).and_raise(KuberKit::Error.new("Some error"))
-    subject.call("auth-app", {})
+    allow(subject.kubectl_commands).to receive(:kubectl_run).and_raise(KuberKit::Error.new("Some error"))
+    subject.call("deploy/auth-app", {})
   end
 end
