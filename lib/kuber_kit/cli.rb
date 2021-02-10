@@ -160,4 +160,21 @@ class KuberKit::CLI < Thor
     def print_result(message, data = {})
       KuberKit::Container['ui'].print_result(message, data)
     end
+
+    def cleanup_processes
+      # Stop all threads
+      Thread.list.each do |t| 
+        t.abort_on_exception   = false
+        t.report_on_exception  = false
+        Thread.kill(t) if t != Thread.current
+      end
+
+      # Find all system calls
+      child_pids_raw = `ps auxww | grep '[K]IT=#{Process.pid}' | awk '{print $2}'`
+      child_pids = child_pids_raw.to_s.split("\n").reject(&:empty?)
+      child_pids.each do |pid|
+        puts "Killing child process: #{pid}"
+        Process.kill("SIGHUP", pid.to_i)
+      end
+    end
 end

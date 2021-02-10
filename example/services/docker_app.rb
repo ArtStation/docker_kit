@@ -4,7 +4,7 @@ KuberKit
   .deployer_strategy(:docker)
   .attributes(
     deployer: {
-      detached:         true,
+      detached:         false,
       image_name:       :ruby_app,
       container_name:   "test_docker_app",
       delete_if_exists: true

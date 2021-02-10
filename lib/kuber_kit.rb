@@ -76,6 +76,7 @@ module KuberKit
   module Tools
     autoload :FilePresenceChecker, 'tools/file_presence_checker'
     autoload :LoggerFactory, 'tools/logger_factory'
+    autoload :ProcessCleaner, 'tools/process_cleaner'
   end
 
   module Shell
@@ -92,6 +93,7 @@ module KuberKit
       autoload :GitCommands, 'shell/commands/git_commands'
       autoload :RsyncCommands, 'shell/commands/rsync_commands'
       autoload :KubectlCommands, 'shell/commands/kubectl_commands'
+      autoload :SystemCommands, 'shell/commands/system_commands'
     end
   end
 

@@ -4,6 +4,7 @@ class KuberKit::Actions::ServiceDeployer
     "service_deployer.service_list_resolver",
     "core.service_store",
     "shell.local_shell",
+    "tools.process_cleaner",
     "ui",
     service_deployer: "service_deployer.action_handler",
   ]
@@ -56,6 +57,8 @@ class KuberKit::Actions::ServiceDeployer
     ui.print_error("Error", e.message)
 
     false
+  rescue Interrupt => e
+    #process_cleaner.clean
   end
 
   def deploy_services(service_names)

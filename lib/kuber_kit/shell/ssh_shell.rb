@@ -27,7 +27,7 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
       ui.print_debug("SshShell", "#{ssh_session.host.green} > Execute: [#{command_number}]: #{command.to_s.cyan}")
     end
 
-    result = ssh_session.exec!(command)
+    result = ssh_session.exec!(wrap_command_with_pid(command))
 
     if result && result != "" && log_command
       ui.print_debug("SshShell", "#{ssh_session.host.green} > Finished [#{command_number}] with result: \n#{result.grey}")

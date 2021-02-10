@@ -15,7 +15,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     end
 
     result = nil
-    IO.popen(command, err: [:child, :out]) do |io|
+    IO.popen(wrap_command_with_pid(command), err: [:child, :out]) do |io|
       result = io.read.chomp.strip
     end
 
@@ -37,7 +37,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
       ui.print_debug("LocalShell", "Interactive: [#{command_number}]: #{command.to_s.cyan}")
     end
 
-    result = system(command)
+    result = system(wrap_command_with_pid(command))
 
     if !$?.success?
       raise ShellError, "Shell command failed: #{command}\r\n#{result}"
@@ -84,6 +84,10 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     else
       raise e
     end
+  end
+
+  def wrap_command_with_pid(command)
+    "KIT=#{Process.pid} #{command}"
   end
 
   private

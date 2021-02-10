@@ -121,6 +121,10 @@ class KuberKit::Container
     KuberKit::Container["tools.logger_factory"].create()
   end
 
+  register "tools.process_cleaner" do
+    KuberKit::Tools::ProcessCleaner.new
+  end
+
   register "shell.bash_commands" do
     KuberKit::Shell::Commands::BashCommands.new
   end
@@ -143,6 +147,10 @@ class KuberKit::Container
 
   register "shell.kubectl_commands" do
     KuberKit::Shell::Commands::KubectlCommands.new
+  end
+
+  register "shell.system_commands" do
+    KuberKit::Shell::Commands::SystemCommands.new
   end
 
   register "shell.local_shell" do

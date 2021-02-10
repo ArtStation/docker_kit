@@ -9,3 +9,5 @@ COPY README.md README.md
 RUN ruby /app/source.rb
 
 COPY example_file.txt <%= build_vars.example_file_name %>
+
+CMD ["tail", "-f", "/dev/null"]
