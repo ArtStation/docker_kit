@@ -18,7 +18,7 @@ RSpec.describe KuberKit::Shell::Commands::SystemCommands do
 
   context "#find_pids_by_name" do
     it do
-      expect(shell).to receive(:exec!).with("ps auxww | grep 'test' | awk '{print $2}'").and_return("122\r\n121")
+      expect(shell).to receive(:exec!).with("ps auxww | grep 'test' | grep -v 'grep' | awk '{print $2}'").and_return("122\r\n121")
       expect(subject.find_pids_by_name(shell, "test")).to eq([122, 121])
     end
   end

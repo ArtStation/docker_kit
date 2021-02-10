@@ -58,7 +58,7 @@ class KuberKit::Actions::ServiceDeployer
 
     false
   rescue Interrupt => e
-    #process_cleaner.clean
+    process_cleaner.clean
   end
 
   def deploy_services(service_names)

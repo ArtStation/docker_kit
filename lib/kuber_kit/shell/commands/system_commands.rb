@@ -10,7 +10,7 @@ class KuberKit::Shell::Commands::SystemCommands
 
   def find_pids_by_name(shell, name)
     shell
-      .exec!("ps auxww | grep '#{name}' | awk '{print $2}'")
+      .exec!("ps auxww | grep '#{name}' | grep -v 'grep' | awk '{print $2}'")
       .split("\n")
       .reject(&:empty?)
       .map(&:chomp)

@@ -26,7 +26,7 @@ class KuberKit::Tools::ProcessCleaner
   private
 
     def find_all_child_processes
-      pids = system_commands.find_pids_by_name(local_shell, "[K]IT=#{Process.pid}")
+      pids = system_commands.find_pids_by_name(local_shell, "KIT=#{Process.pid}")
       pids + get_child_pids(pids)
     end
 
