@@ -29,10 +29,11 @@ class KuberKit::ServiceDeployer::Strategies::DockerCompose < KuberKit::ServiceDe
     custom_args  = strategy_options.fetch(:custom_args, nil)
 
     docker_compose_commands.run(shell, config_path, 
-      service:  service_name, 
-      command:  command_name,
-      args:     custom_args, 
-      detached: !!strategy_options[:detached]
+      service:      service_name, 
+      command:      command_name,
+      args:         custom_args, 
+      detached:     !!strategy_options[:detached],
+      interactive:  !strategy_options[:detached]
     )
   end
 end

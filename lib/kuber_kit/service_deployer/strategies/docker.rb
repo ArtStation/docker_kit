@@ -61,9 +61,10 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
 
     docker_commands.run(
       shell, image.remote_registry_url, 
-      command:    command_name,
-      args:       custom_args, 
-      detached:   !!strategy_options[:detached]
+      command:      command_name,
+      args:         custom_args, 
+      detached:     !!strategy_options[:detached],
+      interactive:  !strategy_options[:detached]
     )
   end
 end

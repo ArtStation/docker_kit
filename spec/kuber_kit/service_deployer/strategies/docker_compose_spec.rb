@@ -7,7 +7,8 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::DockerCompose do
   it "runs service using docker compose" do
     expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
     expect(subject.docker_compose_commands).to receive(:run).with(
-      shell, "/tmp/kuber_kit/services/auth_app.yml", detached: false, service: "auth_app", args: nil, command: nil
+      shell, "/tmp/kuber_kit/services/auth_app.yml", service: "auth_app", args: nil,
+      command: nil, interactive: true, detached: false
     )
     subject.deploy(shell, service)
   end
@@ -15,7 +16,8 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::DockerCompose do
   it "runs uses custom args: nil,  if provided" do
     expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
     expect(subject.docker_compose_commands).to receive(:run).with(
-      shell, "/tmp/kuber_kit/services/auth_app.yml", detached: false, service: "auth_app", args: nil, command: "sh"
+      shell, "/tmp/kuber_kit/services/auth_app.yml", service: "auth_app", args: nil,
+      command: "sh", interactive: true, detached: false
     )
 
     service = service_helper.service(:auth_app, attributes: {deployer: {command_name: "sh"}})
