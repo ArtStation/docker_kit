@@ -11,7 +11,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
 
   it "runs docker container" do
     expect(subject.docker_commands).to receive(:run).with(
-      shell, "default/auth_app:latest", args: ["--name auth-app", "--hostname auth-app"], 
+      shell, "default/auth_app:latest", args: ["--name auth_app", "--hostname auth_app"], 
       command: nil, interactive: true, detached: false
     )
     subject.deploy(shell, service)
@@ -23,7 +23,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
     })
     expect(subject.docker_commands).to receive(:create_volume).with(shell, "test_volume")
     expect(subject.docker_commands).to receive(:run).with(
-      shell, "default/auth_app:latest", args: ["--name auth-app", "--hostname auth-app", "--volume test_volume:/opt"], 
+      shell, "default/auth_app:latest", args: ["--name auth_app", "--hostname auth_app", "--volume test_volume:/opt"], 
       command: nil, interactive: true, detached: false
     )
     subject.deploy(shell, service)
@@ -35,7 +35,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
     })
     expect(subject.docker_commands).to_not receive(:create_volume)
     expect(subject.docker_commands).to receive(:run).with(
-      shell, "default/auth_app:latest", args: ["--name auth-app", "--hostname auth-app", "--volume /opt:/opt"],
+      shell, "default/auth_app:latest", args: ["--name auth_app", "--hostname auth_app", "--volume /opt:/opt"],
       command: nil, interactive: true, detached: false
     )
     subject.deploy(shell, service)
@@ -47,21 +47,33 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
     })
     expect(subject.docker_commands).to receive(:create_network).with(shell, :test_network)
     expect(subject.docker_commands).to receive(:run).with(
-      shell, "default/auth_app:latest", args: ["--name auth-app", "--hostname auth-app", "--network test_network"],
+      shell, "default/auth_app:latest", args: ["--name auth_app", "--hostname auth_app", "--network test_network"],
       command: nil, interactive: true, detached: false
     )
     subject.deploy(shell, service)
   end
 
   it "deletes previous container if it's enabled for service" do
-    expect(subject.docker_commands).to receive(:delete_container).with(shell, "auth-job")
+    expect(subject.docker_commands).to receive(:delete_container).with(shell, "auth_job")
     expect(subject.docker_commands).to receive(:run).with(
-      shell, "default/auth_app:latest", detached: false, args: ["-it", "--name auth-job", "--hostname auth-job"],
+      shell, "default/auth_app:latest", detached: false, args: ["-it", "--name auth_job", "--hostname auth_job"],
       command: "bash", interactive: true, detached: false
     )
 
     service = service_helper.service(:auth_job, attributes: {
       deployer: {image_name: image.name, delete_if_exists: true, custom_args: "-it", command_name: "bash"}
+    })
+    subject.deploy(shell, service)
+  end
+
+  it "uses namespace & service name as container name by default" do
+    expect(subject.docker_commands).to receive(:run).with(
+      shell, "default/auth_app:latest", detached: false, args: ["-it", "--name test_auth_job", "--hostname test_auth_job", ],
+      command: "bash", interactive: true, detached: false
+    )
+
+    service = service_helper.service(:auth_job, attributes: {
+      deployer: {namespace: "test", image_name: image.name, custom_args: "-it", command_name: "bash"}
     })
     subject.deploy(shell, service)
   end

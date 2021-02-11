@@ -6,6 +6,7 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
   ]
 
   STRATEGY_OPTIONS = [
+    :namespace,
     :container_name,
     :image_name,
     :detached,
@@ -24,7 +25,8 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
       raise KuberKit::Error, "Unknow options for deploy strategy: #{unknown_options}. Available options: #{STRATEGY_OPTIONS}"
     end
     
-    container_name = strategy_options.fetch(:container_name, service.uri)
+    namespace      = strategy_options.fetch(:namespace, nil)
+    container_name = strategy_options.fetch(:container_name, [namespace, service.name].compact.join("_"))
     command_name   = strategy_options.fetch(:command_name, nil)
     custom_args    = strategy_options.fetch(:custom_args, nil)
     networks       = strategy_options.fetch(:networks, [])
