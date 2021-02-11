@@ -77,4 +77,28 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
     })
     subject.deploy(shell, service)
   end
+
+  it "allows publishing & exposing ports" do
+    expect(subject.docker_commands).to receive(:run).with(
+      shell, "default/auth_app:latest", detached: false, args: ["--name auth_job", "--hostname auth_job", "--expose 123", "--publish 123:333"],
+      command: "bash", interactive: true, detached: false
+    )
+
+    service = service_helper.service(:auth_job, attributes: {
+      deployer: {image_name: image.name, command_name: "bash", expose: [123], publish: "123:333"}
+    })
+    subject.deploy(shell, service)
+  end
+
+  it "allows setting env file" do
+    expect(subject.docker_commands).to receive(:run).with(
+      shell, "default/auth_app:latest", detached: false, args: ["--name auth_job", "--env-file test.env", "--hostname auth_job", ],
+      command: "bash", interactive: true, detached: false
+    )
+
+    service = service_helper.service(:auth_job, attributes: {
+      deployer: {image_name: image.name, command_name: "bash", env_file: "test.env"}
+    })
+    subject.deploy(shell, service)
+  end
 end

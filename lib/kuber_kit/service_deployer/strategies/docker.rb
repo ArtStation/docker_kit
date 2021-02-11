@@ -8,6 +8,7 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
   STRATEGY_OPTIONS = [
     :namespace,
     :container_name,
+    :env_file,
     :image_name,
     :detached,
     :command_name,
@@ -15,6 +16,8 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     :delete_if_exists,
     :volumes,
     :networks,
+    :expose,
+    :publish,
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service => Any
@@ -28,9 +31,12 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     namespace      = strategy_options.fetch(:namespace, nil)
     container_name = strategy_options.fetch(:container_name, [namespace, service.name].compact.join("_"))
     command_name   = strategy_options.fetch(:command_name, nil)
+    env_file       = strategy_options.fetch(:env_file, nil)
     custom_args    = strategy_options.fetch(:custom_args, nil)
     networks       = strategy_options.fetch(:networks, [])
     volumes        = strategy_options.fetch(:volumes, [])
+    expose_ports   = strategy_options.fetch(:expose, [])
+    publish_ports  = strategy_options.fetch(:publish, [])
     hostname       = strategy_options.fetch(:hostname, container_name)
 
     image_name = strategy_options.fetch(:image_name, nil)
@@ -48,6 +54,9 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     if container_name
       custom_args << "--name #{container_name}"
     end
+    if env_file
+      custom_args << "--env-file #{env_file}"
+    end
     if hostname
       custom_args << "--hostname #{hostname}"
     end
@@ -59,6 +68,12 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
       volume_name, _ = volume.split(":")
       docker_commands.create_volume(shell, volume_name) unless volume_name.start_with?("/")
       custom_args << "--volume #{volume}"
+    end
+    Array(expose_ports).each do |expose_port|
+      custom_args << "--expose #{expose_port}"
+    end
+    Array(publish_ports).each do |publish_port|
+      custom_args << "--publish #{publish_port}"
     end
 
     docker_commands.run(
