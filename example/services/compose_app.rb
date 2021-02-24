@@ -1,5 +1,5 @@
 KuberKit
-  .define_service(:auth_app)
+  .define_service(:compose_app)
   .template(:docker_compose)
   .images(:ruby_app)
   .tags(:compose)

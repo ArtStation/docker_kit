@@ -15,9 +15,9 @@ class KuberKit::Actions::ServiceChecker
       services = services.select{ |s| enabled_services.include?(s) }
     end
 
-    deployments = resources_fetcher.call("deployments")
+    resources = resources_fetcher.call("deployments") + resources_fetcher.call("cronjobs")
 
-    missing_services = services.select{ |s| !deployments.include?(s.gsub("_", "-")) }
+    missing_services = services.select{ |s| !resources.include?(s.gsub("_", "-")) }
 
     ui.print_warning("Warning", "This command will only check services deployed using k8s")
 
