@@ -32,10 +32,13 @@ class KuberKit::Kubernetes::ResourcesFetcher
   end
 
   def get_resources(type)
+    current_configuration  = KuberKit.current_configuration
+    
     kubectl_commands.get_resources(
       local_shell, type, 
-      jsonpath: ".items[*].metadata.name", 
-      namespace: KuberKit.current_configuration.deployer_namespace
+      jsonpath:         ".items[*].metadata.name", 
+      kubeconfig_path:  current_configuration.kubeconfig_path, 
+      namespace:        current_configuration.deployer_namespace
     )
   end
 end
