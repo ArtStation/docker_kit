@@ -86,6 +86,15 @@ class KuberKit::CLI < Thor
     end
   end
 
+  desc "check", "Check to make sure that all services are deployed"
+  def check()
+    setup(options)
+
+    if KuberKit::Container['actions.configuration_loader'].call(options)
+      KuberKit::Container['actions.service_checker'].call(options)
+    end
+  end
+
   desc "apply FILE_PATH", "Apply FILE_PATH with kubectl"
   def apply(file_path)
     setup(options)

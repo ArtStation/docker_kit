@@ -55,6 +55,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Docker do
 
   it "deletes previous container if it's enabled for service" do
     expect(subject.docker_commands).to receive(:delete_container).with(shell, "auth_job")
+    expect(subject.docker_commands).to receive(:container_exists?).and_return(true)
     expect(subject.docker_commands).to receive(:run).with(
       shell, "default/auth_app:latest", detached: false, args: ["-it", "--name auth_job", "--hostname auth_job"],
       command: "bash", interactive: true, detached: false

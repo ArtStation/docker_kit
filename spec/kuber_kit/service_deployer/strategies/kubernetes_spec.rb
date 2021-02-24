@@ -34,6 +34,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
 
   it "deletes previous deployment if it's enabled for service" do
     expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_job.yml", /apiVersion: v1/)
+    expect(subject.kubectl_commands).to receive(:resource_exists?).and_return(true)
     expect(subject.kubectl_commands).to receive(:delete_resource).with(shell, "job", "auth-job", kubeconfig_path: nil, namespace: nil)
     expect(subject.kubectl_commands).to receive(:apply_file).with(
       shell, "/tmp/kuber_kit/services/auth_job.yml", kubeconfig_path: nil, namespace: nil
@@ -45,6 +46,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
 
   it "uses custom deployment name if provided" do
     expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
+    expect(subject.kubectl_commands).to receive(:resource_exists?).and_return(true)
     expect(subject.kubectl_commands).to receive(:apply_file)
     expect(subject.kubectl_commands).to receive(:rolling_restart).with(
       shell, "deployment", "custom-deployment", kubeconfig_path: nil, namespace: nil

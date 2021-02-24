@@ -21,6 +21,10 @@ class KuberKit::Container
     KuberKit::Actions::ServiceDeployer.new
   end
 
+  register "actions.service_checker" do
+    KuberKit::Actions::ServiceChecker.new
+  end
+
   register "actions.configuration_loader" do
     KuberKit::Actions::ConfigurationLoader.new
   end
@@ -271,6 +275,10 @@ class KuberKit::Container
 
   register "service_reader.reader" do
     KuberKit::ServiceReader::Reader.new
+  end
+
+  register "kubernetes.resource_selector" do
+    KuberKit::Kubernetes::ResourceSelector.new
   end
 
   register "kubernetes.resources_fetcher" do

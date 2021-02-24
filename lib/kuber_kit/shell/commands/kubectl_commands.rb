@@ -61,18 +61,19 @@ class KuberKit::Shell::Commands::KubectlCommands
     end
 
     result = kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, namespace: namespace)
+    items  = Array(result.to_s.split("\n")).map(&:strip).reject(&:empty?)
 
     # Hide warnings manually, until appropriate kubectl option will be available
-    result = result.split("\n").reject{|n| n.start_with?("Warning:") }.join("\n") if result.is_a?(String)
+    items = items.reject{|n| n.start_with?("Warning:") }
 
-    result
+    items
   end
 
   def resource_exists?(shell, resource_type, resource_name, kubeconfig_path: nil, namespace: nil)
     result = get_resources(shell, resource_type, 
       field_selector: "metadata.name=#{resource_name}", kubeconfig_path: kubeconfig_path, namespace: namespace
     )
-    result && result != ""
+    result.any?
   end
 
   def delete_resource(shell, resource_type, resource_name, kubeconfig_path: nil, namespace: nil)

@@ -165,6 +165,7 @@ module KuberKit
     autoload :TemplateReader, 'actions/template_reader'
     autoload :ServiceReader, 'actions/service_reader'
     autoload :ServiceDeployer, 'actions/service_deployer'
+    autoload :ServiceChecker, 'actions/service_checker'
     autoload :ConfigurationLoader, 'actions/configuration_loader'
     autoload :KubectlApplier, 'actions/kubectl_applier'
     autoload :KubectlAttacher, 'actions/kubectl_attacher'
@@ -179,6 +180,7 @@ module KuberKit
   end
 
   module Kubernetes
+    autoload :ResourceSelector, 'kubernetes/resource_selector'
     autoload :ResourcesFetcher, 'kubernetes/resources_fetcher'
   end
 

@@ -1,6 +1,6 @@
 class TestShell < KuberKit::Shell::LocalShell
   def exec!(command)
-    return true
+    return ""
   end
 
   def recursive_list_files(path)
