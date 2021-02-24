@@ -132,6 +132,15 @@ class KuberKit::CLI < Thor
     end
   end
 
+  desc "env", "Show environment variables for given configuration"
+  def env()
+    setup(options)
+
+    if KuberKit::Container['actions.configuration_loader'].call(options.merge(load_inventory: false))
+      KuberKit::Container['actions.kubectl_env'].call(options)
+    end
+  end
+
   desc "version", "Print current version"
   def version
     puts KuberKit::VERSION

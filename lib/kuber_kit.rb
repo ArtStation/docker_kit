@@ -171,6 +171,7 @@ module KuberKit
     autoload :KubectlConsole, 'actions/kubectl_console'
     autoload :KubectlDescribe, 'actions/kubectl_describe'
     autoload :KubectlLogs, 'actions/kubectl_logs'
+    autoload :KubectlEnv, 'actions/kubectl_env'
   end
 
   module Extensions

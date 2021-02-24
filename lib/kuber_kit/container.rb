@@ -45,6 +45,10 @@ class KuberKit::Container
     KuberKit::Actions::KubectlLogs.new
   end
 
+  register "actions.kubectl_env" do
+    KuberKit::Actions::KubectlEnv.new
+  end
+
   register "configs" do
     KuberKit::Configs.new
   end
