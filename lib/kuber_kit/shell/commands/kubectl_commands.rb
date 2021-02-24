@@ -60,13 +60,12 @@ class KuberKit::Shell::Commands::KubectlCommands
       command_parts << "-o jsonpath='{#{jsonpath}}'"
     end
 
-    result = kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, namespace: namespace)
-    items  = Array(result.to_s.split("\n")).map(&:strip).reject(&:empty?)
+    result = kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, namespace: namespace).to_s
 
     # Hide warnings manually, until appropriate kubectl option will be available
-    items = items.reject{|n| n.start_with?("Warning:") }
+    result = result.split("\n").reject{|n| n.start_with?("Warning:") }.join("\n")
 
-    items
+    Array(result.split(" ")).reject(&:empty?)
   end
 
   def resource_exists?(shell, resource_type, resource_name, kubeconfig_path: nil, namespace: nil)

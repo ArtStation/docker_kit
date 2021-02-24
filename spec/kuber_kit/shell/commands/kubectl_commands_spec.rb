@@ -100,7 +100,7 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
     it do
       expect(shell).to receive(:exec!)
         .with("kubectl get job --field-selector=metadata.name=my-job -o jsonpath='{.items[*].metadata.name}'")
-        .and_return("test\r\nanother")
+        .and_return("test another")
       result = subject.get_resources(shell, "job", field_selector: "metadata.name=my-job")
       expect(result).to eq(["test", "another"])
     end

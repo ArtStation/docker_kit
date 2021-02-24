@@ -1,6 +1,6 @@
 class KuberKit::Actions::ServiceChecker
   include KuberKit::Import[
-    "shell.kubectl_commands",
+    "kubernetes.resources_fetcher",
     "shell.local_shell",
     "core.service_store",
     "ui",
@@ -15,11 +15,13 @@ class KuberKit::Actions::ServiceChecker
       services = services.select{ |s| enabled_services.include?(s) }
     end
 
-    deployed_services  = resources_fetcher.
+    deployments = resources_fetcher.call("deployments")
+
+    missing_services = services.select{ |s| !deployments.include?(s.gsub("_", "-")) }
 
     ui.print_warning("Warning", "This command will only check services deployed using k8s")
 
-    ui.print_info("All", services.inspect)
+    ui.print_info("Missing", missing_services.inspect)
 
     {}
   rescue KuberKit::Error => e
