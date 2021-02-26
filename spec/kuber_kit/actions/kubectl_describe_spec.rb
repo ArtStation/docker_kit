@@ -9,7 +9,7 @@ RSpec.describe KuberKit::Actions::KubectlDescribe do
   end
 
   it "shows a deployments selection if no resource_name provided" do
-    expect(subject.resources_fetcher).to receive(:call).with(
+    expect(subject.resource_selector).to receive(:call).with(
       "describe", include_ingresses: true, include_pods: true
     ).and_return("deploy/test-app")
     expect(subject.kubectl_commands).to receive(:describe).with(subject.local_shell, 

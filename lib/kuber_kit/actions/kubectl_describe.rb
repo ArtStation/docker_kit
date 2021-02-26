@@ -2,7 +2,7 @@ class KuberKit::Actions::KubectlDescribe
   include KuberKit::Import[
     "shell.kubectl_commands",
     "shell.local_shell",
-    "kubernetes.resources_fetcher",
+    "kubernetes.resource_selector",
     "ui"
   ]
 
@@ -12,7 +12,7 @@ class KuberKit::Actions::KubectlDescribe
     deployer_namespace = KuberKit.current_configuration.deployer_namespace
 
     if !resource_name 
-      resource_name  = resources_fetcher.call("describe", include_ingresses: true, include_pods: true)
+      resource_name  = resource_selector.call("describe", include_ingresses: true, include_pods: true)
     end
 
     args = nil

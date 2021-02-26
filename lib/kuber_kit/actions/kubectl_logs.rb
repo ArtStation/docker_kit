@@ -2,7 +2,7 @@ class KuberKit::Actions::KubectlLogs
   include KuberKit::Import[
     "shell.kubectl_commands",
     "shell.local_shell",
-    "kubernetes.resources_fetcher",
+    "kubernetes.resource_selector",
     "ui"
   ]
 
@@ -12,7 +12,7 @@ class KuberKit::Actions::KubectlLogs
     deployer_namespace = KuberKit.current_configuration.deployer_namespace
 
     if !pod_name 
-      pod_name = resources_fetcher.call("attach")
+      pod_name = resource_selector.call("attach")
     end
 
     args = nil

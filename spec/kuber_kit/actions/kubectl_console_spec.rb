@@ -9,7 +9,7 @@ RSpec.describe KuberKit::Actions::KubectlConsole do
   end
 
   it "shows a deployments selection if no pod_name provided" do
-    expect(subject.resources_fetcher).to receive(:call).with(
+    expect(subject.resource_selector).to receive(:call).with(
       "attach"
     ).and_return("deploy/test-app")
     expect(subject.kubectl_commands).to receive(:exec).with(subject.local_shell, 
