@@ -9,7 +9,8 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
     :resource_type,
     :resource_name,
     :delete_if_exists,
-    :restart_if_exists
+    :restart_if_exists,
+    :wait_for_rollout
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service => Any
@@ -41,12 +42,18 @@ class KuberKit::ServiceDeployer::Strategies::Kubernetes < KuberKit::ServiceDeplo
 
     apply_result = kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path, namespace: namespace)
 
-    restart_enabled = strategy_options.fetch(:restart_if_exists, true)
+    restart_enabled  = strategy_options.fetch(:restart_if_exists, true)
+    wait_for_rollout = strategy_options.fetch(:wait_for_rollout, true)
     if restart_enabled && resource_exists
       kubectl_commands.rolling_restart(
         shell, resource_type, resource_name, 
         kubeconfig_path: kubeconfig_path, namespace: namespace
       )
+      
+      kubectl_commands.rollout_status(
+        shell, resource_type, resource_name, wait: true,
+        kubeconfig_path: kubeconfig_path, namespace: namespace
+      ) if wait_for_rollout
     end
     
     apply_result

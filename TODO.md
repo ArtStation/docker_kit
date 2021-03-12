@@ -1,4 +1,5 @@
 - do not show result for images list, if list is too large (Mikhail)
+- deploy services in batches, not all of them at the same time
 - add kit get method for more interactive kubernetes
 - env files should use a separate deployment method (with change detection)
 - add automatical confirmation support for service deployer

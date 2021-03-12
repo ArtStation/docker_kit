@@ -127,4 +127,11 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
       subject.rolling_restart(shell, "deployment", "my_deployment", kubeconfig_path: "/path/to/kube.cfg", namespace: "test")
     end
   end
+
+  context "#rollout_status" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{kubectl rollout status job my-job -w})
+      subject.rollout_status(shell, "job", "my-job")
+    end
+  end
 end

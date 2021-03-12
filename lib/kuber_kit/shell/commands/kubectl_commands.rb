@@ -102,4 +102,12 @@ class KuberKit::Shell::Commands::KubectlCommands
       }
     }, kubeconfig_path: kubeconfig_path, namespace: namespace)
   end
+
+  def rollout_status(shell, resource_type, resource_name, wait: true, kubeconfig_path: nil, namespace: nil)
+    command_parts = []
+    command_parts << %Q{rollout status #{resource_type} #{resource_name}}
+    command_parts << "-w" if wait
+
+    kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, namespace: namespace)
+  end
 end
