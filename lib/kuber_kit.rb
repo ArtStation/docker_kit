@@ -46,6 +46,10 @@ module KuberKit
       autoload :BuildServer, 'core/build_servers/build_server'
     end
 
+    module Dependencies
+      autoload :AbstractDependencyResolver, 'core/dependencies/abstract_dependency_resolver'
+    end
+
     module EnvFiles
       autoload :EnvFileStore, 'core/env_files/env_file_store'
       autoload :AbstractEnvFile, 'core/env_files/abstract_env_file'
@@ -145,6 +149,7 @@ module KuberKit
     autoload :StrategyDetector, 'service_deployer/strategy_detector'
     autoload :Deployer, 'service_deployer/deployer'
     autoload :ServiceListResolver, 'service_deployer/service_list_resolver'
+    autoload :ServiceDependencyResolver, 'service_deployer/service_dependency_resolver'
 
     module Strategies
       autoload :Abstract, 'service_deployer/strategies/abstract'

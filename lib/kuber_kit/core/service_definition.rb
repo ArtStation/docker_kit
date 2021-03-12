@@ -1,5 +1,5 @@
 class KuberKit::Core::ServiceDefinition
-  attr_reader :service_name, :template_name
+  attr_reader :service_name, :template_name, :dependencies
   
   Contract Or[Symbol, String] => Any
   def initialize(service_name)
