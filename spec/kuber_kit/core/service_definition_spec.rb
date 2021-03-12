@@ -15,6 +15,26 @@ RSpec.describe KuberKit::Core::ServiceDefinition do
     end
   end
 
+  context "dependencies" do
+    it "sets service dependencies with symbol" do
+      definition = subject.depends_on(:another_service)
+  
+      expect(definition.to_service_attrs.dependencies).to eq([:another_service])
+    end
+
+    it "sets service dependencies with array" do
+      definition = subject.depends_on([:first_service, :second_service])
+  
+      expect(definition.to_service_attrs.dependencies).to eq([:first_service, :second_service])
+    end
+
+    it "sets service dependencies with multiple args" do
+      definition = subject.depends_on(:first_service, :second_service)
+  
+      expect(definition.to_service_attrs.dependencies).to eq([:first_service, :second_service])
+    end
+  end
+
   context "template" do
     it "sets service template name with symbol" do
       definition = subject.template(:service_template)

@@ -1,18 +1,20 @@
 class KuberKit::Core::Service
   AttributeNotSet = Class.new(Indocker::Error)
 
-  attr_reader :name, :template_name, :tags, :images, :attributes, :deployer_strategy
+  attr_reader :name, :dependencies, :template_name, :tags, :images, :attributes, :deployer_strategy
 
   Contract KeywordArgs[
     name:               Symbol,
+    dependencies:       ArrayOf[Symbol],
     template_name:      Maybe[Symbol],
     tags:               ArrayOf[Symbol],
     images:             ArrayOf[Symbol],
     attributes:         HashOf[Symbol => Any],
     deployer_strategy:  Maybe[Symbol]
   ] => Any
-  def initialize(name:, template_name:, tags:, images:, attributes:, deployer_strategy:)
+  def initialize(name:, dependencies:, template_name:, tags:, images:, attributes:, deployer_strategy:)
     @name = name
+    @dependencies = dependencies
     @template_name = template_name
     @tags = tags
     @images = images

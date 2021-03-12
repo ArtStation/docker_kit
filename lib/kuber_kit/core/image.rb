@@ -1,5 +1,6 @@
 class KuberKit::Core::Image
-  attr_reader :name, :dependencies, :registry, :dockerfile_path, :build_vars, :build_context_dir, :tag, :before_build_callback, :after_build_callback
+  attr_reader :name, :dependencies, :registry, :dockerfile_path, :build_vars, :build_context_dir, :tag, 
+              :before_build_callback, :after_build_callback
 
   Contract KeywordArgs[
     name:               Symbol,

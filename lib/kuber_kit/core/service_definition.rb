@@ -4,17 +4,24 @@ class KuberKit::Core::ServiceDefinition
   Contract Or[Symbol, String] => Any
   def initialize(service_name)
     @service_name = service_name.to_sym
+    @dependencies = []
   end
 
   def to_service_attrs
     OpenStruct.new(
-      name:             @service_name,
-      template_name:    get_value(@template_name),
-      tags:             Array(get_value(@tags)).map(&:to_sym),
-      images:           Array(get_value(@images)).map(&:to_sym),
-      attributes:       get_value(@attributes),
+      name:               @service_name,
+      dependencies:       @dependencies,
+      template_name:      get_value(@template_name),
+      tags:               Array(get_value(@tags)).map(&:to_sym),
+      images:             Array(get_value(@images)).map(&:to_sym),
+      attributes:         get_value(@attributes),
       deployer_strategy:  get_value(@deployer_strategy),
     )
+  end
+
+  def depends_on(*value, &block)
+    @dependencies = Array(value).flatten
+    self
   end
 
   def template(value = nil, &block)
