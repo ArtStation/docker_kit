@@ -1,8 +1,9 @@
 - do not show result for images list, if list is too large (Mikhail)
-- add kit get method for interactive kubernetes
-- kit status should show the list of services and their status, with ability to select & view logs
-- find a way to always deploy some service, e.g. for migrations and env_files
+- add kit get method for more interactive kubernetes
+- env files should use a separate deployment method (with change detection)
+- add automatical confirmation support for service deployer
 - template should be able to set default attributes
 - template should be able to depend on image?
 - cleanup image builds older than some date
 - add some rotation for deploy log
+- kit status should show the list of services and their status, with ability to select & view logs

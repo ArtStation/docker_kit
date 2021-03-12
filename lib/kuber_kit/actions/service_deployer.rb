@@ -93,8 +93,9 @@ class KuberKit::Actions::ServiceDeployer
 
   def show_tags_selection()
     specific_service_option = "deploy specific service"
+    all_services_option     = "deploy all services"
 
-    tags = [specific_service_option]
+    tags = [specific_service_option, all_services_option]
     tags += service_store
       .all_definitions
       .values
@@ -109,6 +110,8 @@ class KuberKit::Actions::ServiceDeployer
 
     if selected_tag == specific_service_option
       show_service_selection
+    elsif selected_tag == all_services_option
+      [["*"], []]
     else
       [[], [selected_tag]]
     end

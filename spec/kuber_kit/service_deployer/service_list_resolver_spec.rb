@@ -56,6 +56,11 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceListResolver do
       result = subject.resolve(tags: ["web"], enabled_services: [])
       expect(result).to eq(["auth_app", "marketplace_app"])
     end
+
+    it "returns all services with full wildcard" do
+      result = subject.resolve(services: ["*"])
+      expect(result).to eq(["auth_app", "marketplace_app"])
+    end
   end
 
   context "split_by_inclusion" do
