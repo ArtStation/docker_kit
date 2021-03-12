@@ -257,6 +257,10 @@ class KuberKit::Container
     KuberKit::ServiceDeployer::ServiceListResolver.new
   end
 
+  register "service_deployer.service_dependency_resolver" do
+    KuberKit::ServiceDeployer::ServiceDependencyResolver.new
+  end
+
   register "service_deployer.strategies.kubernetes" do
     KuberKit::ServiceDeployer::Strategies::Kubernetes.new
   end

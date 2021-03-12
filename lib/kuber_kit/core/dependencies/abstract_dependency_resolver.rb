@@ -2,6 +2,8 @@ class KuberKit::Core::Dependencies::AbstractDependencyResolver
   CircularDependencyError = Class.new(KuberKit::Error)
   DependencyNotFoundError = Class.new(KuberKit::NotFoundError)
 
+  # Iterate over list of dependencies for items (including the items themself).
+  # Iteration will send the list to the callback block function
   Contract Or[Symbol, ArrayOf[Symbol]], Proc => Any
   def each_with_deps(item_names, &block)
     resolved_dependencies = []
@@ -20,6 +22,9 @@ class KuberKit::Core::Dependencies::AbstractDependencyResolver
     end
   end
   
+  # Returns next list of dependencies ready to resolve.
+  # Item is not ready to resolve if it has personal dependency.
+  # E.g. if "A" depends on "B" and "C", "C" depends on "D", then only "B" and "D" will be returned. 
   Contract Or[Symbol, ArrayOf[Symbol]], KeywordArgs[
     resolved: Optional[ArrayOf[Symbol]],
     limit:    Optional[Maybe[Num]]
@@ -36,6 +41,13 @@ class KuberKit::Core::Dependencies::AbstractDependencyResolver
     unresolved_deps = ready_to_resolve - resolved
     unresolved_deps = unresolved_deps.take(limit) if limit
     unresolved_deps
+  end
+
+  # Get all dependencies for items (including the items themself), without any limitations
+  Contract Or[Symbol, ArrayOf[Symbol]] => Any
+  def get_all(item_names)
+    deps = Array(item_names).map { |i| get_recursive_deps(i) }.flatten
+    (deps + item_names).uniq
   end
 
   def get_recursive_deps(item_name, dependency_tree: [])

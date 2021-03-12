@@ -2,6 +2,7 @@ class KuberKit::Actions::ServiceDeployer
   include KuberKit::Import[
     "actions.image_compiler",
     "service_deployer.service_list_resolver",
+    "service_deployer.service_dependency_resolver",
     "core.service_store",
     "shell.local_shell",
     "tools.process_cleaner",
@@ -26,12 +27,15 @@ class KuberKit::Actions::ServiceDeployer
       enabled_services: KuberKit.current_configuration.enabled_services.map(&:to_s)
     )
 
-    unless service_names.any?
+    # Return the list of services with all dependencies.
+    all_service_names = service_dependency_resolver.get_all(service_names.map(&:to_sym))
+
+    unless all_service_names.any?
       ui.print_warning "ServiceDeployer", "No service found with given options, nothing will be deployed."
       return false
     end
 
-    services_list = service_names.map(&:to_s).map(&:yellow).join(", ")
+    services_list = all_service_names.map(&:to_s).map(&:yellow).join(", ")
     ui.print_info "ServiceDeployer", "The following services will be deployed: #{services_list}"
 
     if require_confirmation
@@ -39,7 +43,7 @@ class KuberKit::Actions::ServiceDeployer
       return false unless ["confirm".green, "confirm", "yes"].include?(result)
     end
 
-    services = service_names.map do |service_name|
+    services = all_service_names.map do |service_name|
       service_store.get_service(service_name.to_sym)
     end
 
@@ -50,9 +54,9 @@ class KuberKit::Actions::ServiceDeployer
       return false unless compile_result
     end
 
-    deployment_result = deploy_services(service_names)
+    deployment_result = deploy_services(all_service_names)
 
-    { services: service_names, deployment: deployment_result }
+    { services: all_service_names, deployment: deployment_result }
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
 
