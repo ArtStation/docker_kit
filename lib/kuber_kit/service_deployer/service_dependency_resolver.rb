@@ -9,6 +9,6 @@ class KuberKit::ServiceDeployer::ServiceDependencyResolver < KuberKit::Core::Dep
   end
 
   def dependency_batch_size
-    configs.compile_simultaneous_limit
+    configs.deploy_simultaneous_limit
   end
 end
