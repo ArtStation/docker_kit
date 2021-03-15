@@ -1,6 +1,8 @@
 require 'fileutils'
 
 class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
+  MAX_LINES_TO_PRINT = 50
+
   include KuberKit::Import[
     "shell.command_counter",
     "shell.rsync_commands",
@@ -20,7 +22,19 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     end
 
     if result && result != "" && log_command
-      ui.print_debug("LocalShell", "Finished [#{command_number}] with result: \n  ----\n#{result.grey}\n  ----")
+      print_result = result
+      print_result_lines = print_result.split("\n")
+
+      if print_result_lines.count >= MAX_LINES_TO_PRINT
+        print_result = [
+          "[Result is too long, showing only first and last items]".yellow, 
+          print_result_lines.first, 
+          "[#{print_result_lines.count - 2} lines not showing]".yellow, 
+          print_result_lines.last
+      ].join("\n")
+      end
+
+      ui.print_debug("LocalShell", "Finished [#{command_number}] with result: \n  ----\n#{print_result.grey}\n  ----")
     end
 
     if $?.exitstatus != 0

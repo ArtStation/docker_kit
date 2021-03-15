@@ -1,4 +1,3 @@
-- do not show result for images list, if list is too large (Mikhail)
 - add kit get method for more interactive kubernetes
 - env files should use a separate deployment method (with change detection)
 - add automatical confirmation support for service deployer

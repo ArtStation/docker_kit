@@ -133,5 +133,10 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
       expect(shell).to receive(:exec!).with(%Q{kubectl rollout status job my-job -w})
       subject.rollout_status(shell, "job", "my-job")
     end
+
+    it do
+      expect(shell).to receive(:exec!).with(%Q{kubectl rollout status job my-job})
+      subject.rollout_status(shell, "job", "my-job", wait: false)
+    end
   end
 end
