@@ -45,6 +45,10 @@ class KuberKit::Container
     KuberKit::Actions::KubectlDescribe.new
   end
 
+  register "actions.kubectl_get" do
+    KuberKit::Actions::KubectlGet.new
+  end
+
   register "actions.kubectl_logs" do
     KuberKit::Actions::KubectlLogs.new
   end

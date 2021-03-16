@@ -150,6 +150,15 @@ class KuberKit::CLI < Thor
     end
   end
 
+  desc "get RESOURCE_NAME", "Get RESOURCE_NAME using kubectl"
+  def get(pod_name = nil)
+    setup(options)
+
+    if KuberKit::Container['actions.configuration_loader'].call(options.merge(load_inventory: false))
+      KuberKit::Container['actions.kubectl_get'].call(pod_name, options)
+    end
+  end
+
   desc "version", "Print current version"
   def version
     puts KuberKit::VERSION

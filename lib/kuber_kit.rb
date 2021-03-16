@@ -176,6 +176,7 @@ module KuberKit
     autoload :KubectlAttacher, 'actions/kubectl_attacher'
     autoload :KubectlConsole, 'actions/kubectl_console'
     autoload :KubectlDescribe, 'actions/kubectl_describe'
+    autoload :KubectlGet, 'actions/kubectl_get'
     autoload :KubectlLogs, 'actions/kubectl_logs'
     autoload :KubectlEnv, 'actions/kubectl_env'
   end
