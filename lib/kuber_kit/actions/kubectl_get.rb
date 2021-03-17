@@ -16,10 +16,12 @@ class KuberKit::Actions::KubectlGet
       kubeconfig_path: kubeconfig_path, 
       namespace: deployer_namespace
     )
+    
+    if resource_name
+      resources = resources.select{|r| r.include?(resource_name) }
+    end
 
-    matching_resources = resources.select{|r| r.include?(resource_name) }
-
-    ui.print_info("Pods", matching_resources.join("\n"))
+    ui.print_info("Pods", resources.join("\n"))
 
     true
   rescue KuberKit::Error => e
