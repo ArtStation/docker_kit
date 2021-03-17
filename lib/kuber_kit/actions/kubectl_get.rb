@@ -11,21 +11,15 @@ class KuberKit::Actions::KubectlGet
     kubeconfig_path = KuberKit.current_configuration.kubeconfig_path
     deployer_namespace = KuberKit.current_configuration.deployer_namespace
 
-    if !resource_name 
-      resource_name  = resource_selector.call("get", include_ingresses: true, include_pods: true)
-    end
-
-    args = nil
-    if options[:follow]
-      args = "-f"
-    end
-
-    kubectl_commands.get(
-      local_shell, resource_name,
-      args: args,
+    resources = kubectl_commands.get_resources(
+      local_shell, "pod",
       kubeconfig_path: kubeconfig_path, 
       namespace: deployer_namespace
     )
+
+    matching_resources = resources.select{|r| r.include?(resource_name) }
+
+    ui.print_info("Pods", matching_resources.join("\n"))
 
     true
   rescue KuberKit::Error => e
