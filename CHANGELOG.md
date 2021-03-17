@@ -1,3 +1,6 @@
+**0.5.3**
+- Change the symbol to exclude service from "-" to "!", you can pass "-s !auth_app" to exclude "auth_app"
+ 
 **0.5.2**
 - Added dependencies support to services
 - Added an option to deploy all services in `kit deloy`

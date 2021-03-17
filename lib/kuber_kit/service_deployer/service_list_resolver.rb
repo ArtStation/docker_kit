@@ -41,9 +41,9 @@ class KuberKit::ServiceDeployer::ServiceListResolver
 
   Contract Array => Array
   def split_by_inclusion(array)
-    excluded, included = array.partition{|e| e.start_with?('-') }
+    excluded, included = array.partition{|e| e.start_with?('!') }
 
-    excluded.map!{ |item| item.gsub(/^\-/, "") }
+    excluded.map!{ |item| item.gsub(/^\!/, "") }
 
     [included, excluded]
   end
