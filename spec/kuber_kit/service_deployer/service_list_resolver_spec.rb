@@ -61,6 +61,11 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceListResolver do
       result = subject.resolve(services: ["*"])
       expect(result).to eq(["auth_app", "marketplace_app"])
     end
+
+    it "skips disabled services" do
+      result = subject.resolve(tags: ["web"], disabled_services: ["auth_app"])
+      expect(result).to eq(["marketplace_app"])
+    end
   end
 
   context "split_by_inclusion" do

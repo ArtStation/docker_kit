@@ -18,6 +18,8 @@ class KuberKit::Actions::ServiceDeployer
     require_confirmation: Maybe[Bool],
   ] => Any
   def call(services:, tags:, skip_compile: false, require_confirmation: false)
+    current_configuration = KuberKit.current_configuration
+
     if services.empty? && tags.empty?
       services, tags = show_tags_selection
     end
@@ -25,7 +27,8 @@ class KuberKit::Actions::ServiceDeployer
     service_names = service_list_resolver.resolve(
       services:         services || [],
       tags:             tags || [],
-      enabled_services: KuberKit.current_configuration.enabled_services.map(&:to_s)
+      enabled_services:   current_configuration.enabled_services.map(&:to_s),
+      disabled_services:  current_configuration.disabled_services.map(&:to_s)
     ).map(&:to_sym)
 
     # Return the list of services with all dependencies.

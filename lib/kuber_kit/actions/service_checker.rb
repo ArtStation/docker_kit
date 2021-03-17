@@ -15,6 +15,11 @@ class KuberKit::Actions::ServiceChecker
       services = services.select{ |s| enabled_services.include?(s) }
     end
 
+    disabled_services  = KuberKit.current_configuration.disabled_services.map(&:to_s)
+    if disabled_services.any?
+      services = services.select{ |s| !disabled_services.include?(s) }
+    end
+
     resources = resources_fetcher.call("deployments") + resources_fetcher.call("cronjobs")
 
     missing_services = services.select{ |s| !resources.include?(s.gsub("_", "-")) }

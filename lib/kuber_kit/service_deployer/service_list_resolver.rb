@@ -4,11 +4,12 @@ class KuberKit::ServiceDeployer::ServiceListResolver
   ]
 
   Contract KeywordArgs[
-    services:         Optional[ArrayOf[String]],
-    tags:             Optional[ArrayOf[String]],
-    enabled_services: Optional[ArrayOf[String]]
+    services:           Optional[ArrayOf[String]],
+    tags:               Optional[ArrayOf[String]],
+    enabled_services:   Optional[ArrayOf[String]],
+    disabled_services:  Optional[ArrayOf[String]]
   ] => ArrayOf[String]
-  def resolve(services: [], tags: [], enabled_services: [])
+  def resolve(services: [], tags: [], enabled_services: [], disabled_services: [])
     all_definitions = service_store.all_definitions.values
 
     included_services, excluded_services = split_by_inclusion(services)
@@ -34,6 +35,10 @@ class KuberKit::ServiceDeployer::ServiceListResolver
 
     if enabled_services.any?
       included_services = included_services.select{ |s| enabled_services.include?(s) }
+    end
+
+    if disabled_services.any?
+      included_services = included_services.select{ |s| !disabled_services.include?(s) }
     end
 
     included_services
