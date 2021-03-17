@@ -1,5 +1,6 @@
 **0.5.3**
 - Change the symbol to exclude service from "-" to "!", you can pass "-s !auth_app" to exclude "auth_app"
+- Added kit get command to find pods
  
 **0.5.2**
 - Added dependencies support to services

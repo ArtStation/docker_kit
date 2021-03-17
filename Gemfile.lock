@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kuber_kit (0.5.2)
+    kuber_kit (0.5.3)
       cli-ui
       contracts-lite
       dry-auto_inject
