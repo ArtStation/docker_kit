@@ -59,8 +59,8 @@ class KuberKit::CLI < Thor
     end
   end
 
-  desc "env ENV_FILE_NAME", "Return content of Env File ENV_FILE_NAME"
-  def env(env_file_name)
+  desc "envfile ENV_FILE_NAME", "Return content of Env File ENV_FILE_NAME"
+  def envfile(env_file_name)
     setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
