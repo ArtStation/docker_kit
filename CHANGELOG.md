@@ -1,3 +1,6 @@
+**0.5.5**
+- Added ability to skip services during deployment using -S option
+
 **0.5.4**
 - Added disabled services support
 
