@@ -3,4 +3,4 @@ KuberKit
   .depends_on(:env_file)
   .template(:service)
   .images(:ruby_app)
-  .tags("app")
+  .tags("app", "minimal")

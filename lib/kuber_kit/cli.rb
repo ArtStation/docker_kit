@@ -33,6 +33,7 @@ class KuberKit::CLI < Thor
   desc "deploy -t TAG_NAME", "Deploy CONTEXT_NAME with kubectl"
   method_option :services,              :type => :array,    aliases: ["-s"], repeatable: true
   method_option :tags,                  :type => :array,    aliases: ["-t"], repeatable: true
+  method_option :skip_services,         :type => :array,    aliases: ["-S"], repeatable: true
   method_option :skip_compile,          :type => :boolean,  aliases: ["-B"]
   method_option :require_confirmation,  :type => :boolean,  aliases: ["-r"]
   def deploy
@@ -46,6 +47,7 @@ class KuberKit::CLI < Thor
       result = KuberKit::Container['actions.service_deployer'].call(
         services:             (options[:services] || []).flatten.uniq, 
         tags:                 (options[:tags] || []).flatten.uniq,
+        skip_services:        (options[:skip_services] || []).flatten.uniq, 
         skip_compile:         options[:skip_compile] || false,
         require_confirmation: require_confirmation
       )
