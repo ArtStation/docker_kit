@@ -28,22 +28,22 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceListResolver do
     end
   
     it "exludes service with minus in name" do
-      result = subject.resolve(tags: ["web"], services: ["!auth_app"])
+      result = subject.resolve(tags: ["web"], services: ["^auth_app"])
       expect(result).to eq(["marketplace_app"])
     end
 
     it "exludes service with wildcard in name" do
-      result = subject.resolve(tags: ["web"], services: ["!auth_*"])
+      result = subject.resolve(tags: ["web"], services: ["^auth_*"])
       expect(result).to eq(["marketplace_app"])
     end
 
     it "exludes service with minus in tag" do
-      result = subject.resolve(tags: ["web", "!marketplace"])
+      result = subject.resolve(tags: ["web", "^marketplace"])
       expect(result).to eq(["auth_app"])
     end
 
     it "excludes service with wildcard in tag" do
-      result = subject.resolve(tags: ["web", "!au*"])
+      result = subject.resolve(tags: ["web", "^au*"])
       expect(result).to eq(["marketplace_app"])
     end
 
@@ -70,7 +70,7 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceListResolver do
 
   context "split_by_inclusion" do
     it do
-      result = subject.split_by_inclusion(["!foo", "web"])
+      result = subject.split_by_inclusion(["^foo", "web"])
       expect(result[0]).to eq(["web"])
       expect(result[1]).to eq(["foo"])
     end
