@@ -3,17 +3,18 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
 
   let(:shell) { test_helper.shell }
   let(:service) { service_helper.service(:auth_app) }
+  let(:service_config_path) { File.expand_path(File.join("~", ".kuber_kit/services/auth_app.yml")) }
 
   it "applies kubernetes config" do
-    expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
+    expect(shell).to receive(:write).with(service_config_path, /apiVersion: v1/)
     expect(subject.kubectl_commands).to receive(:apply_file).with(
-      shell, "/tmp/kuber_kit/services/auth_app.yml", kubeconfig_path: nil, namespace: nil
+      shell, service_config_path, kubeconfig_path: nil, namespace: nil
     )
     subject.deploy(shell, service)
   end
 
   it "restarts service if it exists" do
-    expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
+    expect(shell).to receive(:write).with(service_config_path, /apiVersion: v1/)
     expect(subject.kubectl_commands).to receive(:resource_exists?).and_return(true)
     expect(subject.kubectl_commands).to receive(:apply_file)
     expect(subject.kubectl_commands).to receive(:rolling_restart).with(
@@ -27,7 +28,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
   end
 
   it "doesn't restart deployment if it's disabled for service" do
-    expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
+    expect(shell).to receive(:write).with(service_config_path, /apiVersion: v1/)
     expect(subject.kubectl_commands).to receive(:resource_exists?).and_return(true)
     expect(subject.kubectl_commands).to receive(:apply_file)
     expect(subject.kubectl_commands).to_not receive(:rolling_restart)
@@ -37,7 +38,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
   end
 
   it "doesn't wait for rollout status deployment if it's disabled for service" do
-    expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
+    expect(shell).to receive(:write).with(service_config_path, /apiVersion: v1/)
     expect(subject.kubectl_commands).to receive(:resource_exists?).and_return(true)
     expect(subject.kubectl_commands).to receive(:apply_file)
     expect(subject.kubectl_commands).to receive(:rolling_restart)
@@ -48,11 +49,11 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
   end
 
   it "deletes previous deployment if it's enabled for service" do
-    expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_job.yml", /apiVersion: v1/)
+    expect(shell).to receive(:write).with(/auth_job/, /apiVersion: v1/)
     expect(subject.kubectl_commands).to receive(:resource_exists?).and_return(true)
     expect(subject.kubectl_commands).to receive(:delete_resource).with(shell, "job", "auth-job", kubeconfig_path: nil, namespace: nil)
     expect(subject.kubectl_commands).to receive(:apply_file).with(
-      shell, "/tmp/kuber_kit/services/auth_job.yml", kubeconfig_path: nil, namespace: nil
+      shell, /auth_job/, kubeconfig_path: nil, namespace: nil
     )
 
     service = service_helper.service(:auth_job, attributes: {deployer: {resource_type: "job", delete_if_exists: true}})
@@ -60,7 +61,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
   end
 
   it "uses custom deployment name if provided" do
-    expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
+    expect(shell).to receive(:write).with(service_config_path, /apiVersion: v1/)
     expect(subject.kubectl_commands).to receive(:resource_exists?).and_return(true)
     expect(subject.kubectl_commands).to receive(:apply_file)
     expect(subject.kubectl_commands).to receive(:rolling_restart).with(

@@ -25,13 +25,13 @@ RSpec.describe KuberKit::Core::ContextHelper::BaseHelper do
     it "returns artifacts cloned path" do
       test_helper.add_artifact(:example_repo, "git@github.com/myapp.git")
 
-      expect(subject.artifact_path(:example_repo)).to eq("/tmp/kuber_kit/artifacts/example_repo")
+      expect(subject.artifact_path(:example_repo)).to eq(File.expand_path(File.join("~", ".kuber_kit/artifacts/example_repo")))
     end
 
     it "returns artifacts path to specific file if needed" do
       test_helper.add_artifact(:example_repo, "git@github.com/myapp.git")
 
-      expect(subject.artifact_path(:example_repo, "test.txt")).to eq("/tmp/kuber_kit/artifacts/example_repo/test.txt")
+      expect(subject.artifact_path(:example_repo, "test.txt")).to eq(File.expand_path(File.join("~", ".kuber_kit/artifacts/example_repo/test.txt")))
     end
   end
 

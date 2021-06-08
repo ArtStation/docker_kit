@@ -34,10 +34,12 @@ class KuberKit::Configs
   end
 
   def add_default_configs
+    home_kuber_kit_path = File.expand_path(File.join("~", ".kuber_kit"))
+    
     set :image_dockerfile_name,   "Dockerfile"
     set :image_build_context_dir, "build_context"
     set :image_tag,               'latest'
-    set :image_compile_dir,       "/tmp/kuber_kit/image_builds"
+    set :image_compile_dir,       File.join(home_kuber_kit_path, "image_builds")
     set :docker_ignore_list,      DOCKER_IGNORE_LIST
     set :kuber_kit_dirname,       "kuber_kit"
     set :kuber_kit_min_version,   KuberKit::VERSION
@@ -45,14 +47,14 @@ class KuberKit::Configs
     set :services_dirname,        "services"
     set :infra_dirname,           "infrastructure"
     set :configurations_dirname,  "configurations"
-    set :artifact_clone_dir,      "/tmp/kuber_kit/artifacts"
-    set :service_config_dir,      "/tmp/kuber_kit/services"
+    set :artifact_clone_dir,      File.join(home_kuber_kit_path, "artifacts")
+    set :service_config_dir,      File.join(home_kuber_kit_path, "services")
     set :deployer_strategy,         :kubernetes
     set :compile_simultaneous_limit, 5
     set :deploy_simultaneous_limit,  5
     set :additional_images_paths, []
     set :deprecation_warnings_disabled, false
-    set :log_file_path,           "/tmp/kuber_kit.log"
+    set :log_file_path,           File.join(home_kuber_kit_path, "deploy.log")
   end
 
   def items

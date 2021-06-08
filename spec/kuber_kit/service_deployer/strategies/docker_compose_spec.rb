@@ -3,20 +3,21 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::DockerCompose do
 
   let(:shell) { test_helper.shell }
   let(:service) { service_helper.service(:auth_app) }
+  let(:service_config_path) { File.expand_path(File.join("~", ".kuber_kit/services/auth_app.yml")) }
 
   it "runs service using docker compose" do
-    expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
+    expect(shell).to receive(:write).with(service_config_path, /apiVersion: v1/)
     expect(subject.docker_compose_commands).to receive(:run).with(
-      shell, "/tmp/kuber_kit/services/auth_app.yml", service: "auth_app", args: nil,
+      shell, service_config_path, service: "auth_app", args: nil,
       command: nil, interactive: true, detached: false
     )
     subject.deploy(shell, service)
   end
 
   it "runs uses custom args: nil,  if provided" do
-    expect(shell).to receive(:write).with("/tmp/kuber_kit/services/auth_app.yml", /apiVersion: v1/)
+    expect(shell).to receive(:write).with(service_config_path, /apiVersion: v1/)
     expect(subject.docker_compose_commands).to receive(:run).with(
-      shell, "/tmp/kuber_kit/services/auth_app.yml", service: "auth_app", args: nil,
+      shell, service_config_path, service: "auth_app", args: nil,
       command: "sh", interactive: true, detached: false
     )
 

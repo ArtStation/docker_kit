@@ -6,7 +6,7 @@ RSpec.describe KuberKit::ImageCompiler::ActionHandler do
 
   it "runs image compile by image name and returns compilation result" do
     expect(subject.image_store).to receive(:get_image).with(:example).and_return(image)
-    expect(subject.compiler).to receive(:compile).with(shell, image, "/tmp/kuber_kit/image_builds/2020").and_return("image_id")
+    expect(subject.compiler).to receive(:compile).with(shell, image, /kuber_kit\/image_builds\/2020/).and_return("image_id")
 
     result = subject.call(shell, :example, "2020")
     expect(result).to eq("image_id")
