@@ -1,4 +1,5 @@
 require 'logger'
+require 'fileutils'
 
 class KuberKit::Tools::LoggerFactory
   SEVERITY_COLORS_BY_LEVEL = {
@@ -14,6 +15,10 @@ class KuberKit::Tools::LoggerFactory
   ]
 
   def create(stdout = nil, level = nil)
+    if !stdout
+      prepare_log_file(configs.log_file_path)
+    end
+    
     logger = Logger.new(stdout || configs.log_file_path)
 
     logger.level = level || Logger::DEBUG
@@ -35,4 +40,13 @@ class KuberKit::Tools::LoggerFactory
 
     logger
   end
+
+  private
+    def prepare_log_file(file_path)
+      dir_path = File.dirname(file_path)
+      unless Dir.exists?(dir_path)
+        FileUtils.mkdir_p(dir_path)
+      end
+      FileUtils.touch(file_path)
+    end
 end
