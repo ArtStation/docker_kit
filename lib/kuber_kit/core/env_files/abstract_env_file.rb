@@ -6,4 +6,8 @@ class KuberKit::Core::EnvFiles::AbstractEnvFile
   def initialize(env_file_name)
     @name = env_file_name
   end
+
+  def uniq_name
+    @name.to_s
+  end
 end

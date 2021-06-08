@@ -6,4 +6,8 @@ class KuberKit::Core::EnvFiles::ArtifactFile < KuberKit::Core::EnvFiles::Abstrac
     @artifact_name = artifact_name
     @file_path = file_path
   end
+
+  def uniq_name
+    [@artifact_name.to_s, @name.to_s].join("-")
+  end
 end

@@ -1,6 +1,6 @@
 **0.5.6** (To be released)
 - Pre-process env file if it has .erb extension
-- Change default data paths to use homde directory
+- Change default data paths to use home directory
 
 **0.5.5**
 - Added ability to skip services during deployment using -S option
