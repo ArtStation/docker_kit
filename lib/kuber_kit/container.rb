@@ -229,6 +229,10 @@ class KuberKit::Container
     KuberKit::EnvFileReader::Reader.new
   end
 
+  register "env_file_reader.env_file_parser" do
+    KuberKit::EnvFileReader::EnvFileParser.new
+  end
+
   register "env_file_reader.strategies.artifact_file" do
     KuberKit::EnvFileReader::Strategies::ArtifactFile.new
   end

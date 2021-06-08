@@ -127,6 +127,7 @@ module KuberKit
   module EnvFileReader
     autoload :ActionHandler, 'env_file_reader/action_handler'
     autoload :Reader, 'env_file_reader/reader'
+    autoload :EnvFileParser, 'env_file_reader/env_file_parser'
 
     module Strategies
       autoload :Abstract, 'env_file_reader/strategies/abstract'
