@@ -1,3 +1,6 @@
+**0.5.6** (To be released)
+- Pre-process env file if it has .erb extension
+
 **0.5.5**
 - Added ability to skip services during deployment using -S option
 
