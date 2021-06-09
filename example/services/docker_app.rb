@@ -7,6 +7,7 @@ KuberKit
       detached:         false,
       image_name:       :ruby_app,
       container_name:   "test_docker_app",
-      delete_if_exists: true
+      delete_if_exists: true,
+      env_file_names:   [:test]
     }
   )

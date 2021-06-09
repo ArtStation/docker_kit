@@ -1,5 +1,6 @@
 **0.5.6** (To be released)
 - Pre-process env file if it has .erb extension
+- Allow attaching env file from configuration to docker container
 - Change default data paths to use home directory
 
 **0.5.5**

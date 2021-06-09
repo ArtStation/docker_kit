@@ -19,6 +19,7 @@ class KuberKit::EnvFileReader::EnvFileParser
     (?:$|\z)              # end of line
   /x
 
+  Contract String => Hash
   def call(string)
     hash = {}
     string.gsub(/\r\n?/, "\n").scan(LINE).each do |key, value|
