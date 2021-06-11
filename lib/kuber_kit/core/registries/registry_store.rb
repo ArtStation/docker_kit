@@ -3,6 +3,7 @@ class KuberKit::Core::Registries::RegistryStore
     store.add(registry.name, registry)
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::Registries::AbstractRegistry]
   def get(registry_name)
     registry = get_from_configuration(registry_name) || 
                get_global(registry_name)
@@ -10,10 +11,12 @@ class KuberKit::Core::Registries::RegistryStore
     registry
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::Registries::AbstractRegistry]
   def get_global(registry_name)
     store.get(registry_name)
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::Registries::AbstractRegistry]
   def get_from_configuration(registry_name)
     registries = KuberKit.current_configuration.registries
     registries[registry_name]

@@ -3,6 +3,7 @@ class KuberKit::Core::Artifacts::ArtifactStore
     store.add(artifact.name, artifact)
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::Artifacts::AbstractArtifact]
   def get(artifact_name)
     artifact = get_from_configuration(artifact_name) || 
                get_global(artifact_name)
@@ -10,10 +11,12 @@ class KuberKit::Core::Artifacts::ArtifactStore
     artifact
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::Artifacts::AbstractArtifact]
   def get_global(artifact_name)
     store.get(artifact_name)
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::Artifacts::AbstractArtifact]
   def get_from_configuration(artifact_name)
     artifacts = KuberKit.current_configuration.artifacts
     artifacts[artifact_name]

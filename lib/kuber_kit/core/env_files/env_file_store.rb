@@ -3,6 +3,7 @@ class KuberKit::Core::EnvFiles::EnvFileStore
     store.add(env_file.name, env_file)
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::EnvFiles::AbstractEnvFile]
   def get(env_file_name)
     env_file = get_from_configuration(env_file_name) || 
                get_global(env_file_name)
@@ -10,10 +11,12 @@ class KuberKit::Core::EnvFiles::EnvFileStore
     env_file
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::EnvFiles::AbstractEnvFile]
   def get_global(env_file_name)
     store.get(env_file_name)
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::EnvFiles::AbstractEnvFile]
   def get_from_configuration(env_file_name)
     env_files = KuberKit.current_configuration.env_files
     env_files[env_file_name]

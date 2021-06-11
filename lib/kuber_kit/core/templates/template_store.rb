@@ -3,6 +3,7 @@ class KuberKit::Core::Templates::TemplateStore
     store.add(template.name, template)
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::Templates::AbstractTemplate]
   def get(template_name)
     template = get_from_configuration(template_name) || 
                get_global(template_name)
@@ -10,10 +11,12 @@ class KuberKit::Core::Templates::TemplateStore
     template
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::Templates::AbstractTemplate]
   def get_global(template_name)
     store.get(template_name)
   end
 
+  Contract Symbol => Maybe[KuberKit::Core::Templates::AbstractTemplate]
   def get_from_configuration(template_name)
     templates = KuberKit.current_configuration.templates
     templates[template_name]
