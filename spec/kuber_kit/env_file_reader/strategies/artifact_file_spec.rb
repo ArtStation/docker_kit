@@ -3,7 +3,7 @@ RSpec.describe KuberKit::EnvFileReader::Strategies::ArtifactFile do
 
   let(:artifact) { KuberKit::Core::Artifacts::Local.new(:env_files).setup(File.join(FIXTURES_PATH, "env_files")) }
   let(:env_file_plain) { KuberKit::Core::EnvFiles::ArtifactFile.new(:test_env, artifact_name: :env_files, file_path: "test.env") }
-  let(:env_file_erb) { KuberKit::Core::EnvFiles::ArtifactFile.new(:test_env, artifact_name: :env_files, file_path: "test2.env.erb") }
+  let(:env_file_erb) { KuberKit::Core::EnvFiles::ArtifactFile.new(:test_env_erb, artifact_name: :env_files, file_path: "test2.env.erb") }
 
   before do
     test_helper.artifact_store.add(artifact)

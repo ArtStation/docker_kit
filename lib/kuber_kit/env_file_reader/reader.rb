@@ -3,6 +3,7 @@ class KuberKit::EnvFileReader::Reader
 
   include KuberKit::Import[
     "env_file_reader.strategies.artifact_file",
+    "env_file_reader.strategies.env_group",
   ]
 
   def initialize(**injected_deps)
@@ -35,5 +36,6 @@ class KuberKit::EnvFileReader::Reader
   private
     def add_default_strategies
       use_reader(artifact_file, env_file_class: KuberKit::Core::EnvFiles::ArtifactFile)
+      use_reader(env_group, env_file_class: KuberKit::Core::EnvFiles::EnvGroup)
     end
 end

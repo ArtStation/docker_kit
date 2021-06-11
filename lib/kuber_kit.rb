@@ -54,6 +54,7 @@ module KuberKit
       autoload :EnvFileStore, 'core/env_files/env_file_store'
       autoload :AbstractEnvFile, 'core/env_files/abstract_env_file'
       autoload :ArtifactFile, 'core/env_files/artifact_file'
+      autoload :EnvGroup, 'core/env_files/env_group'
     end
 
     module ContextHelper
@@ -133,6 +134,7 @@ module KuberKit
     module Strategies
       autoload :Abstract, 'env_file_reader/strategies/abstract'
       autoload :ArtifactFile, 'env_file_reader/strategies/artifact_file'
+      autoload :EnvGroup, 'env_file_reader/strategies/env_group'
     end
   end
 

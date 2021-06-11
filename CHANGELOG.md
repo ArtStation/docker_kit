@@ -2,6 +2,7 @@
 - Pre-process env file if it has .erb extension
 - Allow attaching env file from configuration to docker container
 - Change default data paths to use home directory
+- Add env groups support to combine multiple env files
 
 **0.5.5**
 - Added ability to skip services during deployment using -S option
