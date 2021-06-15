@@ -137,6 +137,10 @@ class KuberKit::Container
     KuberKit::Tools::ProcessCleaner.new
   end
 
+  register "tools.workdir_detector" do
+    KuberKit::Tools::WorkdirDetector.new
+  end
+
   register "shell.bash_commands" do
     KuberKit::Shell::Commands::BashCommands.new
   end

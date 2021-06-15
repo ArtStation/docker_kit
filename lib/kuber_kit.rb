@@ -82,6 +82,7 @@ module KuberKit
     autoload :FilePresenceChecker, 'tools/file_presence_checker'
     autoload :LoggerFactory, 'tools/logger_factory'
     autoload :ProcessCleaner, 'tools/process_cleaner'
+    autoload :WorkdirDetector, 'tools/workdir_detector'
   end
 
   module Shell

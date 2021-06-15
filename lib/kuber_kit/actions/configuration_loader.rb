@@ -4,6 +4,7 @@ class KuberKit::Actions::ConfigurationLoader
     "core.image_store",
     "core.service_store",
     "core.configuration_store",
+    "tools.workdir_detector",
     "artifacts_sync.artifacts_updater",
     "shell.local_shell",
     "ui",
@@ -12,7 +13,7 @@ class KuberKit::Actions::ConfigurationLoader
 
   Contract Hash => Any
   def call(options)
-    root_path     = options[:path] || File.join(Dir.pwd, configs.kuber_kit_dirname)
+    root_path     = workdir_detector.call(options)
     images_path   = options[:images_path] || File.join(root_path, configs.images_dirname)
     services_path = options[:services_path] || File.join(root_path, configs.services_dirname)
     infra_path    = options[:infra_path]  || File.join(root_path, configs.infra_dirname)
