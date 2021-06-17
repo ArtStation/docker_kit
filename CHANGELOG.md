@@ -1,3 +1,6 @@
+**0.5.8**
+- Update gemspec to support ruby 2.5
+
 **0.5.7**
 - Look for kuber_kit root path in parent folders, so kit command will work in sub-folders
 
