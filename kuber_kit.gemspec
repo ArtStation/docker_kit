@@ -24,11 +24,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "contracts-lite"
-  spec.add_dependency "dry-auto_inject"
+  spec.add_dependency "dry-auto_inject", "~> 0.7.0"
   spec.add_dependency "thor"
   spec.add_dependency "cli-ui"
   spec.add_dependency "net-ssh"
   spec.add_dependency "tty-prompt"
+  spec.add_dependency "dry-container", "~> 0.7.2"
 
   spec.add_development_dependency "bundler", "~> 1.17"
   spec.add_development_dependency "rake", "~> 10.0"
