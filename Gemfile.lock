@@ -4,7 +4,8 @@ PATH
     kuber_kit (0.5.7)
       cli-ui
       contracts-lite
-      dry-auto_inject
+      dry-auto_inject (~> 0.7.0)
+      dry-container (~> 0.7.2)
       net-ssh
       thor
       tty-prompt
