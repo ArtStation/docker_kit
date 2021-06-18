@@ -20,7 +20,8 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     :networks,
     :expose,
     :publish,
-    :env_file_names
+    :env_file_names,
+    :env_vars
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service => Any
@@ -44,6 +45,7 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
 
     env_file_names  = strategy_options.fetch(:env_file_names, [])
     env_files       = prepare_env_files(shell, env_file_names)
+    env_vars        = strategy_options.fetch(:env_vars, {})
 
     image_name = strategy_options.fetch(:image_name, nil)
     if image_name.nil?
@@ -83,6 +85,9 @@ class KuberKit::ServiceDeployer::Strategies::Docker < KuberKit::ServiceDeployer:
     end
     Array(env_files).each do |env_file|
       custom_args << "--env-file #{env_file}"
+    end
+    env_vars.each do |key, value|
+      custom_args << "--env #{key}=#{value}"
     end
 
     docker_commands.run(
