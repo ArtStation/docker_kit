@@ -3,7 +3,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: <%= service_uri %>
+    app:  <%= service_uri %>
+    user: <%= KuberKit.user %>
   name: <%= service_uri %>
 spec:
   replicas: 1

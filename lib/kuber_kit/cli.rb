@@ -10,6 +10,7 @@ class KuberKit::CLI < Thor
   class_option :ui, :type => :string, :desc => "UI mode (interactive|debug|simple)"
   class_option :debug, :type => :boolean, aliases: ["-d"]
   class_option :configuration, :type => :string, aliases: ["-C"]
+  class_option :user, :type => :string, aliases: ["-u"]
 
   desc "compile IMAGE_NAMES", "Compile image with IMAGE_NAMES (comma-separated)"
   def compile(image_names_str)
@@ -176,6 +177,10 @@ class KuberKit::CLI < Thor
         KuberKit.set_ui_mode(:debug)
       elsif options[:ui]
         KuberKit.set_ui_mode(options[:ui].to_sym)
+      end
+
+      if options[:user]
+        KuberKit.set_user(options[:user])
       end
 
       # We should load config before loading any bean, to make sure that bean won't be built with default config

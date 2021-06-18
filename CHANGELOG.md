@@ -1,3 +1,6 @@
+**0.5.9**(to be released)
+- Added an ability to set custom user
+
 **0.5.8**
 - Update gemspec to support ruby 2.5
 

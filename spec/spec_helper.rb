@@ -8,6 +8,7 @@ require 'pry'
 require 'dry/container/stub'
 
 ENV['KUBER_KIT_CONFIGURATION'] = nil
+ENV['KUBER_KIT_PATH'] = nil
 
 Dir["#{File.dirname(__FILE__)}/helpers/**/*.rb"].each { |f| require f }
 
