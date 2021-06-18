@@ -1,6 +1,7 @@
 **0.5.9**(to be released)
 - Added an ability to set custom user
 - Allow setting environment variable in docker strategy
+- Properly stop deployment if image compilation is failed
 
 **0.5.8**
 - Update gemspec to support ruby 2.5

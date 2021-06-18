@@ -170,6 +170,7 @@ module KuberKit
   end
 
   module Actions
+    autoload :ActionResult, 'actions/action_result'
     autoload :ImageCompiler, 'actions/image_compiler'
     autoload :EnvFileReader, 'actions/env_file_reader'
     autoload :TemplateReader, 'actions/template_reader'

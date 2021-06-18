@@ -10,38 +10,40 @@ class KuberKit::Actions::ImageCompiler
 
   Contract ArrayOf[Symbol], Hash => Any
   def call(image_names, options)
+    compilation_result = KuberKit::Actions::ActionResult.new()
+
     build_id = generate_build_id
     build_server_pool = build_server_pool_factory.create()
 
-    compiled_images = []
-    compilation_result = {}
     image_dependency_resolver.each_with_deps(image_names) do |dep_image_names|
       ui.print_debug("ImageCompiler", "Scheduling to compile: #{dep_image_names.inspect}. Limit: #{configs.compile_simultaneous_limit}")
-      result = compile_simultaneously(dep_image_names, build_id, build_server_pool)
-      compiled_images += dep_image_names
-      compilation_result = compilation_result.merge(result)
+
+      if compilation_result.succeeded?
+        compile_simultaneously(dep_image_names, build_id, build_server_pool, compilation_result)
+      end
     end
 
     build_server_pool.disconnect_all
 
-    { images: compiled_images, compilation: compilation_result }
+    compilation_result
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
+
+    compilation_result.failed!(e.message)
 
     false
   end
 
   private
-    def compile_simultaneously(image_names, build_id, build_server_pool)
+    def compile_simultaneously(image_names, build_id, build_server_pool, compilation_result)
       task_group = ui.create_task_group
-      compiler_result = {}
       image_names.map do |image_name|
 
         ui.print_debug("ImageCompiler", "Started compiling: #{image_name.to_s.green}")
         task_group.add("Compiling #{image_name.to_s.yellow}") do |task|
-          shell = build_server_pool.get_shell
-          
-          compiler_result[image_name] = image_compiler.call(shell, image_name, build_id)
+          compilation_result.start_task(image_name)
+          image_result = compile_one(image_name, build_id, build_server_pool)
+          compilation_result.finish_task(image_name, image_result)
 
           task.update_title("Compiled #{image_name.to_s.green}")
           ui.print_debug("ImageCompiler", "Finished compiling: #{image_name}")
@@ -49,7 +51,11 @@ class KuberKit::Actions::ImageCompiler
         
       end
       task_group.wait
-      compiler_result
+    end
+
+    def compile_one(image_name, build_id, build_server_pool)
+      shell = build_server_pool.get_shell
+      image_compiler.call(shell, image_name, build_id)
     end
 
     def generate_build_id

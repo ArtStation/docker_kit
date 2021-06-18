@@ -20,12 +20,15 @@ class KuberKit::CLI < Thor
     image_names = image_names_str.split(",").map(&:strip).map(&:to_sym)
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
-      result = KuberKit::Container['actions.image_compiler'].call(image_names, options)
+      action_result = KuberKit::Container['actions.image_compiler'].call(image_names, options)
     end
 
-    if result
+    if action_result && action_result.succeeded?
       time = (Time.now.to_i - started_at)
-      print_result("Image compilation finished! (#{time}s)", result: result)
+      print_result("Image compilation finished! (#{time}s)", result: {
+        images:       action_result.finished_tasks,
+        compilation:  action_result.result
+      })
     else
       exit 1
     end
@@ -45,7 +48,7 @@ class KuberKit::CLI < Thor
                              KuberKit.current_configuration.deployer_require_confirimation ||
                              false
       started_at = Time.now.to_i
-      result = KuberKit::Container['actions.service_deployer'].call(
+      action_result = KuberKit::Container['actions.service_deployer'].call(
         services:             (options[:services] || []).flatten.uniq, 
         tags:                 (options[:tags] || []).flatten.uniq,
         skip_services:        (options[:skip_services] || []).flatten.uniq, 
@@ -54,9 +57,12 @@ class KuberKit::CLI < Thor
       )
     end
 
-    if result
+    if action_result && action_result.succeeded?
       time = (Time.now.to_i - started_at)
-      print_result("Service deployment finished! (#{time}s)", result: result)
+      print_result("Service deployment finished! (#{time}s)", result: {
+        services:   action_result.finished_tasks, 
+        deployment: action_result.result
+      })
     else
       exit 1
     end
@@ -193,22 +199,5 @@ class KuberKit::CLI < Thor
 
     def print_result(message, data = {})
       KuberKit::Container['ui'].print_result(message, data)
-    end
-
-    def cleanup_processes
-      # Stop all threads
-      Thread.list.each do |t| 
-        t.abort_on_exception   = false
-        t.report_on_exception  = false
-        Thread.kill(t) if t != Thread.current
-      end
-
-      # Find all system calls
-      child_pids_raw = `ps auxww | grep '[K]IT=#{Process.pid}' | awk '{print $2}'`
-      child_pids = child_pids_raw.to_s.split("\n").reject(&:empty?)
-      child_pids.each do |pid|
-        puts "Killing child process: #{pid}"
-        Process.kill("SIGHUP", pid.to_i)
-      end
     end
 end

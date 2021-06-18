@@ -19,6 +19,7 @@ class KuberKit::Actions::ServiceDeployer
     require_confirmation: Maybe[Bool],
   ] => Any
   def call(services:, tags:, skip_services: nil, skip_compile: false, require_confirmation: false)
+    deployment_result     = KuberKit::Actions::ActionResult.new()
     current_configuration = KuberKit.current_configuration
 
     if services.empty? && tags.empty?
@@ -59,22 +60,24 @@ class KuberKit::Actions::ServiceDeployer
     images_names = services.map(&:images).flatten.uniq
 
     unless skip_compile
-      compile_result = compile_images(images_names)
-      return false unless compile_result
+      compilation_result = compile_images(images_names)
+
+      return false unless compilation_result && compilation_result.succeeded?
     end
 
-    deployed_services = []
-    deployment_result = {}
     service_dependency_resolver.each_with_deps(service_names) do |dep_service_names|
       ui.print_debug("ServiceDeployer", "Scheduling to compile: #{dep_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
-      result = deploy_simultaneously(dep_service_names)
-      deployed_services += dep_service_names
-      deployment_result = deployment_result.merge(result)
+
+      if deployment_result.succeeded?
+        deploy_simultaneously(dep_service_names, deployment_result)
+      end
     end
 
-    { services: all_service_names, deployment: deployment_result }
+    deployment_result
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
+
+    compilation_result.failed!(e.message)
 
     false
   rescue Interrupt => e
@@ -82,16 +85,16 @@ class KuberKit::Actions::ServiceDeployer
   end
 
   private
-    def deploy_simultaneously(service_names)
+    def deploy_simultaneously(service_names, deployment_result)
       task_group = ui.create_task_group
-
-      deployer_result = {}
 
       service_names.each do |service_name|
 
         ui.print_debug("ServiceDeployer", "Started deploying: #{service_name.to_s.green}")
         task_group.add("Deploying #{service_name.to_s.yellow}") do |task|
-          deployer_result[service_name] = service_deployer.call(local_shell, service_name.to_sym)
+          deployment_result.start_task(service_name)
+          service_result = service_deployer.call(local_shell, service_name.to_sym)
+          deployment_result.finish_task(service_name, service_result)
 
           task.update_title("Deployed #{service_name.to_s.green}")
           ui.print_debug("ServiceDeployer", "Finished deploying: #{service_name.to_s.green}")
@@ -99,12 +102,10 @@ class KuberKit::Actions::ServiceDeployer
       end
 
       task_group.wait
-
-      deployer_result
     end
 
     def compile_images(images_names)
-      return true if images_names.empty?
+      return KuberKit::Actions::ActionResult.new if images_names.empty?
       image_compiler.call(images_names, {})
     end
 

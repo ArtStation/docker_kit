@@ -10,14 +10,14 @@ RSpec.describe KuberKit::Actions::ServiceDeployer do
 
   it "compiles images & deploys services found by resolver" do
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :auth_app)
-    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(true)
+    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(KuberKit::Actions::ActionResult.new)
     subject.call(services: ["auth_app"], tags: [])
   end
 
   it "deploys services by tag" do
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :auth_app)
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :test_auth_app)
-    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(true)
+    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(KuberKit::Actions::ActionResult.new)
     subject.call(services: [], tags: ["auth"])
   end
 
@@ -35,7 +35,7 @@ RSpec.describe KuberKit::Actions::ServiceDeployer do
 
   it "shows tags selection if no service found" do
     expect(subject.ui).to receive(:prompt).with("Please select which tag to deploy", any_args).and_return("auth")
-    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(true)
+    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(KuberKit::Actions::ActionResult.new)
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :auth_app)
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :test_auth_app)
     subject.call(services: [], tags: [])
@@ -44,14 +44,14 @@ RSpec.describe KuberKit::Actions::ServiceDeployer do
   it "shows service selection if no tag selected" do
     expect(subject.ui).to receive(:prompt).with("Please select which tag to deploy", any_args).and_return("deploy specific service")
     expect(subject.ui).to receive(:prompt).with("Please select which service to deploy", any_args).and_return("auth_app")
-    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(true)
+    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(KuberKit::Actions::ActionResult.new)
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :auth_app)
     subject.call(services: [], tags: [])
   end
 
   it "prints error if error happen" do
     expect(subject.ui).to receive(:print_error)
-    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(true)
+    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(KuberKit::Actions::ActionResult.new)
     allow(subject.service_deployer).to receive(:call).and_raise(KuberKit::Error.new("Some error"))
     subject.call(services: ["auth_app"], tags: [])
   end
