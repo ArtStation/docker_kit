@@ -1,3 +1,6 @@
+**0.5.10**
+- Fix a regression when deployment result would not be properly returned as json.
+
 **0.5.9**
 - Added an ability to set custom user
 - Allow setting environment variable in docker strategy
