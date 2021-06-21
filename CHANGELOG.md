@@ -1,4 +1,4 @@
-**0.5.9**(to be released)
+**0.5.9**
 - Added an ability to set custom user
 - Allow setting environment variable in docker strategy
 - Properly stop deployment if image compilation is failed
