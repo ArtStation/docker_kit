@@ -1,8 +1,8 @@
 class KuberKit::Actions::ActionResult
-  attr_reader :finished_tasks, :result, :error
+  attr_reader :finished_tasks, :all_results, :error
 
   def initialize()
-    @results         = {}
+    @all_results     = {}
     @started_tasks   = []
     @finished_tasks  = []
     @mutex = Mutex.new
@@ -14,11 +14,11 @@ class KuberKit::Actions::ActionResult
     end
   end
 
-  def finish_task(task, result)
+  def finish_task(task, result = nil)
     @mutex.synchronize do
       @started_tasks.delete(task)
       @finished_tasks.push(task)
-      @results[task] = result
+      @all_results[task] = result
     end
   end
 

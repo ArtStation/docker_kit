@@ -27,7 +27,7 @@ class KuberKit::CLI < Thor
       time = (Time.now.to_i - started_at)
       print_result("Image compilation finished! (#{time}s)", result: {
         images:       action_result.finished_tasks,
-        compilation:  action_result.result
+        compilation:  action_result.all_results
       })
     else
       exit 1
@@ -61,7 +61,7 @@ class KuberKit::CLI < Thor
       time = (Time.now.to_i - started_at)
       print_result("Service deployment finished! (#{time}s)", result: {
         services:   action_result.finished_tasks, 
-        deployment: action_result.result
+        deployment: action_result.all_results
       })
     else
       exit 1
