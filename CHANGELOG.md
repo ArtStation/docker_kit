@@ -1,3 +1,6 @@
+**0.6.0** (In progress)
+- Cleanup old image build dirs
+
 **0.5.10**
 - Fix a regression when deployment result would not be properly returned as json.
 

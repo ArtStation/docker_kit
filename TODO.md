@@ -1,4 +1,3 @@
-- cleanup image builds older than some date
 - add some rotation for deploy log
 - env files should use a separate deployment method (with change detection)
 - add automatical confirmation support for service deployer

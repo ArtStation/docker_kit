@@ -79,6 +79,7 @@ module KuberKit
   end
 
   module Tools
+    autoload :BuildDirCleaner, 'tools/build_dir_cleaner'
     autoload :FilePresenceChecker, 'tools/file_presence_checker'
     autoload :LoggerFactory, 'tools/logger_factory'
     autoload :ProcessCleaner, 'tools/process_cleaner'

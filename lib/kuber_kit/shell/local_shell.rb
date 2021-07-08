@@ -100,6 +100,18 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     end
   end
 
+  def list_dirs(path)
+    command = %Q{find -L #{path}  -type f}
+    command += " -name '#{name}'" if name
+    exec!(command).split(/[\r\n]+/)
+  rescue => e
+    if e.message.include?("No such file or directory")
+      raise DirNotFoundError.new("Dir not found: #{path}")
+    else
+      raise e
+    end
+  end
+
   def wrap_command_with_pid(command)
     "KIT=#{Process.pid} #{command}"
   end

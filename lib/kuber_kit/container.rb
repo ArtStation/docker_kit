@@ -121,6 +121,10 @@ class KuberKit::Container
     KuberKit::Core::ContextHelper::ContextHelperFactory.new
   end
 
+  register "tools.build_dir_cleaner" do
+    KuberKit::Tools::BuildDirCleaner.new
+  end
+
   register "tools.file_presence_checker" do
     KuberKit::Tools::FilePresenceChecker.new
   end
