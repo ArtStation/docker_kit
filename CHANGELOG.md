@@ -1,4 +1,4 @@
-**0.6.0** (In progress)
+**0.6.0**
 - Cleanup old image build dirs
 - Add rotation to deployment log file
 
