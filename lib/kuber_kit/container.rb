@@ -273,6 +273,10 @@ class KuberKit::Container
     KuberKit::ServiceDeployer::Deployer.new
   end
 
+  register "service_deployer.deployment_options_selector" do
+    KuberKit::ServiceDeployer::DeploymentOptionsSelector.new
+  end
+
   register "service_deployer.service_list_resolver" do
     KuberKit::ServiceDeployer::ServiceListResolver.new
   end

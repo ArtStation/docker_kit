@@ -33,19 +33,11 @@ RSpec.describe KuberKit::Actions::ServiceDeployer do
     subject.call(services: [], tags: ["auth"], skip_services: ["test_auth_app"], skip_compile: true)
   end
 
-  it "shows tags selection if no service found" do
-    expect(subject.ui).to receive(:prompt).with("Please select which tag to deploy", any_args).and_return("auth")
+  it "shows deployment options selection if no service found" do
+    expect(subject.deployment_options_selector).to receive(:call).and_return([[], ["auth"]])
     expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(KuberKit::Actions::ActionResult.new)
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :auth_app)
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :test_auth_app)
-    subject.call(services: [], tags: [])
-  end
-
-  it "shows service selection if no tag selected" do
-    expect(subject.ui).to receive(:prompt).with("Please select which tag to deploy", any_args).and_return("deploy specific service")
-    expect(subject.ui).to receive(:prompt).with("Please select which service to deploy", any_args).and_return("auth_app")
-    expect(subject.image_compiler).to receive(:call).with([:auth_image], {}).and_return(KuberKit::Actions::ActionResult.new)
-    expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :auth_app)
     subject.call(services: [], tags: [])
   end
 

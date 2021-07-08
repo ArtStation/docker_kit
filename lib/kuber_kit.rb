@@ -153,6 +153,7 @@ module KuberKit
     autoload :ActionHandler, 'service_deployer/action_handler'
     autoload :StrategyDetector, 'service_deployer/strategy_detector'
     autoload :Deployer, 'service_deployer/deployer'
+    autoload :DeploymentOptionsSelector, 'service_deployer/deployment_options_selector'
     autoload :ServiceListResolver, 'service_deployer/service_list_resolver'
     autoload :ServiceDependencyResolver, 'service_deployer/service_dependency_resolver'
 

@@ -30,7 +30,7 @@ class KuberKit::Actions::ImageCompiler
     ui.print_error("Error", e.message)
 
     compilation_result.failed!(e.message)
-
+    
     false
   end
 

@@ -3,6 +3,7 @@ class KuberKit::Actions::ServiceDeployer
     "actions.image_compiler",
     "service_deployer.service_list_resolver",
     "service_deployer.service_dependency_resolver",
+    "service_deployer.deployment_options_selector",
     "core.service_store",
     "shell.local_shell",
     "tools.process_cleaner",
@@ -23,9 +24,8 @@ class KuberKit::Actions::ServiceDeployer
     current_configuration = KuberKit.current_configuration
 
     if services.empty? && tags.empty?
-      services, tags = show_tags_selection
+      services, tags = deployment_options_selector.call()
     end
-
 
     disabled_services = current_configuration.disabled_services.map(&:to_s)
     disabled_services += skip_services if skip_services
@@ -45,20 +45,12 @@ class KuberKit::Actions::ServiceDeployer
       return false
     end
 
-    services_list = all_service_names.map(&:to_s).map(&:yellow).join(", ")
-    ui.print_info "ServiceDeployer", "The following services will be deployed: #{services_list}"
-
-    if require_confirmation
-      result = ui.prompt("Please confirm to continue deployment", ["confirm".green, "cancel".red])
-      return false unless ["confirm".green, "confirm", "yes"].include?(result)
+    unless allow_deployment?(require_confirmation: require_confirmation, service_names: all_service_names)
+      return false
     end
 
-    services = all_service_names.map do |service_name|
-      service_store.get_service(service_name.to_sym)
-    end
-
-    images_names = services.map(&:images).flatten.uniq
-
+    # Compile images for all services and dependencies
+    images_names = get_image_names(service_names: all_service_names)
     unless skip_compile
       compilation_result = compile_images(images_names)
 
@@ -77,11 +69,13 @@ class KuberKit::Actions::ServiceDeployer
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
 
-    compilation_result.failed!(e.message)
-
+    deployment_result.failed!(e.message)
+    
     false
   rescue Interrupt => e
     process_cleaner.clean
+
+    false
   end
 
   private
@@ -109,46 +103,23 @@ class KuberKit::Actions::ServiceDeployer
       image_compiler.call(images_names, {})
     end
 
-    def show_tags_selection()
-      specific_service_option = "deploy specific service"
-      all_services_option     = "deploy all services"
-
-      tags = [specific_service_option, all_services_option]
-      tags += service_store
-        .all_definitions
-        .values
-        .map(&:to_service_attrs)
-        .map(&:tags)
-        .flatten
-        .uniq
-        .sort
-        .map(&:to_s)
-
-      selected_tag = ui.prompt("Please select which tag to deploy", tags)
-
-      if selected_tag == specific_service_option
-        show_service_selection
-      elsif selected_tag == all_services_option
-        [["*"], []]
-      else
-        [[], [selected_tag]]
+    def get_image_names(service_names:)
+      services = service_names.map do |service_name|
+        service_store.get_service(service_name.to_sym)
       end
+  
+      services.map(&:images).flatten.uniq
     end
 
-    def show_service_selection()
-      services = service_store
-        .all_definitions
-        .values
-        .map(&:service_name)
-        .uniq
-        .sort
-        .map(&:to_s)
+    def allow_deployment?(require_confirmation:, service_names:)
+      services_list = service_names.map(&:to_s).map(&:yellow).join(", ")
+      ui.print_info "ServiceDeployer", "The following services will be deployed: #{services_list}"
 
-      if services.empty?
-        return [[], []]
+      unless require_confirmation
+        return true
       end
 
-      selected_service = ui.prompt("Please select which service to deploy", services)
-      [[selected_service], []]
+      result = ui.prompt("Please confirm to continue deployment", ["confirm".green, "cancel".red])
+      return ["confirm".green, "confirm", "yes"].include?(result)
     end
 end
