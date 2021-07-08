@@ -10,16 +10,17 @@ class KuberKit::Tools::LoggerFactory
     Logger::FATAL  => String::Colors::PURPLE,
   }
 
+  MAX_LOGS_TO_KEEP  = 3
+  MAX_LOG_FILE_SIZE = 512000
+
   include KuberKit::Import[
     "configs",
   ]
 
-  def create(stdout = nil, level = nil)
-    if !stdout
-      prepare_log_file(configs.log_file_path)
-    end
+  def create(level: nil)
+    prepare_log_file(configs.log_file_path)
     
-    logger = Logger.new(stdout || configs.log_file_path)
+    logger = Logger.new(configs.log_file_path, MAX_LOGS_TO_KEEP, MAX_LOG_FILE_SIZE)
 
     logger.level = level || Logger::DEBUG
 
