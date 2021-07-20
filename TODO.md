@@ -1,5 +1,3 @@
-- env files should use a separate deployment method (with change detection)
 - add automatical confirmation support for service deployer
 - template should be able to set default attributes
 - template should be able to depend on image?
-- kit status should show the list of services and their status, with ability to select & view logs

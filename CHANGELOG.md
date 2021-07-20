@@ -1,4 +1,4 @@
-**0.6.1 (In Progress)**
+**0.6.1**
 - Improve performance of artifacts update by updating in threads.
 - Added an ability to define default services
 
