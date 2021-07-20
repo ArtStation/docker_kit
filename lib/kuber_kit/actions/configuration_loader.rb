@@ -5,7 +5,7 @@ class KuberKit::Actions::ConfigurationLoader
     "core.service_store",
     "core.configuration_store",
     "tools.workdir_detector",
-    "artifacts_sync.artifacts_updater",
+    "artifacts_sync.artifact_updater",
     "shell.local_shell",
     "ui",
     "configs"
@@ -43,11 +43,7 @@ class KuberKit::Actions::ConfigurationLoader
     load_infrastructure(infra_path)
 
     if load_inventory
-      ui.create_task("Updating artifacts") do |task|
-        artifacts = KuberKit.current_configuration.artifacts.values
-        artifacts_updater.update(local_shell, artifacts)
-        task.update_title("Updated #{artifacts.count} artifacts")
-      end
+      update_artifacts(KuberKit.current_configuration.artifacts.values)
 
       ui.create_task("Loading image definitions") do |task|
         files = image_store.load_definitions(images_path)
@@ -100,5 +96,18 @@ class KuberKit::Actions::ConfigurationLoader
     end
   rescue KuberKit::Shell::AbstractShell::DirNotFoundError
     ui.print_warning("ConfigurationLoader", "Directory with infrastructure not found: #{infra_path}")
+  end
+
+  def update_artifacts(artifacts)
+    return unless artifacts.any?
+
+    artifact_task_group = ui.create_task_group
+    artifacts.each do |artifact|
+      artifact_task_group.add("Updating #{artifact.name.to_s.yellow}") do |task|
+        artifact_updater.update(local_shell, artifact)
+        task.update_title("Updated #{artifact.name.to_s.green}")
+      end
+    end
+    artifact_task_group.wait
   end
 end

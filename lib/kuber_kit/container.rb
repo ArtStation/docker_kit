@@ -217,8 +217,8 @@ class KuberKit::Container
     KuberKit::ImageCompiler::VersionTagBuilder.new
   end
 
-  register "artifacts_sync.artifacts_updater" do
-    KuberKit::ArtifactsSync::ArtifactsUpdater.new
+  register "artifacts_sync.artifact_updater" do
+    KuberKit::ArtifactsSync::ArtifactUpdater.new
   end
 
   register "artifacts_sync.git_artifact_resolver" do

@@ -122,7 +122,7 @@ module KuberKit
 
   module ArtifactsSync
     autoload :AbstractArtifactResolver, 'artifacts_sync/abstract_artifact_resolver'
-    autoload :ArtifactsUpdater, 'artifacts_sync/artifacts_updater'
+    autoload :ArtifactUpdater, 'artifacts_sync/artifact_updater'
     autoload :GitArtifactResolver, 'artifacts_sync/git_artifact_resolver'
     autoload :NullArtifactResolver, 'artifacts_sync/null_artifact_resolver'
   end

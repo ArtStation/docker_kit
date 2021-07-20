@@ -1,4 +1,4 @@
-class KuberKit::ArtifactsSync::ArtifactsUpdater
+class KuberKit::ArtifactsSync::ArtifactUpdater
   ResolverNotFoundError = Class.new(KuberKit::NotFoundError)
 
   include KuberKit::Import[
@@ -18,18 +18,16 @@ class KuberKit::ArtifactsSync::ArtifactsUpdater
     @@resolvers[artifact_class] = artifact_resolver
   end
 
-  def update(shell, artifacts)
+  def update(shell, artifact)
     add_default_resolvers
 
-    artifacts.each do |artifact|
-      resolver = @@resolvers[artifact.class]
+    resolver = @@resolvers[artifact.class]
 
-      ui.print_debug "ArtifactUpdater", "Updating artifact #{artifact.name.to_s.green}"
-      
-      raise ResolverNotFoundError, "Can't find resolver for artifact #{artifact}" if resolver.nil?
+    ui.print_debug "ArtifactUpdater", "Updating artifact #{artifact.name.to_s.green}"
+    
+    raise ResolverNotFoundError, "Can't find resolver for artifact #{artifact}" if resolver.nil?
 
-      resolver.resolve(shell, artifact)
-    end
+    resolver.resolve(shell, artifact)
   end
 
   def add_default_resolvers

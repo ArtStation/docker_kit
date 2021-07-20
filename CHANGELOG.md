@@ -1,3 +1,6 @@
+**0.6.1 (In Progress)**
+- Improve performance of artifacts update by updating in threads.
+
 **0.6.0**
 - Cleanup old image build dirs
 - Add rotation to deployment log file
