@@ -45,7 +45,7 @@ class KuberKit::CLI < Thor
 
     if KuberKit::Container['actions.configuration_loader'].call(options)
       require_confirmation = options[:require_confirmation] || 
-                             KuberKit.current_configuration.deployer_require_confirimation ||
+                             KuberKit.current_configuration.deployer_require_confirmation ||
                              false
       started_at = Time.now.to_i
       action_result = KuberKit::Container['actions.service_deployer'].call(

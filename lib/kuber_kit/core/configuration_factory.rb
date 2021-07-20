@@ -34,7 +34,7 @@ class KuberKit::Core::ConfigurationFactory
       global_build_vars:    configuration_attrs.global_build_vars || {},
       deployer_strategy:              configuration_attrs.deployer_strategy || configs.deployer_strategy,
       deployer_namespace:             configuration_attrs.deployer_namespace,
-      deployer_require_confirimation: configuration_attrs.deployer_require_confirimation,
+      deployer_require_confirmation: configuration_attrs.deployer_require_confirmation,
     )
   end
 

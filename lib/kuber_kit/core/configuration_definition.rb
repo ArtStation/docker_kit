@@ -33,7 +33,7 @@ class KuberKit::Core::ConfigurationDefinition
       global_build_vars:    @global_build_vars,
       deployer_strategy:              @deployer_strategy,
       deployer_namespace:             @deployer_namespace,
-      deployer_require_confirimation: @deployer_require_confirimation || false,
+      deployer_require_confirmation: @deployer_require_confirmation || false,
     )
   end
 
@@ -99,11 +99,12 @@ class KuberKit::Core::ConfigurationDefinition
     self
   end
 
-  def deployer_require_confirimation
-    @deployer_require_confirimation = true
+  def deployer_require_confirmation
+    @deployer_require_confirmation = true
 
     self
   end
+  alias_method :deployer_require_confirimation, :deployer_require_confirmation
 
   def enabled_services(services)
     if services.is_a?(Hash)

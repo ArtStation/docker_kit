@@ -99,11 +99,11 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
     end
   end
 
-  context "deployer_require_confirimation" do
+  context "deployer_require_confirmation" do
     it "defines attributes for services" do
-      subject.deployer_require_confirimation()
+      subject.deployer_require_confirmation()
 
-      expect(subject.to_attrs.deployer_require_confirimation).to eq(true)
+      expect(subject.to_attrs.deployer_require_confirmation).to eq(true)
     end
   end
 

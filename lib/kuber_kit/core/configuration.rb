@@ -2,7 +2,7 @@ class KuberKit::Core::Configuration
   attr_reader :name, :artifacts, :registries, :env_files, :templates, :kubeconfig_path, 
               :services_attributes, :enabled_services, :disabled_services, :default_services, 
               :build_servers, :global_build_vars,
-              :deployer_strategy, :deployer_namespace, :deployer_require_confirimation
+              :deployer_strategy, :deployer_namespace, :deployer_require_confirmation
 
   Contract KeywordArgs[
     name:                 Symbol,
@@ -19,12 +19,12 @@ class KuberKit::Core::Configuration
     global_build_vars:    HashOf[Symbol => Any],
     deployer_strategy:              Symbol,
     deployer_namespace:             Maybe[Symbol],
-    deployer_require_confirimation: Bool,
+    deployer_require_confirmation: Bool,
   ] => Any
   def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, 
                  services_attributes:, enabled_services:, disabled_services:, default_services:, 
                  build_servers:, global_build_vars:,
-                 deployer_strategy:, deployer_namespace:, deployer_require_confirimation:)
+                 deployer_strategy:, deployer_namespace:, deployer_require_confirmation:)
     @name                 = name
     @artifacts            = artifacts
     @registries           = registries
@@ -39,7 +39,7 @@ class KuberKit::Core::Configuration
     @global_build_vars    = global_build_vars
     @deployer_strategy              = deployer_strategy
     @deployer_namespace             = deployer_namespace
-    @deployer_require_confirimation = deployer_require_confirimation
+    @deployer_require_confirmation = deployer_require_confirmation
   end
 
   def service_attributes(service_name)
