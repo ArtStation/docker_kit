@@ -66,6 +66,16 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceListResolver do
       result = subject.resolve(tags: ["web"], disabled_services: ["auth_app"])
       expect(result).to eq(["marketplace_app"])
     end
+
+    it "always returns default services" do
+      result = subject.resolve(services: ["marketplace_app"], default_services: ["auth_app"])
+      expect(result).to eq(["marketplace_app", "auth_app"])
+    end
+
+    it "doesn't returns default services if nothing else was found" do
+      result = subject.resolve(default_services: ["auth_app"])
+      expect(result).to eq([])
+    end
   end
 
   context "split_by_inclusion" do

@@ -1,5 +1,6 @@
 **0.6.1 (In Progress)**
 - Improve performance of artifacts update by updating in threads.
+- Added an ability to define default services
 
 **0.6.0**
 - Cleanup old image build dirs

@@ -13,6 +13,7 @@ class KuberKit::Core::ConfigurationDefinition
     @build_servers      = []
     @enabled_services   = []
     @disabled_services  = []
+    @default_services   = []
     @services_attributes = {}
   end
 
@@ -26,6 +27,7 @@ class KuberKit::Core::ConfigurationDefinition
       kubeconfig_path:      @kubeconfig_path,
       enabled_services:     @enabled_services,
       disabled_services:    @disabled_services,
+      default_services:     @default_services,
       build_servers:        @build_servers,
       services_attributes:  @services_attributes,
       global_build_vars:    @global_build_vars,
@@ -116,6 +118,11 @@ class KuberKit::Core::ConfigurationDefinition
     end
 
     raise KuberKit::Error, "#enabled_services method accepts only Array or Hash"
+  end
+
+  def default_services(services)
+    @default_services += services.map(&:to_sym)
+    return self
   end
 
   def disabled_services(services)

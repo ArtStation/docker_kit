@@ -7,9 +7,10 @@ class KuberKit::ServiceDeployer::ServiceListResolver
     services:           Optional[ArrayOf[String]],
     tags:               Optional[ArrayOf[String]],
     enabled_services:   Optional[ArrayOf[String]],
-    disabled_services:  Optional[ArrayOf[String]]
+    disabled_services:  Optional[ArrayOf[String]],
+    default_services:   Optional[ArrayOf[String]]
   ] => ArrayOf[String]
-  def resolve(services: [], tags: [], enabled_services: [], disabled_services: [])
+  def resolve(services: [], tags: [], enabled_services: [], disabled_services: [], default_services: [])
     all_definitions = service_store.all_definitions.values
 
     included_services, excluded_services = split_by_inclusion(services)
@@ -39,6 +40,10 @@ class KuberKit::ServiceDeployer::ServiceListResolver
 
     if disabled_services.any?
       included_services = included_services.select{ |s| !disabled_services.include?(s) }
+    end
+
+    if included_services.any?
+      included_services += default_services
     end
 
     included_services

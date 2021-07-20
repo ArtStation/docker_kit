@@ -30,6 +30,7 @@ class KuberKit::Core::ConfigurationFactory
       services_attributes:  configuration_attrs.services_attributes,
       enabled_services:     configuration_attrs.enabled_services,
       disabled_services:    configuration_attrs.disabled_services,
+      default_services:     configuration_attrs.default_services,
       global_build_vars:    configuration_attrs.global_build_vars || {},
       deployer_strategy:              configuration_attrs.deployer_strategy || configs.deployer_strategy,
       deployer_namespace:             configuration_attrs.deployer_namespace,

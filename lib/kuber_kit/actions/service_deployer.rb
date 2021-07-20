@@ -27,14 +27,17 @@ class KuberKit::Actions::ServiceDeployer
       services, tags = deployment_options_selector.call()
     end
 
+    default_services  = current_configuration.default_services.map(&:to_s)
     disabled_services = current_configuration.disabled_services.map(&:to_s)
     disabled_services += skip_services if skip_services
+    
 
     service_names = service_list_resolver.resolve(
       services:         services || [],
       tags:             tags || [],
       enabled_services:   current_configuration.enabled_services.map(&:to_s),
-      disabled_services:  disabled_services
+      disabled_services:  disabled_services,
+      default_services:   default_services
     ).map(&:to_sym)
 
     # Return the list of services with all dependencies.
