@@ -101,8 +101,12 @@ class KuberKit::Actions::ConfigurationLoader
   def update_artifacts(artifacts)
     return unless artifacts.any?
 
+    # Skip local artifacts, they sometimes produce error in CLI::UI::SpinGroup task,
+    # because the task is executed too quickly
+    not_local_artifacts = artifacts.reject{ |a| a.is_a?(KuberKit::Core::Artifacts::Local) }
+
     artifact_task_group = ui.create_task_group
-    artifacts.each do |artifact|
+    not_local_artifacts.each do |artifact|
       artifact_task_group.add("Updating #{artifact.name.to_s.yellow}") do |task|
         artifact_updater.update(local_shell, artifact)
         task.update_title("Updated #{artifact.name.to_s.green}")

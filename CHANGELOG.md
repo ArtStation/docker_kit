@@ -1,3 +1,7 @@
+**0.6.2**
+- Added an ability to return build vars as a hash value.
+- Skip local artifacts while updating configuration, it sometimes produce an error
+
 **0.6.1**
 - Improve performance of artifacts update by updating in threads.
 - Added an ability to define default services

@@ -11,6 +11,11 @@ RSpec.describe KuberKit::Core::ContextHelper::ContextVars do
     expect(result.foo.bar.config).to eq("test")
   end
 
+  it "allows getting a hach value" do
+    result = subject.new({foo: {bar: {config: "test"}}})
+    expect(result.foo.bar.to_h).to eq({config: "test"})
+  end
+
   it "raises exception if config variable not found" do
     result = subject.new({
       foo: { test: "bar" }

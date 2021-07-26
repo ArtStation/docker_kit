@@ -23,6 +23,14 @@ class KuberKit::Core::ContextHelper::ContextVars
     value
   end
 
+  def to_h
+    if @context_vars.is_a?(Hash)
+      return @context_vars
+    else
+      return {value: @context_vars}
+    end
+  end
+
   private
 
   def format_arg(name)
