@@ -1,3 +1,6 @@
+**0.6.3**
+- Fix updating artifacts when there is only local artifacts
+
 **0.6.2**
 - Added an ability to return build vars as a hash value.
 - Skip local artifacts while updating configuration, it sometimes produce an error

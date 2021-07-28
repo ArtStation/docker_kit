@@ -46,6 +46,7 @@ class KuberKit::UI::Simple
   class TaskGroup
     def initialize(task_class)
       @task_class = task_class
+      @tasks
     end
 
     def add(task_title, &task_block)
