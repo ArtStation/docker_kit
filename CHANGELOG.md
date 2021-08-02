@@ -1,3 +1,6 @@
+**0.6.4**
+- Improve context vars, allow checking if variable is defined
+
 **0.6.3**
 - Fix updating artifacts when there is only local artifacts
 
