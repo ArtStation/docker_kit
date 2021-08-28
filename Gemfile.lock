@@ -3,7 +3,7 @@ PATH
   specs:
     kuber_kit (0.6.4)
       cli-ui
-      contracts-lite
+      contracts
       dry-auto_inject (~> 0.7.0)
       dry-container (~> 0.7.2)
       net-ssh
@@ -16,7 +16,7 @@ GEM
     cli-ui (1.5.1)
     coderay (1.1.3)
     concurrent-ruby (1.1.9)
-    contracts-lite (0.15.0)
+    contracts (0.16)
     diff-lcs (1.4.4)
     docile (1.4.0)
     dry-auto_inject (0.7.0)
@@ -73,7 +73,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.17)
+  bundler (~> 2.2)
   kuber_kit!
   pry
   rake (~> 10.0)
@@ -81,4 +81,4 @@ DEPENDENCIES
   simplecov
 
 BUNDLED WITH
-   1.17.3
+   2.2.26
