@@ -1,3 +1,6 @@
+**0.7.0**
+- Added Ruby 3.0 support
+
 **0.6.4**
 - Improve context vars, allow checking if variable is defined
 
