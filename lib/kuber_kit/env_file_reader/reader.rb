@@ -6,8 +6,8 @@ class KuberKit::EnvFileReader::Reader
     "env_file_reader.strategies.env_group",
   ]
 
-  def initialize(**injected_deps)
-    super(injected_deps)
+  def initialize(**injected_deps, &block)
+    super(**injected_deps)
     add_default_strategies
   end
 

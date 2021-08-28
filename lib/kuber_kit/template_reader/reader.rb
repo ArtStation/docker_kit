@@ -5,8 +5,8 @@ class KuberKit::TemplateReader::Reader
     "template_reader.strategies.artifact_file",
   ]
 
-  def initialize(**injected_deps)
-    super(injected_deps)
+  def initialize(**injected_deps, &block)
+    super(**injected_deps)
     add_default_strategies
   end
 

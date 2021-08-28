@@ -2,7 +2,7 @@ RSpec.describe KuberKit::Tools::WorkdirDetector do
   subject{ KuberKit::Tools::WorkdirDetector.new }
 
   it do
-    expect(subject.call(path: "/kit/path")).to eq("/kit/path")
+    expect(subject.call({path: "/kit/path"})).to eq("/kit/path")
   end
 
   it do

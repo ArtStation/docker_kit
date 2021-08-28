@@ -8,8 +8,8 @@ class KuberKit::ServiceDeployer::Deployer
     "service_deployer.strategies.docker_compose"
   ]
 
-  def initialize(**injected_deps)
-    super(injected_deps)
+  def initialize(**injected_deps, &block)
+    super(**injected_deps)
     add_default_strategies
   end
 
