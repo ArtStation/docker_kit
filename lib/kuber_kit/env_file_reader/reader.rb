@@ -5,12 +5,7 @@ class KuberKit::EnvFileReader::Reader
     "env_file_reader.strategies.artifact_file",
     "env_file_reader.strategies.env_group",
   ]
-
-  def initialize(**injected_deps, &block)
-    super(**injected_deps)
-    add_default_strategies
-  end
-
+  
   def use_reader(env_file_reader, env_file_class:)
     @@readers ||= {}
 
@@ -28,14 +23,4 @@ class KuberKit::EnvFileReader::Reader
 
     reader.read(shell, env_file)
   end
-
-  def reset!
-    @@readers = {}
-  end
-
-  private
-    def add_default_strategies
-      use_reader(artifact_file, env_file_class: KuberKit::Core::EnvFiles::ArtifactFile)
-      use_reader(env_group, env_file_class: KuberKit::Core::EnvFiles::EnvGroup)
-    end
 end

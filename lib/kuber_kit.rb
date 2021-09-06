@@ -208,6 +208,7 @@ module KuberKit
   autoload :CLI, 'cli'
   autoload :Container, 'container'
   autoload :Configs, 'configs'
+  autoload :Defaults, 'defaults'
 
   Import = Dry::AutoInject(Container)
 
@@ -296,5 +297,7 @@ module KuberKit
     end
   end
 end
+
+KuberKit::Defaults.init
 
 require 'kuber_kit/extensions/indocker_compat'

@@ -13,10 +13,14 @@ RSpec.describe KuberKit::EnvFileReader::Reader do
   class ExampleEnvFile2 < KuberKit::Core::EnvFiles::AbstractEnvFile
   end
 
+  class ExampleEnvFile3 < KuberKit::Core::EnvFiles::AbstractEnvFile
+  end
+
   let(:reader1) { ExampleReader.new }
   let(:reader2) { ExampleReader.new }
   let(:env_file1) { ExampleEnvFile1.new(:env_file1) }
   let(:env_file2) { ExampleEnvFile2.new(:env_file2) }
+  let(:env_file3) { ExampleEnvFile3.new(:env_file3) }
 
   it "calls the reader for this env file type on read" do
     subject.use_reader(reader1, env_file_class: ExampleEnvFile1)
@@ -31,7 +35,7 @@ RSpec.describe KuberKit::EnvFileReader::Reader do
 
   it "raises error if reader not found for class" do
     expect {
-      subject.read(test_helper.shell, env_file1)
+      subject.read(test_helper.shell, env_file3)
     }.to raise_error(KuberKit::EnvFileReader::Reader::ReaderNotFoundError)
   end
 

@@ -13,10 +13,14 @@ RSpec.describe KuberKit::TemplateReader::Reader do
   class ExampleTemplate2 < KuberKit::Core::Templates::AbstractTemplate
   end
 
+  class ExampleTemplate3 < KuberKit::Core::Templates::AbstractTemplate
+  end
+
   let(:reader1) { ExampleTemplateReader.new }
   let(:reader2) { ExampleTemplateReader.new }
   let(:template1) { ExampleTemplate1.new(:template1) }
   let(:template2) { ExampleTemplate2.new(:template2) }
+  let(:template3) { ExampleTemplate3.new(:template3) }
 
   it "calls the reader for this env file type on read" do
     subject.use_reader(reader1, template_class: ExampleTemplate1)
@@ -31,7 +35,7 @@ RSpec.describe KuberKit::TemplateReader::Reader do
 
   it "raises error if reader not found for class" do
     expect {
-      subject.read(test_helper.shell, template1)
+      subject.read(test_helper.shell, template3)
     }.to raise_error(KuberKit::TemplateReader::Reader::ReaderNotFoundError)
   end
 

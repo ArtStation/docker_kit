@@ -5,11 +5,6 @@ class KuberKit::TemplateReader::Reader
     "template_reader.strategies.artifact_file",
   ]
 
-  def initialize(**injected_deps, &block)
-    super(**injected_deps)
-    add_default_strategies
-  end
-
   def use_reader(template_reader, template_class:)
     @@readers ||= {}
 
@@ -27,13 +22,4 @@ class KuberKit::TemplateReader::Reader
 
     reader.read(shell, template)
   end
-
-  def reset!
-    @@readers = {}
-  end
-
-  private
-    def add_default_strategies
-      use_reader(artifact_file, template_class: KuberKit::Core::Templates::ArtifactFile)
-    end
 end

@@ -19,8 +19,6 @@ class KuberKit::ArtifactsSync::ArtifactUpdater
   end
 
   def update(shell, artifact)
-    add_default_resolvers
-
     resolver = @@resolvers[artifact.class]
 
     ui.print_debug "ArtifactUpdater", "Updating artifact #{artifact.name.to_s.green}"
@@ -28,14 +26,5 @@ class KuberKit::ArtifactsSync::ArtifactUpdater
     raise ResolverNotFoundError, "Can't find resolver for artifact #{artifact}" if resolver.nil?
 
     resolver.resolve(shell, artifact)
-  end
-
-  def add_default_resolvers
-    use_resolver(git_artifact_resolver, artifact_class: KuberKit::Core::Artifacts::Git)
-    use_resolver(null_artifact_resolver, artifact_class: KuberKit::Core::Artifacts::Local)
-  end
-
-  def reset!
-    @@resolvers = {}
   end
 end
