@@ -1,10 +1,6 @@
 class KuberKit::TemplateReader::Reader
   ReaderNotFoundError = Class.new(KuberKit::NotFoundError)
 
-  include KuberKit::Import[
-    "template_reader.strategies.artifact_file",
-  ]
-
   def use_reader(template_reader, template_class:)
     @@readers ||= {}
 

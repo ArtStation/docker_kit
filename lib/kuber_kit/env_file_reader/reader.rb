@@ -1,10 +1,5 @@
 class KuberKit::EnvFileReader::Reader
   ReaderNotFoundError = Class.new(KuberKit::NotFoundError)
-
-  include KuberKit::Import[
-    "env_file_reader.strategies.artifact_file",
-    "env_file_reader.strategies.env_group",
-  ]
   
   def use_reader(env_file_reader, env_file_class:)
     @@readers ||= {}

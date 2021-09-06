@@ -2,9 +2,6 @@ class KuberKit::ArtifactsSync::ArtifactUpdater
   ResolverNotFoundError = Class.new(KuberKit::NotFoundError)
 
   include KuberKit::Import[
-    "artifacts_sync.git_artifact_resolver",
-    "artifacts_sync.null_artifact_resolver",
-
     "ui"
   ]
 
