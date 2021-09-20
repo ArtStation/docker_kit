@@ -23,13 +23,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  if RUBY_VERSION >= '3.0.0'
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0')
     spec.add_dependency "contracts", '0.17.0'
   else
     spec.add_dependency "contracts", '0.16.0'
   end
 
-  if RUBY_VERSION >= '2.6.0'
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.6.0')
     spec.add_dependency "dry-auto_inject", "~> 0.8.0"
   else
     spec.add_dependency "dry-auto_inject", "~> 0.7.0"
@@ -40,6 +40,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "net-ssh"
   spec.add_dependency "tty-prompt"
   spec.add_dependency "dry-container", "~> 0.7.2"
+  spec.add_dependency "dry-configurable", "~> 0.12.1"
 
   spec.add_development_dependency "bundler", "~> 2.2"
   spec.add_development_dependency "rake", "~> 10.0"
