@@ -1,3 +1,6 @@
+**0.8.5**
+- Properly show initial services in deployment confirmation
+
 **0.8.4**
 - Added initial services support, to deploy before all other servies
 
