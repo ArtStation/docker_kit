@@ -147,6 +147,15 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
     end
   end
 
+  context "initial_services" do
+    it "allows using array to set initial services" do
+      subject.initial_services([:service_1, :service_2])
+      subject.initial_services([:service_3])
+
+      expect(subject.to_attrs.initial_services).to eq([:service_1, :service_2, :service_3])
+    end
+  end
+
   context "service_attributes" do
     it "defines attributes for services" do
       subject.service_attributes(my_service: {scale: 1})

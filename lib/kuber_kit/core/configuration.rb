@@ -1,7 +1,7 @@
 class KuberKit::Core::Configuration
   attr_reader :name, :artifacts, :registries, :env_files, :templates, :kubeconfig_path, 
-              :services_attributes, :enabled_services, :disabled_services, :default_services, 
-              :build_servers, :global_build_vars,
+              :services_attributes, :enabled_services, :disabled_services, :default_services,
+              :initial_services, :build_servers, :global_build_vars,
               :deployer_strategy, :deployer_namespace, :deployer_require_confirmation
 
   Contract KeywordArgs[
@@ -15,6 +15,7 @@ class KuberKit::Core::Configuration
     enabled_services:     ArrayOf[Symbol],
     disabled_services:    ArrayOf[Symbol],
     default_services:     ArrayOf[Symbol],
+    initial_services:     ArrayOf[Symbol],
     build_servers:        ArrayOf[KuberKit::Core::BuildServers::AbstractBuildServer],
     global_build_vars:    HashOf[Symbol => Any],
     deployer_strategy:              Symbol,
@@ -23,7 +24,7 @@ class KuberKit::Core::Configuration
   ] => Any
   def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, 
                  services_attributes:, enabled_services:, disabled_services:, default_services:, 
-                 build_servers:, global_build_vars:,
+                 initial_services:, build_servers:, global_build_vars:,
                  deployer_strategy:, deployer_namespace:, deployer_require_confirmation:)
     @name                 = name
     @artifacts            = artifacts
@@ -36,6 +37,7 @@ class KuberKit::Core::Configuration
     @enabled_services     = enabled_services
     @disabled_services    = disabled_services
     @default_services     = default_services
+    @initial_services     = initial_services
     @global_build_vars    = global_build_vars
     @deployer_strategy              = deployer_strategy
     @deployer_namespace             = deployer_namespace

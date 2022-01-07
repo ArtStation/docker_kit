@@ -28,9 +28,10 @@ class KuberKit::Actions::ServiceDeployer
       services, tags = deployment_options_selector.call()
     end
 
-    default_services  = current_configuration.default_services.map(&:to_s)
     disabled_services = current_configuration.disabled_services.map(&:to_s)
     disabled_services += skip_services if skip_services
+    default_services  = current_configuration.default_services.map(&:to_s) - disabled_services
+    initial_services  = current_configuration.initial_services.map(&:to_s) - disabled_services
 
     service_names = service_list_resolver.resolve(
       services:         services || [],
@@ -64,9 +65,20 @@ class KuberKit::Actions::ServiceDeployer
       return false unless compilation_result && compilation_result.succeeded?
     end
 
+    # First deploy initial services. 
+    # This feature is used to deploy some services, required for deployment of other services, e.g. env files
+    # Note: Initial services are deployed without dependencies
+    initial_services.map(&:to_sym).each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
+      ui.print_debug("ServiceDeployer", "Scheduling to compile: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
+
+      if deployment_result.succeeded?
+        deploy_simultaneously(batch_service_names, deployment_result)
+      end
+    end
+
     if skip_dependencies
       service_names.each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
-        ui.print_debug("ServiceDeployer", "Scheduling to compile: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
+        ui.print_debug("ServiceDeployer", "Scheduling to deploy: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
 
         if deployment_result.succeeded?
           deploy_simultaneously(batch_service_names, deployment_result)
@@ -74,7 +86,7 @@ class KuberKit::Actions::ServiceDeployer
       end
     else
       service_dependency_resolver.each_with_deps(service_names) do |dep_service_names|
-        ui.print_debug("ServiceDeployer", "Scheduling to compile: #{dep_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
+        ui.print_debug("ServiceDeployer", "Scheduling to deploy: #{dep_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
 
         if deployment_result.succeeded?
           deploy_simultaneously(dep_service_names, deployment_result)

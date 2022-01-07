@@ -45,6 +45,21 @@ RSpec.describe KuberKit::Actions::ServiceDeployer do
     subject.call(services: [], tags: ["auth"], skip_dependencies: true, skip_compile: true)
   end
 
+  it "deploys initial services first" do
+    test_helper
+      .configuration_store
+      .define(:production)
+      .initial_services([:identity_app])
+
+    KuberKit.set_configuration_name(:production)
+
+    expect(subject).to receive(:deploy_simultaneously).with([:identity_app], anything)
+    expect(subject).to receive(:deploy_simultaneously).with([:auth_app], anything)
+    
+    expect(subject.image_compiler).to receive(:call).never
+    subject.call(services: ["auth_app"], tags: [], skip_dependencies: true, skip_compile: true)
+  end
+
   it "shows deployment options selection if no service found" do
     expect(subject.deployment_options_selector).to receive(:call).and_return([[], ["auth"]])
     expect(subject.image_compiler).to receive(:call).with([:identity_image, :auth_image], {}).and_return(KuberKit::Actions::ActionResult.new)

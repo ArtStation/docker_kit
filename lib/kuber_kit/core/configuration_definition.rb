@@ -14,6 +14,7 @@ class KuberKit::Core::ConfigurationDefinition
     @enabled_services   = []
     @disabled_services  = []
     @default_services   = []
+    @initial_services   = []
     @services_attributes = {}
   end
 
@@ -28,6 +29,7 @@ class KuberKit::Core::ConfigurationDefinition
       enabled_services:     @enabled_services,
       disabled_services:    @disabled_services,
       default_services:     @default_services,
+      initial_services:     @initial_services,
       build_servers:        @build_servers,
       services_attributes:  @services_attributes,
       global_build_vars:    @global_build_vars,
@@ -123,6 +125,11 @@ class KuberKit::Core::ConfigurationDefinition
 
   def default_services(services)
     @default_services += services.map(&:to_sym)
+    return self
+  end
+
+  def initial_services(services)
+    @initial_services += services.map(&:to_sym)
     return self
   end
 
