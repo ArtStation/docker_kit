@@ -1,3 +1,6 @@
+**0.8.3**
+- Always load artifacts, if kubeconfig is an artifact
+
 **0.8.2**
 - Update Kit Env command to support kubeconfig path as artifact
 
