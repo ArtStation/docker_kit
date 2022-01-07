@@ -67,9 +67,9 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceListResolver do
       expect(result).to eq(["marketplace_app"])
     end
 
-    it "always returns default services" do
+    it "always returns default services first in the list" do
       result = subject.resolve(services: ["marketplace_app"], default_services: ["auth_app"])
-      expect(result).to eq(["marketplace_app", "auth_app"])
+      expect(result).to eq(["auth_app", "marketplace_app"])
     end
 
     it "doesn't returns default services if nothing else was found" do

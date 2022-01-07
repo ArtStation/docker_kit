@@ -43,7 +43,7 @@ class KuberKit::ServiceDeployer::ServiceListResolver
     end
 
     if included_services.any?
-      included_services += default_services
+      included_services = default_services + included_services
     end
 
     included_services
