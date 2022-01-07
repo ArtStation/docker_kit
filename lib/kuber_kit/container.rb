@@ -61,6 +61,10 @@ class KuberKit::Container
     KuberKit::Configs.new
   end
 
+  register "core.artifact_path_resolver" do
+    KuberKit::Core::ArtifactPathResolver.new
+  end
+
   register "core.image_factory" do
     KuberKit::Core::ImageFactory.new
   end

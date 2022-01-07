@@ -14,6 +14,7 @@ module KuberKit
   
   module Core
     autoload :ArtifactPath, 'core/artifact_path'
+    autoload :ArtifactPathResolver, 'core/artifact_path_resolver'
 
     autoload :ImageDefinition, 'core/image_definition'
     autoload :ImageDefinitionFactory, 'core/image_definition_factory'

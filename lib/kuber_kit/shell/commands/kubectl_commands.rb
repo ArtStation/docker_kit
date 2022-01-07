@@ -3,7 +3,7 @@ require 'shellwords'
 
 class KuberKit::Shell::Commands::KubectlCommands
   include KuberKit::Import[
-    "core.artifact_store"
+    "core.artifact_path_resolver"
   ]
 
   Contract KuberKit::Shell::AbstractShell, Or[String, ArrayOf[String]], KeywordArgs[
@@ -18,9 +18,7 @@ class KuberKit::Shell::Commands::KubectlCommands
 
     if kubeconfig_path
       if kubeconfig_path.is_a?(KuberKit::Core::ArtifactPath)
-        artifact = artifact_store.get(kubeconfig_path.artifact_name)
-        file_parts = [artifact.cloned_path, kubeconfig_path.file_path].compact
-        kubeconfig_path  = File.join(*file_parts)
+        kubeconfig_path = artifact_path_resolver.call(kubeconfig_path)
       end
       command_parts << "KUBECONFIG=#{kubeconfig_path}"
     end
