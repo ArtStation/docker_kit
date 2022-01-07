@@ -1,8 +1,15 @@
 RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
   subject { KuberKit::Shell::Commands::KubectlCommands.new }
+
   let(:shell) { KuberKit::Shell::LocalShell.new }
   
   context "#kubectl_run" do
+    let(:artifact) { KuberKit::Core::Artifacts::Local.new(:kubeconfig).setup(File.join(FIXTURES_PATH, "kubeconfig")) }
+
+    before do
+      test_helper.artifact_store.add(artifact)
+    end
+
     it do
       expect(shell).to receive(:exec!).with(%Q{kubectl some_command})
       subject.kubectl_run(shell, "some_command")
@@ -21,6 +28,12 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
     it do
       expect(shell).to receive(:exec!).with(%Q{kubectl some_command some_argument})
       subject.kubectl_run(shell, ["some_command", "some_argument"])
+    end
+
+    it do
+      artifact = KuberKit::Core::ArtifactPath.new(artifact_name: :kubeconfig, file_path: "kubeconfig.yml")
+      expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=#{FIXTURES_PATH}/kubeconfig/kubeconfig.yml kubectl some_command})
+      subject.kubectl_run(shell, "some_command", kubeconfig_path: artifact)
     end
   end
 

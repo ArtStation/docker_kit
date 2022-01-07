@@ -13,6 +13,8 @@ module KuberKit
   NotFoundError = Class.new(Error)
   
   module Core
+    autoload :ArtifactPath, 'core/artifact_path'
+
     autoload :ImageDefinition, 'core/image_definition'
     autoload :ImageDefinitionFactory, 'core/image_definition_factory'
     autoload :ImageStore, 'core/image_store'

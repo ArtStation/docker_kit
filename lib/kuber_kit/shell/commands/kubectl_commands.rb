@@ -2,9 +2,26 @@ require 'json'
 require 'shellwords'
 
 class KuberKit::Shell::Commands::KubectlCommands
+  include KuberKit::Import[
+    "core.artifact_store"
+  ]
+
+  Contract KuberKit::Shell::AbstractShell, Or[String, ArrayOf[String]], KeywordArgs[
+    kubeconfig_path: Maybe[Or[
+      String, KuberKit::Core::ArtifactPath
+    ]],
+    namespace:       Maybe[String],
+    interactive:     Optional[Bool],
+  ] => Any
   def kubectl_run(shell, command_list, kubeconfig_path: nil, namespace: nil, interactive: false)
     command_parts = []
+
     if kubeconfig_path
+      if kubeconfig_path.is_a?(KuberKit::Core::ArtifactPath)
+        artifact = artifact_store.get(kubeconfig_path.artifact_name)
+        file_parts = [artifact.cloned_path, kubeconfig_path.file_path].compact
+        kubeconfig_path  = File.join(*file_parts)
+      end
       command_parts << "KUBECONFIG=#{kubeconfig_path}"
     end
 
@@ -41,11 +58,11 @@ class KuberKit::Shell::Commands::KubectlCommands
   end
 
   def logs(shell, pod_name, args: nil, kubeconfig_path: nil, namespace: nil)
-    kubectl_run(shell, ["logs", args, pod_name], kubeconfig_path: kubeconfig_path, interactive: true, namespace: namespace)
+    kubectl_run(shell, ["logs", args, pod_name].compact, kubeconfig_path: kubeconfig_path, interactive: true, namespace: namespace)
   end
 
   def describe(shell, resource_name, args: nil, kubeconfig_path: nil, namespace: nil)
-    kubectl_run(shell, ["describe", args, resource_name], kubeconfig_path: kubeconfig_path, interactive: true, namespace: namespace)
+    kubectl_run(shell, ["describe", args, resource_name].compact, kubeconfig_path: kubeconfig_path, interactive: true, namespace: namespace)
   end
 
   def get_resources(shell, resource_type, field_selector: nil, jsonpath: ".items[*].metadata.name", kubeconfig_path: nil, namespace: nil)
