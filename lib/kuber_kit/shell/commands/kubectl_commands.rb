@@ -16,10 +16,11 @@ class KuberKit::Shell::Commands::KubectlCommands
   def kubectl_run(shell, command_list, kubeconfig_path: nil, namespace: nil, interactive: false)
     command_parts = []
 
+    if kubeconfig_path.is_a?(KuberKit::Core::ArtifactPath)
+      kubeconfig_path = artifact_path_resolver.call(kubeconfig_path)
+    end
+
     if kubeconfig_path
-      if kubeconfig_path.is_a?(KuberKit::Core::ArtifactPath)
-        kubeconfig_path = artifact_path_resolver.call(kubeconfig_path)
-      end
       command_parts << "KUBECONFIG=#{kubeconfig_path}"
     end
 

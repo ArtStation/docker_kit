@@ -42,9 +42,11 @@ class KuberKit::Actions::ConfigurationLoader
     load_configurations(configurations_path, configuration_name)
     load_infrastructure(infra_path)
 
-    if load_inventory
+    if load_inventory || KuberKit.current_configuration.kubeconfig_path.is_a?(KuberKit::Core::ArtifactPath)
       update_artifacts(KuberKit.current_configuration.artifacts.values)
+    end
 
+    if load_inventory
       ui.create_task("Loading image definitions") do |task|
         files = image_store.load_definitions(images_path)
 
