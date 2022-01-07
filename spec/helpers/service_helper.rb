@@ -22,7 +22,7 @@ class ServiceHelper
     factory.create(service_definition)
   end
 
-  def register_service(name, template_name: :service_template, images: [], tags: [])
+  def register_service(name, template_name: :service_template, images: [], tags: [], dependencies: [])
     setup_service_template(template_name)
     
     service_definition = store.define(name).template(template_name)
@@ -35,6 +35,10 @@ class ServiceHelper
       service_definition = service_definition.tags(tags)
     end
 
+    if dependencies.any?
+      service_definition = service_definition.depends_on(dependencies)
+    end
+
     factory.create(service_definition)
   end
 
@@ -44,7 +48,7 @@ class ServiceHelper
       test_helper.artifact_store.add(artifact)
     end
 
-    unless test_helper.artifact_store.exists?(template_name)
+    unless test_helper.template_store.exists?(template_name)
       template = KuberKit::Core::Templates::ArtifactFile.new(template_name, artifact_name: :templates, file_path: "service.yml")
       test_helper.template_store.add(template)
     end

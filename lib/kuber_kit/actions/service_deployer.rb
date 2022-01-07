@@ -17,9 +17,10 @@ class KuberKit::Actions::ServiceDeployer
     tags:                 Maybe[ArrayOf[String]],
     skip_services:        Maybe[ArrayOf[String]],
     skip_compile:         Maybe[Bool],
+    skip_dependencies:    Maybe[Bool],
     require_confirmation: Maybe[Bool],
   ] => Any
-  def call(services:, tags:, skip_services: nil, skip_compile: false, require_confirmation: false)
+  def call(services:, tags:, skip_services: nil, skip_compile: false, skip_dependencies: false, require_confirmation: false)
     deployment_result     = KuberKit::Actions::ActionResult.new()
     current_configuration = KuberKit.current_configuration
 
@@ -30,7 +31,6 @@ class KuberKit::Actions::ServiceDeployer
     default_services  = current_configuration.default_services.map(&:to_s)
     disabled_services = current_configuration.disabled_services.map(&:to_s)
     disabled_services += skip_services if skip_services
-    
 
     service_names = service_list_resolver.resolve(
       services:         services || [],
@@ -41,7 +41,11 @@ class KuberKit::Actions::ServiceDeployer
     ).map(&:to_sym)
 
     # Return the list of services with all dependencies.
-    all_service_names = service_dependency_resolver.get_all(service_names)
+    if skip_dependencies
+      all_service_names = service_names
+    else
+      all_service_names = service_dependency_resolver.get_all(service_names)
+    end
 
     unless all_service_names.any?
       ui.print_warning "ServiceDeployer", "No service found with given options, nothing will be deployed."
@@ -60,11 +64,21 @@ class KuberKit::Actions::ServiceDeployer
       return false unless compilation_result && compilation_result.succeeded?
     end
 
-    service_dependency_resolver.each_with_deps(service_names) do |dep_service_names|
-      ui.print_debug("ServiceDeployer", "Scheduling to compile: #{dep_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
+    if skip_dependencies
+      service_names.each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
+        ui.print_debug("ServiceDeployer", "Scheduling to compile: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
 
-      if deployment_result.succeeded?
-        deploy_simultaneously(dep_service_names, deployment_result)
+        if deployment_result.succeeded?
+          deploy_simultaneously(batch_service_names, deployment_result)
+        end
+      end
+    else
+      service_dependency_resolver.each_with_deps(service_names) do |dep_service_names|
+        ui.print_debug("ServiceDeployer", "Scheduling to compile: #{dep_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
+
+        if deployment_result.succeeded?
+          deploy_simultaneously(dep_service_names, deployment_result)
+        end
       end
     end
 
