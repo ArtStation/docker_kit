@@ -32,6 +32,7 @@ class KuberKit::Actions::ServiceDeployer
     disabled_services += skip_services if skip_services
     default_services  = current_configuration.default_services.map(&:to_s) - disabled_services
     initial_services  = current_configuration.initial_services.map(&:to_s) - disabled_services
+    initial_service_names = initial_services.map(&:to_sym)
 
     service_names = service_list_resolver.resolve(
       services:         services || [],
@@ -53,12 +54,12 @@ class KuberKit::Actions::ServiceDeployer
       return false
     end
 
-    unless allow_deployment?(require_confirmation: require_confirmation, service_names: all_service_names)
+    unless allow_deployment?(require_confirmation: require_confirmation, service_names: (initial_service_names + all_service_names).uniq)
       return false
     end
 
     # Compile images for all services and dependencies
-    images_names = get_image_names(service_names: all_service_names)
+    images_names = get_image_names(service_names: (initial_service_names + all_service_names).uniq)
     unless skip_compile
       compilation_result = compile_images(images_names)
 
