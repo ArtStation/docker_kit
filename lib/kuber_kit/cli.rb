@@ -54,8 +54,8 @@ class KuberKit::CLI < Thor
         tags:                 (options[:tags] || []).flatten.uniq,
         skip_services:        (options[:skip_services] || []).flatten.uniq, 
         skip_compile:         options[:skip_compile] || false,
-        skip_dependencies:    options[:skip_dependencies] || false
-        require_confirmation: require_confirmation,
+        skip_dependencies:    options[:skip_dependencies] || false,
+        require_confirmation: require_confirmation
       )
     end
 

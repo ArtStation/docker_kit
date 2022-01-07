@@ -1,9 +1,9 @@
-**0.8.0**
+**0.8.1**
 - Allow deploying services without dependecies
 - Default services should be first in the list
 - KubeConfig should be able to take file from artifact
 
-**0.7.0**
+**0.7.1**
 - Added Ruby 3.0 support
 
 **0.6.4**
