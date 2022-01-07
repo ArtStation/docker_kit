@@ -10,7 +10,7 @@ class KuberKit::Core::Configuration
     registries:           Hash,
     env_files:            Hash,
     templates:            Hash,
-    kubeconfig_path:      Maybe[String],
+    kubeconfig_path:      Maybe[Or[String, KuberKit::Core::ArtifactPath]],
     services_attributes:  HashOf[Symbol => Hash],
     enabled_services:     ArrayOf[Symbol],
     disabled_services:    ArrayOf[Symbol],

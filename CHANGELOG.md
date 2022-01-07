@@ -1,3 +1,6 @@
+**0.8.2**
+- Update Kit Env command to support kubeconfig path as artifact
+
 **0.8.1**
 - Allow deploying services without dependecies
 - Default services should be first in the list
