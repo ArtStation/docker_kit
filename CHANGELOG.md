@@ -1,3 +1,6 @@
+**0.8.4**
+- Added initial services support, to deploy before all other servies
+
 **0.8.3**
 - Always load artifacts, if kubeconfig is an artifact
 
