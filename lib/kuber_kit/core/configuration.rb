@@ -19,7 +19,7 @@ class KuberKit::Core::Configuration
     build_servers:        ArrayOf[KuberKit::Core::BuildServers::AbstractBuildServer],
     global_build_vars:    HashOf[Symbol => Any],
     deployer_strategy:              Symbol,
-    deployer_namespace:             Maybe[Symbol],
+    deployer_namespace:             Maybe[Or[Symbol, String]],
     deployer_require_confirmation: Bool,
   ] => Any
   def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, 
