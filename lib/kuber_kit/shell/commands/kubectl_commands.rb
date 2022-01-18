@@ -10,7 +10,7 @@ class KuberKit::Shell::Commands::KubectlCommands
     kubeconfig_path: Maybe[Or[
       String, KuberKit::Core::ArtifactPath
     ]],
-    namespace:       Maybe[String],
+    namespace:       Maybe[Or[Symbol, String]],
     interactive:     Optional[Bool],
   ] => Any
   def kubectl_run(shell, command_list, kubeconfig_path: nil, namespace: nil, interactive: false)
