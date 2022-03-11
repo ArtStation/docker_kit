@@ -26,6 +26,7 @@ class KuberKit::Core::ConfigurationFactory
       env_files:            env_files,
       templates:            templates,
       kubeconfig_path:      configuration_attrs.kubeconfig_path,
+      kubectl_entrypoint:   configuration_attrs.kubectl_entrypoint,
       build_servers:        build_servers,
       services_attributes:  configuration_attrs.services_attributes,
       enabled_services:     configuration_attrs.enabled_services,

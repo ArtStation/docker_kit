@@ -83,6 +83,14 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
     end
   end
 
+  context "kubectl_entrypoint" do
+    it "sets kubectl_entrypoint for confuguration" do
+      subject.kubectl_entrypoint("bash -c \"source /etc/env; $@\"")
+
+      expect(subject.to_attrs.kubectl_entrypoint).to eq("bash -c \"source /etc/env; $@\"")
+    end
+  end
+
   context "deployer_namespace" do
     it "sets deployer_namespace for confuguration" do
       subject.deployer_namespace("test")

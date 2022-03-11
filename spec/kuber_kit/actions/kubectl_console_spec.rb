@@ -3,7 +3,7 @@ RSpec.describe KuberKit::Actions::KubectlConsole do
 
   it "executes console command using kubectl" do
     expect(subject.kubectl_commands).to receive(:exec).with(subject.local_shell, 
-      "auth-app", "bin/console", args: "-it", interactive: true, kubeconfig_path: nil, namespace: nil
+      "auth-app", "bin/console", args: "-it", interactive: true, kubeconfig_path: nil, namespace: nil, entrypoint: nil
     )
     subject.call("auth-app", {})
   end
@@ -13,7 +13,7 @@ RSpec.describe KuberKit::Actions::KubectlConsole do
       "attach"
     ).and_return("deploy/test-app")
     expect(subject.kubectl_commands).to receive(:exec).with(subject.local_shell, 
-      "deploy/test-app", "bin/console", args: "-it", interactive: true, kubeconfig_path: nil, namespace: nil
+      "deploy/test-app", "bin/console", args: "-it", interactive: true, kubeconfig_path: nil, namespace: nil, entrypoint: nil
     )
     subject.call(nil, {})
   end

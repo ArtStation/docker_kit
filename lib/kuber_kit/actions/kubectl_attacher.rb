@@ -8,7 +8,8 @@ class KuberKit::Actions::KubectlAttacher
 
   Contract Maybe[String], Hash => Any
   def call(pod_name, options)
-    kubeconfig_path = KuberKit.current_configuration.kubeconfig_path
+    kubeconfig_path    = KuberKit.current_configuration.kubeconfig_path
+    kubectl_entrypoint = KuberKit.current_configuration.kubectl_entrypoint
     deployer_namespace = KuberKit.current_configuration.deployer_namespace
 
     if !pod_name
@@ -18,8 +19,9 @@ class KuberKit::Actions::KubectlAttacher
     kubectl_commands.exec(
       local_shell, pod_name, "bash", args: "-it", 
       kubeconfig_path: kubeconfig_path, 
-      interactive: true,
-      namespace: deployer_namespace
+      interactive:  true,
+      namespace:    deployer_namespace,
+      entrypoint:   kubectl_entrypoint
     )
 
     true

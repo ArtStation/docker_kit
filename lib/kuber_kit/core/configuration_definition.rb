@@ -26,6 +26,7 @@ class KuberKit::Core::ConfigurationDefinition
       env_files:            @env_files,
       templates:            @templates,
       kubeconfig_path:      @kubeconfig_path,
+      kubectl_entrypoint:   @kubectl_entrypoint,
       enabled_services:     @enabled_services,
       disabled_services:    @disabled_services,
       default_services:     @default_services,
@@ -85,6 +86,12 @@ class KuberKit::Core::ConfigurationDefinition
 
   def kubeconfig_path(path)
     @kubeconfig_path = path
+
+    self
+  end
+
+  def kubectl_entrypoint(path)
+    @kubectl_entrypoint = path
 
     self
   end

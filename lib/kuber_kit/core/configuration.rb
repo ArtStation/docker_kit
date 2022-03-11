@@ -1,5 +1,5 @@
 class KuberKit::Core::Configuration
-  attr_reader :name, :artifacts, :registries, :env_files, :templates, :kubeconfig_path, 
+  attr_reader :name, :artifacts, :registries, :env_files, :templates, :kubeconfig_path, :kubectl_entrypoint,
               :services_attributes, :enabled_services, :disabled_services, :default_services,
               :initial_services, :build_servers, :global_build_vars,
               :deployer_strategy, :deployer_namespace, :deployer_require_confirmation
@@ -11,6 +11,7 @@ class KuberKit::Core::Configuration
     env_files:            Hash,
     templates:            Hash,
     kubeconfig_path:      Maybe[Or[String, KuberKit::Core::ArtifactPath]],
+    kubectl_entrypoint:   Maybe[String],
     services_attributes:  HashOf[Symbol => Hash],
     enabled_services:     ArrayOf[Symbol],
     disabled_services:    ArrayOf[Symbol],
@@ -22,7 +23,7 @@ class KuberKit::Core::Configuration
     deployer_namespace:             Maybe[Or[Symbol, String]],
     deployer_require_confirmation: Bool,
   ] => Any
-  def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, 
+  def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, kubectl_entrypoint:,
                  services_attributes:, enabled_services:, disabled_services:, default_services:, 
                  initial_services:, build_servers:, global_build_vars:,
                  deployer_strategy:, deployer_namespace:, deployer_require_confirmation:)
@@ -32,6 +33,7 @@ class KuberKit::Core::Configuration
     @env_files            = env_files
     @templates            = templates
     @kubeconfig_path      = kubeconfig_path
+    @kubectl_entrypoint   = kubectl_entrypoint
     @build_servers        = build_servers
     @services_attributes  = services_attributes
     @enabled_services     = enabled_services

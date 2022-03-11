@@ -43,12 +43,16 @@ class KuberKit::Shell::Commands::KubectlCommands
     kubectl_run(shell, "apply -f #{file_path}", kubeconfig_path: kubeconfig_path, namespace: namespace)
   end
 
-  def exec(shell, pod_name, command, args: nil, kubeconfig_path: nil, interactive: false, namespace: nil)
+  def exec(shell, pod_name, command, args: nil, kubeconfig_path: nil, interactive: false, namespace: nil, entrypoint: nil)
     command_parts = []
     command_parts << "exec"
 
     if args
       command_parts << args
+    end
+    
+    if entrypoint
+      command = entrypoint.gsub("$@", command)
     end
 
     command_parts << pod_name

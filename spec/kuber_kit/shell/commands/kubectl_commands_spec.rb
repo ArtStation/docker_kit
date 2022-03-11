@@ -64,6 +64,11 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
       expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=/path/to/kube.cfg kubectl exec my-pod -- bash})
       subject.exec(shell, "my-pod", "bash", kubeconfig_path: "/path/to/kube.cfg")
     end
+
+    it do
+      expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=/path/to/kube.cfg kubectl exec my-pod -- bash -c "source /etc/env; bash"})
+      subject.exec(shell, "my-pod", "bash", kubeconfig_path: "/path/to/kube.cfg", entrypoint: "bash -c \"source /etc/env; $@\"")
+    end
   end
 
   context "#logs" do
