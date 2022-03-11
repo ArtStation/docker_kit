@@ -1,8 +1,7 @@
-**0.8.5**
-- Properly show initial services in deployment confirmation
-
-**0.8.4**
+**0.8.4-0.8.8**
 - Added initial services support, to deploy before all other servies
+- Allow namespace as symbol in kubectl commands
+- Allow setting kubectl entrypoint for configuration
 
 **0.8.3**
 - Always load artifacts, if kubeconfig is an artifact
