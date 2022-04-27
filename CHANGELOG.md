@@ -1,3 +1,6 @@
+**0.9.0**
+- Allow skipping confirmation during deployment
+
 **0.8.4-0.8.8**
 - Added initial services support, to deploy before all other servies
 - Allow namespace as symbol in kubectl commands
