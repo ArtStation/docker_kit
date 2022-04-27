@@ -42,6 +42,10 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
     raise "Currently interactive run is not supported for ssh shell."
   end
 
+  def replace!(shell_name: nil, env: [])
+    raise "Currently repliace run is not supported for ssh shell."
+  end
+
   def sync(local_path, remote_path, exclude: nil, delete: true)
     rsync_commands.rsync(
       local_shell, local_path, remote_path, 

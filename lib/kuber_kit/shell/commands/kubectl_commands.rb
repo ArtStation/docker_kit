@@ -130,4 +130,10 @@ class KuberKit::Shell::Commands::KubectlCommands
 
     kubectl_run(shell, command_parts, kubeconfig_path: kubeconfig_path, namespace: namespace)
   end
+
+  def set_namespace(shell, namespace, kubeconfig_path: nil)
+    command = %Q{config set-context --current --namespace=#{namespace}}
+
+    kubectl_run(shell, command, kubeconfig_path: kubeconfig_path)
+  end
 end

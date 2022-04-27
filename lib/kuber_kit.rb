@@ -190,6 +190,7 @@ module KuberKit
     autoload :KubectlGet, 'actions/kubectl_get'
     autoload :KubectlLogs, 'actions/kubectl_logs'
     autoload :KubectlEnv, 'actions/kubectl_env'
+    autoload :ShellLauncher, 'actions/shell_launcher'
   end
 
   module Extensions

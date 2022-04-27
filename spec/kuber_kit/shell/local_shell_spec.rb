@@ -18,6 +18,18 @@ RSpec.describe KuberKit::Shell::LocalShell do
       }.to raise_error(KuberKit::Shell::LocalShell::ShellError) 
     end
   end
+
+  context "#replace!" do
+    it "calls exec function with a shell command" do
+      expect(subject).to receive(:system_exec).with("$SHELL")
+      subject.replace!()
+    end
+
+    it "calls exec function with env variables" do
+      expect(subject).to receive(:system_exec).with("TEST=value ANOTHER_TEST=another $SHELL")
+      subject.replace!(env: ["TEST=value", "ANOTHER_TEST=another"])
+    end
+  end
   
   context "#read" do
     it "reads content of the file" do

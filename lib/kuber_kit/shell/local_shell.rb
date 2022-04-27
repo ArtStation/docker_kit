@@ -58,6 +58,17 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     end
   end
 
+  def replace!(shell_name: nil, env: [], log_command: true)
+    shell_name ||= "$SHELL"
+    command = (env + [shell_name]).join(" ")
+
+    if log_command
+      ui.print_debug("LocalShell", "Replace Shell: #{command.to_s.cyan}")
+    end
+
+    system_exec(command)
+  end
+
   def sync(local_path, remote_path, exclude: nil, delete: true)
     rsync_commands.rsync(self, local_path, remote_path, exclude: exclude, delete: delete)
   end
@@ -117,6 +128,10 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
   end
 
   private
+    def system_exec(command)
+      exec(command)
+    end
+
     def ensure_directory_exists(file_path)
       dir_path = File.dirname(file_path)
 

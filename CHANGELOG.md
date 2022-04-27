@@ -1,5 +1,6 @@
 **0.9.0**
 - Allow skipping confirmation during deployment
+- Added `kit sh` command to create a new shell
 
 **0.8.4-0.8.8**
 - Added initial services support, to deploy before all other servies

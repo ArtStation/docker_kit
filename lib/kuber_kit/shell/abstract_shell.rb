@@ -10,6 +10,10 @@ class KuberKit::Shell::AbstractShell
     raise KuberKit::NotImplementedError, "must be implemented"
   end
 
+  def replace!(shell_name: nil, env: [])
+    raise KuberKit::NotImplementedError, "must be implemented"
+  end
+
   def read(file_path)
     raise KuberKit::NotImplementedError, "must be implemented"
   end

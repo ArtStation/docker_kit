@@ -163,6 +163,15 @@ class KuberKit::CLI < Thor
     end
   end
 
+  desc "sh", "Create a new shell with KUBECONFIG env variable in place"
+  def sh()
+    setup(options)
+
+    if KuberKit::Container['actions.configuration_loader'].call(options.merge(load_inventory: false))
+      KuberKit::Container['actions.shell_launcher'].call()
+    end
+  end
+
   desc "get RESOURCE_NAME", "List pods matching RESOURCE_NAME using kubectl"
   def get(pod_name = nil)
     setup(options)

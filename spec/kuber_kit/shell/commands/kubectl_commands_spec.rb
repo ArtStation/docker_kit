@@ -157,4 +157,11 @@ RSpec.describe KuberKit::Shell::Commands::KubectlCommands do
       subject.rollout_status(shell, "job", "my-job", wait: false)
     end
   end
+
+  context "#set_namespace" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{kubectl config set-context --current --namespace=new-namespace})
+      subject.set_namespace(shell, "new-namespace")
+    end
+  end
 end

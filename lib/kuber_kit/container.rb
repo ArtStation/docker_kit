@@ -57,6 +57,10 @@ class KuberKit::Container
     KuberKit::Actions::KubectlEnv.new
   end
 
+  register "actions.shell_launcher" do
+    KuberKit::Actions::ShellLauncher.new
+  end
+
   register "configs" do
     KuberKit::Configs.new
   end
