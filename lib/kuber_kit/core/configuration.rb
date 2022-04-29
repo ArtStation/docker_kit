@@ -2,7 +2,8 @@ class KuberKit::Core::Configuration
   attr_reader :name, :artifacts, :registries, :env_files, :templates, :kubeconfig_path, :kubectl_entrypoint,
               :services_attributes, :enabled_services, :disabled_services, :default_services,
               :initial_services, :build_servers, :global_build_vars,
-              :deployer_strategy, :deployer_namespace, :deployer_require_confirmation
+              :deployer_strategy, :deployer_namespace, :deployer_require_confirmation,
+              :shell_launcher_strategy
 
   Contract KeywordArgs[
     name:                 Symbol,
@@ -21,12 +22,13 @@ class KuberKit::Core::Configuration
     global_build_vars:    HashOf[Symbol => Any],
     deployer_strategy:              Symbol,
     deployer_namespace:             Maybe[Or[Symbol, String]],
-    deployer_require_confirmation: Bool,
+    deployer_require_confirmation:  Bool,
+    shell_launcher_strategy:        Symbol,
   ] => Any
   def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, kubectl_entrypoint:,
                  services_attributes:, enabled_services:, disabled_services:, default_services:, 
                  initial_services:, build_servers:, global_build_vars:,
-                 deployer_strategy:, deployer_namespace:, deployer_require_confirmation:)
+                 deployer_strategy:, deployer_namespace:, deployer_require_confirmation:, shell_launcher_strategy:)
     @name                 = name
     @artifacts            = artifacts
     @registries           = registries
@@ -43,7 +45,8 @@ class KuberKit::Core::Configuration
     @global_build_vars    = global_build_vars
     @deployer_strategy              = deployer_strategy
     @deployer_namespace             = deployer_namespace
-    @deployer_require_confirmation = deployer_require_confirmation
+    @deployer_require_confirmation  = deployer_require_confirmation
+    @shell_launcher_strategy        = shell_launcher_strategy
   end
 
   def service_attributes(service_name)

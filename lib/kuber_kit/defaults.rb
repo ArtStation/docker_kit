@@ -29,15 +29,20 @@ class KuberKit::Defaults
       )
       container["service_deployer.deployer"].register_strategy(
         :kubernetes,
-        container["service_deployer.strategies.kubernetes"]
+        KuberKit::ServiceDeployer::Strategies::Kubernetes.new
       )
       container["service_deployer.deployer"].register_strategy(
         :docker,
-        container["service_deployer.strategies.docker"]
+        KuberKit::ServiceDeployer::Strategies::Docker.new
       )
       container["service_deployer.deployer"].register_strategy(
         :docker_compose,
-        container["service_deployer.strategies.docker_compose"]
+        KuberKit::ServiceDeployer::Strategies::DockerCompose.new
+      )
+
+      container["shell_launcher.launcher"].register_strategy(
+        :kubernetes,
+        KuberKit::ShellLauncher::Strategies::Kubernetes.new
       )
     end
 

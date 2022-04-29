@@ -297,24 +297,20 @@ class KuberKit::Container
     KuberKit::ServiceDeployer::ServiceDependencyResolver.new
   end
 
-  register "service_deployer.strategies.kubernetes" do
-    KuberKit::ServiceDeployer::Strategies::Kubernetes.new
-  end
-
-  register "service_deployer.strategies.docker" do
-    KuberKit::ServiceDeployer::Strategies::Docker.new
-  end
-
-  register "service_deployer.strategies.docker_compose" do
-    KuberKit::ServiceDeployer::Strategies::DockerCompose.new
-  end
-
   register "service_reader.action_handler" do
     KuberKit::ServiceReader::ActionHandler.new
   end
 
   register "service_reader.reader" do
     KuberKit::ServiceReader::Reader.new
+  end
+
+  register "shell_launcher.action_handler" do
+    KuberKit::ShellLauncher::ActionHandler.new
+  end
+
+  register "shell_launcher.launcher" do
+    KuberKit::ShellLauncher::Launcher.new
   end
 
   register "kubernetes.resource_selector" do

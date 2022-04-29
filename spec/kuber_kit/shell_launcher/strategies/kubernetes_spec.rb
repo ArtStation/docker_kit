@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::Actions::ShellLauncher do
-  subject{ KuberKit::Actions::ShellLauncher.new(local_shell: shell) }
+RSpec.describe KuberKit::ShellLauncher::Strategies::Kubernetes do
+  subject{ KuberKit::ShellLauncher::Strategies::Kubernetes.new() }
 
   let(:shell) { test_helper.shell }
 
@@ -14,8 +14,9 @@ RSpec.describe KuberKit::Actions::ShellLauncher do
   end
 
   it "launches a shell with required env variables" do
+    expect(subject.kubectl_commands).to receive(:set_namespace).with(shell, "prod", kubeconfig_path: "/path/to/kubeconfig")
     expect(shell).to receive(:replace!).with(env: ["KUBECONFIG=/path/to/kubeconfig"])
     
-    subject.call()
+    subject.call(shell)
   end
 end

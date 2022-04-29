@@ -174,6 +174,16 @@ module KuberKit
     autoload :Reader, 'service_reader/reader'
   end
 
+  module ShellLauncher
+    autoload :ActionHandler, 'shell_launcher/action_handler'
+    autoload :Launcher, 'shell_launcher/launcher'
+
+    module Strategies
+      autoload :Abstract, 'shell_launcher/strategies/abstract'
+      autoload :Kubernetes, 'shell_launcher/strategies/kubernetes'
+    end
+  end
+
   module Actions
     autoload :ActionResult, 'actions/action_result'
     autoload :ImageCompiler, 'actions/image_compiler'

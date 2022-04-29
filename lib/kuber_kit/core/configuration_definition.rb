@@ -36,7 +36,8 @@ class KuberKit::Core::ConfigurationDefinition
       global_build_vars:    @global_build_vars,
       deployer_strategy:              @deployer_strategy,
       deployer_namespace:             @deployer_namespace,
-      deployer_require_confirmation: @deployer_require_confirmation || false,
+      deployer_require_confirmation:  @deployer_require_confirmation || false,
+      shell_launcher_strategy:        @shell_launcher_strategy,
     )
   end
 
@@ -102,8 +103,8 @@ class KuberKit::Core::ConfigurationDefinition
     self
   end
 
-  def deployer_strategy(path)
-    @deployer_strategy = path
+  def deployer_strategy(strategy)
+    @deployer_strategy = strategy
 
     self
   end
@@ -114,6 +115,12 @@ class KuberKit::Core::ConfigurationDefinition
     self
   end
   alias_method :deployer_require_confirimation, :deployer_require_confirmation
+
+  def shell_launcher_strategy(strategy)
+    @shell_launcher_strategy = path
+
+    self
+  end
 
   def enabled_services(services)
     if services.is_a?(Hash)
