@@ -7,26 +7,43 @@ class KuberKit::Defaults
     end
 
     def init!
-      KuberKit::Container["artifacts_sync.artifact_updater"].use_resolver(
-        KuberKit::Container["artifacts_sync.git_artifact_resolver"], 
+      container["artifacts_sync.artifact_updater"].use_resolver(
+        container["artifacts_sync.git_artifact_resolver"], 
         artifact_class: KuberKit::Core::Artifacts::Git
       )
-      KuberKit::Container["artifacts_sync.artifact_updater"].use_resolver(
-        KuberKit::Container["artifacts_sync.null_artifact_resolver"], 
+      container["artifacts_sync.artifact_updater"].use_resolver(
+        container["artifacts_sync.null_artifact_resolver"], 
         artifact_class: KuberKit::Core::Artifacts::Local
       )
-      KuberKit::Container["env_file_reader.reader"].use_reader(
-        KuberKit::Container["env_file_reader.strategies.artifact_file"], 
+      container["env_file_reader.reader"].use_reader(
+        container["env_file_reader.strategies.artifact_file"], 
         env_file_class: KuberKit::Core::EnvFiles::ArtifactFile
       )
-      KuberKit::Container["env_file_reader.reader"].use_reader(
-        KuberKit::Container["env_file_reader.strategies.env_group"], 
+      container["env_file_reader.reader"].use_reader(
+        container["env_file_reader.strategies.env_group"], 
         env_file_class: KuberKit::Core::EnvFiles::EnvGroup
       )
-      KuberKit::Container["template_reader.reader"].use_reader(
-        KuberKit::Container["template_reader.strategies.artifact_file"], 
+      container["template_reader.reader"].use_reader(
+        container["template_reader.strategies.artifact_file"], 
         template_class: KuberKit::Core::Templates::ArtifactFile
       )
+      container["service_deployer.deployer"].register_strategy(
+        :kubernetes,
+        container["service_deployer.strategies.kubernetes"]
+      )
+      container["service_deployer.deployer"].register_strategy(
+        :docker,
+        container["service_deployer.strategies.docker"]
+      )
+      container["service_deployer.deployer"].register_strategy(
+        :docker_compose,
+        container["service_deployer.strategies.docker_compose"]
+      )
     end
+
+    private
+      def container
+        KuberKit::Container
+      end
   end
 end

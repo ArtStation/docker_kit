@@ -1,5 +1,5 @@
 class KuberKit::Core::Service
-  AttributeNotSet = Class.new(Indocker::Error)
+  AttributeNotSet = Class.new(KuberKit::Error)
 
   attr_reader :name, :dependencies, :template_name, :tags, :images, :attributes, :deployer_strategy
 

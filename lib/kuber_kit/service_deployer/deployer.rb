@@ -3,15 +3,7 @@ class KuberKit::ServiceDeployer::Deployer
 
   include KuberKit::Import[
     "core.service_store",
-    "service_deployer.strategies.kubernetes",
-    "service_deployer.strategies.docker",
-    "service_deployer.strategies.docker_compose"
   ]
-
-  def initialize(**injected_deps, &block)
-    super(**injected_deps)
-    add_default_strategies
-  end
 
   def register_strategy(strategy_name, strategy)
     @@strategies ||= {}
@@ -31,15 +23,4 @@ class KuberKit::ServiceDeployer::Deployer
 
     deployer.deploy(shell, service)
   end
-
-  def reset!
-    @@strategies = {}
-  end
-
-  private
-    def add_default_strategies
-      register_strategy(:kubernetes, kubernetes)
-      register_strategy(:docker, docker)
-      register_strategy(:docker_compose, docker_compose)
-    end
 end
