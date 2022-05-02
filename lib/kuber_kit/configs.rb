@@ -41,7 +41,7 @@ class KuberKit::Configs
     set :image_build_context_dir, "build_context"
     set :image_tag,               'latest'
     set :image_compile_dir,         File.join(absolute_kuber_kit_path, "image_builds")
-    set :remote_image_compile_dir,  File.join("tmp", "kuber_kit", "image_builds")
+    set :remote_image_compile_dir,  File.join("/tmp", "kuber_kit", "image_builds")
     set :docker_ignore_list,      DOCKER_IGNORE_LIST
     set :kuber_kit_dirname,       "kuber_kit"
     set :kuber_kit_min_version,   KuberKit::VERSION
