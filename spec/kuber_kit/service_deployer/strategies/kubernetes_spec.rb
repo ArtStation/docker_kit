@@ -3,7 +3,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
 
   let(:shell) { test_helper.shell }
   let(:service) { service_helper.service(:auth_app) }
-  let(:service_config_path) { File.expand_path(File.join("~", ".kuber_kit/services/auth_app.yml")) }
+  let(:service_config_path) { File.join("~", ".kuber_kit/services/auth_app.yml") }
 
   it "applies kubernetes config" do
     expect(shell).to receive(:write).with(service_config_path, /apiVersion: v1/)

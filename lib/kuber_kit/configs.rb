@@ -34,7 +34,7 @@ class KuberKit::Configs
   end
 
   def add_default_configs
-    home_kuber_kit_path = File.expand_path(File.join("~", ".kuber_kit"))
+    home_kuber_kit_path = File.join("~", ".kuber_kit")
     
     set :image_dockerfile_name,   "Dockerfile"
     set :image_build_context_dir, "build_context"
