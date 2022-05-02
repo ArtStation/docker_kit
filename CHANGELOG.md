@@ -1,7 +1,7 @@
-**0.9.0**
+**0.9.0-0.9.1**
 - Allow skipping confirmation during deployment
 - Added `kit sh` command to create a new shell
-- Do not expand directory path in config
+- Do not expand image compile directory path in default config
 
 **0.8.4-0.8.8**
 - Added initial services support, to deploy before all other servies
