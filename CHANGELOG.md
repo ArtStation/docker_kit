@@ -1,7 +1,7 @@
-**0.9.0-0.9.1**
+**0.9.0-0.9.2**
 - Allow skipping confirmation during deployment
 - Added `kit sh` command to create a new shell
-- Do not expand image compile directory path in default config
+- Use tmp dir as image builds parent dir for remote compilation
 
 **0.8.4-0.8.8**
 - Added initial services support, to deploy before all other servies
