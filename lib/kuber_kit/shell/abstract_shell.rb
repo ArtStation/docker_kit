@@ -29,4 +29,8 @@ class KuberKit::Shell::AbstractShell
   def sync(local_path, remote_path, exclude: nil)
     raise KuberKit::NotImplementedError, "must be implemented"
   end
+
+  def expand_path(relative_path)
+    raise KuberKit::NotImplementedError, "must be implemented"
+  end
 end

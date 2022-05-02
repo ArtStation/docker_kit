@@ -42,5 +42,11 @@ RSpec.describe KuberKit::Shell::Commands::BashCommands do
       expect(shell).to receive(:exec!).with(%Q{mkdir -p "/test"})
       subject.mkdir_p(shell, "/test")
     end
+
+    it do
+      expanded_path = File.expand_path("~/test")
+      expect(shell).to receive(:exec!).with(%Q{mkdir -p "#{expanded_path}"})
+      subject.mkdir_p(shell, "~/test")
+    end
   end
 end
