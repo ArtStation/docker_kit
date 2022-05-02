@@ -13,7 +13,7 @@ RSpec.describe KuberKit::ImageCompiler::ActionHandler do
   end
 
   it "uses tmp folder for remote compilation" do
-    remote_shell = KuberKit::Shell::SshShell.new
+    remote_shell = test_helper.ssh_shell
     expect(subject.image_store).to receive(:get_image).with(:example).and_return(image)
     expect(subject.compiler).to receive(:compile).with(remote_shell, image, /kuber_kit\/image_builds\/2020/).and_return("image_id")
 

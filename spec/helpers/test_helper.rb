@@ -17,6 +17,10 @@ class TestHelper
     TestShell.new
   end
 
+  def ssh_shell
+    TestSshShell.new
+  end
+
   def context_helper
     HelloWorldContextHelper.new
   end

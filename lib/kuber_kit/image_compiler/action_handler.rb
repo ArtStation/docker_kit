@@ -12,7 +12,7 @@ class KuberKit::ImageCompiler::ActionHandler
 
     image = image_store.get_image(image_name)
 
-    build_dir_cleaner.call(parent_dir: parent_dir)
+    build_dir_cleaner.call(shell, parent_dir: parent_dir)
     
     compile_dir = generate_compile_dir(parent_dir: parent_dir, build_id: build_id)
 

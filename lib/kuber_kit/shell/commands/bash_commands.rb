@@ -1,3 +1,4 @@
+require 'time'
 class KuberKit::Shell::Commands::BashCommands
   def rm(shell, path)
     shell.exec!(%Q{rm "#{path}"})
@@ -21,5 +22,10 @@ class KuberKit::Shell::Commands::BashCommands
 
   def mkdir_p(shell, path)
     shell.exec!(%Q{mkdir -p "#{path}"})
+  end
+
+  def ctime(shell, path)
+    result = shell.exec!(%Q{date -r "#{path}"})
+    Time.parse(result)
   end
 end

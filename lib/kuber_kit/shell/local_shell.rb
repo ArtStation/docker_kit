@@ -112,8 +112,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
   end
 
   def list_dirs(path)
-    command = %Q{find -L #{path}  -type f}
-    command += " -name '#{name}'" if name
+    command = %Q{find -L #{path} -maxdepth 0 -type d}
     exec!(command).split(/[\r\n]+/)
   rescue => e
     if e.message.include?("No such file or directory")
