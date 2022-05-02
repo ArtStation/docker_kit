@@ -41,7 +41,7 @@ class KuberKit::Configs
     set :image_build_context_dir, "build_context"
     set :image_tag,               'latest'
     # do not use absolute path for compile dir, compilation could be done on remote server
-    set :image_compile_dir,       File.join(home_kuber_kit_path, "image_builds")
+    set :image_compile_dir,       File.join(absolute_kuber_kit_path, "image_builds")
     set :docker_ignore_list,      DOCKER_IGNORE_LIST
     set :kuber_kit_dirname,       "kuber_kit"
     set :kuber_kit_min_version,   KuberKit::VERSION

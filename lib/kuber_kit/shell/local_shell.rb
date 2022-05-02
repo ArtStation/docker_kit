@@ -127,10 +127,6 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     "KIT=#{Process.pid} #{command}"
   end
 
-  def expand_path(relative_path)
-    File.expand_path(relative_path)
-  end
-
   private
     def system_exec(command)
       exec(command)

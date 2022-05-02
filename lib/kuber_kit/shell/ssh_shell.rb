@@ -71,10 +71,6 @@ class KuberKit::Shell::SshShell < KuberKit::Shell::LocalShell
     true
   end
 
-  def expand_path(relative_path)
-    exec!("readlink -f #{relative_path}")
-  end
-
   private
     def ssh_session
       unless connected?

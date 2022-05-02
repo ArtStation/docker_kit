@@ -99,14 +99,6 @@ RSpec.describe KuberKit::Shell::LocalShell do
     end
   end
 
-  context "#expand_path" do
-    it "expands a relative path" do
-      path = "~/.kuber_kit"
-      expanded_path = File.expand_path(path)
-      expect(subject.expand_path(path)).to eq(expanded_path)
-    end
-  end
-
   context "#recursive_list_files" do
     let(:test_dir) { File.join(FIXTURES_PATH, "shell") }
 
