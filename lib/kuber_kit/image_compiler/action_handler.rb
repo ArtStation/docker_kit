@@ -25,10 +25,10 @@ class KuberKit::ImageCompiler::ActionHandler
     end
 
     def get_image_compile_parent_dir_for_shell(shell)
-      if shell.is_a?(KuberKit::Shell::LocalShell)
-        configs.image_compile_dir
-      else
+      if shell.is_a?(KuberKit::Shell::SshShell)
         configs.remote_image_compile_dir
+      else
+        configs.image_compile_dir
       end
     end
 end
