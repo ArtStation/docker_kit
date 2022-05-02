@@ -2,7 +2,7 @@
 
 class KuberKit::Configs
   AVAILABLE_CONFIGS = [
-    :image_dockerfile_name, :image_build_context_dir, :image_tag, :docker_ignore_list, :image_compile_dir, 
+    :image_dockerfile_name, :image_build_context_dir, :image_tag, :docker_ignore_list, :image_compile_dir, :remote_image_compile_dir,
     :kuber_kit_dirname, :kuber_kit_min_version, :images_dirname, :services_dirname, :infra_dirname, :configurations_dirname,
     :artifact_clone_dir, :service_config_dir, :deployer_strategy, :compile_simultaneous_limit, :deploy_simultaneous_limit,
     :additional_images_paths, :deprecation_warnings_disabled, :log_file_path, :env_file_compile_dir, :shell_launcher_strategy
@@ -40,8 +40,8 @@ class KuberKit::Configs
     set :image_dockerfile_name,   "Dockerfile"
     set :image_build_context_dir, "build_context"
     set :image_tag,               'latest'
-    # do not use absolute path for compile dir, compilation could be done on remote server
-    set :image_compile_dir,       File.join(absolute_kuber_kit_path, "image_builds")
+    set :image_compile_dir,         File.join(absolute_kuber_kit_path, "image_builds")
+    set :remote_image_compile_dir,  File.join("tmp", "kuber_kit", "image_builds")
     set :docker_ignore_list,      DOCKER_IGNORE_LIST
     set :kuber_kit_dirname,       "kuber_kit"
     set :kuber_kit_min_version,   KuberKit::VERSION
