@@ -15,7 +15,7 @@ RSpec.describe KuberKit::ShellLauncher::Strategies::Kubernetes do
 
   it "launches a shell with required env variables" do
     expect(subject.kubectl_commands).to receive(:set_namespace).with(shell, "prod", kubeconfig_path: "/path/to/kubeconfig")
-    expect(shell).to receive(:replace!).with(env: ["KUBECONFIG=/path/to/kubeconfig"])
+    expect(shell).to receive(:replace!).with(env: ["KUBECONFIG=/path/to/kubeconfig", "KUBER_KIT_SHELL_CONFIGURATION=production"])
     
     subject.call(shell)
   end

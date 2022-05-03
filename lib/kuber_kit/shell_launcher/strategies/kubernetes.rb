@@ -17,6 +17,6 @@ class KuberKit::ShellLauncher::Strategies::Kubernetes < KuberKit::ShellLauncher:
       kubectl_commands.set_namespace(shell, deployer_namespace, kubeconfig_path: kubeconfig_path)
     end
 
-    shell.replace!(env: ["KUBECONFIG=#{kubeconfig_path}"])
+    shell.replace!(env: ["KUBECONFIG=#{kubeconfig_path}", "KUBER_KIT_SHELL_CONFIGURATION=#{KuberKit.current_configuration.name}"])
   end
 end
