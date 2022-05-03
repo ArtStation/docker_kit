@@ -18,10 +18,6 @@ class KuberKit::Tools::BuildDirCleaner
     def get_ancient_builds_dirs(shell, parent_dir:)
       all_dirs  = shell.list_dirs("#{parent_dir}/*")
 
-      all_dirs.each do |dir|
-        puts bash_commands.ctime(shell, f).inspect
-      end
-
       skip_dirs = all_dirs
         .sort_by{ |f| bash_commands.ctime(shell, f) }
         .reverse[0...KEEP_DIRS_COUNT]
