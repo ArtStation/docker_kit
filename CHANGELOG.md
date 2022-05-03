@@ -1,4 +1,4 @@
-**0.9.0-0.9.3**
+**0.9.0-0.9.4**
 - Allow skipping confirmation during deployment
 - Added `kit sh` command to create a new shell
 - Use tmp dir as image builds parent dir for remote compilation
