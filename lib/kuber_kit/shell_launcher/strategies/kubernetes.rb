@@ -1,7 +1,6 @@
 class KuberKit::ShellLauncher::Strategies::Kubernetes < KuberKit::ShellLauncher::Strategies::Abstract
   include KuberKit::Import[
     "core.artifact_path_resolver",
-    "service_reader.reader",
     "shell.kubectl_commands",
     "configs",
   ]

@@ -117,7 +117,7 @@ class KuberKit::Core::ConfigurationDefinition
   alias_method :deployer_require_confirimation, :deployer_require_confirmation
 
   def shell_launcher_strategy(strategy)
-    @shell_launcher_strategy = path
+    @shell_launcher_strategy = strategy
 
     self
   end
