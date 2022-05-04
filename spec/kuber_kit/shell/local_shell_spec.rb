@@ -21,12 +21,12 @@ RSpec.describe KuberKit::Shell::LocalShell do
 
   context "#replace!" do
     it "calls exec function with a shell command" do
-      expect(subject).to receive(:system_exec).with("$SHELL")
+      expect(subject).to receive(:system_exec).with("$SHELL --login")
       subject.replace!()
     end
 
     it "calls exec function with env variables" do
-      expect(subject).to receive(:system_exec).with("TEST=value ANOTHER_TEST=another $SHELL")
+      expect(subject).to receive(:system_exec).with("TEST=value ANOTHER_TEST=another $SHELL --login")
       subject.replace!(env: ["TEST=value", "ANOTHER_TEST=another"])
     end
   end

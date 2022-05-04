@@ -59,7 +59,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
   end
 
   def replace!(shell_name: nil, env: [], log_command: true)
-    shell_name ||= "$SHELL"
+    shell_name ||= "$SHELL --login"
     command = (env + [shell_name]).join(" ")
 
     if log_command
