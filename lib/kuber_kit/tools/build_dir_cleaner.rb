@@ -1,6 +1,7 @@
 class KuberKit::Tools::BuildDirCleaner
   include KuberKit::Import[
     "shell.bash_commands",
+    "ui"
   ]
 
   KEEP_DIRS_COUNT = 10
