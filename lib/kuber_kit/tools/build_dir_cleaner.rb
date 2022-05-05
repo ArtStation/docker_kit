@@ -11,7 +11,11 @@ class KuberKit::Tools::BuildDirCleaner
 
     dirs_to_delete.each do |dir|
       bash_commands.rm_rf(shell, dir)
+    rescue KuberKit::Shell::AbstractShell::ShellError => e
+      ui.print_debug "BuildDirCleaner", "Error while removing directory: #{e.inspect}"
     end
+  rescue KuberKit::Shell::AbstractShell::DirNotFoundError
+    ui.print_debug "BuildDirCleaner", "Build directory not found"
   end
 
   private
