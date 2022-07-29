@@ -41,6 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tty-prompt"
   spec.add_dependency "dry-container", "~> 0.7.2"
   spec.add_dependency "dry-configurable", "~> 0.12.1"
+  spec.add_dependency "ree"
 
   spec.add_development_dependency "bundler", "~> 2.2"
   spec.add_development_dependency "rake", "~> 10.0"

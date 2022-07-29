@@ -5,6 +5,7 @@ class KuberKit::Tools::FilePresenceChecker
     "shell.local_shell"
   ]
 
+  contract String => Bool
   def check_file!(file_path)
     unless file_exists?(file_path)
       raise FileNotFound, "File not found at path: #{file_path}"

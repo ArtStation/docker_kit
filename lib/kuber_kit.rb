@@ -1,4 +1,5 @@
 require "kuber_kit/version"
+require "ree"
 require 'ostruct'
 require 'contracts'
 require 'dry-auto_inject'
