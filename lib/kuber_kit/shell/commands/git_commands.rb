@@ -22,6 +22,7 @@ class KuberKit::Shell::Commands::GitCommands
       "git add .",
       "git reset HEAD --hard",
       "git checkout #{branch}",
+      "git reset --hard '@{u}'",
       "git pull --force",
     ].join(" && ")
   end

@@ -21,7 +21,7 @@ RSpec.describe KuberKit::Shell::Commands::GitCommands do
   context "#force_pull_repo" do
     it do
       expect(shell).to receive(:exec!).with(
-        %Q{cd /data/myapp && git add . && git reset HEAD --hard && git checkout master && git pull --force}
+        %Q{cd /data/myapp && git add . && git reset HEAD --hard && git checkout master && git reset --hard '@{u}' && git pull --force}
       )
       subject.force_pull_repo(shell, path: "/data/myapp", branch: "master")
     end
