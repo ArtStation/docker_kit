@@ -1,3 +1,7 @@
+**0.9.9**
+- Fix updating artifact if it was force-pushed
+- Improve resource selector, allow connecting to job via kit console
+
 **0.9.0-0.9.8**
 - Allow skipping confirmation during deployment
 - Added `kit sh` command to create a new shell
