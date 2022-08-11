@@ -1,9 +1,9 @@
 RSpec.describe KuberKit::Kubernetes::ResourceSelector do
   subject{ KuberKit::Kubernetes::ResourceSelector.new }
 
-  it "shows a deployments selection" do
+  it "shows a deploy selection" do
     expect(subject.resources_fetcher).to receive(:call).with(
-      "deployments"
+      "deploy"
     ).and_return(["test-app"])
     expect(subject.ui).to receive(:prompt).with(
       "Please select resource to attach", ["deploy/test-app"]
@@ -14,41 +14,41 @@ RSpec.describe KuberKit::Kubernetes::ResourceSelector do
     expect(result).to eq("deploy/test-app")
   end
 
-  it "shows pods selection if option provided" do
+  it "shows pod selection if option provided" do
     expect(subject.resources_fetcher).to receive(:call).with(
-      "deployments"
+      "deploy"
     ).and_return(["test-app"])
     expect(subject.resources_fetcher).to receive(:call).with(
-      "pods"
+      "pod"
     ).and_return(["test-app"])
     expect(subject.ui).to receive(:prompt).with(
-      "Please select resource to attach", ["deploy/test-app", "pods"]
-    ).and_return("pods")
+      "Please select resource to attach", ["deploy/test-app", "pod"]
+    ).and_return("pod")
     expect(subject.ui).to receive(:prompt).with(
-      "Please select pod to attach", ["pods/test-app"]
-    ).and_return("pods/test-app")
+      "Please select pod to attach", ["pod/test-app"]
+    ).and_return("pod/test-app")
 
-    result = subject.call("attach", include_pods: true)
+    result = subject.call("attach", additional_resources: ["pod"])
 
-    expect(result).to eq("pods/test-app")
+    expect(result).to eq("pod/test-app")
   end
 
-  it "shows ingresses selection if option provided" do
+  it "shows ingress selection if option provided" do
     expect(subject.resources_fetcher).to receive(:call).with(
-      "deployments"
+      "deploy"
     ).and_return(["test-app"])
     expect(subject.resources_fetcher).to receive(:call).with(
-      "ingresses"
+      "ingress"
     ).and_return(["test-app"])
     expect(subject.ui).to receive(:prompt).with(
-      "Please select resource to attach", ["deploy/test-app", "ingresses"]
-    ).and_return("ingresses")
+      "Please select resource to attach", ["deploy/test-app", "ingress"]
+    ).and_return("ingress")
     expect(subject.ui).to receive(:prompt).with(
-      "Please select ingress to attach", ["ingresses/test-app"]
-    ).and_return("ingresses/test-app")
+      "Please select ingress to attach", ["ingress/test-app"]
+    ).and_return("ingress/test-app")
 
-    result = subject.call("attach", include_ingresses: true)
+    result = subject.call("attach", additional_resources: ["ingress"])
 
-    expect(result).to eq("ingresses/test-app")
+    expect(result).to eq("ingress/test-app")
   end
 end

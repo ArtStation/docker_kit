@@ -13,7 +13,10 @@ class KuberKit::Actions::KubectlConsole
     deployer_namespace = KuberKit.current_configuration.deployer_namespace
 
     if !pod_name 
-      pod_name = resource_selector.call("attach")
+      pod_name = resource_selector.call("attach", additional_resources: [
+        KuberKit::Kubernetes::Resources::POD,
+        KuberKit::Kubernetes::Resources::JOB,
+      ])
     end
 
     kubectl_commands.exec(
