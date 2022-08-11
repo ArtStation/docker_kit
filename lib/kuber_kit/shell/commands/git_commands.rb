@@ -8,6 +8,13 @@ class KuberKit::Shell::Commands::GitCommands
     return nil
   end
 
+  def get_version_hash(shell, git_repo_path)
+    shell.exec! [
+      "cd #{git_repo_path}",
+      "git rev-parse --short HEAD",
+    ].join(" && ")
+  end
+
   def download_repo(shell, remote_url:, path:, branch:)
     shell.exec! [
       "rm -rf #{path}",

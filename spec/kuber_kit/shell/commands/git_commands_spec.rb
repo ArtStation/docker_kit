@@ -9,6 +9,13 @@ RSpec.describe KuberKit::Shell::Commands::GitCommands do
     end
   end
 
+  context "#get_version_hash" do
+    it do
+      expect(shell).to receive(:exec!).with(%Q{cd /data/myapp && git rev-parse --short HEAD})
+      subject.get_version_hash(shell, "/data/myapp")
+    end
+  end
+
   context "#download_repo" do
     it do
       expect(shell).to receive(:exec!).with(
