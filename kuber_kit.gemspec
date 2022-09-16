@@ -34,6 +34,12 @@ Gem::Specification.new do |spec|
   else
     spec.add_dependency "dry-auto_inject", "~> 0.7.0"
   end
+  
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.7.0')
+    spec.add_dependency "dry-core", "~> 0.8.1"
+  else
+    spec.add_dependency "dry-core", "~> 0.7.1"
+  end
 
   spec.add_dependency "thor"
   spec.add_dependency "cli-ui"
