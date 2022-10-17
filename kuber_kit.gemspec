@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
     spec.add_dependency "dry-core", "~> 0.8.1"
     spec.add_dependency "dry-configurable", "~> 0.16.1"
     spec.add_dependency "dry-container", "~> 0.10.1"
-  elsif Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.6.0')
+  else
     spec.add_dependency "dry-auto_inject", "~> 0.8.0"
     spec.add_dependency "dry-core", "~> 0.7.1"
     spec.add_dependency "dry-configurable", "~> 0.12.1"

@@ -1,7 +1,5 @@
-**1.1.0**
-- Drop support for Ruby < 2.6.0
-- Do not use legacy trim mode for erb
-- Improve ruby 3 support
+**1.0.1**
+- Change minimal ruby version to 2.6
 
 **1.0.0**
 - Bump stable release
