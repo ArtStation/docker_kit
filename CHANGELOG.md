@@ -1,5 +1,7 @@
-**1.1.0 (WIP)**
+**1.1.0**
 - Drop support for Ruby < 2.6.0
+- Do not use legacy trim mode for erb
+- Improve ruby 3 support
 
 **1.0.0**
 - Bump stable release
