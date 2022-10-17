@@ -12,6 +12,15 @@ Add this line to your application's Gemfile:
 gem 'kuber_kit'
 ```
 
+## Ruby versions
+
+Please install specific kuber_kit version, depending on Ruby version.
+
+| Ruby Version | KuberKit Version |
+| ------------ | ------------ |
+| 2.6 | 1.0.1 |
+| 2.7 | 1.1.0 |
+
 ## Usage
 
 ### Available commands
