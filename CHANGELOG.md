@@ -1,3 +1,6 @@
+**1.0.0**
+- Bump stable release
+
 **0.9.9**
 - Fix updating artifact if it was force-pushed
 - Improve resource selector, allow connecting to job via kit console
