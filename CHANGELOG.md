@@ -1,3 +1,6 @@
+**1.1.0 (WIP)**
+- Drop support for Ruby < 2.6.0
+
 **1.0.0**
 - Bump stable release
 
