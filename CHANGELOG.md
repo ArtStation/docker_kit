@@ -1,3 +1,6 @@
+**1.2.0**
+- Change minimal ruby version to 3
+
 **1.1.1**
 - Change minimal ruby version to 2.7
 
