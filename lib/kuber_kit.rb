@@ -211,6 +211,7 @@ module KuberKit
   module Kubernetes
     autoload :ResourceSelector, 'kubernetes/resource_selector'
     autoload :ResourcesFetcher, 'kubernetes/resources_fetcher'
+    autoload :Resources, 'kubernetes/resources'
   end
 
   module UI

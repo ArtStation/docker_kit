@@ -1,3 +1,3 @@
 module KuberKit
-  VERSION = "0.9.8"
+  VERSION = "1.2.0"
 end

@@ -1,3 +1,19 @@
+**1.2.0**
+- Change minimal ruby version to 3
+
+**1.1.1**
+- Change minimal ruby version to 2.7
+
+**1.0.1**
+- Change minimal ruby version to 2.6
+
+**1.0.0**
+- Bump stable release
+
+**0.9.9**
+- Fix updating artifact if it was force-pushed
+- Improve resource selector, allow connecting to job via kit console
+
 **0.9.0-0.9.8**
 - Allow skipping confirmation during deployment
 - Added `kit sh` command to create a new shell

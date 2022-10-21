@@ -12,7 +12,12 @@ class KuberKit::Actions::KubectlDescribe
     deployer_namespace = KuberKit.current_configuration.deployer_namespace
 
     if !resource_name 
-      resource_name  = resource_selector.call("describe", include_ingresses: true, include_pods: true)
+      resource_name  = resource_selector.call("describe", additional_resources: [
+        KuberKit::Kubernetes::Resources::INGRESS, 
+        KuberKit::Kubernetes::Resources::POD,
+        KuberKit::Kubernetes::Resources::JOB,
+        KuberKit::Kubernetes::Resources::CRONJOB
+      ])
     end
 
     args = nil
