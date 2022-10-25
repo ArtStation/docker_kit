@@ -44,7 +44,7 @@ class KuberKit::Shell::Commands::DockerCommands
     if status
       command_parts << "--filter=\"status=#{status}\""
     end
-    command_parts << "--filter=\"name=#{container_name}\""
+    command_parts << "--filter=\"name=^/#{container_name}$\""
 
     shell.exec!(command_parts.join(" "))
   end
