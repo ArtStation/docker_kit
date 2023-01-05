@@ -1,5 +1,5 @@
 class TestShell < KuberKit::Shell::LocalShell
-  def exec!(command)
+  def exec!(command, merge_stderr: false)
     return ""
   end
 

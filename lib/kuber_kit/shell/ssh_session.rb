@@ -22,7 +22,7 @@ class KuberKit::Shell::SshSession
     @session = nil
   end
 
-  def exec!(command)
+  def exec!(command, merge_stderr: false)
     stdout_data = ''
     stderr_data = ''
     exit_code = nil
@@ -38,6 +38,10 @@ class KuberKit::Shell::SshSession
 
         channel.on_extended_data do |ch,type,data|
           stderr_data += data
+          
+          if merge_stderr
+            stdout_data += data
+          end
         end
 
         channel.on_request('exit-status') do |ch,data|

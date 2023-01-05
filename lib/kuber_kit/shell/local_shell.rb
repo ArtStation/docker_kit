@@ -9,7 +9,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     "ui",
   ]
 
-  def exec!(command, log_command: true)
+  def exec!(command, log_command: true, merge_stderr: false)
     command_number = command_counter.get_number.to_s.rjust(2, "0")
     
     if log_command
@@ -17,7 +17,9 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     end
 
     result = nil
-    IO.popen(wrap_command_with_pid(command), err: [:child, :out]) do |io|
+    
+    options = merge_stderr ? {err: [:child, :out]} : {}
+    IO.popen(wrap_command_with_pid(command), **options) do |io|
       result = io.read.chomp.strip
     end
 
@@ -88,21 +90,21 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
   end
 
   def delete(file_path)
-    exec!("rm #{file_path}")
+    exec!("rm #{file_path}", merge_stderr: true)
   end
 
   def file_exists?(file_path)
-    exec!("test -f #{file_path} && echo 'true' || echo 'false'", log_command: false) == 'true'
+    exec!("test -f #{file_path} && echo 'true' || echo 'false'", log_command: false, merge_stderr: true) == 'true'
   end
 
   def dir_exists?(dir_path)
-    exec!("test -d #{dir_path} && echo 'true' || echo 'false'", log_command: false) == 'true'
+    exec!("test -d #{dir_path} && echo 'true' || echo 'false'", log_command: false, merge_stderr: true) == 'true'
   end
 
   def recursive_list_files(path, name: nil)
     command = %Q{find -L #{path}  -type f}
     command += " -name '#{name}'" if name
-    exec!(command).split(/[\r\n]+/)
+    exec!(command, merge_stderr: true).split(/[\r\n]+/)
   rescue => e
     if e.message.include?("No such file or directory")
       raise DirNotFoundError.new("Dir not found: #{path}")
@@ -113,7 +115,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
 
   def list_dirs(path)
     command = %Q{find -L #{path} -maxdepth 0 -type d}
-    exec!(command).split(/[\r\n]+/)
+    exec!(command, merge_stderr: true).split(/[\r\n]+/)
   rescue => e
     if e.message.include?("No such file or directory")
       raise DirNotFoundError.new("Dir not found: #{path}")
