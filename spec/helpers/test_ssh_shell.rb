@@ -1,5 +1,5 @@
 class TestSshShell < KuberKit::Shell::SshShell
-  def exec!(command)
+  def exec!(command, merge_stderr: false)
     return ""
   end
 

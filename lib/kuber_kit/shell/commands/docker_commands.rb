@@ -3,15 +3,15 @@ class KuberKit::Shell::Commands::DockerCommands
     default_args = ["--rm=true"]
     args_list = (default_args + args).join(" ")
 
-    shell.exec!(%Q{docker image build #{build_dir} #{args_list}})
+    shell.exec!(%Q{docker image build #{build_dir} #{args_list}}, merge_stderr: true)
   end
 
   def tag(shell, image_name, tag_name)
-    shell.exec!(%Q{docker tag #{image_name} #{tag_name}})
+    shell.exec!(%Q{docker tag #{image_name} #{tag_name}}, merge_stderr: true)
   end
 
   def push(shell, tag_name)
-    shell.exec!(%Q{docker push #{tag_name}})
+    shell.exec!(%Q{docker push #{tag_name}}, merge_stderr: true)
   end
 
   def run(shell, image_name, args: nil, command: nil, detached: false, interactive: false)
@@ -25,7 +25,7 @@ class KuberKit::Shell::Commands::DockerCommands
     if interactive
       shell.interactive!(command_parts.join(" "))
     else
-      shell.exec!(command_parts.join(" "))
+      shell.exec!(command_parts.join(" "), merge_stderr: true)
     end
   end
 
