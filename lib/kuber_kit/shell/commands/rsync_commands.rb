@@ -22,7 +22,7 @@ class KuberKit::Shell::Commands::RsyncCommands
       args << "--delete"
     end
 
-    shell.exec!(%Q{rsync -a #{args.join(' ')}})
+    shell.exec!(%Q{rsync -a #{args.join(' ')}}, merge_stderr: true)
   end
 
   private

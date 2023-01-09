@@ -19,4 +19,8 @@ class KuberKit::Core::Artifacts::Git < KuberKit::Core::Artifacts::AbstractArtifa
     configs = KuberKit::Container['configs']
     "#{configs.artifact_clone_dir}/#{name}"
   end
+
+  def sync_description
+    "#{remote_url}:#{branch}"
+  end
 end
