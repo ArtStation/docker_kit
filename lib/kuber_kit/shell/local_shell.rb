@@ -9,6 +9,8 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     "ui",
   ]
 
+  # @merge_stderr: Merge STDERR to the resulting stream. Could be helpful, if we don't want it printed to STDERR. 
+  #                Should be false, if we want to read & use the result of the command.
   def exec!(command, log_command: true, merge_stderr: false)
     command_number = command_counter.get_number.to_s.rjust(2, "0")
     

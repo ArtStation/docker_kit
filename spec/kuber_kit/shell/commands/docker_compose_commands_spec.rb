@@ -4,7 +4,7 @@ RSpec.describe KuberKit::Shell::Commands::DockerComposeCommands do
   
   context "#run" do
     it do
-      expect(shell).to receive(:exec!).with(%Q{docker-compose -f /path/to/file.yml run rspec bash})
+      expect(shell).to receive(:exec!).with(%Q{docker-compose -f /path/to/file.yml run rspec bash}, merge_stderr: true)
       subject.run(shell, "/path/to/file.yml", service: "rspec", command: "bash")
     end
 
@@ -14,7 +14,7 @@ RSpec.describe KuberKit::Shell::Commands::DockerComposeCommands do
     end
 
     it do
-      expect(shell).to receive(:exec!).with(%Q{docker-compose -f /path/to/file.yml run -d rspec bash})
+      expect(shell).to receive(:exec!).with(%Q{docker-compose -f /path/to/file.yml run -d rspec bash}, merge_stderr: true)
       subject.run(shell, "/path/to/file.yml", service: "rspec", command: "bash", detached: true)
     end
   end
