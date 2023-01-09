@@ -15,7 +15,7 @@ class KuberKit::Shell::Commands::DockerComposeCommands
     if interactive
       shell.interactive!(command_parts.join(" "))
     else
-      shell.exec!(command_parts.join(" "))
+      shell.exec!(command_parts.join(" "), merge_stderr: true)
     end
   end
 end
