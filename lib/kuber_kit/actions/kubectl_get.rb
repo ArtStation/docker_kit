@@ -6,7 +6,7 @@ class KuberKit::Actions::KubectlGet
     "ui"
   ]
 
-  Contract Maybe[String], Hash => Any
+  Contract Maybe[String], Hash => Array
   def call(resource_name, options)
     kubeconfig_path = KuberKit.current_configuration.kubeconfig_path
     deployer_namespace = KuberKit.current_configuration.deployer_namespace
@@ -23,10 +23,10 @@ class KuberKit::Actions::KubectlGet
 
     ui.print_info("Pods", resources.join("\n"))
 
-    true
+    resources
   rescue KuberKit::Error => e
     ui.print_error("Error", e.message)
     
-    false
+    []
   end
 end
