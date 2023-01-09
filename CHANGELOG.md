@@ -1,6 +1,7 @@
 **1.2.1**
 - Update shell commands so that STDERR stream won't be merged for commands using the command result.
 - kit sh would also set current default configuration
+- kit get supports "api" ui
 - show sync description (git/local) for artifact sync
 
 **1.2.0**

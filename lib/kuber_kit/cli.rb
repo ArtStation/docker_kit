@@ -177,7 +177,11 @@ class KuberKit::CLI < Thor
     setup(options)
 
     if KuberKit::Container['actions.configuration_loader'].call(options.merge(load_inventory: false))
-      KuberKit::Container['actions.kubectl_get'].call(pod_name, options)
+      pods = KuberKit::Container['actions.kubectl_get'].call(pod_name, options)
+
+      print_result("Fetched list of pods", result: {
+        pods: pods
+      })
     end
   end
 
