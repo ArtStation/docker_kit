@@ -4,7 +4,7 @@ RSpec.describe KuberKit::Shell::Commands::SystemCommands do
 
   context "#kill_process" do
     it do
-      expect(shell).to receive(:exec!).with(%Q{kill -9 123})
+      expect(shell).to receive(:exec!).with(%Q{kill -9 123}, merge_stderr: true)
       subject.kill_process(shell, "123")
     end
   end

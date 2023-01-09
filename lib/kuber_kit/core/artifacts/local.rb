@@ -11,4 +11,8 @@ class KuberKit::Core::Artifacts::Local < KuberKit::Core::Artifacts::AbstractArti
   def cloned_path
     root_path
   end
+
+  def sync_description
+    "local"
+  end
 end

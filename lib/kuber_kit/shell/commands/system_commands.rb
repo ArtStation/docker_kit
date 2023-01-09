@@ -2,7 +2,7 @@ class KuberKit::Shell::Commands::SystemCommands
   def kill_process(shell, pid)
     # we need to use kill command directly sometimes, 
     # because Process.kill doesn't kill processes created by system() call
-    shell.exec!("kill -9 #{pid}")
+    shell.exec!("kill -9 #{pid}", merge_stderr: true)
     true
   rescue
     false

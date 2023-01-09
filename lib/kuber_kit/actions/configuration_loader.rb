@@ -109,9 +109,9 @@ class KuberKit::Actions::ConfigurationLoader
 
     artifact_task_group = ui.create_task_group
     not_local_artifacts.each do |artifact|
-      artifact_task_group.add("Updating #{artifact.name.to_s.yellow}") do |task|
+      artifact_task_group.add("Updating #{artifact.name.to_s.yellow} [#{artifact.sync_description.cyan}]") do |task|
         artifact_updater.update(local_shell, artifact)
-        task.update_title("Updated #{artifact.name.to_s.green}")
+        task.update_title("Updating #{artifact.name.to_s.green} [#{artifact.sync_description.cyan}]")
       end
     end
     artifact_task_group.wait
