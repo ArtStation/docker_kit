@@ -209,7 +209,7 @@ class KuberKit::CLI < Thor
       # We should load config before loading any bean, to make sure that bean won't be built with default config
       root_path = KuberKit::Container['tools.workdir_detector'].call(options)
       config_file_path = File.join(root_path, APP_CONFIG_FILENAME)
-      if File.exists?(config_file_path)
+      if File.exist?(config_file_path)
         require config_file_path
       end
     end

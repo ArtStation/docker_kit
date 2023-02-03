@@ -7,7 +7,7 @@ RSpec.describe KuberKit::Preprocessing::FilePreprocessor do
   let(:destination_path) { File.join(FIXTURES_PATH, "compiler", "erb_template.txt.compiled") }
   let(:shell) { test_helper.shell }
   
-  after { FileUtils.rm(destination_path) if File.exists?(destination_path) }
+  after { FileUtils.rm(destination_path) if File.exist?(destination_path) }
 
   it "compiles a given erb template" do
     subject.compile(shell, source_path, destination_path: destination_path, context_helper: test_helper.context_helper)
