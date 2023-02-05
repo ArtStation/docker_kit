@@ -20,7 +20,7 @@ Please install specific kuber_kit version, depending on Ruby version.
 | ------------ | ------------ |
 | 2.6 | 1.0.1 |
 | 2.7 | 1.1.2 |
-| > 3.0 | 1.2.1 |
+| > 3.0 | 1.2.2 |
 
 ## Usage
 
