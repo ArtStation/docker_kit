@@ -138,7 +138,7 @@ class KuberKit::Shell::LocalShell < KuberKit::Shell::AbstractShell
     def ensure_directory_exists(file_path)
       dir_path = File.dirname(file_path)
 
-      unless Dir.exists?(dir_path)
+      unless Dir.exist?(dir_path)
         FileUtils.mkdir_p(dir_path)
       end
     end

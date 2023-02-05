@@ -45,7 +45,7 @@ class KuberKit::Tools::LoggerFactory
   private
     def prepare_log_file(file_path)
       dir_path = File.dirname(file_path)
-      unless Dir.exists?(dir_path)
+      unless Dir.exist?(dir_path)
         FileUtils.mkdir_p(dir_path)
       end
       FileUtils.touch(file_path)

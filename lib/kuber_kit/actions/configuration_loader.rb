@@ -31,7 +31,7 @@ class KuberKit::Actions::ConfigurationLoader
 
     ui.print_info("Logs", "See logs at: #{configs.log_file_path}")
 
-    unless File.exists?(root_path)
+    unless File.exist?(root_path)
       ui.print_warning "ConfigurationLoader", "KuberKit root path #{root_path} doesn't exist. You may want to pass it --path parameter."
     end
 
