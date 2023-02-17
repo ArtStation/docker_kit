@@ -1,4 +1,4 @@
-**1.2.3**
+**1.2.4**
 - Fix a mistake in setting env variables
 - Added an option to set "use local deployment" variable
 - Allow finding job resources in kit attach and kit log
