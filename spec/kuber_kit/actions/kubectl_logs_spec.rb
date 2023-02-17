@@ -10,7 +10,7 @@ RSpec.describe KuberKit::Actions::KubectlLogs do
 
   it "shows a deployments selection if no pod_name provided" do
     expect(subject.resource_selector).to receive(:call).with(
-      "attach"
+      "attach", additional_resources: ["pod", "job"]
     ).and_return("deploy/test-app")
     expect(subject.kubectl_commands).to receive(:logs).with(subject.local_shell, 
       "deploy/test-app", args: nil, kubeconfig_path: nil, namespace: nil
