@@ -20,7 +20,7 @@ class KuberKit::Actions::ConfigurationLoader
     configurations_path  = options[:configurations_path]  || File.join(root_path, configs.configurations_dirname)
     configuration_name   = options[:configuration] || ENV["KUBER_KIT_CONFIGURATION"]
     load_inventory = options.fetch(:load_inventory, true)
-    use_local_deploy = options.fetch(:use_local_deploy, true)
+    use_local_deploy = options.fetch(:use_local_deploy, false)
 
     ui.print_debug "ConfigurationLoader", "Launching kuber_kit with:"
     ui.print_debug "ConfigurationLoader", "  Root path: #{root_path.to_s.yellow}"
