@@ -14,7 +14,11 @@ RSpec.describe KuberKit::Actions::ShellLauncher do
   end
 
   it "launches a shell with required env variables" do
-    expect(shell).to receive(:replace!).with(env: ["KUBECONFIG=/path/to/kubeconfig", "KUBER_KIT_SHELL_CONFIGURATION=production"])
+    expect(shell).to receive(:replace!).with(env: [
+      "KUBECONFIG=/path/to/kubeconfig", 
+      "KUBER_KIT_SHELL_CONFIGURATION=production",
+      "KUBER_KIT_CONFIGURATION=production"
+    ])
     
     subject.call()
   end

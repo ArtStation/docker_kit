@@ -11,6 +11,7 @@ class KuberKit::CLI < Thor
   class_option :debug, :type => :boolean, aliases: ["-d"]
   class_option :configuration, :type => :string, aliases: ["-C"]
   class_option :user, :type => :string, aliases: ["-u"]
+  class_option :use_local_deploy, :type => :boolean, aliases: ["-l"]
 
   desc "compile IMAGE_NAMES", "Compile image with IMAGE_NAMES (comma-separated)"
   def compile(image_names_str)

@@ -20,6 +20,7 @@ class KuberKit::Actions::ConfigurationLoader
     configurations_path  = options[:configurations_path]  || File.join(root_path, configs.configurations_dirname)
     configuration_name   = options[:configuration] || ENV["KUBER_KIT_CONFIGURATION"]
     load_inventory = options.fetch(:load_inventory, true)
+    use_local_deploy = options.fetch(:use_local_deploy, true)
 
     ui.print_debug "ConfigurationLoader", "Launching kuber_kit with:"
     ui.print_debug "ConfigurationLoader", "  Root path: #{root_path.to_s.yellow}"
@@ -28,6 +29,7 @@ class KuberKit::Actions::ConfigurationLoader
     ui.print_debug "ConfigurationLoader", "  Infrastructure path: #{infra_path.to_s.yellow}"
     ui.print_debug "ConfigurationLoader", "  Configurations path: #{configurations_path.to_s.yellow}"
     ui.print_debug "ConfigurationLoader", "  Configuration name: #{configuration_name.to_s.yellow}"
+    ui.print_debug "ConfigurationLoader", "  Use local deploy: #{use_local_deploy.to_s.yellow}"
 
     ui.print_info("Logs", "See logs at: #{configs.log_file_path}")
 
@@ -37,6 +39,10 @@ class KuberKit::Actions::ConfigurationLoader
 
     if Gem::Version.new(KuberKit::VERSION) < Gem::Version.new(configs.kuber_kit_min_version)
       raise KuberKit::Error, "The minimal required kuber_kit version is #{configs.kuber_kit_min_version}"
+    end
+
+    if use_local_deploy
+      ENV["KUBER_KIT_USE_LOCAL_DEPLOYMENT"] = "true"
     end
 
     load_configurations(configurations_path, configuration_name)

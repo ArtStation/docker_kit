@@ -26,6 +26,6 @@ class KuberKit::ShellLauncher::Strategies::Kubernetes < KuberKit::ShellLauncher:
       env_vars << "KUBER_KIT_CONFIGURATION=#{KuberKit.current_configuration.name}"
     end
 
-    shell.replace!(env: ["KUBECONFIG=#{kubeconfig_path}", "KUBER_KIT_SHELL_CONFIGURATION=#{KuberKit.current_configuration.name}"])
+    shell.replace!(env: env_vars)
   end
 end

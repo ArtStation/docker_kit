@@ -1,3 +1,7 @@
+**1.2.3**
+- Fix a mistake in setting env variables
+- Added an option to set "use local deployment" variable
+
 **1.2.2**
 - Support Ruby 3.2.0
 
