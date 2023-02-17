@@ -1,6 +1,7 @@
 **1.2.3**
 - Fix a mistake in setting env variables
 - Added an option to set "use local deployment" variable
+- Allow finding job resources in kit attach and kit log
 
 **1.2.2**
 - Support Ruby 3.2.0
