@@ -75,4 +75,22 @@ RSpec.describe KuberKit::Core::ContextHelper::ContextVars do
       expect(result.variable_defined?(:foo)).to eq(true)
     end
   end
+
+  context "#to_h" do
+    it "returns hash" do
+      context = subject.new({foo: {bar: {config: "test"}}})
+      expect(context.to_h).to eq({foo: {bar: {config: "test"}}})
+    end
+  end
+
+  context "#to_struct" do
+    it "returns nested OpenStruct" do
+      context = subject.new({foo: {bar: {config: "test"}}})
+
+      struct = context.to_struct 
+      expect(struct).to be_a(OpenStruct)
+
+      expect(struct.foo.bar.config).to eq("test")
+    end
+  end
 end

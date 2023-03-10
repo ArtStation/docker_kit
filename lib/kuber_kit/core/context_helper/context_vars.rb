@@ -1,3 +1,4 @@
+require 'ostruct'
 class KuberKit::Core::ContextHelper::ContextVars
   attr_reader :parent, :parent_name
 
@@ -39,12 +40,27 @@ class KuberKit::Core::ContextHelper::ContextVars
     dig(name)
   end
 
+  def keys
+    @context_vars.keys
+  end
+
   def to_h
-    if @context_vars.is_a?(Hash)
-      return @context_vars
-    else
-      return {value: @context_vars}
+    values = keys.map do |key|
+      value = get_variable_value(key)
+      hash_value = value.respond_to?(:to_h) ? value.to_h : value
+      [key, hash_value]
     end
+    Hash[values]
+  end
+
+  def to_struct
+    values = keys.map do |key|
+      value = get_variable_value(key)
+      hash_value = value.respond_to?(:to_struct) ? value.to_struct : value
+      [key, hash_value]
+    end
+    hash = Hash[values]
+    OpenStruct.new(hash)
   end
 
   def get_variable_value(variable_name)
