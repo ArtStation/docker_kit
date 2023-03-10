@@ -90,6 +90,10 @@ class KuberKit::Actions::ConfigurationLoader
       configuration_name   = first_configurations.configuration_name
     end
 
+    if configuration_store.count > 1 && configuration_name
+      ui.print_info("Configuration", "Using configuration: #{configuration_name.to_s.cyan}")
+    end
+
     if configuration_store.count > 1 && configuration_name.nil?
       options = all_configurations.map(&:configuration_name).map(&:to_s)
       configuration_name = ui.prompt("Please select configuration name (or set it using -C option)", options)
