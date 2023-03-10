@@ -25,6 +25,18 @@ RSpec.describe KuberKit::Core::ContextHelper::ContextVars do
     end
   end
 
+  context "#dig" do
+    it "allows reading top level arguments" do
+      result = subject.new({foo: "bar"})
+      expect(result.dig(:foo)).to eq("bar")
+    end
+
+    it "allows reading multi-level arguments" do
+      result = subject.new({foo: {bar: {config: "test"}}})
+      expect(result.dig(:foo, :bar, :config)).to eq("test")
+    end
+  end
+
   context "#read" do
     it "allows reading top level arguments" do
       result = subject.new({foo: "bar"})
@@ -34,6 +46,16 @@ RSpec.describe KuberKit::Core::ContextHelper::ContextVars do
     it "allows reading multi-level arguments" do
       result = subject.new({foo: {bar: {config: "test"}}})
       expect(result.read(:foo, :bar, :config)).to eq("test")
+    end
+
+    it "returns nil if some variable is not found" do
+      result = subject.new({foo: {bar: {config: "test"}}})
+      expect(result.read(:foo, :wrong_var, :bar)).to eq(nil)
+    end
+
+    it "returns default value if some variable is not found & default value provided" do
+      result = subject.new({foo: {bar: {config: "test"}}})
+      expect(result.read(:foo, :wrong_var, :bar, default: "test")).to eq("test")
     end
   end
   
@@ -50,7 +72,7 @@ RSpec.describe KuberKit::Core::ContextHelper::ContextVars do
 
     it "allows checking multi-level arguments" do
       result = subject.new({foo: {bar: {config: "test"}}})
-      expect(result.variable_defined?(:foo, :bar, :config)).to eq(true)
+      expect(result.variable_defined?(:foo)).to eq(true)
     end
   end
 end

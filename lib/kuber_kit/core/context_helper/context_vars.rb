@@ -9,7 +9,14 @@ class KuberKit::Core::ContextHelper::ContextVars
     @parent = parent
   end
 
-  def read(*variable_names)
+
+  def read(*variable_names, default: nil)
+    dig(*variable_names)
+  rescue BuildArgUndefined
+    return default
+  end
+
+  def dig(*variable_names)
     result = self
     variable_names.each do |var|
       result = result.get_variable_value(var)
@@ -18,7 +25,7 @@ class KuberKit::Core::ContextHelper::ContextVars
   end
 
   def variable_defined?(*variable_names)
-    read(*variable_names) 
+    dig(*variable_names)
     return true
   rescue BuildArgUndefined
     return false
@@ -29,7 +36,7 @@ class KuberKit::Core::ContextHelper::ContextVars
       raise ArgumentError.new("context args does not accept any arguments")
     end
 
-    read(name)
+    dig(name)
   end
 
   def to_h
