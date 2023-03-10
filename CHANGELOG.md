@@ -1,3 +1,6 @@
+**1.2.5**
+- Improve handling ContextVars, ability to convert context var to OpenStruct
+
 **1.2.4**
 - Fix a mistake in setting env variables
 - Added an option to set "use local deployment" variable
