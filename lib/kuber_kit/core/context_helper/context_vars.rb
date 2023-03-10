@@ -4,12 +4,10 @@ class KuberKit::Core::ContextHelper::ContextVars
 
   BuildArgUndefined = Class.new(KuberKit::Error)
 
-  def initialize(context_vars, parent_name = nil, parent = nil)
+  def initialize(context_vars, parent_name = nil)
     @context_vars = context_vars
     @parent_name  = parent_name
-    @parent = parent
   end
-
 
   def read(*variable_names, default: nil)
     dig(*variable_names)
@@ -69,23 +67,16 @@ class KuberKit::Core::ContextHelper::ContextVars
     end
 
     if value.is_a?(Hash)
-      return self.class.new(value, variable_name, self)
+      return self.class.new(value, format_arg(variable_name))
     end
 
     value
   end
 
   private
+    
 
     def format_arg(name)
-      string = [@parent_name, name].compact.join(".")
-      parent = @parent
-
-      while parent do
-        string = [parent.parent_name, string].compact.join(".")
-        parent = parent.parent
-      end
-
-      string
+      [@parent_name, name].compact.join(".")
     end
 end

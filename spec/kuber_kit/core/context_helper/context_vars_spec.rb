@@ -19,9 +19,9 @@ RSpec.describe KuberKit::Core::ContextHelper::ContextVars do
   
     it "raises exception if config variable not found" do
       result = subject.new({
-        foo: { test: "bar" }
+        foo: { bar: {test1: 123} }
       })
-      expect { result.foo.bar }.to raise_error(KuberKit::Core::ContextHelper::ContextVars::BuildArgUndefined, /build arg \'foo\.bar\' is not defined/)
+      expect { result.foo.bar.test2 }.to raise_error(KuberKit::Core::ContextHelper::ContextVars::BuildArgUndefined, /build arg \'foo\.bar.test2\' is not defined/)
     end
   end
 
