@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-container", "~> 0.10.1"
 
   spec.add_dependency "thor"
-  spec.add_dependency "cli-ui"
+  spec.add_dependency "cli-ui", '2.1.0'
   spec.add_dependency "net-ssh"
   spec.add_dependency "tty-prompt"
 

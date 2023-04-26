@@ -1,3 +1,6 @@
+**1.2.6**
+- Lock cli-ui version on 2.1.0 (2.2.x has some bugs)
+
 **1.2.5**
 - Improve handling ContextVars, ability to convert context var to OpenStruct
 
