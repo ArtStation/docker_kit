@@ -31,6 +31,12 @@ RSpec.describe KuberKit::Actions::ServiceDeployer do
     subject.call(services: ["auth_app"], tags: [], skip_compile: true)
   end
 
+  it "skips deployment if such option provided" do
+    expect(subject.service_deployer).to receive(:call).never
+    expect(subject.image_compiler).to receive(:call).with([:identity_image, :auth_image], {}).and_return(KuberKit::Actions::ActionResult.new)
+    subject.call(services: ["auth_app"], tags: [], skip_deployment: true)
+  end
+
   it "skips specific services if skip_services option is provided" do
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :identity_app)
     expect(subject.service_deployer).to receive(:call).with(subject.local_shell, :auth_app)

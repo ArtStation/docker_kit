@@ -42,6 +42,7 @@ class KuberKit::CLI < Thor
   method_option :skip_dependencies,     :type => :boolean,  aliases: ["-D"]
   method_option :require_confirmation,  :type => :boolean,  aliases: ["-r"]
   method_option :skip_confirmation,     :type => :boolean,  aliases: ["-R"]
+  method_option :skip_deployment,       :type => :boolean,  aliases: ["-K"]
   def deploy
     setup(options)
 
@@ -57,6 +58,7 @@ class KuberKit::CLI < Thor
         skip_services:        (options[:skip_services] || []).flatten.uniq, 
         skip_compile:         options[:skip_compile] || false,
         skip_dependencies:    options[:skip_dependencies] || false,
+        skip_deployment:      options[:skip_deployment] || false,
         require_confirmation: require_confirmation
       )
     end

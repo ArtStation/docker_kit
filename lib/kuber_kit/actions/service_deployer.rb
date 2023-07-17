@@ -18,9 +18,10 @@ class KuberKit::Actions::ServiceDeployer
     skip_services:        Maybe[ArrayOf[String]],
     skip_compile:         Maybe[Bool],
     skip_dependencies:    Maybe[Bool],
+    skip_deployment:      Maybe[Bool],
     require_confirmation: Maybe[Bool],
   ] => Any
-  def call(services:, tags:, skip_services: nil, skip_compile: false, skip_dependencies: false, require_confirmation: false)
+  def call(services:, tags:, skip_services: nil, skip_compile: false, skip_dependencies: false, skip_deployment: false, require_confirmation: false)
     deployment_result     = KuberKit::Actions::ActionResult.new()
     current_configuration = KuberKit.current_configuration
 
@@ -64,6 +65,11 @@ class KuberKit::Actions::ServiceDeployer
       compilation_result = compile_images(images_names)
 
       return false unless compilation_result && compilation_result.succeeded?
+    end
+
+    # Skip service deployment, only compile images.
+    if skip_deployment
+      return deployment_result
     end
 
     # First deploy initial services. 
