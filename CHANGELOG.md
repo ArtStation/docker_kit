@@ -1,3 +1,6 @@
+**1.2.7**
+- Added an option to skip deployment and only build images for `deploy` command
+
 **1.2.6**
 - Lock cli-ui version on 2.1.0 (2.2.x has some bugs)
 
