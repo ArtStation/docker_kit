@@ -104,6 +104,7 @@ module KuberKit
       autoload :RsyncCommands, 'shell/commands/rsync_commands'
       autoload :KubectlCommands, 'shell/commands/kubectl_commands'
       autoload :SystemCommands, 'shell/commands/system_commands'
+      autoload :HelmCommands, 'shell/commands/helm_commands'
     end
   end
 
