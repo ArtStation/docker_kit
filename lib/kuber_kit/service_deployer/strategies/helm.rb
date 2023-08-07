@@ -1,62 +1,41 @@
 class KuberKit::ServiceDeployer::Strategies::Helm < KuberKit::ServiceDeployer::Strategies::Abstract
   include KuberKit::Import[
     "service_reader.reader",
-    "shell.kubectl_commands",
     "shell.helm_commands",
+    "shell.bash_commands",
     "configs",
-  ]
-
-  STRATEGY_OPTIONS = [
-    :resource_type,
-    :resource_name,
-    :delete_if_exists,
-    :restart_if_exists,
-    :wait_for_rollout
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service => Any
   def deploy(shell, service)
-    service_config = reader.read(shell, service)
-    config_path    = "#{configs.service_config_dir}/#{service.name}.yml"
-    shell.write(config_path, service_config)
+    service_config        = reader.read(shell, service)
+    chart_root_path       = File.join(configs.service_config_dir, "#{service.name}_chart")
+    chart_templates_path  = File.join(chart_root_path, "templates")
+    chart_config_path = File.join(chart_root_path, "Chart.yaml")
+    release_path      = File.join(chart_templates_path, "release.yaml")
+
+    bash_commands.mkdir_p(shell, File.dirname(chart_root_path))
+    bash_commands.mkdir_p(shell, File.dirname(chart_templates_path))
+
+    shell.write(release_path, service_config)
+    shell.write(chart_config_path, chart_config_content(service.uri))
 
     kubeconfig_path = KuberKit.current_configuration.kubeconfig_path
     namespace       = KuberKit.current_configuration.deployer_namespace
 
-    strategy_options = service.attribute(:deployer, default: {})
-    unknown_options  = strategy_options.keys.map(&:to_sym) - STRATEGY_OPTIONS
-    if unknown_options.any?
-      raise KuberKit::Error, "Unknow options for deploy strategy: #{unknown_options}. Available options: #{STRATEGY_OPTIONS}"
-    end
+    upgrade_result = helm_commands.upgrade(shell, chart_root_path, kubeconfig_path: kubeconfig_path, namespace: namespace)
     
-    resource_type = strategy_options.fetch(:resource_type, "deployment")
-    resource_name = strategy_options.fetch(:resource_name, service.uri)
-    
-    resource_exists = kubectl_commands.resource_exists?(
-      shell, resource_type, resource_name, kubeconfig_path: kubeconfig_path, namespace: namespace
-    )
+    upgrade_result
+  end
 
-    delete_enabled = strategy_options.fetch(:delete_if_exists, false)
-    if delete_enabled && resource_exists
-      kubectl_commands.delete_resource(shell, resource_type, resource_name, kubeconfig_path: kubeconfig_path, namespace: namespace)
-    end
-
-    apply_result = kubectl_commands.apply_file(shell, config_path, kubeconfig_path: kubeconfig_path, namespace: namespace)
-
-    restart_enabled  = strategy_options.fetch(:restart_if_exists, true)
-    wait_for_rollout = strategy_options.fetch(:wait_for_rollout, true)
-    if restart_enabled && resource_exists
-      kubectl_commands.rolling_restart(
-        shell, resource_type, resource_name, 
-        kubeconfig_path: kubeconfig_path, namespace: namespace
-      )
-      
-      kubectl_commands.rollout_status(
-        shell, resource_type, resource_name, wait: true,
-        kubeconfig_path: kubeconfig_path, namespace: namespace
-      ) if wait_for_rollout
-    end
-    
-    apply_result
+  def chart_config_content(release_name)
+    query = <<-CHART
+apiVersion: v2
+name: #{release_name}
+description: #{release_name}
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+    CHART
   end
 end

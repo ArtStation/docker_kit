@@ -167,6 +167,7 @@ module KuberKit
       autoload :Docker, 'service_deployer/strategies/docker'
       autoload :DockerCompose, 'service_deployer/strategies/docker_compose'
       autoload :Kubernetes, 'service_deployer/strategies/kubernetes'
+      autoload :Helm, 'service_deployer/strategies/helm'
     end
   end
 
