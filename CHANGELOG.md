@@ -1,3 +1,7 @@
+**1.3.0**
+- Allow sending custom apply command for k8s deploy strategy
+- Added initial support for helm deploy strategy
+
 **1.2.7**
 - Added an option to skip deployment and only build images for `deploy` command
 
