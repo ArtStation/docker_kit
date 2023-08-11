@@ -181,6 +181,10 @@ class KuberKit::Container
     KuberKit::Shell::Commands::SystemCommands.new
   end
 
+  register "shell.helm_commands" do
+    KuberKit::Shell::Commands::HelmCommands.new
+  end
+
   register "shell.local_shell" do
     KuberKit::Shell::LocalShell.new
   end
