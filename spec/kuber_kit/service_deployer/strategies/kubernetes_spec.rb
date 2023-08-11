@@ -8,7 +8,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
   it "applies kubernetes config" do
     expect(shell).to receive(:write).with(service_config_path, /apiVersion: v1/)
     expect(subject.kubectl_commands).to receive(:apply_file).with(
-      shell, service_config_path, kubeconfig_path: nil, namespace: nil
+      shell, service_config_path, kubeconfig_path: nil, namespace: nil, apply_command: "apply"
     )
     subject.deploy(shell, service)
   end
@@ -53,7 +53,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
     expect(subject.kubectl_commands).to receive(:resource_exists?).and_return(true)
     expect(subject.kubectl_commands).to receive(:delete_resource).with(shell, "job", "auth-job", kubeconfig_path: nil, namespace: nil)
     expect(subject.kubectl_commands).to receive(:apply_file).with(
-      shell, /auth_job/, kubeconfig_path: nil, namespace: nil
+      shell, /auth_job/, kubeconfig_path: nil, namespace: nil, apply_command: "apply"
     )
 
     service = service_helper.service(:auth_job, attributes: {deployer: {resource_type: "job", delete_if_exists: true}})
@@ -69,6 +69,15 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Kubernetes do
     )
 
     service = service_helper.service(:auth_app, attributes: {deployer: {resource_name: "custom-deployment"}})
+    subject.deploy(shell, service)
+  end
+
+  it "uses custom apply command if provided" do
+    expect(shell).to receive(:write).with(service_config_path, /apiVersion: v1/)
+    expect(subject.kubectl_commands).to receive(:apply_file).with(
+      shell, service_config_path, kubeconfig_path: nil, namespace: nil, apply_command: "create"
+    )
+    service = service_helper.service(:auth_app, attributes: {deployer: {apply_command: "create"}})
     subject.deploy(shell, service)
   end
 end

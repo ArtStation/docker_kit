@@ -39,8 +39,9 @@ class KuberKit::Shell::Commands::KubectlCommands
     end
   end
   
-  def apply_file(shell, file_path, kubeconfig_path: nil, namespace: nil)
-    kubectl_run(shell, "apply -f #{file_path}", kubeconfig_path: kubeconfig_path, namespace: namespace)
+  def apply_file(shell, file_path, kubeconfig_path: nil, namespace: nil, apply_command: nil)
+    apply_command ||= "apply"
+    kubectl_run(shell, "#{apply_command} -f #{file_path}", kubeconfig_path: kubeconfig_path, namespace: namespace)
   end
 
   def exec(shell, pod_name, command, args: nil, kubeconfig_path: nil, interactive: false, namespace: nil, entrypoint: nil)
