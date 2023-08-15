@@ -23,7 +23,7 @@ class KuberKit::ServiceDeployer::Strategies::Helm < KuberKit::ServiceDeployer::S
     kubeconfig_path = KuberKit.current_configuration.kubeconfig_path
     namespace       = KuberKit.current_configuration.deployer_namespace
 
-    upgrade_result = helm_commands.upgrade(shell, chart_root_path, kubeconfig_path: kubeconfig_path, namespace: namespace)
+    upgrade_result = helm_commands.upgrade(shell, service.uri, chart_root_path, kubeconfig_path: kubeconfig_path, namespace: namespace)
     
     upgrade_result
   end

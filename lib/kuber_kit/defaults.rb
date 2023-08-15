@@ -39,6 +39,10 @@ class KuberKit::Defaults
         :docker_compose,
         KuberKit::ServiceDeployer::Strategies::DockerCompose.new
       )
+      container["service_deployer.deployer"].register_strategy(
+        :helm,
+        KuberKit::ServiceDeployer::Strategies::Helm.new
+      )
 
       container["shell_launcher.launcher"].register_strategy(
         :kubernetes,
