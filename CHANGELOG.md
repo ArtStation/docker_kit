@@ -1,3 +1,6 @@
+**1.3.1**
+- Fix upgrade command for helm strategy
+
 **1.3.0**
 - Allow sending custom apply command for k8s deploy strategy
 - Added initial support for helm deploy strategy

@@ -11,7 +11,7 @@ RSpec.describe KuberKit::ServiceDeployer::Strategies::Helm do
     expect(shell).to receive(:write).with(release_path, /apiVersion: v1/)
     expect(shell).to receive(:write).with(chart_config_path, /name: auth-app/)
     expect(subject.helm_commands).to receive(:upgrade).with(
-      shell, chart_root_path, kubeconfig_path: nil, namespace: nil
+      shell, service.uri, chart_root_path, kubeconfig_path: nil, namespace: nil
     )
     subject.deploy(shell, service)
   end
