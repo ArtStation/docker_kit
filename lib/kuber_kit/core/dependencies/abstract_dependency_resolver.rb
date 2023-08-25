@@ -50,6 +50,13 @@ class KuberKit::Core::Dependencies::AbstractDependencyResolver
     (deps + item_names).uniq
   end
 
+  # Get all dependencies for items (excluding the items themself), without any limitations
+  Contract Or[Symbol, ArrayOf[Symbol]] => Any
+  def get_all_deps(item_names)
+    deps = Array(item_names).map { |i| get_recursive_deps(i) }.flatten
+    deps.uniq - item_names
+  end
+
   def get_recursive_deps(item_name, dependency_tree: [])
     deps = get_deps(item_name)
 

@@ -36,7 +36,7 @@ class ServiceHelper
     end
 
     if dependencies.any?
-      service_definition = service_definition.depends_on(dependencies)
+      service_definition = service_definition.initialize_with(dependencies)
     end
 
     factory.create(service_definition)

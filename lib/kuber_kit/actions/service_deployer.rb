@@ -72,32 +72,36 @@ class KuberKit::Actions::ServiceDeployer
       return deployment_result
     end
 
-    # First deploy initial services. 
+    # First, deploy initial services.
     # This feature is used to deploy some services, required for deployment of other services, e.g. env files
     # Note: Initial services are deployed without dependencies
     initial_services.map(&:to_sym).each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
-      ui.print_debug("ServiceDeployer", "Scheduling to compile: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
+      ui.print_debug("ServiceDeployer", "Scheduling to deploy: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
 
       if deployment_result.succeeded?
         deploy_simultaneously(batch_service_names, deployment_result)
       end
     end
 
-    if skip_dependencies
-      service_names.each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
+    # Next, deploy all initializers simultaneously.
+    # Note: In earlier versions, KuberKit would deploy all dependencies in the order defined by dependency tree.
+    #       Now it would deploy all dependencies (initializers) at the same time, even if one initializer depends on another initializer.
+    unless skip_dependencies
+      initializers = service_dependency_resolver.get_all_deps(service_names)
+      initializers.map(&:to_sym).each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
         ui.print_debug("ServiceDeployer", "Scheduling to deploy: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
-
+  
         if deployment_result.succeeded?
           deploy_simultaneously(batch_service_names, deployment_result)
         end
       end
-    else
-      service_dependency_resolver.each_with_deps(service_names) do |dep_service_names|
-        ui.print_debug("ServiceDeployer", "Scheduling to deploy: #{dep_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
+    end
 
-        if deployment_result.succeeded?
-          deploy_simultaneously(dep_service_names, deployment_result)
-        end
+    service_names.each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
+      ui.print_debug("ServiceDeployer", "Scheduling to deploy: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
+
+      if deployment_result.succeeded?
+        deploy_simultaneously(batch_service_names, deployment_result)
       end
     end
 
