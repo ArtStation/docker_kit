@@ -51,16 +51,31 @@ RSpec.describe KuberKit::Actions::ServiceDeployer do
     subject.call(services: [], tags: ["auth"], skip_dependencies: true, skip_compile: true)
   end
 
-  it "deploys initial services first" do
+  it "deploys pre-deploy services first" do
     test_helper
       .configuration_store
       .define(:production)
-      .initial_services([:identity_app])
+      .pre_deploy_services([:identity_app])
 
     KuberKit.set_configuration_name(:production)
 
     expect(subject).to receive(:deploy_simultaneously).with([:identity_app], anything)
     expect(subject).to receive(:deploy_simultaneously).with([:auth_app], anything)
+    
+    expect(subject.image_compiler).to receive(:call).never
+    subject.call(services: ["auth_app"], tags: [], skip_dependencies: true, skip_compile: true)
+  end
+
+  it "deploys post-deploy services last" do
+    test_helper
+      .configuration_store
+      .define(:production)
+      .post_deploy_services([:identity_app])
+
+    KuberKit.set_configuration_name(:production)
+
+    expect(subject).to receive(:deploy_simultaneously).with([:auth_app], anything)
+    expect(subject).to receive(:deploy_simultaneously).with([:identity_app], anything)
     
     expect(subject.image_compiler).to receive(:call).never
     subject.call(services: ["auth_app"], tags: [], skip_dependencies: true, skip_compile: true)

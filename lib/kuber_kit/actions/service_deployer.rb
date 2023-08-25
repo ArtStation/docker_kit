@@ -29,11 +29,11 @@ class KuberKit::Actions::ServiceDeployer
       services, tags = deployment_options_selector.call()
     end
 
-    disabled_services = current_configuration.disabled_services.map(&:to_s)
-    disabled_services += skip_services if skip_services
-    default_services  = current_configuration.default_services.map(&:to_s) - disabled_services
-    initial_services  = current_configuration.initial_services.map(&:to_s) - disabled_services
-    initial_service_names = initial_services.map(&:to_sym)
+    disabled_services     = current_configuration.disabled_services.map(&:to_s)
+    disabled_services     += skip_services if skip_services
+    default_services      = current_configuration.default_services.map(&:to_s) - disabled_services
+    pre_deploy_services   = current_configuration.pre_deploy_services.map(&:to_s) - disabled_services
+    post_deploy_services  = current_configuration.post_deploy_services.map(&:to_s) - disabled_services
 
     service_names = service_list_resolver.resolve(
       services:         services || [],
@@ -50,17 +50,19 @@ class KuberKit::Actions::ServiceDeployer
       all_service_names = service_dependency_resolver.get_all(service_names)
     end
 
+    all_service_names_with_hooks  = (pre_deploy_services.map(&:to_sym) + all_service_names + post_deploy_services.map(&:to_sym)).uniq
+
     unless all_service_names.any?
       ui.print_warning "ServiceDeployer", "No service found with given options, nothing will be deployed."
       return false
     end
 
-    unless allow_deployment?(require_confirmation: require_confirmation, service_names: (initial_service_names + all_service_names).uniq)
+    unless allow_deployment?(require_confirmation: require_confirmation, service_names: all_service_names_with_hooks)
       return false
     end
 
     # Compile images for all services and dependencies
-    images_names = get_image_names(service_names: (initial_service_names + all_service_names).uniq)
+    images_names = get_image_names(service_names: all_service_names_with_hooks.uniq)
     unless skip_compile
       compilation_result = compile_images(images_names)
 
@@ -72,15 +74,11 @@ class KuberKit::Actions::ServiceDeployer
       return deployment_result
     end
 
-    # First, deploy initial services.
+    # First, deploy pre-deploy services.
     # This feature is used to deploy some services, required for deployment of other services, e.g. env files
     # Note: Initial services are deployed without dependencies
-    initial_services.map(&:to_sym).each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
-      ui.print_debug("ServiceDeployer", "Scheduling to deploy: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
-
-      if deployment_result.succeeded?
-        deploy_simultaneously(batch_service_names, deployment_result)
-      end
+    pre_deploy_services.map(&:to_sym).each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
+      deploy_simultaneously(batch_service_names, deployment_result)
     end
 
     # Next, deploy all initializers simultaneously.
@@ -89,20 +87,18 @@ class KuberKit::Actions::ServiceDeployer
     unless skip_dependencies
       initializers = service_dependency_resolver.get_all_deps(service_names)
       initializers.map(&:to_sym).each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
-        ui.print_debug("ServiceDeployer", "Scheduling to deploy: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
-  
-        if deployment_result.succeeded?
-          deploy_simultaneously(batch_service_names, deployment_result)
-        end
+        deploy_simultaneously(batch_service_names, deployment_result)
       end
     end
 
+    # Next, deploy all requested services.
     service_names.each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
-      ui.print_debug("ServiceDeployer", "Scheduling to deploy: #{batch_service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
+      deploy_simultaneously(batch_service_names, deployment_result)
+    end
 
-      if deployment_result.succeeded?
-        deploy_simultaneously(batch_service_names, deployment_result)
-      end
+    # Last, deploy post-deploy services.
+    post_deploy_services.map(&:to_sym).each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
+      deploy_simultaneously(batch_service_names, deployment_result)
     end
 
     deployment_result
@@ -120,6 +116,13 @@ class KuberKit::Actions::ServiceDeployer
 
   private
     def deploy_simultaneously(service_names, deployment_result)
+      unless deployment_result.succeeded?
+        ui.print_debug("ServiceDeployer", "Deploymet already failed. Canceling: #{service_names.inspect}")
+        return
+      end
+
+      ui.print_debug("ServiceDeployer", "Scheduling to deploy: #{service_names.inspect}. Limit: #{configs.deploy_simultaneous_limit}")
+
       task_group = ui.create_task_group
 
       service_names.each do |service_name|
