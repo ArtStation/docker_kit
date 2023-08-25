@@ -155,12 +155,30 @@ RSpec.describe KuberKit::Core::ConfigurationDefinition do
     end
   end
 
-  context "initial_services" do
-    it "allows using array to set initial services" do
+  context "initial_services (deprecated)" do
+    it "allows using array to set pre-deploy services" do
       subject.initial_services([:service_1, :service_2])
       subject.initial_services([:service_3])
 
-      expect(subject.to_attrs.initial_services).to eq([:service_1, :service_2, :service_3])
+      expect(subject.to_attrs.pre_deploy_services).to eq([:service_1, :service_2, :service_3])
+    end
+  end
+
+  context "pre_deploy_services" do
+    it "allows using array to set pre-deploy services" do
+      subject.pre_deploy_services([:service_1, :service_2])
+      subject.pre_deploy_services([:service_3])
+
+      expect(subject.to_attrs.pre_deploy_services).to eq([:service_1, :service_2, :service_3])
+    end
+  end
+
+  context "post_deploy_services" do
+    it "allows using array to set post-deploy services" do
+      subject.post_deploy_services([:service_1, :service_2])
+      subject.post_deploy_services([:service_3])
+
+      expect(subject.to_attrs.post_deploy_services).to eq([:service_1, :service_2, :service_3])
     end
   end
 

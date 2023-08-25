@@ -1,7 +1,7 @@
 class KuberKit::Core::Configuration
   attr_reader :name, :artifacts, :registries, :env_files, :templates, :kubeconfig_path, :kubectl_entrypoint,
               :services_attributes, :enabled_services, :disabled_services, :default_services,
-              :initial_services, :build_servers, :global_build_vars,
+              :pre_deploy_services, :post_deploy_services, :build_servers, :global_build_vars,
               :deployer_strategy, :deployer_namespace, :deployer_require_confirmation,
               :shell_launcher_strategy
 
@@ -17,7 +17,8 @@ class KuberKit::Core::Configuration
     enabled_services:     ArrayOf[Symbol],
     disabled_services:    ArrayOf[Symbol],
     default_services:     ArrayOf[Symbol],
-    initial_services:     ArrayOf[Symbol],
+    pre_deploy_services:  ArrayOf[Symbol],
+    post_deploy_services: ArrayOf[Symbol],
     build_servers:        ArrayOf[KuberKit::Core::BuildServers::AbstractBuildServer],
     global_build_vars:    HashOf[Symbol => Any],
     deployer_strategy:              Symbol,
@@ -27,7 +28,7 @@ class KuberKit::Core::Configuration
   ] => Any
   def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, kubectl_entrypoint:,
                  services_attributes:, enabled_services:, disabled_services:, default_services:, 
-                 initial_services:, build_servers:, global_build_vars:,
+                 pre_deploy_services:, post_deploy_services:, build_servers:, global_build_vars:,
                  deployer_strategy:, deployer_namespace:, deployer_require_confirmation:, shell_launcher_strategy:)
     @name                 = name
     @artifacts            = artifacts
@@ -41,7 +42,8 @@ class KuberKit::Core::Configuration
     @enabled_services     = enabled_services
     @disabled_services    = disabled_services
     @default_services     = default_services
-    @initial_services     = initial_services
+    @pre_deploy_services  = pre_deploy_services
+    @post_deploy_services = post_deploy_services
     @global_build_vars    = global_build_vars
     @deployer_strategy              = deployer_strategy
     @deployer_namespace             = deployer_namespace

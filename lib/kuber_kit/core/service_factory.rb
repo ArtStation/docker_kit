@@ -7,7 +7,7 @@ class KuberKit::Core::ServiceFactory
 
     KuberKit::Core::Service.new(
       name:               service_attrs.name,
-      dependencies:       service_attrs.dependencies,
+      initializers:       service_attrs.initializers,
       template_name:      service_attrs.template_name,
       tags:               service_attrs.tags,
       images:             service_attrs.images,

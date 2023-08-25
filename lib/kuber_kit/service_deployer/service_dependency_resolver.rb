@@ -5,7 +5,7 @@ class KuberKit::ServiceDeployer::ServiceDependencyResolver < KuberKit::Core::Dep
   ]
   
   def get_deps(service_name)
-    service_store.get_definition(service_name).dependencies
+    service_store.get_definition(service_name).initializers
   end
 
   def dependency_batch_size
