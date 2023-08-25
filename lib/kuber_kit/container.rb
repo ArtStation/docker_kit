@@ -153,6 +153,10 @@ class KuberKit::Container
     KuberKit::Tools::WorkdirDetector.new
   end
 
+  register "tools.helm_package_generator" do
+    KuberKit::Tools::HelmPackageGenerator.new
+  end
+
   register "shell.bash_commands" do
     KuberKit::Shell::Commands::BashCommands.new
   end

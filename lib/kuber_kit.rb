@@ -87,6 +87,7 @@ module KuberKit
     autoload :LoggerFactory, 'tools/logger_factory'
     autoload :ProcessCleaner, 'tools/process_cleaner'
     autoload :WorkdirDetector, 'tools/workdir_detector'
+    autoload :HelmPackageGenerator, 'tools/helm_package_generator'
   end
 
   module Shell
