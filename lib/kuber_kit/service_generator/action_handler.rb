@@ -5,12 +5,12 @@ class KuberKit::ServiceGenerator::ActionHandler
     "core.service_store",
   ]
 
-  Contract KuberKit::Shell::AbstractShell, Symbol => Any
-  def call(shell, service_name)
+  Contract KuberKit::Shell::AbstractShell, Symbol, String => Any
+  def call(shell, service_name, export_path)
     service = service_store.get_service(service_name)
 
     strategy_name = strategy_detector.call(service)
 
-    generator.generate(shell, service, strategy_name)
+    generator.generate(shell, service, export_path, strategy_name)
   end
 end

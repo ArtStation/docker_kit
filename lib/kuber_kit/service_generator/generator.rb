@@ -15,12 +15,12 @@ class KuberKit::ServiceGenerator::Generator
     @@strategies[strategy_name] = strategy
   end
 
-  Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service, Symbol => Any
-  def generate(shell, service, strategy_name)
+  Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Service, String, Symbol => Any
+  def generate(shell, service, export_path, strategy_name)
     generator = @@strategies[strategy_name]
 
     raise StrategyNotFoundError, "Can't find strategy with name #{strategy_name}" if generator.nil?
 
-    generator.generate(shell, service)
+    generator.generate(shell, service, export_path)
   end
 end

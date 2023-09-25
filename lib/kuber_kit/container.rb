@@ -25,6 +25,10 @@ class KuberKit::Container
     KuberKit::Actions::ServiceChecker.new
   end
 
+  register "actions.service_generator" do
+    KuberKit::Actions::ServiceGenerator.new
+  end
+
   register "actions.configuration_loader" do
     KuberKit::Actions::ConfigurationLoader.new
   end

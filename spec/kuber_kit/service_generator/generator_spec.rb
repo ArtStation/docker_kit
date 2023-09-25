@@ -9,7 +9,7 @@ RSpec.describe KuberKit::ServiceGenerator::Generator do
       @name = name
     end
 
-    def generate(shell, service)
+    def generate(shell, service, export_path)
       return {name: @name}
     end
   end
@@ -21,8 +21,8 @@ RSpec.describe KuberKit::ServiceGenerator::Generator do
     subject.register_strategy(:strategy1, strategy1)
     subject.register_strategy(:strategy2, strategy2)
 
-    result1 = subject.generate(test_helper.shell, service, :strategy1)
-    result2 = subject.generate(test_helper.shell, service, :strategy2)
+    result1 = subject.generate(test_helper.shell, service, "/tmp", :strategy1)
+    result2 = subject.generate(test_helper.shell, service, "/tmp", :strategy2)
 
     expect(result1[:name]).to eq(:strategy1)
     expect(result2[:name]).to eq(:strategy2)
@@ -30,7 +30,7 @@ RSpec.describe KuberKit::ServiceGenerator::Generator do
 
   it "raises error if strategy not found" do
     expect {
-      subject.generate(test_helper.shell, service, :strategy3)
+      subject.generate(test_helper.shell, service, "/tmp", :strategy3)
     }.to raise_error(KuberKit::ServiceGenerator::Generator::StrategyNotFoundError)
   end
 

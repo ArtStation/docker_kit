@@ -44,6 +44,11 @@ class KuberKit::Defaults
         KuberKit::ServiceDeployer::Strategies::Helm.new
       )
 
+      container["service_generator.generator"].register_strategy(
+        :helm,
+        KuberKit::ServiceGenerator::Strategies::Helm.new
+      )
+
       container["shell_launcher.launcher"].register_strategy(
         :kubernetes,
         KuberKit::ShellLauncher::Strategies::Kubernetes.new

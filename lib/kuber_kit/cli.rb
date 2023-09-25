@@ -111,6 +111,16 @@ class KuberKit::CLI < Thor
     end
   end
 
+
+  desc "generate SERVICE_NAME PATH_NAME", "Generates a template for a given service in a given path"
+  def generate(service_name, path)
+    setup(options)
+
+    if KuberKit::Container['actions.configuration_loader'].call(options)
+      KuberKit::Container['actions.service_generator'].call(service_name.to_sym, path)
+    end
+  end
+
   desc "apply FILE_PATH", "Apply FILE_PATH with kubectl"
   def apply(file_path)
     setup(options)

@@ -6,8 +6,8 @@ RSpec.describe KuberKit::ServiceGenerator::ActionHandler do
 
   it "runs service generator by service name" do
     expect(subject.service_store).to receive(:get_service).with(:example).and_return(service)
-    expect(subject.generator).to receive(:generate).with(shell, service, :helm).and_return("deployment_result")
+    expect(subject.generator).to receive(:generate).with(shell, service, "/tmp", :helm).and_return("deployment_result")
 
-    result = subject.call(shell, :example)
+    result = subject.call(shell, :example, "/tmp")
   end
 end

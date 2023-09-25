@@ -5,6 +5,6 @@ RSpec.describe KuberKit::ServiceGenerator::Strategies::Abstract do
   let(:service) { service_helper.register_service(:auth_app) }
 
   it do
-    expect{ subject.generate(test_helper.shell, service) }.to raise_error(KuberKit::NotImplementedError)
+    expect{ subject.generate(test_helper.shell, service, "/tmp") }.to raise_error(KuberKit::NotImplementedError)
   end
 end

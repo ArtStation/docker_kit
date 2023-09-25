@@ -205,6 +205,7 @@ module KuberKit
     autoload :ServiceReader, 'actions/service_reader'
     autoload :ServiceDeployer, 'actions/service_deployer'
     autoload :ServiceChecker, 'actions/service_checker'
+    autoload :ServiceGenerator, 'actions/service_generator'
     autoload :ConfigurationLoader, 'actions/configuration_loader'
     autoload :KubectlApplier, 'actions/kubectl_applier'
     autoload :KubectlAttacher, 'actions/kubectl_attacher'
