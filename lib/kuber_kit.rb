@@ -171,6 +171,17 @@ module KuberKit
     end
   end
 
+  module ServiceGenerator
+    autoload :ActionHandler, 'service_generator/action_handler'
+    autoload :StrategyDetector, 'service_generator/strategy_detector'
+    autoload :Generator, 'service_generator/generator'
+
+    module Strategies
+      autoload :Abstract, 'service_generator/strategies/abstract'
+      autoload :Helm, 'service_generator/strategies/helm'
+    end
+  end
+
   module ServiceReader
     autoload :ActionHandler, 'service_reader/action_handler'
     autoload :Reader, 'service_reader/reader'

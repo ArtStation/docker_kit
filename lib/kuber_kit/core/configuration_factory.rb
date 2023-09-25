@@ -39,6 +39,7 @@ class KuberKit::Core::ConfigurationFactory
       deployer_namespace:             configuration_attrs.deployer_namespace,
       deployer_require_confirmation:  configuration_attrs.deployer_require_confirmation,
       shell_launcher_strategy:        configuration_attrs.shell_launcher_strategy || configs.shell_launcher_strategy,
+      generator_strategy:             configuration_attrs.generator_strategy || configs.generator_strategy,
     )
   end
 

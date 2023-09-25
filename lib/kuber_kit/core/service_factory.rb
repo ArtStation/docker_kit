@@ -13,6 +13,7 @@ class KuberKit::Core::ServiceFactory
       images:             service_attrs.images,
       attributes:         attributes,
       deployer_strategy:  service_attrs.deployer_strategy,
+      generator_strategy: service_attrs.generator_strategy,
     )
   end
 end

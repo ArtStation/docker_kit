@@ -301,6 +301,18 @@ class KuberKit::Container
     KuberKit::ServiceDeployer::ServiceDependencyResolver.new
   end
 
+  register "service_generator.action_handler" do
+    KuberKit::ServiceGenerator::ActionHandler.new
+  end
+
+  register "service_generator.strategy_detector" do
+    KuberKit::ServiceGenerator::StrategyDetector.new
+  end
+
+  register "service_generator.generator" do
+    KuberKit::ServiceGenerator::Generator.new
+  end
+
   register "service_reader.action_handler" do
     KuberKit::ServiceReader::ActionHandler.new
   end

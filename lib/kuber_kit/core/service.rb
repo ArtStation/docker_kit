@@ -1,7 +1,8 @@
 class KuberKit::Core::Service
   AttributeNotSet = Class.new(KuberKit::Error)
 
-  attr_reader :name, :initializers, :template_name, :tags, :images, :attributes, :deployer_strategy
+  attr_reader :name, :initializers, :template_name, :tags, :images, :attributes, 
+              :deployer_strategy, :generator_strategy
 
   Contract KeywordArgs[
     name:               Symbol,
@@ -10,9 +11,10 @@ class KuberKit::Core::Service
     tags:               ArrayOf[Symbol],
     images:             ArrayOf[Symbol],
     attributes:         HashOf[Symbol => Any],
-    deployer_strategy:  Maybe[Symbol]
+    deployer_strategy:  Maybe[Symbol],
+    generator_strategy: Maybe[Symbol]
   ] => Any
-  def initialize(name:, initializers:, template_name:, tags:, images:, attributes:, deployer_strategy:)
+  def initialize(name:, initializers:, template_name:, tags:, images:, attributes:, deployer_strategy:, generator_strategy:)
     @name = name
     @initializers = initializers
     @template_name = template_name
@@ -20,6 +22,7 @@ class KuberKit::Core::Service
     @images = images
     @attributes = attributes
     @deployer_strategy = deployer_strategy
+    @generator_strategy = generator_strategy
   end
 
   def uri

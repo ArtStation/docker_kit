@@ -16,6 +16,7 @@ class KuberKit::Core::ServiceDefinition
       images:             Array(get_value(@images)).map(&:to_sym),
       attributes:         get_value(@attributes),
       deployer_strategy:  get_value(@deployer_strategy),
+      generator_strategy: get_value(@generator_strategy),
     )
   end
 
@@ -55,6 +56,12 @@ class KuberKit::Core::ServiceDefinition
 
   def deployer_strategy(value = nil, &block)
     @deployer_strategy = block_given? ? block : value
+
+    self
+  end
+
+  def generator_strategy(value = nil, &block)
+    @generator_strategy = block_given? ? block : value
 
     self
   end

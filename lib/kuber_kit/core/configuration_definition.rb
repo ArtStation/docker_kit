@@ -40,6 +40,7 @@ class KuberKit::Core::ConfigurationDefinition
       deployer_namespace:             @deployer_namespace,
       deployer_require_confirmation:  @deployer_require_confirmation || false,
       shell_launcher_strategy:        @shell_launcher_strategy,
+      generator_strategy:             @generator_strategy,
     )
   end
 
@@ -107,6 +108,12 @@ class KuberKit::Core::ConfigurationDefinition
 
   def deployer_strategy(strategy)
     @deployer_strategy = strategy
+
+    self
+  end
+
+  def generator_strategy(strategy)
+    @generator_strategy = strategy
 
     self
   end

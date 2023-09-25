@@ -3,7 +3,7 @@ class KuberKit::Core::Configuration
               :services_attributes, :enabled_services, :disabled_services, :default_services,
               :pre_deploy_services, :post_deploy_services, :build_servers, :global_build_vars,
               :deployer_strategy, :deployer_namespace, :deployer_require_confirmation,
-              :shell_launcher_strategy
+              :shell_launcher_strategy, :generator_strategy
 
   Contract KeywordArgs[
     name:                 Symbol,
@@ -25,11 +25,12 @@ class KuberKit::Core::Configuration
     deployer_namespace:             Maybe[Or[Symbol, String]],
     deployer_require_confirmation:  Bool,
     shell_launcher_strategy:        Symbol,
+    generator_strategy:             Symbol,
   ] => Any
   def initialize(name:, artifacts:, registries:, env_files:, templates:, kubeconfig_path:, kubectl_entrypoint:,
                  services_attributes:, enabled_services:, disabled_services:, default_services:, 
                  pre_deploy_services:, post_deploy_services:, build_servers:, global_build_vars:,
-                 deployer_strategy:, deployer_namespace:, deployer_require_confirmation:, shell_launcher_strategy:)
+                 deployer_strategy:, deployer_namespace:, deployer_require_confirmation:, shell_launcher_strategy:, generator_strategy:)
     @name                 = name
     @artifacts            = artifacts
     @registries           = registries
@@ -49,6 +50,7 @@ class KuberKit::Core::Configuration
     @deployer_namespace             = deployer_namespace
     @deployer_require_confirmation  = deployer_require_confirmation
     @shell_launcher_strategy        = shell_launcher_strategy
+    @generator_strategy             = generator_strategy
   end
 
   def service_attributes(service_name)
