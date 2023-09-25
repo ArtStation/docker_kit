@@ -1,4 +1,7 @@
 **1.3.1**
+- Added an ability to generate helm templates using `kit generate` command
+
+**1.3.1**
 - Fix upgrade command for helm strategy
 
 **1.3.0**
