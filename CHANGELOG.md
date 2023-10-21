@@ -1,4 +1,9 @@
-**1.3.1**
+**1.3.3**
+- Support "partials" in the templates with "render" method.
+- Cleanup artifacts after deployment if cache_result: false
+- Improve fetching git artifact when branch name has changed
+
+**1.3.2**
 - Added an ability to generate helm templates using `kit generate` command
 
 **1.3.1**
