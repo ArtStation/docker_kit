@@ -19,8 +19,8 @@ Please install specific kuber_kit version, depending on Ruby version.
 | Ruby Version | KuberKit Version |
 | ------------ | ------------ |
 | 2.6 | 1.0.1 |
-| 2.7 | 1.1.5 |
-| > 3.0 | 1.2.6 |
+| 2.7 | 1.1.6 |
+| > 3.0 | 1.3.3 |
 
 ## Usage
 
