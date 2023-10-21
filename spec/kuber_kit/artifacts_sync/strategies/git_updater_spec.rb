@@ -1,5 +1,5 @@
-RSpec.describe KuberKit::ArtifactsSync::GitArtifactResolver do
-  subject{ KuberKit::ArtifactsSync::GitArtifactResolver.new }
+RSpec.describe KuberKit::ArtifactsSync::Strategies::GitUpdater do
+  subject{ KuberKit::ArtifactsSync::Strategies::GitUpdater.new }
 
   let(:artifact_url) { "git@example.com/myapp.git" }
   let(:artifact) { KuberKit::Core::Artifacts::Git.new(:myapp).setup(remote_url: artifact_url) }
@@ -13,7 +13,7 @@ RSpec.describe KuberKit::ArtifactsSync::GitArtifactResolver do
       branch:     artifact.branch
     )
 
-    subject.resolve(test_helper.shell, artifact)
+    subject.update(test_helper.shell, artifact)
   end
 
   it "pulls repo if it's already cloned" do
@@ -24,6 +24,6 @@ RSpec.describe KuberKit::ArtifactsSync::GitArtifactResolver do
       branch: artifact.branch
     )
 
-    subject.resolve(test_helper.shell, artifact)
+    subject.update(test_helper.shell, artifact)
   end
 end

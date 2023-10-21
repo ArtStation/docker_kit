@@ -1,27 +1,27 @@
 class KuberKit::ArtifactsSync::ArtifactUpdater
-  ResolverNotFoundError = Class.new(KuberKit::NotFoundError)
+  StrategyNotFoundError = Class.new(KuberKit::NotFoundError)
 
   include KuberKit::Import[
     "ui"
   ]
 
-  def use_resolver(artifact_resolver, artifact_class:)
-    @@resolvers ||= {}
+  def use_strategy(strategy, artifact_class:)
+    @@strategies ||= {}
 
-    if !artifact_resolver.is_a?(KuberKit::ArtifactsSync::AbstractArtifactResolver)
-      raise ArgumentError.new("should be an instance of KuberKit::ArtifactsSync::AbstractArtifactResolver, got: #{artifact_resolver.inspect}")
+    if !strategy.is_a?(KuberKit::ArtifactsSync::Strategies::Abstract)
+      raise ArgumentError.new("should be an instance of KuberKit::ArtifactsSync::Strategies::Abstract, got: #{strategy.inspect}")
     end
 
-    @@resolvers[artifact_class] = artifact_resolver
+    @@strategies[artifact_class] = strategy
   end
 
   def update(shell, artifact)
-    resolver = @@resolvers[artifact.class]
+    strategy = @@strategies[artifact.class]
 
     ui.print_debug "ArtifactUpdater", "Updating artifact #{artifact.name.to_s.green}"
     
-    raise ResolverNotFoundError, "Can't find resolver for artifact #{artifact}" if resolver.nil?
+    raise StrategyNotFoundError, "Can't find strategy for artifact #{artifact}" if strategy.nil?
 
-    resolver.resolve(shell, artifact)
+    strategy.update(shell, artifact)
   end
 end

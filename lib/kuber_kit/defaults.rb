@@ -7,12 +7,12 @@ class KuberKit::Defaults
     end
 
     def init!
-      container["artifacts_sync.artifact_updater"].use_resolver(
-        container["artifacts_sync.git_artifact_resolver"], 
+      container["artifacts_sync.artifact_updater"].use_strategy(
+        container["artifacts_sync.strategies.git_updater"], 
         artifact_class: KuberKit::Core::Artifacts::Git
       )
-      container["artifacts_sync.artifact_updater"].use_resolver(
-        container["artifacts_sync.null_artifact_resolver"], 
+      container["artifacts_sync.artifact_updater"].use_strategy(
+        container["artifacts_sync.strategies.null_updater"], 
         artifact_class: KuberKit::Core::Artifacts::Local
       )
       container["env_file_reader.reader"].use_reader(

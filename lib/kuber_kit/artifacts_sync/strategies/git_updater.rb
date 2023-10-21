@@ -1,11 +1,11 @@
-class KuberKit::ArtifactsSync::GitArtifactResolver < KuberKit::ArtifactsSync::AbstractArtifactResolver
+class KuberKit::ArtifactsSync::Strategies::GitUpdater < KuberKit::ArtifactsSync::Strategies::Abstract
 
   include KuberKit::Import[
     "shell.git_commands",
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Artifacts::Git => Any
-  def resolve(shell, artifact)
+  def update(shell, artifact)
     already_cloned = artifact_already_cloned?(
       shell:       shell,
       target_path: artifact.cloned_path,

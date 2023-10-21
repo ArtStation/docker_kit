@@ -127,10 +127,13 @@ module KuberKit
   end
 
   module ArtifactsSync
-    autoload :AbstractArtifactResolver, 'artifacts_sync/abstract_artifact_resolver'
     autoload :ArtifactUpdater, 'artifacts_sync/artifact_updater'
-    autoload :GitArtifactResolver, 'artifacts_sync/git_artifact_resolver'
-    autoload :NullArtifactResolver, 'artifacts_sync/null_artifact_resolver'
+
+    module Strategies
+      autoload :Abstract, 'artifacts_sync/strategies/abstract'
+      autoload :GitUpdater, 'artifacts_sync/strategies/git_updater'
+      autoload :NullUpdater, 'artifacts_sync/strategies/null_updater'
+    end
   end
 
   module EnvFileReader
