@@ -1,3 +1,10 @@
+**1.3.5**
+- Update git force_pull_repo command to improve performance
+
+**1.3.4**
+- Fix checking branch name in git artifact update
+- Make LocalContextHelper compatible with ruby 3
+
 **1.3.3**
 - Support "partials" in the templates with "render" method.
 - Cleanup artifacts after deployment if cache_result: false
