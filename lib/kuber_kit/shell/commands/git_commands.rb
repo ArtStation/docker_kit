@@ -36,11 +36,8 @@ class KuberKit::Shell::Commands::GitCommands
     shell.exec!([
       "cd #{path}",
       "git add .",
-      "git reset HEAD --hard",
       "git fetch origin #{branch}",
-      "git checkout #{branch}",
-      "git reset --hard '@{u}'",
-      "git pull --force",
+      "git reset --hard '@{u}'"
     ].join(" && "), merge_stderr: true)
   end
 end
