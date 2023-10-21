@@ -7,9 +7,9 @@ class KuberKit::ArtifactsSync::Strategies::GitUpdater < KuberKit::ArtifactsSync:
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Artifacts::Git => Any
   def update(shell, artifact)
     already_cloned = artifact_already_cloned?(
-      shell:       shell,
-      target_path: artifact.cloned_path,
-      remote_url:  artifact.remote_url,
+      shell:      shell,
+      repo_path:  artifact.cloned_path,
+      artifact:   artifact
     )
 
     if already_cloned
@@ -24,8 +24,17 @@ class KuberKit::ArtifactsSync::Strategies::GitUpdater < KuberKit::ArtifactsSync:
   end
 
   private
-    def artifact_already_cloned?(shell:, target_path:, remote_url:)
-      target_remote_url = git_commands.get_remote_url(shell, target_path)
-      target_remote_url == remote_url
+    def artifact_already_cloned?(shell:, repo_path:, artifact:)
+      target_remote_url = git_commands.get_remote_url(shell, repo_path)
+      if target_remote_url != artifact.remote_url
+        return false
+      end
+
+      target_branch = git_commands.get_branch_name(shell, repo_path)
+      if target_branch != artifact.branch
+        return false
+      end
+
+      return true
     end
 end
