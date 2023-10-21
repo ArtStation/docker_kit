@@ -22,7 +22,7 @@ RSpec.describe KuberKit::TemplateReader::Reader do
   let(:template2) { ExampleTemplate2.new(:template2) }
   let(:template3) { ExampleTemplate3.new(:template3) }
 
-  it "calls the reader for this env file type on read" do
+  it "calls the reader for this template type on read" do
     subject.use_reader(reader1, template_class: ExampleTemplate1)
     subject.use_reader(reader2, template_class: ExampleTemplate2)
 

@@ -2,7 +2,8 @@ class KuberKit::Core::ContextHelper::ContextHelperFactory
   include KuberKit::Import[
     "core.image_store",
     "core.artifact_store",
-    env_file_reader: "env_file_reader.action_handler"
+    template_renderer: "template_reader.renderer",
+    env_file_reader:   "env_file_reader.action_handler"
   ]
 
   def build_image_context(shell, image)
@@ -22,6 +23,7 @@ class KuberKit::Core::ContextHelper::ContextHelperFactory
       shell:            shell,
       env_file_reader:  env_file_reader,
       service:          service,
+      template_renderer: template_renderer
     )
   end
 end

@@ -14,6 +14,6 @@ class KuberKit::ServiceReader::Reader
 
     context_helper = context_helper_factory.build_service_context(shell, service)
 
-    renderer.render(shell, service.template_name, context_helper: context_helper)
+    renderer.call(shell, service.template_name, context_helper: context_helper)
   end
 end
