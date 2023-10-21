@@ -1,3 +1,6 @@
+**1.3.5**
+- Update git force_pull_repo command to improve performance
+
 **1.3.4**
 - Fix checking branch name in git artifact update
 - Make LocalContextHelper compatible with ruby 3
