@@ -37,7 +37,6 @@ class KuberKit::Shell::Commands::GitCommands
       "cd #{path}",
       "git add .",
       "git reset HEAD --hard",
-      "git fetch origin #{branch}",
       "git checkout #{branch}",
       "git reset --hard '@{u}'",
       "git pull --force",

@@ -18,6 +18,7 @@ RSpec.describe KuberKit::ArtifactsSync::Strategies::GitUpdater do
 
   it "pulls repo if it's already cloned" do
     expect(subject.git_commands).to receive(:get_remote_url).and_return(artifact_url)
+    expect(subject.git_commands).to receive(:get_branch_name).and_return(artifact.branch)
     expect(subject.git_commands).to receive(:force_pull_repo).with(
       instance_of(TestShell),
       path:   artifact.cloned_path, 
