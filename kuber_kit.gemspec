@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "cli-ui", '2.1.0'
   spec.add_dependency "net-ssh"
   spec.add_dependency "tty-prompt"
+  spec.add_dependency 'ed25519'
 
   spec.add_development_dependency "bundler", "~> 2.2"
   spec.add_development_dependency "rake", "~> 10.0"
