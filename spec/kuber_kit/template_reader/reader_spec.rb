@@ -3,7 +3,7 @@ RSpec.describe KuberKit::TemplateReader::Reader do
 
   class ExampleTemplateReader < KuberKit::TemplateReader::Strategies::Abstract
     def read(shell, template, context_helper: nil)
-      return {name: template.name}
+      return template.name.to_s
     end
   end
 
@@ -29,8 +29,8 @@ RSpec.describe KuberKit::TemplateReader::Reader do
     result1 = subject.read(test_helper.shell, template1)
     result2 = subject.read(test_helper.shell, template2)
 
-    expect(result1[:name]).to eq(:template1)
-    expect(result2[:name]).to eq(:template2)
+    expect(result1).to eq("template1")
+    expect(result2).to eq("template2")
   end
 
   it "raises error if reader not found for class" do

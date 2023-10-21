@@ -147,6 +147,7 @@ module KuberKit
   module TemplateReader
     autoload :ActionHandler, 'template_reader/action_handler'
     autoload :Reader, 'template_reader/reader'
+    autoload :Renderer, 'template_reader/renderer'
 
     module Strategies
       autoload :Abstract, 'template_reader/strategies/abstract'

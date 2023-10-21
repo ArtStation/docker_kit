@@ -277,6 +277,10 @@ class KuberKit::Container
     KuberKit::TemplateReader::Reader.new
   end
 
+  register "template_reader.renderer" do
+    KuberKit::TemplateReader::Renderer.new
+  end
+
   register "template_reader.strategies.artifact_file" do
     KuberKit::TemplateReader::Strategies::ArtifactFile.new
   end
