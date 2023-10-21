@@ -37,7 +37,7 @@ class KuberKit::ArtifactsSync::Strategies::GitUpdater < KuberKit::ArtifactsSync:
       end
 
       target_branch = git_commands.get_branch_name(shell, repo_path)
-      if target_branch != artifact.branch
+      if target_branch != artifact.branch.to_s
         return false
       end
 
