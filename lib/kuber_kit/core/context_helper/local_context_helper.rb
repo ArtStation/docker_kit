@@ -4,11 +4,11 @@ class KuberKit::Core::ContextHelper::LocalContextHelper < KuberKit::Core::Contex
     @variables = variables
   end
 
-  def method_missing(method_name, *args, &block)
+  def method_missing(method_name, *args, **kwargs, &block)
     if @variables.has_key?(method_name)
       @variables[method_name]
     else
-      @parent_context_helper.send(method_name, *args, &block)
+      @parent_context_helper.send(method_name, *args, **kwargs, &block)
     end
   end
 end
