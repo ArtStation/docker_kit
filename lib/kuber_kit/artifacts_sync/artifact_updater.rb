@@ -24,4 +24,14 @@ class KuberKit::ArtifactsSync::ArtifactUpdater
 
     strategy.update(shell, artifact)
   end
+
+  def cleanup(shell, artifact)
+    strategy = @@strategies[artifact.class]
+
+    ui.print_debug "ArtifactUpdater", "Cleaning artifact #{artifact.name.to_s.green}"
+    
+    raise StrategyNotFoundError, "Can't find strategy for artifact #{artifact}" if strategy.nil?
+
+    strategy.cleanup(shell, artifact)
+  end
 end

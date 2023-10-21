@@ -2,6 +2,7 @@ class KuberKit::ArtifactsSync::Strategies::GitUpdater < KuberKit::ArtifactsSync:
 
   include KuberKit::Import[
     "shell.git_commands",
+    "shell.bash_commands",
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Artifacts::Git => Any
@@ -21,6 +22,11 @@ class KuberKit::ArtifactsSync::Strategies::GitUpdater < KuberKit::ArtifactsSync:
         remote_url: artifact.remote_url, path: artifact.cloned_path, branch: artifact.branch
       )
     end
+  end
+
+  Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Artifacts::Git => Any
+  def cleanup(shell, artifact)
+    bash_commands.rm_rf(shell, artifact.cloned_path)
   end
 
   private

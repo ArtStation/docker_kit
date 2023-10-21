@@ -24,6 +24,8 @@ class KuberKit::CLI < Thor
       action_result = KuberKit::Container['actions.image_compiler'].call(image_names, options)
     end
 
+    clean_artifacts(options)
+
     if action_result && action_result.succeeded?
       time = (Time.now.to_i - started_at)
       print_result("Image compilation finished! (#{time}s)", result: {
@@ -63,6 +65,8 @@ class KuberKit::CLI < Thor
         require_confirmation: require_confirmation
       )
     end
+
+    clean_artifacts(options)
 
     if action_result && action_result.succeeded?
       time = (Time.now.to_i - started_at)
@@ -229,5 +233,18 @@ class KuberKit::CLI < Thor
 
     def print_result(message, data = {})
       KuberKit::Container['ui'].print_result(message, data)
+    end
+
+    def clean_artifacts(options)
+      artifacts = KuberKit.current_configuration.artifacts.values
+      artifacts_to_clean = artifacts.select(&:cleanup_needed?)
+  
+      return unless artifacts_to_clean.any?
+
+      artifacts_to_clean.each do |artifact|
+        KuberKit::Container['artifacts_sync.artifact_updater'].cleanup(
+          KuberKit::Container['shell.local_shell'], artifact
+        )
+      end
     end
 end

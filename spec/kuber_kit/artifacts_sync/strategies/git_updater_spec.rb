@@ -27,4 +27,13 @@ RSpec.describe KuberKit::ArtifactsSync::Strategies::GitUpdater do
 
     subject.update(test_helper.shell, artifact)
   end
+
+  it "cleans repo" do
+    expect(subject.bash_commands).to receive(:rm_rf).with(
+      instance_of(TestShell),
+      artifact.cloned_path
+    )
+
+    subject.cleanup(test_helper.shell, artifact)
+  end
 end
