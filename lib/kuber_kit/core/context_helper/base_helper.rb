@@ -1,6 +1,4 @@
-class KuberKit::Core::ContextHelper::BaseHelper
-  CONTRACT = RespondTo[:get_binding]
-
+class KuberKit::Core::ContextHelper::BaseHelper < KuberKit::Core::ContextHelper::AbstractHelper
   attr_reader :shell, :artifact_store, :image_store, :env_file_reader
 
   def initialize(image_store:, artifact_store:, shell:, env_file_reader:)
@@ -38,9 +36,5 @@ class KuberKit::Core::ContextHelper::BaseHelper
       puts "DEPRECATION: global_build_args is deprecated, please use global_build_vars instead"
     end
     global_build_vars
-  end
-
-  def get_binding
-    binding
   end
 end

@@ -61,11 +61,13 @@ module KuberKit
     end
 
     module ContextHelper
+      autoload :AbstractHelper, 'core/context_helper/abstract_helper'
       autoload :BaseHelper, 'core/context_helper/base_helper'
       autoload :ImageHelper, 'core/context_helper/image_helper'
       autoload :ServiceHelper, 'core/context_helper/service_helper'
       autoload :ContextHelperFactory, 'core/context_helper/context_helper_factory'
       autoload :ContextVars, 'core/context_helper/context_vars'
+      autoload :LocalContextHelper, 'core/context_helper/local_context_helper'
     end
 
     module Registries
@@ -147,6 +149,7 @@ module KuberKit
   module TemplateReader
     autoload :ActionHandler, 'template_reader/action_handler'
     autoload :Reader, 'template_reader/reader'
+    autoload :Renderer, 'template_reader/renderer'
 
     module Strategies
       autoload :Abstract, 'template_reader/strategies/abstract'

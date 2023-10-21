@@ -3,6 +3,7 @@ class KuberKit::TemplateReader::Strategies::ArtifactFile < KuberKit::TemplateRea
     "core.artifact_store"
   ]
 
+  Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Templates::AbstractTemplate => String
   def read(shell, template)
     artifact = artifact_store.get(template.artifact_name)
 

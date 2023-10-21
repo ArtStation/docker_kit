@@ -6,7 +6,8 @@ RSpec.describe KuberKit::Core::ContextHelper::ServiceHelper do
     artifact_store:   KuberKit::Container['core.artifact_store'],
     shell:            test_helper.shell,
     env_file_reader:  KuberKit::Container['env_file_reader.action_handler'],
-    service:          service
+    service:          service,
+    template_renderer: KuberKit::Container['template_reader.renderer'],
   ) }
 
   context "service_name" do

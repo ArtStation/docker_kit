@@ -1,15 +1,11 @@
 class TestHelper
-  class HelloWorldContextHelper
+  class HelloWorldContextHelper < KuberKit::Core::ContextHelper::AbstractHelper
     def hello_world
       "hello world"
     end
 
     def configuration_name
       :default
-    end
-  
-    def get_binding
-      binding
     end
   end
 

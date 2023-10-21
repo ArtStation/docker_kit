@@ -56,5 +56,10 @@ class ServiceHelper
       template = KuberKit::Core::Templates::ArtifactFile.new(template_name, artifact_name: :templates, file_path: "service.yml")
       test_helper.template_store.add(template)
     end
+
+    unless test_helper.template_store.exists?(:"_metadata")
+      template = KuberKit::Core::Templates::ArtifactFile.new(:"_metadata", artifact_name: :templates, file_path: "_metadata.yml")
+      test_helper.template_store.add(template)
+    end
   end
 end
