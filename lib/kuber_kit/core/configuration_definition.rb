@@ -9,13 +9,14 @@ class KuberKit::Core::ConfigurationDefinition
     @artifacts  = {}
     @registries = {}
     @env_files  = {}
-    @templates  = {}
-    @build_servers      = []
-    @enabled_services   = []
-    @disabled_services  = []
-    @default_services   = []
-    @initial_services   = []
-    @services_attributes = {}
+    @templates  = {} 
+    @build_servers        = []
+    @enabled_services     = []
+    @disabled_services    = []
+    @default_services     = []
+    @pre_deploy_services  = []
+    @post_deploy_services = []
+    @services_attributes  = {}
   end
 
   def to_attrs
@@ -30,7 +31,8 @@ class KuberKit::Core::ConfigurationDefinition
       enabled_services:     @enabled_services,
       disabled_services:    @disabled_services,
       default_services:     @default_services,
-      initial_services:     @initial_services,
+      pre_deploy_services:  @pre_deploy_services,
+      post_deploy_services: @post_deploy_services,
       build_servers:        @build_servers,
       services_attributes:  @services_attributes,
       global_build_vars:    @global_build_vars,
@@ -38,6 +40,7 @@ class KuberKit::Core::ConfigurationDefinition
       deployer_namespace:             @deployer_namespace,
       deployer_require_confirmation:  @deployer_require_confirmation || false,
       shell_launcher_strategy:        @shell_launcher_strategy,
+      generator_strategy:             @generator_strategy,
     )
   end
 
@@ -109,6 +112,12 @@ class KuberKit::Core::ConfigurationDefinition
     self
   end
 
+  def generator_strategy(strategy)
+    @generator_strategy = strategy
+
+    self
+  end
+
   def deployer_require_confirmation
     @deployer_require_confirmation = true
 
@@ -143,7 +152,19 @@ class KuberKit::Core::ConfigurationDefinition
   end
 
   def initial_services(services)
-    @initial_services += services.map(&:to_sym)
+    unless KuberKit.deprecation_warnings_disabled?
+      puts "WARNING: initial_services is deprecated, please use pre_deploy_services instead"
+    end
+    pre_deploy_services(services)
+  end
+
+  def pre_deploy_services(services)
+    @pre_deploy_services += services.map(&:to_sym)
+    return self
+  end
+
+  def post_deploy_services(services)
+    @post_deploy_services += services.map(&:to_sym)
     return self
   end
 

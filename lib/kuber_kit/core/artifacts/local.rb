@@ -15,4 +15,8 @@ class KuberKit::Core::Artifacts::Local < KuberKit::Core::Artifacts::AbstractArti
   def sync_description
     "local"
   end
+
+  def cleanup_needed?
+    false
+  end
 end

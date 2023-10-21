@@ -15,23 +15,43 @@ RSpec.describe KuberKit::Core::ServiceDefinition do
     end
   end
 
-  context "dependencies" do
-    it "sets service dependencies with symbol" do
+  context "dependencies (deprecated)" do
+    it "sets service initializers with symbol" do
       definition = subject.depends_on(:another_service)
   
-      expect(definition.to_service_attrs.dependencies).to eq([:another_service])
+      expect(definition.to_service_attrs.initializers).to eq([:another_service])
     end
 
-    it "sets service dependencies with array" do
+    it "sets service initializers with array" do
       definition = subject.depends_on([:first_service, :second_service])
   
-      expect(definition.to_service_attrs.dependencies).to eq([:first_service, :second_service])
+      expect(definition.to_service_attrs.initializers).to eq([:first_service, :second_service])
     end
 
-    it "sets service dependencies with multiple args" do
+    it "sets service initializers with multiple args" do
       definition = subject.depends_on(:first_service, :second_service)
   
-      expect(definition.to_service_attrs.dependencies).to eq([:first_service, :second_service])
+      expect(definition.to_service_attrs.initializers).to eq([:first_service, :second_service])
+    end
+  end
+
+  context "initializers" do
+    it "sets service initializers with symbol" do
+      definition = subject.initialize_with(:another_service)
+  
+      expect(definition.to_service_attrs.initializers).to eq([:another_service])
+    end
+
+    it "sets service initializers with array" do
+      definition = subject.initialize_with([:first_service, :second_service])
+  
+      expect(definition.to_service_attrs.initializers).to eq([:first_service, :second_service])
+    end
+
+    it "sets service initializers with multiple args" do
+      definition = subject.initialize_with(:first_service, :second_service)
+  
+      expect(definition.to_service_attrs.initializers).to eq([:first_service, :second_service])
     end
   end
 

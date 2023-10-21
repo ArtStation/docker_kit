@@ -3,11 +3,13 @@ RSpec.describe KuberKit::Actions::ServiceReader do
 
   let(:shell) { test_helper.shell }
   let(:artifact) { KuberKit::Core::Artifacts::Local.new(:templates).setup(File.join(FIXTURES_PATH, "templates")) }
-  let(:template) { KuberKit::Core::Templates::ArtifactFile.new(:service, artifact_name: :templates, file_path: "service.yml") }
+  let(:service_template) { KuberKit::Core::Templates::ArtifactFile.new(:service, artifact_name: :templates, file_path: "service.yml") }
+  let(:metadata_template) { KuberKit::Core::Templates::ArtifactFile.new(:_metadata, artifact_name: :templates, file_path: "_metadata.yml") }
 
   before do
     test_helper.artifact_store.add(artifact)
-    test_helper.template_store.add(template)
+    test_helper.template_store.add(service_template)
+    test_helper.template_store.add(metadata_template)
 
     service_helper.store.define(:auth_app).template(:service)
   end

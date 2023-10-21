@@ -5,7 +5,7 @@ class KuberKit::ImageCompiler::ImageBuilder
   ]
 
   Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Image, String, KeywordArgs[
-    context_helper: Maybe[KuberKit::Core::ContextHelper::BaseHelper::CONTRACT]
+    context_helper: Maybe[KuberKit::Core::ContextHelper::AbstractHelper]
   ] => Any
   def build(shell, image, build_dir, context_helper: nil)
     image.before_build_callback.call(context_helper, build_dir) if image.before_build_callback

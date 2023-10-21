@@ -25,6 +25,10 @@ class KuberKit::Container
     KuberKit::Actions::ServiceChecker.new
   end
 
+  register "actions.service_generator" do
+    KuberKit::Actions::ServiceGenerator.new
+  end
+
   register "actions.configuration_loader" do
     KuberKit::Actions::ConfigurationLoader.new
   end
@@ -233,12 +237,12 @@ class KuberKit::Container
     KuberKit::ArtifactsSync::ArtifactUpdater.new
   end
 
-  register "artifacts_sync.git_artifact_resolver" do
-    KuberKit::ArtifactsSync::GitArtifactResolver.new
+  register "artifacts_sync.strategies.git_updater" do
+    KuberKit::ArtifactsSync::Strategies::GitUpdater.new
   end
 
-  register "artifacts_sync.null_artifact_resolver" do
-    KuberKit::ArtifactsSync::NullArtifactResolver.new
+  register "artifacts_sync.strategies.null_updater" do
+    KuberKit::ArtifactsSync::Strategies::NullUpdater.new
   end
 
   register "env_file_reader.action_handler" do
@@ -273,6 +277,10 @@ class KuberKit::Container
     KuberKit::TemplateReader::Reader.new
   end
 
+  register "template_reader.renderer" do
+    KuberKit::TemplateReader::Renderer.new
+  end
+
   register "template_reader.strategies.artifact_file" do
     KuberKit::TemplateReader::Strategies::ArtifactFile.new
   end
@@ -299,6 +307,18 @@ class KuberKit::Container
 
   register "service_deployer.service_dependency_resolver" do
     KuberKit::ServiceDeployer::ServiceDependencyResolver.new
+  end
+
+  register "service_generator.action_handler" do
+    KuberKit::ServiceGenerator::ActionHandler.new
+  end
+
+  register "service_generator.strategy_detector" do
+    KuberKit::ServiceGenerator::StrategyDetector.new
+  end
+
+  register "service_generator.generator" do
+    KuberKit::ServiceGenerator::Generator.new
   end
 
   register "service_reader.action_handler" do

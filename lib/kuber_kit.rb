@@ -61,11 +61,13 @@ module KuberKit
     end
 
     module ContextHelper
+      autoload :AbstractHelper, 'core/context_helper/abstract_helper'
       autoload :BaseHelper, 'core/context_helper/base_helper'
       autoload :ImageHelper, 'core/context_helper/image_helper'
       autoload :ServiceHelper, 'core/context_helper/service_helper'
       autoload :ContextHelperFactory, 'core/context_helper/context_helper_factory'
       autoload :ContextVars, 'core/context_helper/context_vars'
+      autoload :LocalContextHelper, 'core/context_helper/local_context_helper'
     end
 
     module Registries
@@ -125,10 +127,13 @@ module KuberKit
   end
 
   module ArtifactsSync
-    autoload :AbstractArtifactResolver, 'artifacts_sync/abstract_artifact_resolver'
     autoload :ArtifactUpdater, 'artifacts_sync/artifact_updater'
-    autoload :GitArtifactResolver, 'artifacts_sync/git_artifact_resolver'
-    autoload :NullArtifactResolver, 'artifacts_sync/null_artifact_resolver'
+
+    module Strategies
+      autoload :Abstract, 'artifacts_sync/strategies/abstract'
+      autoload :GitUpdater, 'artifacts_sync/strategies/git_updater'
+      autoload :NullUpdater, 'artifacts_sync/strategies/null_updater'
+    end
   end
 
   module EnvFileReader
@@ -147,6 +152,7 @@ module KuberKit
   module TemplateReader
     autoload :ActionHandler, 'template_reader/action_handler'
     autoload :Reader, 'template_reader/reader'
+    autoload :Renderer, 'template_reader/renderer'
 
     module Strategies
       autoload :Abstract, 'template_reader/strategies/abstract'
@@ -168,6 +174,17 @@ module KuberKit
       autoload :DockerCompose, 'service_deployer/strategies/docker_compose'
       autoload :Kubernetes, 'service_deployer/strategies/kubernetes'
       autoload :Helm, 'service_deployer/strategies/helm'
+    end
+  end
+
+  module ServiceGenerator
+    autoload :ActionHandler, 'service_generator/action_handler'
+    autoload :StrategyDetector, 'service_generator/strategy_detector'
+    autoload :Generator, 'service_generator/generator'
+
+    module Strategies
+      autoload :Abstract, 'service_generator/strategies/abstract'
+      autoload :Helm, 'service_generator/strategies/helm'
     end
   end
 
@@ -194,6 +211,7 @@ module KuberKit
     autoload :ServiceReader, 'actions/service_reader'
     autoload :ServiceDeployer, 'actions/service_deployer'
     autoload :ServiceChecker, 'actions/service_checker'
+    autoload :ServiceGenerator, 'actions/service_generator'
     autoload :ConfigurationLoader, 'actions/configuration_loader'
     autoload :KubectlApplier, 'actions/kubectl_applier'
     autoload :KubectlAttacher, 'actions/kubectl_attacher'

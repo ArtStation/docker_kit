@@ -14,4 +14,8 @@ class KuberKit::Core::Artifacts::AbstractArtifact
   def sync_description
     raise KuberKit::NotImplementedError, "must be implemented"
   end
+
+  def cleanup_needed?
+    raise KuberKit::NotImplementedError, "must be implemented"
+  end
 end

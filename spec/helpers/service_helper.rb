@@ -15,10 +15,14 @@ class ServiceHelper
     definition_factory.create(name)
   end
 
-  def service(name, template: :service_template, attributes: {}, deployer_strategy: nil)
+  def service(name, template: :service_template, attributes: {}, deployer_strategy: nil, generator_strategy: nil)
     setup_service_template(template)
 
-    service_definition = definition(name).template(template).attributes(attributes).deployer_strategy(deployer_strategy)
+    service_definition = definition(name)
+      .template(template)
+      .attributes(attributes)
+      .deployer_strategy(deployer_strategy)
+      .generator_strategy(generator_strategy)
     factory.create(service_definition)
   end
 
@@ -36,7 +40,7 @@ class ServiceHelper
     end
 
     if dependencies.any?
-      service_definition = service_definition.depends_on(dependencies)
+      service_definition = service_definition.initialize_with(dependencies)
     end
 
     factory.create(service_definition)
@@ -50,6 +54,11 @@ class ServiceHelper
 
     unless test_helper.template_store.exists?(template_name)
       template = KuberKit::Core::Templates::ArtifactFile.new(template_name, artifact_name: :templates, file_path: "service.yml")
+      test_helper.template_store.add(template)
+    end
+
+    unless test_helper.template_store.exists?(:"_metadata")
+      template = KuberKit::Core::Templates::ArtifactFile.new(:"_metadata", artifact_name: :templates, file_path: "_metadata.yml")
       test_helper.template_store.add(template)
     end
   end

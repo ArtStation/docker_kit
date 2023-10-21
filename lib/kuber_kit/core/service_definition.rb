@@ -1,26 +1,32 @@
 class KuberKit::Core::ServiceDefinition
-  attr_reader :service_name, :template_name, :dependencies
+  attr_reader :service_name, :template_name, :dependencies, :initializers
   
   Contract Or[Symbol, String] => Any
   def initialize(service_name)
     @service_name = service_name.to_sym
-    @dependencies = []
+    @initializers = []
   end
 
   def to_service_attrs
     OpenStruct.new(
       name:               @service_name,
-      dependencies:       @dependencies,
+      initializers:       @initializers,
       template_name:      get_value(@template_name),
       tags:               Array(get_value(@tags)).map(&:to_sym),
       images:             Array(get_value(@images)).map(&:to_sym),
       attributes:         get_value(@attributes),
       deployer_strategy:  get_value(@deployer_strategy),
+      generator_strategy: get_value(@generator_strategy),
     )
   end
 
   def depends_on(*value, &block)
-    @dependencies = Array(value).flatten
+    initialize_with(value)
+    self
+  end
+
+  def initialize_with(*value, &block)
+    @initializers = Array(value).flatten
     self
   end
 
@@ -50,6 +56,12 @@ class KuberKit::Core::ServiceDefinition
 
   def deployer_strategy(value = nil, &block)
     @deployer_strategy = block_given? ? block : value
+
+    self
+  end
+
+  def generator_strategy(value = nil, &block)
+    @generator_strategy = block_given? ? block : value
 
     self
   end

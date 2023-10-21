@@ -8,6 +8,15 @@ class KuberKit::Shell::Commands::GitCommands
     return nil
   end
 
+  def get_branch_name(shell, git_repo_path, remote_name: "origin")
+    shell.exec!([
+      "cd #{git_repo_path}",
+      "git rev-parse --abbrev-ref HEAD",
+    ].join(" && "), merge_stderr: true)
+  rescue KuberKit::Shell::AbstractShell::ShellError
+    return nil
+  end
+
   def get_version_hash(shell, git_repo_path)
     shell.exec!([
       "cd #{git_repo_path}",
@@ -28,6 +37,7 @@ class KuberKit::Shell::Commands::GitCommands
       "cd #{path}",
       "git add .",
       "git reset HEAD --hard",
+      "git fetch origin #{branch}",
       "git checkout #{branch}",
       "git reset --hard '@{u}'",
       "git pull --force",

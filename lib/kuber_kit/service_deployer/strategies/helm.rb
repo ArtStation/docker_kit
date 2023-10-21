@@ -14,8 +14,8 @@ class KuberKit::ServiceDeployer::Strategies::Helm < KuberKit::ServiceDeployer::S
     chart_config_path = File.join(chart_root_path, "Chart.yaml")
     release_path      = File.join(chart_templates_path, "release.yaml")
 
-    bash_commands.mkdir_p(shell, File.dirname(chart_root_path))
-    bash_commands.mkdir_p(shell, File.dirname(chart_templates_path))
+    bash_commands.mkdir_p(shell, chart_root_path)
+    bash_commands.mkdir_p(shell, chart_templates_path)
 
     shell.write(release_path, service_config)
     shell.write(chart_config_path, chart_config_content(service.uri))

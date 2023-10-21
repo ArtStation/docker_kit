@@ -11,6 +11,7 @@ class KuberKit::TemplateReader::Reader
     @@readers[template_class] = template_reader
   end
 
+  Contract KuberKit::Shell::AbstractShell, KuberKit::Core::Templates::AbstractTemplate => String
   def read(shell, template)
     reader = @@readers[template.class]
 

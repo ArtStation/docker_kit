@@ -1,8 +1,8 @@
 RSpec.describe KuberKit::ArtifactsSync::ArtifactUpdater do
   subject{ KuberKit::ArtifactsSync::ArtifactUpdater.new }
 
-  class ExampleResolver < KuberKit::ArtifactsSync::AbstractArtifactResolver
-    def resolve(shell, artifact)
+  class ExampleResolver < KuberKit::ArtifactsSync::Strategies::Abstract
+    def update(shell, artifact)
       resolved_artifacts.push(artifact)
     end
 
@@ -25,18 +25,18 @@ RSpec.describe KuberKit::ArtifactsSync::ArtifactUpdater do
   it "raises error if resolver not found for class" do
     expect {
       subject.update(test_helper.shell, artifact1)
-    }.to raise_error(KuberKit::ArtifactsSync::ArtifactUpdater::ResolverNotFoundError)
+    }.to raise_error(KuberKit::ArtifactsSync::ArtifactUpdater::StrategyNotFoundError)
   end
 
   it "raises an error if resolver is not instance of abstract resolver" do
     expect {
-      subject.use_resolver(KuberKit, artifact_class: ExampleArtifact1)
+      subject.use_strategy(KuberKit, artifact_class: ExampleArtifact1)
     }.to raise_error(ArgumentError)
   end
 
   it "calls the resolver for this artifact on update" do
-    subject.use_resolver(resolver1, artifact_class: ExampleArtifact1)
-    subject.use_resolver(resolver2, artifact_class: ExampleArtifact2)
+    subject.use_strategy(resolver1, artifact_class: ExampleArtifact1)
+    subject.use_strategy(resolver2, artifact_class: ExampleArtifact2)
 
     subject.update(test_helper.shell, artifact1)
     subject.update(test_helper.shell, artifact2)
