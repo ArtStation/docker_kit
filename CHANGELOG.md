@@ -1,3 +1,6 @@
+**1.3.6**
+- Remove dependency on ed25519 gem since it makes installation too complex
+
 **1.3.5**
 - Update git force_pull_repo command to improve performance
 
