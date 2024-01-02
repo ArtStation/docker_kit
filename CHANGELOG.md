@@ -1,3 +1,8 @@
+**1.3.7**
+- Monkeypatch for TTY::Prompt so that we can sanitize the filter value
+- Add ruby 3.3 support in specs
+- Update helm deploy command to wait for service restart
+
 **1.3.6**
 - Remove dependency on ed25519 gem since it makes installation too complex
 
