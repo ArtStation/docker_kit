@@ -4,6 +4,7 @@ require 'contracts'
 require 'dry-auto_inject'
 require 'kuber_kit/extensions/colored_string'
 require 'kuber_kit/extensions/contracts'
+require 'kuber_kit/extensions/tty_prompt'
 
 $LOAD_PATH << File.join(__dir__, 'kuber_kit')
 
