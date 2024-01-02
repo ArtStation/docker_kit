@@ -11,12 +11,12 @@ RSpec.describe KuberKit::Shell::Commands::HelmCommands do
 
   context "#upgrade" do
     it do
-      expect(shell).to receive(:exec!).with(%Q{helm upgrade learning-app /path/to/chart --install})
+      expect(shell).to receive(:exec!).with(%Q{helm upgrade learning-app /path/to/chart --install --wait})
       subject.upgrade(shell, "learning-app", "/path/to/chart")
     end
     
     it do
-      expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=/path/to/kube.cfg helm upgrade learning-app /path/to/chart --install})
+      expect(shell).to receive(:exec!).with(%Q{KUBECONFIG=/path/to/kube.cfg helm upgrade learning-app /path/to/chart --install --wait})
       subject.upgrade(shell, "learning-app", "/path/to/chart", kubeconfig_path: "/path/to/kube.cfg")
     end
   end

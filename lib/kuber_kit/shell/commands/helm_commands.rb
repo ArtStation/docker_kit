@@ -36,7 +36,12 @@ class KuberKit::Shell::Commands::HelmCommands
     helm_run(shell, "install #{release_name} #{chart_path}", kubeconfig_path: kubeconfig_path, namespace: namespace)
   end
 
-  def upgrade(shell, release_name, chart_path, kubeconfig_path: nil, namespace: nil)
-    helm_run(shell, "upgrade #{release_name} #{chart_path} --install", kubeconfig_path: kubeconfig_path, namespace: namespace)
+  def upgrade(shell, release_name, chart_path, kubeconfig_path: nil, namespace: nil, wait: true)
+    command_parts = [
+      "upgrade #{release_name} #{chart_path}",
+      "--install"
+    ]
+    command_parts << "--wait" if wait
+    helm_run(shell, command_parts, kubeconfig_path: kubeconfig_path, namespace: namespace)
   end
 end
