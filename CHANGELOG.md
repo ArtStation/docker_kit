@@ -1,3 +1,6 @@
+**1.3.8**
+- Deploy initializers separately first even if they are part of the initially requested list of services
+
 **1.3.7**
 - Monkeypatch for TTY::Prompt so that we can sanitize the filter value
 - Add ruby 3.3 support in specs
