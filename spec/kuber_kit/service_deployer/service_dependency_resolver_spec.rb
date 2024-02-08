@@ -44,5 +44,17 @@ RSpec.describe KuberKit::ServiceDeployer::ServiceDependencyResolver do
       result = subject.get_all_deps([:service4])
       expect(result.sort).to eq([:service1, :service2_a, :service2_b, :service3_a, :service3_b])
     end
+
+    it "returns dependencies even if they are part of the initially requested services" do
+      service_helper.store.define(:service1)
+      service_helper.store.define(:service2_a).initialize_with(:service1)
+      service_helper.store.define(:service2_b).initialize_with(:service1)
+      service_helper.store.define(:service3_a).initialize_with(:service2_a)
+      service_helper.store.define(:service3_b).initialize_with(:service2_b, :service1)
+      service_helper.store.define(:service4).initialize_with(:service1, :service3_a, :service3_b)
+
+      result = subject.get_all_deps([:service4, :service1])
+      expect(result.sort).to eq([:service1, :service2_a, :service2_b, :service3_a, :service3_b])
+    end
   end
 end

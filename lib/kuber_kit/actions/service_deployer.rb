@@ -89,9 +89,10 @@ class KuberKit::Actions::ServiceDeployer
       initializers.map(&:to_sym).each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
         deploy_simultaneously(batch_service_names, deployment_result)
       end
+      service_names -= initializers
     end
 
-    # Next, deploy all requested services.
+    # Next, deploy all requested services, except initializers.
     service_names.each_slice(configs.deploy_simultaneous_limit) do |batch_service_names|
       deploy_simultaneously(batch_service_names, deployment_result)
     end
