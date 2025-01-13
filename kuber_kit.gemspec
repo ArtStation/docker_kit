@@ -27,10 +27,10 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "contracts", '0.17.0'
 
-  spec.add_dependency "dry-auto_inject", "~> 0.9.0"
-  spec.add_dependency "dry-core", "~> 0.8.1"
-  spec.add_dependency "dry-configurable", "~> 0.16.1"
-  spec.add_dependency "dry-container", "~> 0.10.1"
+  spec.add_dependency "dry-auto_inject", "~> 1.0.1"
+  spec.add_dependency "dry-core", "~> 1.0.0"
+  spec.add_dependency "dry-configurable", "~> 1.0.1"
+  spec.add_dependency "dry-container", "~> 0.11.0"
 
   spec.add_dependency "thor"
   spec.add_dependency "cli-ui", '2.1.0'
