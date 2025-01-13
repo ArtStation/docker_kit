@@ -2,6 +2,7 @@ require "kuber_kit/version"
 require 'ostruct'
 require 'contracts'
 require 'dry-auto_inject'
+require 'dry/container'
 require 'kuber_kit/extensions/colored_string'
 require 'kuber_kit/extensions/contracts'
 require 'kuber_kit/extensions/tty_prompt'
@@ -12,7 +13,7 @@ module KuberKit
   Error = Class.new(StandardError)
   NotImplementedError = Class.new(Error)
   NotFoundError = Class.new(Error)
-  
+
   module Core
     autoload :ArtifactPath, 'core/artifact_path'
     autoload :ArtifactPathResolver, 'core/artifact_path_resolver'
@@ -251,11 +252,11 @@ module KuberKit
   class << self
     def define_image(image_name)
       image_path = caller[0].split(':').first
-  
+
       Container["core.image_store"].define(image_name, image_path.split('image.rb').first)
     end
 
-    def define_service(service_name)  
+    def define_service(service_name)
       Container["core.service_store"].define(service_name)
     end
 
@@ -271,7 +272,7 @@ module KuberKit
     def set_ui_mode(value)
       @ui_mode = value
     end
-    
+
     def ui_mode
       @ui_mode
     end

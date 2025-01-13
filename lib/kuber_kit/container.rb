@@ -76,7 +76,7 @@ class KuberKit::Container
   register "core.image_factory" do
     KuberKit::Core::ImageFactory.new
   end
-  
+
   register "core.image_definition_factory" do
     KuberKit::Core::ImageDefinitionFactory.new
   end
@@ -88,7 +88,7 @@ class KuberKit::Container
   register "core.service_factory" do
     KuberKit::Core::ServiceFactory.new
   end
-  
+
   register "core.service_definition_factory" do
     KuberKit::Core::ServiceDefinitionFactory.new
   end
